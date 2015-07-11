@@ -1,5 +1,6 @@
 <?php
 $wallpaper = $_POST['Twallpaper'];
+$elements = $_POST['Telements'];
 $overlay = $_POST['Toverlay'];
 $name = $_POST['name'];
 $devname = $_POST['devname'];
@@ -10,13 +11,14 @@ $tname = '<key>ThemeName</key>' . PHP_EOL . '<string>' . PHP_EOL . $name . '</st
 $dname = '<key>DevName</key>' . PHP_EOL . '<string>' . PHP_EOL . $devname . '</string>' . PHP_EOL;
 $wkey = '<key>Wallpaper</key>' . PHP_EOL . '<string>' . PHP_EOL . $wallpaper . '</string>' . PHP_EOL;
 $okey = '<key>Overlay</key>' . PHP_EOL . '<string>' . PHP_EOL . $overlay . '</string>' . PHP_EOL;
+$ekey = '<key>Elements</key>' . PHP_EOL . '<string>' . PHP_EOL . $elements . '</string>' . PHP_EOL;
 
 $end = '</dict>' . PHP_EOL . '</plist>';
 
 
 $file = fopen("themes/".$name.".plist", "w") or die("Unable to open file!");
 
-fwrite($file, $head . $tname . $dname . $wkey . $okey . $end);
+fwrite($file, $head . $tname . $dname . $wkey . $okey . $ekey . $end);
 
 fclose($file);
 

@@ -8,16 +8,19 @@
 	<link rel="stylesheet" type="text/css" href="css/elementPanels.css">
 	<link rel="stylesheet" type="text/css" href="css/tooltips.css">
 	<script src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
 </head>
 <body>
 <div class="container">
 	<div class="phone">
-		<div class="screen"></div>
+		<div class="screen">
+			<div id="screenElements"></div>
+		</div>
 		<div class="screenoverlay"></div>
 	</div>
 	<div class="toolPanel">
-		<ul>
+		<ul id="icons">
 			<a href="#" title="Change Background" class="leftTooltip">
 				<li class="fa fa-photo" id="background"></li>
 			</a>
@@ -52,9 +55,11 @@
   <input type="hidden" name="devname" id="devname"/>
   <input type="hidden" name="Twallpaper" id="Twallpaper"/>
   <input type="hidden" name="Toverlay" id="Toverlay"/>
+  <input type="hidden" name="Telements" id="Telements"/>
   <input style="display:none;" type="submit" value="Submit">
 </form>
 <input type='file' class="input" id='bgInput' name='bg'>
+<script src="js/clock.js"></script>
 <script src="js/arrays.js"></script>
 <script src="js/main.js"></script>
 </body>

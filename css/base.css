@@ -10,3 +10,13 @@ body{
 .input{
 	display: none;
 }
+ #screenElements div{
+    position: absolute;
+    color:white;
+    font-size: 30px;
+    white-space: nowrap;
+    z-index: 1;
+    width: auto;
+    text-align: left;
+    cursor: pointer;
+  }
