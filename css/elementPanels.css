@@ -22,12 +22,7 @@
 .elementPanel label{
     cursor: pointer;
 }
-.elementPanel li~li{
-    border-bottom: 1px;
-    border-style: solid;
-    border-width: 1px; /*June Comment*//*OmegaJak comment*/
-}
-::-webkit-scrollbar {  /*June Comment*/
+::-webkit-scrollbar {
     width: 12px;
 }
 ::-webkit-scrollbar-track {
