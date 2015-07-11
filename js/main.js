@@ -150,8 +150,9 @@ var action = {
         delete this.movedElements[id]; 
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
+        action.showIconMenu(constants.toolArray);
     },
-    showMenu: function(menuArray){
+    showIconMenu: function(menuArray){
         $('#icons').empty();
         for (var i = 0; i < menuArray.length; i++) {
            var a = document.createElement('a');
@@ -210,12 +211,12 @@ $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Toggle off edit menu
             this.doubleClicked = false;
-            action.showMenu(constants.toolArray);
+            action.showIconMenu(constants.toolArray);
             action.selectedItem = "";
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
         } else { // Toggle on edit menu
             this.doubleClicked = true;
-            action.showMenu(constants.editArray);
+            action.showIconMenu(constants.editArray);
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
         }
