@@ -27,7 +27,7 @@
     border-style: solid;
     border-width: 1px; /*June Comment*/
 }
-::-webkit-scrollbar {
+::-webkit-scrollbar {  /*June Comment*/
     width: 12px;
 }
 ::-webkit-scrollbar-track {
