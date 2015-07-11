@@ -15,6 +15,7 @@ var action = {
         if (id === 'size') { this.cgfontSize(); }
         if (id === 'width') { this.cgwidthSize(); }
         if (id === 'align') { this.cgalign(); }
+        if (id === 'delete') { action.removeFromScreen(action.selectedItem)}
     },
     cgfontSize: function () {
         var prmpt = window.prompt('Enter a font size', '');
@@ -129,20 +130,29 @@ var action = {
         this.saveStorage();
         loadClock(); //in clock.js
     },
+    removeFromScreen: function(id) { //when trash for item is clicked or item is re-clicked in element menu
+        var parent = document.getElementById('screenElements'),
+        div = document.getElementById(id),
+        index;
+        parent.removeChild(div); //remove element from dom
+        delete this.movedElements[id]; 
+        this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
+        this.saveStorage(); //save localStorage
+    },
     showEditMenu: function(id){
-        var editArray = ['size~Change Font Size~fa fa-font','width~Change width~fa fa-arrows-h','align~Change alignment~fa fa-align-center'];
+        var editArray = ['size~Change Font Size~fa fa-font','width~Change width~fa fa-arrows-h','align~Change alignment~fa fa-align-center', 'delete~Delete item~fa fa-trash-o'];
         $('#icons').empty();
         for (var i = 0; i < editArray.length; i++) {
            var a = document.createElement('a');
            var li = document.createElement('li');
            a.href = '#';
            a.className = 'leftTooltip';
-           a.title = editArray[i].split('~')[1];
-           li.className = editArray[i].split('~')[2];
-           li.id = editArray[i].split('~')[0];
+           var splitArray = editArray[i].split('~');
+           a.title = splitArray[1];
+           li.className = splitArray[2];
+           li.id = splitArray[0];
            a.appendChild(li);
            $('#icons').append(a);
-
         };
     }
 };
