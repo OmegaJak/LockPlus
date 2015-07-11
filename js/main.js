@@ -150,7 +150,8 @@ var action = {
         delete this.movedElements[id]; 
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
-        action.showIconMenu(constants.toolArray);
+        this.showIconMenu(constants.toolArray);
+        this.revertElementPanel();
     },
     showIconMenu: function(menuArray){
         $('#icons').empty();
@@ -166,6 +167,12 @@ var action = {
            a.appendChild(li);
            $('#icons').append(a);
         };
+    },
+    revertElementPanel: function() { // Returns the element panel to its previous state
+        if($('.elementPanel').data('prevHiddenState'))
+            $('.elementPanel').show()
+        else
+            $('.elementPanel').hide();
     }
 };
 //upload images should implement into action OBJ. (TODO)
@@ -209,16 +216,13 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
-        if(this.doubleClicked){ // Toggle off edit menu
-            this.doubleClicked = false;
+        if(this.doubleClicked){ // Toggle edit menu off
+            this.doubleClicked = false; //Not sure if this is necessary
             action.showIconMenu(constants.toolArray);
             action.selectedItem = "";
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
-            if($('.elementPanel').data('prevHiddenState'))
-                $('.elementPanel').show()
-            else
-                $('.elementPanel').hide();
-        } else { // Toggle on edit menu
+            action.revertElementPanel();
+        } else { // Toggle edit menu on
             this.doubleClicked = true;
             action.showIconMenu(constants.editArray);
             action.selectedItem = event.target.id;
