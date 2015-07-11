@@ -214,11 +214,17 @@ $('.screen').on('dblclick',function(event){
             action.showIconMenu(constants.toolArray);
             action.selectedItem = "";
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
+            if($('.elementPanel').data('prevHiddenState'))
+                $('.elementPanel').show()
+            else
+                $('.elementPanel').hide();
         } else { // Toggle on edit menu
             this.doubleClicked = true;
             action.showIconMenu(constants.editArray);
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
+            $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
+            $('.elementPanel').hide(); //Hide the element panel
         }
     }
 });
