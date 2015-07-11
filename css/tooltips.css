@@ -1,0 +1,32 @@
+.leftTooltip{
+	display: inline;
+	position: relative;
+}
+.leftTooltip:hover:after{
+	top:-8px;
+	left:-155px;
+	width: 150px;
+	text-align: right;
+	color: #000;
+	content: attr(title);
+	position: absolute;
+	z-index: 98;
+	white-space: nowrap;
+	pointer-events:none;
+}
+.Tooltip{
+	display: inline;
+	position: relative;
+}
+.Tooltip:hover:after{
+	top:-8px;
+	left:0px;
+	width: 150px;
+	text-align: right;
+	color: #000;
+	content: attr(title);
+	position: absolute;
+	z-index: 98;
+	white-space: nowrap;
+	pointer-events:none;
+}
