@@ -25,7 +25,7 @@
 .elementPanel li~li{
     border-bottom: 1px;
     border-style: solid;
-    border-width: 1px;
+    border-width: 1px; /*June Comment*/
 }
 ::-webkit-scrollbar {
     width: 12px;
