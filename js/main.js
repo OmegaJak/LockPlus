@@ -1,4 +1,16 @@
 'use strict';
+var constants = {
+    //left panel array format: li id~title~li class
+    toolArray: ['background~Change Background~fa fa-photo'
+                    ,'overlay~Change Overlay~fa fa-connectdevelop'
+                    ,'element~Add Elements~fa fa-plus-square-o'
+                    ,'save~Save Theme~fa fa-floppy-o'
+                    ,'clear~Clear Theme~fa fa-trash-o'],
+    editArray: ['size~Change Font Size~fa fa-font'
+                    ,'width~Change width~fa fa-arrows-h'
+                    ,'align~Change alignment~fa fa-align-center'
+                    ,'delete~Delete item~fa fa-trash-o']
+};
 var action = {
     savedElements : {}, //object to save elements placed
     movedElements : {}, //elements that are placed and moved
@@ -139,15 +151,14 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
     },
-    showEditMenu: function(id){
-        var editArray = ['size~Change Font Size~fa fa-font','width~Change width~fa fa-arrows-h','align~Change alignment~fa fa-align-center', 'delete~Delete item~fa fa-trash-o'];
+    showMenu: function(menuArray){
         $('#icons').empty();
-        for (var i = 0; i < editArray.length; i++) {
+        for (var i = 0; i < menuArray.length; i++) {
            var a = document.createElement('a');
            var li = document.createElement('li');
            a.href = '#';
            a.className = 'leftTooltip';
-           var splitArray = editArray[i].split('~');
+           var splitArray = menuArray[i].split('~');
            a.title = splitArray[1];
            li.className = splitArray[2];
            li.id = splitArray[0];
@@ -197,11 +208,14 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
-        if(this.doubleClicked){
-            location.reload();
-        } else {
+        if(this.doubleClicked){ // Toggle off edit menu
+            this.doubleClicked = false;
+            action.showMenu(constants.toolArray);
+            action.selectedItem = "";
+            $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
+        } else { // Toggle on edit menu
             this.doubleClicked = true;
-            action.showEditMenu(event.target.id);
+            action.showMenu(constants.editArray);
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
         }
