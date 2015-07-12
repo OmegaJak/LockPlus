@@ -73,6 +73,7 @@ var action = {
                 showAlpha: true,
                 preferredFormat: "rgba",
                 showPalette: true,
+                color: $('#' + this.selectedItem).css('color'),
                 palette: [["black", "white", "rgb(0, 0, 255)"]]
             });
             setTimeout(function () {$('#colorDiv').spectrum('show'); }, 0); //give it time to load.
