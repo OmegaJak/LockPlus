@@ -9,6 +9,9 @@ var constants = {
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change width~fa fa-arrows-h~widthDiv'
                     ,'align~Change alignment~fa fa-align-center~alignDiv'
+                    ,'uppercase~Change uppercase~fa fa-text-height~uppercaseDiv' //added
+                    ,'weight~Change font weight~fa fa-text-width~weightDiv' //added
+                    ,'color~Change color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv']
 };
 var action = {
@@ -27,6 +30,9 @@ var action = {
         if (id === 'size') { this.cgfontSize(); }
         if (id === 'width') { this.cgwidthSize(); }
         if (id === 'align') { this.cgalign(); }
+        if (id === 'uppercase') {this.cguppercase();}
+        if (id === 'weight') {this.cgweight();}
+        if (id === 'color') {this.cgcolor();}
         if (id === 'delete') { action.removeFromScreen(action.selectedItem)}
     },
     cgfontSize: function () {
@@ -38,7 +44,7 @@ var action = {
                 action.savedElements.placedElements[action.selectedItem].fontSize = $('#fontSizeInput').val() + 'px';
                 action.saveStorage();
             });
-            $('#size').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip
+            $('#size').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
         } else if ($('#sizeDiv').children().length === 2) {
             $('#fontSizeInput').remove();
             $('#size').parent().attr('title', 'Change Font Size');
@@ -56,7 +62,38 @@ var action = {
         action.savedElements.placedElements[this.selectedItem]['text-align'] = prmpt;
         action.saveStorage();
     },
-    elementPanel: function(id){ //show hide items in element Panel
+    cgcolor: function (color) {
+        if (color) {
+            $('#' + this.selectedItem).css('color', color);
+            action.savedElements.placedElements[this.selectedItem]['color'] = color;
+            action.saveStorage();
+        } else {
+            $("#colorDiv").spectrum({
+                showInitial: true,
+                showAlpha: true,
+                preferredFormat: "rgba",
+                showPalette: true,
+                palette: [["black", "white", "rgb(0, 0, 255)"]]
+            });
+            setTimeout(function () {$('#colorDiv').spectrum('show'); }, 0); //give it time to load.
+            $("#colorDiv").on('hide.spectrum', function (e, tinycolor) {
+                action.cgcolor(tinycolor.toRgbString());
+            });
+        }
+    },
+    cguppercase: function () {
+        var prmpt = window.prompt('Enter uppercase, lowercase, capitalize', '');
+        $('#' + this.selectedItem).css('text-transform', prmpt);
+        action.savedElements.placedElements[this.selectedItem]['text-transform'] = prmpt;
+        action.saveStorage();
+    },
+    cgweight: function () {
+        var prmpt = window.prompt('Enter font weight (100-900 or bold, bolder, lighter, normal)', '');
+        $('#' + this.selectedItem).css('font-weight', prmpt);
+        action.savedElements.placedElements[this.selectedItem]['font-weight'] = prmpt;
+        action.saveStorage();
+    },
+    elementPanel: function (id) { //show hide items in element Panel
         if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(clockEl, 'clockList'); }
         if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
         if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
@@ -262,3 +299,4 @@ $('.screen').on('dblclick',function(event){
 });
 
 $('#bgInput').on('change', uploadedImage);
+
