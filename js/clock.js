@@ -246,3 +246,22 @@ var weatherdivs = function () {
     });
 };
 weatherdivs();
+//systemEl: ['name~Displays name of the phone', 'firmware~Current firmware', 'battery~Current battery', 'batterypercent~Current battery plus percent', 'unlock~text when tapped unlocks device'],
+var systemdivs = function () {
+    'use strict';
+    var systemEl = {
+        name: 'JunesiPhone', //[[UIDevice currentDevice] name];
+        firmware: 'Version 8.3 (Build 12F70)', //[NSProcessInfo processInfo].operatingSystemVersionString;
+        battery: '85', //Math.round([[UIDevice currentDevice]batteryLevel] * 100);
+        batterypercent: '85%',
+        unlock: 'Unlock'
+    };
+    Object.keys(systemEl).forEach(function (key) {
+        var value = systemEl[key],
+            div = checkDiv(key);
+        if (div) {
+            div.innerHTML = value;
+        }
+    });
+};
+systemdivs();

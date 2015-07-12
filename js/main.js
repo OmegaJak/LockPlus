@@ -101,6 +101,7 @@ var action = {
         this.addDraggable(id);
         loadClock(); //in clock.js
         weatherdivs();
+        systemdivs();
     },
     replaceElements: function(){
         Object.keys(this.savedElements.placedElements).forEach(function (key) {
@@ -120,6 +121,7 @@ var action = {
     loadFromStorage: function () { //reload elements onload
         if (localStorage.placedElements) {
             this.savedElements = JSON.parse(localStorage.placedElements);
+            this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
             if (this.savedElements.wallpaper) { //set wallpaper
                 this.setBG(this.savedElements.wallpaper);
             }
@@ -152,6 +154,7 @@ var action = {
         this.saveStorage();
         loadClock(); //in clock.js
         weatherdivs();
+        systemdivs();
     },
     removeFromScreen: function(id) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
@@ -224,6 +227,8 @@ function uploadedImage(e) {
 //event listeners
 window.onload = function () {
     action.loadFromStorage(); //load elements that are stored
+    console.log(action.savedElements);
+    console.log(action.placedElements);
 }
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
