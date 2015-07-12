@@ -51,16 +51,14 @@ var action = {
         }
     },
     cgwidthSize: function () {
-        /*var prmpt = window.prompt('Enter a width', '');
-        $('#' + this.selectedItem).css('width', prmpt + 'px');
-        action.savedElements.placedElements[this.selectedItem].width = prmpt + 'px';
-        action.saveStorage();*/
         if ($('#widthDiv').children().length < 2) {
             var screenWidth = $('.screen').css('width');
-            $('<input type="number" id="widthInput" min="1" max="' + $('.screen').css('width').substring(0, screenWidth.length - 2) + '" class="widthInput">').prependTo('#widthDiv');
+            var maxValue = $('.screen').css('width').substring(0, screenWidth.length - 2);
+            $('<input type="number" id="widthInput" min="1" max="' + maxValue + '" class="widthInput">').prependTo('#widthDiv');
             var elWidth = $('#' + this.selectedItem).css('width');
             $('#widthInput').val(elWidth.substring(0,elWidth.length - 2));
             $('#widthInput').on("change", function() {
+                if ($('#widthInput').val() >= maxValue) $('#widthInput').val(maxValue);
                 $('#' + action.selectedItem).css('width', $('#widthInput').val() + 'px');
                 action.savedElements.placedElements[action.selectedItem].width = $('#widthInput').val() + 'px';
                 action.saveStorage();
