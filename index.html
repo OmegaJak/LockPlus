@@ -10,6 +10,7 @@
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
 	<script src='js/spectrum.js'></script>
+	<script src='js/html2canvas.js'></script>
 	<link rel='stylesheet' href='css/spectrum.css' />
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
 </head>
@@ -52,9 +53,11 @@
 		</ul>
 	</div>
 </div>
+<div id="previewCanvas" style="opacity:0;"></div>
 <form action="php/export.php" method="POST" target="_blank" id="myform">
   <input type="hidden" name="fileName" id="fileName"/>
   <input type="hidden" name="devname" id="devname"/>
+  <input type="hidden" name="Tpreview" id="Tpreview"/>
   <input type="hidden" name="Twallpaper" id="Twallpaper"/>
   <input type="hidden" name="Toverlay" id="Toverlay"/>
   <input type="hidden" name="Telements" id="Telements"/>

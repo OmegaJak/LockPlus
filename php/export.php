@@ -7,6 +7,7 @@ ini_set('post_max_size', '70M');
 ini_set('upload_max_filesize', '70M');
 ini_set('max_input_time', 1200);
 
+$preview = $_POST['Tpreview'];
 $wallpaper = $_POST['Twallpaper'];
 $elements = $_POST['Telements'];
 $overlay = $_POST['Toverlay'];
@@ -17,6 +18,7 @@ $head = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL . '<!DOCTYPE plist PU
 
 $tname = '<key>ThemeName</key>' . PHP_EOL . '<string>' . PHP_EOL . $name . '</string>' . PHP_EOL;
 $dname = '<key>DevName</key>' . PHP_EOL . '<string>' . PHP_EOL . $devname . '</string>' . PHP_EOL;
+$tprev = '<key>ThemePreview</key>' . PHP_EOL . '<string>' . PHP_EOL . $preview . '</string>' . PHP_EOL;
 $wkey = '<key>Wallpaper</key>' . PHP_EOL . '<string>' . PHP_EOL . $wallpaper . '</string>' . PHP_EOL;
 $okey = '<key>Overlay</key>' . PHP_EOL . '<string>' . PHP_EOL . $overlay . '</string>' . PHP_EOL;
 $ekey = '<key>Elements</key>' . PHP_EOL . '<string>' . PHP_EOL . $elements . '</string>' . PHP_EOL;
@@ -26,7 +28,7 @@ $end = '</dict>' . PHP_EOL . '</plist>';
 
 $file = fopen("themes/".$name.".plist", "w") or die("Unable to open file!");
 
-fwrite($file, $head . $tname . $dname . $wkey . $okey . $ekey . $end);
+fwrite($file, $head . $tname . $dname . $tprev . $wkey . $okey . $ekey . $end);
 
 fclose($file);
 
@@ -38,4 +40,6 @@ header('Content-Type: application/octet-stream');
     header('Content-Length: ' . filesize('themes/' . $name.'.plist'));
     readfile('themes/' . $name.'.plist');
     exit;
+
+    header('Location: http://www.junesiphone.com/LockPlus/');
 ?>
