@@ -156,7 +156,7 @@ var action = {
         div = document.getElementById(id),
         index;
         parent.removeChild(div); //remove element from dom
-        delete this.movedElements[id]; 
+        delete this.movedElements[id];
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, false);
@@ -194,7 +194,8 @@ var action = {
 };
 //upload images should implement into action OBJ. (TODO)
 function uploadedImage(e) {
-    var tw = e.target.files,
+    var input = e.currentTarget, //added to provide alert if png is used
+        tw = e.target.files,
         ncount,
         rd,
         us;
@@ -203,6 +204,9 @@ function uploadedImage(e) {
         rd.onload = function (e) {
             return function (e) {
                 if(action.uploadSelection === 'background') {
+                     if(input.files[0].type === 'image/png'){ //if png is uploaded alert (due to server limitations).
+                        alert("It is best to use .jpg for backgrounds, if you have problems saving the plist, try jpg.");
+                     }
                     action.setBG(e.target.result);
                 } else if (action.uploadSelection === 'overlay') {
                     action.setOverlay(e.target.result);
