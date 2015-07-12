@@ -33,7 +33,7 @@ var action = {
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
-        if (id === 'delete') { action.removeFromScreen(action.selectedItem)}
+        if (id === 'delete') { action.removeFromScreen(action.selectedItem, true)}
     },
     cgfontSize: function () {
         if ($('#sizeDiv').children().length < 2) {
@@ -194,7 +194,7 @@ var action = {
         weatherdivs();
         systemdivs();
     },
-    removeFromScreen: function(id) { //when trash for item is clicked or item is re-clicked in element menu
+    removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
         div = document.getElementById(id),
         index;
@@ -203,7 +203,7 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, false);
-        this.revertElementPanel();
+        if (toggleElementPanel) this.revertElementPanel();
     },
     showIconMenu: function(menuArray, surroundWithDiv){
         $('#icons').empty();
@@ -277,7 +277,13 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
         action.elementPanel(event.target.id);
     }
     if(event.target.tagName === "LABEL"){
-        action.addtoScreen(event.target.innerHTML);
+        if (document.getElementById(event.target.innerHTML)) {
+            action.removeFromScreen(event.target.innerHTML, false);
+            document.getElementById('p' + event.target.innerHTML).style.backgroundColor = "rgba(0,0,0,0)";
+        } else {
+           action.addtoScreen(event.target.innerHTML);
+           document.getElementById('p' + event.target.innerHTML).style.backgroundColor = "rgba(0,0,0,0.2)";
+        }
     }
 });
 $('.screen').on('dblclick',function(event){
