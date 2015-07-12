@@ -108,6 +108,7 @@ var action = {
                 desc = element[1];
             li.id = 'p' + label;
             li.innerHTML = '<a title="'+desc+'"><label>' + label + '</label></a>';
+            if (document.getElementById(label)) li.style.backgroundColor = "rgba(0,0,0,0.2)"; // Color already-added elements
             $('#' + div).append(li);
         }
     },
@@ -193,6 +194,7 @@ var action = {
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
+        document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0.2)"; //Add colored background to list element
     },
     removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
@@ -204,6 +206,7 @@ var action = {
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, false);
         if (toggleElementPanel) this.revertElementPanel();
+        document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0)"; //Remove colored background from list element
     },
     showIconMenu: function(menuArray, surroundWithDiv){
         $('#icons').empty();
@@ -279,10 +282,8 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
     if(event.target.tagName === "LABEL"){
         if (document.getElementById(event.target.innerHTML)) {
             action.removeFromScreen(event.target.innerHTML, false);
-            document.getElementById('p' + event.target.innerHTML).style.backgroundColor = "rgba(0,0,0,0)";
         } else {
            action.addtoScreen(event.target.innerHTML);
-           document.getElementById('p' + event.target.innerHTML).style.backgroundColor = "rgba(0,0,0,0.2)";
         }
     }
 });
