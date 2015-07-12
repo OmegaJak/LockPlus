@@ -144,6 +144,8 @@ var action = {
             $('#screenElements').empty();
             action.clearTheme(0);
             action.hideElementPanelElements();
+            $('.screen').css('background-image', '');
+            $('.screenoverlay').css('background-image','');
         }
     },
     hideElementPanelElements: function() {
