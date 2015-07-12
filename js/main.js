@@ -2,10 +2,10 @@
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
     toolArray: ['background~Change Background~fa fa-photo'
-                    ,'overlay~Change Overlay~fa fa-connectdevelop'
-                    ,'element~Add Elements~fa fa-plus-square-o'
-                    ,'save~Save Theme~fa fa-floppy-o'
-                    ,'clear~Clear Theme~fa fa-trash-o~clearDiv'],
+                    ,'overlay~Change Overlay~fa fa-clipboard'
+                    ,'element~Add Elements~fa fa-flask'
+                    ,'save~Save Theme~fa fa-upload'
+                    ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change width~fa fa-arrows-h~widthDiv'
                     ,'align~Change alignment~fa fa-align-center~alignDiv'

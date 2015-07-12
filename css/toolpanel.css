@@ -1,3 +1,10 @@
+/* Colors Scheme */
+
+/* Standard: 21b9b0; -light */
+/* Selected: 54606e; -dark */
+/* Option: 252a30; -darker */
+/* Error: d44b29; -red */
+
 .toolPanel{
 	position: relative;
 	width: 80px;
@@ -12,10 +19,17 @@
 	padding: 5px;
 	width: 40px;
 	line-height: 40px;
-	border: 1px solid black;
-	font-size: 35px;
-	border-radius: 2px;
+	border: 8px solid rgba(0,0,0,0.3);
+	font-size: 25px;
+	border-radius: 100%;
 	margin-top: 2px;
+	background-color: #21b9b0;
+	color:white;
+	-webkit-background-clip: padding-box;
+}
+.toolPanel li:hover{
+	-webkit-transform:translateX(-7px);
+	background-color: #54606e;
 }
 .toolPanel a{
 	text-decoration: none;
@@ -50,32 +64,34 @@
 	-webkit-border-radius: 3;
   	-moz-border-radius: 3;
   	border-radius: 3px;
-	color: #000000;
+	color:#252a30;
   	font-size: 18px;
-  	background: rgba(0,0,0,0);
+  	background-color: #21b9b0;
   	padding: 5px 6px 5px 6px;
-  	border: solid #000000 1px;
+  	border: solid rgba(0,0,0,0.3) 2px;
   	text-decoration: none;
   	outline-width: 4px;
   	outline-color: rgba(0,0,0,0.2);
+  	-webkit-background-clip: padding-box;
 }
 .toolPanel button:hover {
-  	background: rgba(0,0,0,0.05);
+  	background-color: #54606e;
   	text-decoration: none;
 }
 .yesClear {
 	right: 100px;
-  	top: 229px;
+  	top: 288px;
 }
 .noClear {
   	right: 50px;
-  	top: 229px;
+  	top: 288px;
 }
 .clearLabel {
 	position: absolute;
   	right: 150px;
   	width: 130px;
-  	top: 233.5px;
+  	top: 295.5px;
   	font-size: 18px;
   	font-weight: bold;
+  	color:#252a30;
 }

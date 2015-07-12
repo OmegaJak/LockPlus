@@ -3,11 +3,11 @@
 	position: relative;
 }
 .leftTooltip:hover:after{
-	top:-8px;
-	left:-155px;
+	top:-6px;
+	left:-165px;
 	width: 150px;
 	text-align: right;
-	color: #000;
+	color: #54606e;
 	content: attr(title);
 	position: absolute;
 	z-index: 98;
