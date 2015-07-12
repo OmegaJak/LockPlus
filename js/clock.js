@@ -204,3 +204,45 @@ function loadClock() {
 }
 loadClock();
 //endclock
+var weatherdivs = function () {
+    'use strict';
+    var tcf = (celsius === true) ? 'c' : 'f',
+        spd = (celsius === true) ? 'kph' : 'mph',
+        weatherElements = {
+            temp : '76',
+            tempdeg : '76&deg;',
+            tempdegplus : '76&degF',
+            high : '80',
+            highdeg : '80&deg',
+            highdegplus : '80&degF',
+            low : '70',
+            lowdeg : '70&deg;',
+            lowdegplus : '70&deg;F',
+            highdashlow : '80-70',
+            highslashlow : '80/70',
+            highdashlowdeg : '80&deg;-70&deg;',
+            highslashlowdeg : '80&deg;/70&deg;',
+            city : 'Current City',
+            condition : 'Cloudy',
+            humidity : '60',
+            windchill : '20&deg;',
+            wind : '25mph',
+            winddirection : 'N',
+            visibility : '20miles',
+            rain : '20%',
+            dewpoint : '40&deg;',
+            feelslike: '90',
+            feelslikedeg: '90&deg;',
+            sunrise: '5:00',
+            sunset: '7:00',
+            update: '7/11/15 8:05'
+    };
+    Object.keys(weatherElements).forEach(function (key) {
+        var value = weatherElements[key],
+            div = checkDiv(key);
+        if (div) {
+            div.innerHTML = value;
+        }
+    });
+};
+weatherdivs();

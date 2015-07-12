@@ -100,6 +100,7 @@ var action = {
         document.getElementById('screenElements').appendChild(div);
         this.addDraggable(id);
         loadClock(); //in clock.js
+        weatherdivs();
     },
     replaceElements: function(){
         Object.keys(this.savedElements.placedElements).forEach(function (key) {
@@ -150,6 +151,7 @@ var action = {
         this.savedElements.placedElements = this.movedElements;
         this.saveStorage();
         loadClock(); //in clock.js
+        weatherdivs();
     },
     removeFromScreen: function(id) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
