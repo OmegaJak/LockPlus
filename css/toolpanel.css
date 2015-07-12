@@ -22,9 +22,12 @@
 	color:black;
 }
 .sizingInput {
+	height: 51.6px;
+	font-size: 25px;
+	border-radius: 3px;
 	position: absolute;
-	top: 17px;
-	left: -20px;
+	top: 2px;
+	left: -60px;
 	text-align: center;
 	background-color: rgba(0,0,0,0);
 	border-color: #000000;
