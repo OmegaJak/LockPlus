@@ -38,7 +38,8 @@ var action = {
     cgfontSize: function () {
         if ($('#sizeDiv').children().length < 2) {
             $('<input type="number" id="fontSizeInput" min="1" max="70" class="fontSizeInput">').prependTo('#sizeDiv');
-            $('#fontSizeInput').val($('#' + this.selectedItem).css('font-size').substring(0,2));
+            var elFontSize = $('#' + this.selectedItem).css('font-size');
+            $('#fontSizeInput').val(elFontSize.substring(0,elFontSize.length - 2));
             $('#fontSizeInput').on("change", function() {
                 $('#' + action.selectedItem).css('font-size', $('#fontSizeInput').val() + 'px');
                 action.savedElements.placedElements[action.selectedItem].fontSize = $('#fontSizeInput').val() + 'px';
@@ -58,7 +59,7 @@ var action = {
             var elWidth = $('#' + this.selectedItem).css('width');
             $('#widthInput').val(elWidth.substring(0,elWidth.length - 2));
             $('#widthInput').on("change", function() {
-                if ($('#widthInput').val() >= maxValue) $('#widthInput').val(maxValue);
+                if (JSON.parse($('#widthInput').val()) >= JSON.parse(maxValue)) $('#widthInput').val(maxValue);
                 $('#' + action.selectedItem).css('width', $('#widthInput').val() + 'px');
                 action.savedElements.placedElements[action.selectedItem].width = $('#widthInput').val() + 'px';
                 action.saveStorage();
