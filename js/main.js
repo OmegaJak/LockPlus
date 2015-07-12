@@ -132,6 +132,8 @@ var action = {
         });
         setTimeout(function(){
             var ca=document.getElementById('previewCanvas');
+                ca.setAttribute('title',"Theme saved, refresh the page");
+                ca.className = 'pCanvas';
                 ca = ca.children[0];
             var context = ca.getContext('2d');
             var dataURL = ca.toDataURL();

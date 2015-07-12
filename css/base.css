@@ -20,3 +20,22 @@ body{
     text-align: left;
     cursor: pointer;
   }
+#previewCanvas{
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    -webkit-transform: translate(-25%, -54%);
+}
+.pCanvas{
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    -webkit-transform: translate(-25%, -54%);
+}
+.pCanvas:after{
+    position: absolute;
+    content: attr(title);
+    top:90%;
+    left:20%;
+    color:white;
+}
