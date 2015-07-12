@@ -21,13 +21,11 @@
 	text-decoration: none;
 	color:black;
 }
-.sizingInput {
-	height: 51.6px;
+.toolPanel input {
+	height: 52px;
 	font-size: 25px;
 	border-radius: 3px;
 	position: absolute;
-	top: 2px;
-	left: -60px;
 	text-align: center;
 	background-color: rgba(0,0,0,0);
 	border-color: #000000;
@@ -35,4 +33,12 @@
 	border-width: 1px;
 	outline-width: 4px;
 	outline-color: rgba(0,0,0,0.2);
+	width:100%;
+	right: 43px;
+}
+.fontSizeInput {
+	top: 2px;
+}
+.widthInput {
+	top: 55.6px;
 }

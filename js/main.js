@@ -37,7 +37,7 @@ var action = {
     },
     cgfontSize: function () {
         if ($('#sizeDiv').children().length < 2) {
-            $('<input type="number" id="fontSizeInput" min="1" max="70" class="sizingInput">').prependTo('#sizeDiv');
+            $('<input type="number" id="fontSizeInput" min="1" max="70" class="fontSizeInput">').prependTo('#sizeDiv');
             $('#fontSizeInput').val($('#' + this.selectedItem).css('font-size').substring(0,2));
             $('#fontSizeInput').on("change", function() {
                 $('#' + action.selectedItem).css('font-size', $('#fontSizeInput').val() + 'px');
@@ -51,10 +51,25 @@ var action = {
         }
     },
     cgwidthSize: function () {
-        var prmpt = window.prompt('Enter a width', '');
+        /*var prmpt = window.prompt('Enter a width', '');
         $('#' + this.selectedItem).css('width', prmpt + 'px');
         action.savedElements.placedElements[this.selectedItem].width = prmpt + 'px';
-        action.saveStorage();
+        action.saveStorage();*/
+        if ($('#widthDiv').children().length < 2) {
+            var screenWidth = $('.screen').css('width');
+            $('<input type="number" id="widthInput" min="1" max="' + $('.screen').css('width').substring(0, screenWidth.length - 2) + '" class="widthInput">').prependTo('#widthDiv');
+            var elWidth = $('#' + this.selectedItem).css('width');
+            $('#widthInput').val(elWidth.substring(0,elWidth.length - 2));
+            $('#widthInput').on("change", function() {
+                $('#' + action.selectedItem).css('width', $('#widthInput').val() + 'px');
+                action.savedElements.placedElements[action.selectedItem].width = $('#widthInput').val() + 'px';
+                action.saveStorage();
+            });
+            $('#width').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
+        } else if ($('#widthDiv').children().length === 2) {
+            $('#widthInput').remove();
+            $('#width').parent().attr('title', 'Change width');
+        }
     },
     cgalign: function () {
         var prmpt = window.prompt('Enter Left, Center, Right', '');
