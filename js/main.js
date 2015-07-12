@@ -33,11 +33,11 @@ var action = {
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
-        if (id === 'delete') { action.removeFromScreen(action.selectedItem)}
+        if (id === 'delete') { action.removeFromScreen(action.selectedItem, true)}
     },
     cgfontSize: function () {
         if ($('#sizeDiv').children().length < 2) {
-            $('<input type="number" id="fontSizeInput" min="1" max="70" class="sizingInput">').prependTo('#sizeDiv');
+            $('<input type="number" id="fontSizeInput" min="1" max="70" class="fontSizeInput">').prependTo('#sizeDiv');
             $('#fontSizeInput').val($('#' + this.selectedItem).css('font-size').substring(0,2));
             $('#fontSizeInput').on("change", function() {
                 $('#' + action.selectedItem).css('font-size', $('#fontSizeInput').val() + 'px');
@@ -51,10 +51,25 @@ var action = {
         }
     },
     cgwidthSize: function () {
-        var prmpt = window.prompt('Enter a width', '');
+        /*var prmpt = window.prompt('Enter a width', '');
         $('#' + this.selectedItem).css('width', prmpt + 'px');
         action.savedElements.placedElements[this.selectedItem].width = prmpt + 'px';
-        action.saveStorage();
+        action.saveStorage();*/
+        if ($('#widthDiv').children().length < 2) {
+            var screenWidth = $('.screen').css('width');
+            $('<input type="number" id="widthInput" min="1" max="' + $('.screen').css('width').substring(0, screenWidth.length - 2) + '" class="widthInput">').prependTo('#widthDiv');
+            var elWidth = $('#' + this.selectedItem).css('width');
+            $('#widthInput').val(elWidth.substring(0,elWidth.length - 2));
+            $('#widthInput').on("change", function() {
+                $('#' + action.selectedItem).css('width', $('#widthInput').val() + 'px');
+                action.savedElements.placedElements[action.selectedItem].width = $('#widthInput').val() + 'px';
+                action.saveStorage();
+            });
+            $('#width').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
+        } else if ($('#widthDiv').children().length === 2) {
+            $('#widthInput').remove();
+            $('#width').parent().attr('title', 'Change width');
+        }
     },
     cgalign: function () {
         var prmpt = window.prompt('Enter Left, Center, Right', '');
@@ -73,6 +88,7 @@ var action = {
                 showAlpha: true,
                 preferredFormat: "rgba",
                 showPalette: true,
+                color: $('#' + this.selectedItem).css('color'),
                 palette: [["black", "white", "rgb(0, 0, 255)"]]
             });
             setTimeout(function () {$('#colorDiv').spectrum('show'); }, 0); //give it time to load.
@@ -107,6 +123,7 @@ var action = {
                 desc = element[1];
             li.id = 'p' + label;
             li.innerHTML = '<a title="'+desc+'"><label>' + label + '</label></a>';
+            if (document.getElementById(label)) li.style.backgroundColor = "rgba(0,0,0,0.2)"; // Color already-added elements
             $('#' + div).append(li);
         }
     },
@@ -206,8 +223,9 @@ var action = {
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
+        document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0.2)"; //Add colored background to list element
     },
-    removeFromScreen: function(id) { //when trash for item is clicked or item is re-clicked in element menu
+    removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
         div = document.getElementById(id),
         index;
@@ -216,7 +234,8 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, false);
-        this.revertElementPanel();
+        if (toggleElementPanel) this.revertElementPanel();
+        document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0)"; //Remove colored background from list element
     },
     showIconMenu: function(menuArray, surroundWithDiv){
         $('#icons').empty();
@@ -290,7 +309,11 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
         action.elementPanel(event.target.id);
     }
     if(event.target.tagName === "LABEL"){
-        action.addtoScreen(event.target.innerHTML);
+        if (document.getElementById(event.target.innerHTML)) {
+            action.removeFromScreen(event.target.innerHTML, false);
+        } else {
+           action.addtoScreen(event.target.innerHTML);
+        }
     }
 });
 $('.screen').on('dblclick',function(event){
