@@ -137,7 +137,19 @@ var action = {
             $('#clear').parent().attr('title', 'Clear Theme');
         } else if (code === 1) { // definitely clear the theme
             localStorage.removeItem('placedElements');
-            location.reload();
+            action.savedElements = {};
+            action.movedElements = {};
+            action.selectedItem = '';
+            action.doubleClicked = false;
+            $('#screenElements').empty();
+            action.clearTheme(0);
+            action.hideElementPanelElements();
+        }
+    },
+    hideElementPanelElements: function() {
+        var elementPanelElements = $('.elementPanel').find($('ul'));
+        for (var i = 0; i < elementPanelElements.length; i++) {
+            elementPanelElements[i].style.display = "none";
         }
     },
     createLI: function(type, div) { //create add menu
