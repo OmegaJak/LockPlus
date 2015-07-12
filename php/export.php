@@ -1,16 +1,10 @@
 <?php
 
-ignore_user_abort(true);
-ini_set('max_execution_time', 1200);
-ini_set('memory_limit', '512M');
-ini_set('post_max_size', '70M');
-ini_set('upload_max_filesize', '70M');
-ini_set('max_input_time', 1200);
 
 $wallpaper = $_POST['Twallpaper'];
 $elements = $_POST['Telements'];
 $overlay = $_POST['Toverlay'];
-$name = $_POST['name'];
+$name = $_POST['fileName'];
 $devname = $_POST['devname'];
 
 $head = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL . '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' . PHP_EOL . '<plist version="1.0">' . PHP_EOL . '<dict>' . PHP_EOL;

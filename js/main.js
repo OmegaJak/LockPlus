@@ -76,7 +76,7 @@ var action = {
     saveTheme:function () { //saves info to divs and sends form to create plist
         var devname = window.prompt('Enter your name', '');
         var themename = window.prompt('Enter the theme name', '');
-        $('#name').val(themename);
+        $('#fileName').val(themename);
         $('#devname').val(devname);
         $('#Twallpaper').val((action.savedElements.wallpaper) ? action.savedElements.wallpaper : '');
         $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
