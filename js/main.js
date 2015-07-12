@@ -5,7 +5,7 @@ var constants = {
                     ,'overlay~Change Overlay~fa fa-connectdevelop'
                     ,'element~Add Elements~fa fa-plus-square-o'
                     ,'save~Save Theme~fa fa-floppy-o'
-                    ,'clear~Clear Theme~fa fa-trash-o'],
+                    ,'clear~Clear Theme~fa fa-trash-o~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change width~fa fa-arrows-h~widthDiv'
                     ,'align~Change alignment~fa fa-align-center~alignDiv'
@@ -24,7 +24,7 @@ var action = {
         var id = evt.target.id;
         this.uploadSelection = id;
         if (id === 'background' || id === 'overlay') { $('#bgInput').click(); }
-        if (id === 'clear') {localStorage.removeItem('placedElements'); location.reload(); }
+        if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'element') { $('.elementPanel').toggle(); }
         if (id === 'size') { this.cgfontSize(); }
@@ -111,6 +111,33 @@ var action = {
         if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(clockEl, 'clockList'); }
         if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
         if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
+    },
+    clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
+        if (code === -1) { // check what to do
+            if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
+                action.clearTheme(0);
+            } else {
+                $('#clear').parent().attr('title', ''); // Hide the tooltip
+                $('<button type="button" class="noClear">No</button>').prependTo('#clearDiv');
+                $('<button type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
+                $('<label class="clearLabel">Are you sure?</label>').prependTo('#clearDiv');
+
+                $('.yesClear').click(function() {
+                    action.clearTheme(1);
+                });
+                $('.noClear').click(function() {
+                    action.clearTheme(0);
+                });
+            }
+        } else if (code === 0) { // hide confirmation
+            $('.noClear').remove();
+            $('.yesClear').remove();
+            $('.clearLabel').remove();
+            $('#clear').parent().attr('title', 'Clear Theme');
+        } else if (code === 1) { // definitely clear the theme
+            localStorage.removeItem('placedElements');
+            location.reload();
+        }
     },
     createLI: function(type, div) { //create add menu
         $('#' + div).empty();
@@ -233,11 +260,11 @@ var action = {
         delete this.movedElements[id];
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
-        this.showIconMenu(constants.toolArray, false);
+        this.showIconMenu(constants.toolArray, 4);
         if (toggleElementPanel) this.revertElementPanel();
         document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0)"; //Remove colored background from list element
     },
-    showIconMenu: function(menuArray, surroundWithDiv){
+    showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
         for (var i = 0; i < menuArray.length; i++) {
            var div = document.createElement('div');
@@ -251,10 +278,14 @@ var action = {
            li.className = splitArray[2];
            li.id = splitArray[0];
            a.appendChild(li);
-           if (surroundWithDiv) {
-              div.id = splitArray[3];
-              div.appendChild(a);
-              $('#icons').append(div);
+           if (indexesToSurround > -2) {
+              if (indexesToSurround === -1 || i === indexesToSurround) {
+                div.id = splitArray[3];
+                div.appendChild(a);
+                $('#icons').append(div);
+              } else {
+                $('#icons').append(a);
+              }
            } else {
               $('#icons').append(a);
            }
@@ -296,6 +327,7 @@ function uploadedImage(e) {
 
 //event listeners
 window.onload = function () {
+    action.showIconMenu(constants.toolArray, 4);
     action.loadFromStorage(); //load elements that are stored
     console.log(action.savedElements);
     console.log(action.placedElements);
@@ -320,13 +352,13 @@ $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Toggle edit menu off
             this.doubleClicked = false; //Not sure if this is necessary
-            action.showIconMenu(constants.toolArray, false);
+            action.showIconMenu(constants.toolArray, 4);
             action.selectedItem = "";
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
             action.revertElementPanel();
         } else { // Toggle edit menu on
             this.doubleClicked = true;
-            action.showIconMenu(constants.editArray, true);
+            action.showIconMenu(constants.editArray, -1);
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
