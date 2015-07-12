@@ -1,5 +1,11 @@
 <?php
 
+ignore_user_abort(true);
+ini_set('max_execution_time', 1200);
+ini_set('memory_limit', '512M');
+ini_set('post_max_size', '70M');
+ini_set('upload_max_filesize', '70M');
+ini_set('max_input_time', 1200);
 
 $wallpaper = $_POST['Twallpaper'];
 $elements = $_POST['Telements'];
