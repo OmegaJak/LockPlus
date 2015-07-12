@@ -21,3 +21,15 @@
 	text-decoration: none;
 	color:black;
 }
+.sizingInput {
+	position: absolute;
+	top: 17px;
+	left: -20px;
+	text-align: center;
+	background-color: rgba(0,0,0,0);
+	border-color: #000000;
+	border-style: solid;
+	border-width: 1px;
+	outline-width: 4px;
+	outline-color: rgba(0,0,0,0.2);
+}

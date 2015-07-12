@@ -1,15 +1,15 @@
 'use strict';
 var constants = {
-    //left panel array format: li id~title~li class
+    //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
     toolArray: ['background~Change Background~fa fa-photo'
                     ,'overlay~Change Overlay~fa fa-connectdevelop'
                     ,'element~Add Elements~fa fa-plus-square-o'
                     ,'save~Save Theme~fa fa-floppy-o'
                     ,'clear~Clear Theme~fa fa-trash-o'],
-    editArray: ['size~Change Font Size~fa fa-font'
-                    ,'width~Change width~fa fa-arrows-h'
-                    ,'align~Change alignment~fa fa-align-center'
-                    ,'delete~Delete item~fa fa-trash-o']
+    editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
+                    ,'width~Change width~fa fa-arrows-h~widthDiv'
+                    ,'align~Change alignment~fa fa-align-center~alignDiv'
+                    ,'delete~Delete item~fa fa-trash-o~deleteDiv']
 };
 var action = {
     savedElements : {}, //object to save elements placed
@@ -30,10 +30,19 @@ var action = {
         if (id === 'delete') { action.removeFromScreen(action.selectedItem)}
     },
     cgfontSize: function () {
-        var prmpt = window.prompt('Enter a font size', '');
-        $('#' + this.selectedItem).css('font-size', prmpt + 'px');
-        action.savedElements.placedElements[this.selectedItem].fontSize = prmpt + 'px';
-        action.saveStorage();
+        if ($('#sizeDiv').children().length < 2) {
+            $('<input type="number" id="fontSizeInput" min="1" max="70" class="sizingInput">').prependTo('#sizeDiv');
+            $('#fontSizeInput').val($('#' + this.selectedItem).css('font-size').substring(0,2));
+            $('#fontSizeInput').on("change", function() {
+                $('#' + action.selectedItem).css('font-size', $('#fontSizeInput').val() + 'px');
+                action.savedElements.placedElements[action.selectedItem].fontSize = $('#fontSizeInput').val() + 'px';
+                action.saveStorage();
+            });
+            $('#size').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip
+        } else if ($('#sizeDiv').children().length === 2) {
+            $('#fontSizeInput').remove();
+            $('#size').parent().attr('title', 'Change Font Size');
+        }
     },
     cgwidthSize: function () {
         var prmpt = window.prompt('Enter a width', '');
@@ -150,12 +159,14 @@ var action = {
         delete this.movedElements[id]; 
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
-        this.showIconMenu(constants.toolArray);
+        this.showIconMenu(constants.toolArray, false);
         this.revertElementPanel();
     },
-    showIconMenu: function(menuArray){
+    showIconMenu: function(menuArray, surroundWithDiv){
         $('#icons').empty();
         for (var i = 0; i < menuArray.length; i++) {
+           var div = document.createElement('div');
+           div.id = "Test";
            var a = document.createElement('a');
            var li = document.createElement('li');
            a.href = '#';
@@ -165,7 +176,13 @@ var action = {
            li.className = splitArray[2];
            li.id = splitArray[0];
            a.appendChild(li);
-           $('#icons').append(a);
+           if (surroundWithDiv) {
+              div.id = splitArray[3];
+              div.appendChild(a);
+              $('#icons').append(div);
+           } else {
+              $('#icons').append(a);
+           }
         };
     },
     revertElementPanel: function() { // Returns the element panel to its previous state
@@ -218,13 +235,13 @@ $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Toggle edit menu off
             this.doubleClicked = false; //Not sure if this is necessary
-            action.showIconMenu(constants.toolArray);
+            action.showIconMenu(constants.toolArray, false);
             action.selectedItem = "";
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
             action.revertElementPanel();
         } else { // Toggle edit menu on
             this.doubleClicked = true;
-            action.showIconMenu(constants.editArray);
+            action.showIconMenu(constants.editArray, true);
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
