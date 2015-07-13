@@ -53,7 +53,16 @@
 .toolPanel input::-webkit-inner-spin-button,
 .toolPanel input::-webkit-outer-spin-button {
 	-webkit-appearance: none;
-	margin: 0;
+	background: #FFF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=) no-repeat center center;
+    position: relative;
+    width: 10px;
+    top: 0;
+    right: 3px;
+    bottom: 0;
+    background-size: 10px;
+    border-radius: 10px;
+    border: 0;
+    opacity: .5;
 }
 .toolPanel label {
 	color: #54606e;
