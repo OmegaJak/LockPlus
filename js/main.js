@@ -105,7 +105,7 @@ var action = {
     updateSize: function(idSelector, max, cssKey, unit, jsCssKey) {
         if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
         $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
-        action.savedElements.placedElements[action.selectedItem][jsCssKey] = $('#fontSizeInput').val() + unit;
+        action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
         action.saveStorage();
     },
     cgalign: function () {
@@ -371,8 +371,6 @@ var action = {
                 var splitArray = constants.editArray[i].split("~");
                 if ((state === -2 && $('#' + splitArray[3]).children().length < 2) || (state === -1 && $('#' + splitArray[3]).children().length > 1)) {
                     $('#' + splitArray[0]).trigger('click');
-                } else {
-                    console.log("Someone done goofed");
                 }
             }
         } else if (state > -1 && state < constants.editArray.length) {
