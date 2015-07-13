@@ -31,8 +31,8 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'element') { $('.elementPanel').toggle(); }
-        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 1, 140, 'font-size', 'fontSize'); }
-        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 1, $('.screen').css('width').substring(0, $('.screen').css('width').length - 2), 'width', 'width'); }
+        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize'); }
+        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').css('width').substring(0, $('.screen').css('width').length - 2), 'width', 'width'); }
         if (id === 'align') { this.cgalign(); }
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
@@ -73,23 +73,37 @@ var action = {
         var buttonSelector = '#' + splitArr[0];
         if ($(divSelector).children().length < 2) {
             $('<div id="' + key + 'Decrement" class="sizeControl"></div>').prependTo(divSelector);
-            $('<a href="#" class="fa fa-minus-circle"></a>').appendTo('#' + key + 'Decrement');
+            $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Decrement');
             $('#' + key + 'Decrement').on('click', function() {
-                                                    action.sizeControl('#' + key + 'Input', -1);
-                                                    action.updateSize(idSelector, max, cssKey, unit, jsCssKey);
+                                                    event.preventDefault();
+                                                    if (event.ctrlKey) {
+                                                        action.sizeControl(idSelector, min - JSON.parse($(idSelector).val()))
+                                                    } else if (event.shiftKey) {
+                                                        action.sizeControl(idSelector, -10);
+                                                    } else {
+                                                        action.sizeControl(idSelector, -1);
+                                                    }
+                                                    action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
                                                    });
-            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '">').prependTo(divSelector);
+            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!">').prependTo(divSelector);
             $('<div id="' + key + 'Increment" class="sizeControl"></div>').prependTo(divSelector);
-            $('<a href="#" class="fa fa-plus-circle"></a>').appendTo('#' + key + 'Increment');
+            $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Increment');
             $('#' + key + 'Increment').on('click', function() {
-                                                    action.sizeControl('#' + key + 'Input', 1);
-                                                    action.updateSize(idSelector, max, cssKey, unit, jsCssKey);
+                                                    event.preventDefault();
+                                                    if (event.ctrlKey) {
+                                                        action.sizeControl(idSelector, max - JSON.parse($(idSelector).val()))
+                                                    } else if (event.shiftKey) {
+                                                        action.sizeControl(idSelector, 10);
+                                                    } else {
+                                                        action.sizeControl(idSelector, 1);
+                                                    }
+                                                    action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
                                                    });
 
             var elSize = $('#' + this.selectedItem).css(cssKey);
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
             $(idSelector).on("change", function() {
-                action.updateSize(idSelector, max, cssKey, unit, jsCssKey);
+                action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
             });
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
         } else if ($(divSelector).children().length >= 2) {
@@ -102,8 +116,9 @@ var action = {
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
     },
-    updateSize: function(idSelector, max, cssKey, unit, jsCssKey) {
+    updateSize: function(idSelector, max, min, cssKey, unit, jsCssKey) {
         if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+        if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
         $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
         action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
         action.saveStorage();
