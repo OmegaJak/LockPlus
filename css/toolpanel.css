@@ -37,15 +37,19 @@
 }
 .toolPanel input {
 	height: 45px;
-	width: 60px;
-	right: 70px;
+	width: 120px;
+	right: 58px;
 	font-size: 25px;
-	color: #54606e;
+	background-color: #54606e;
+	color: white;
 	position: absolute;
 	text-align: center;
-	background-color: rgba(0,0,0,0);
-	border-color: rgba(0,0,0,0);
+	border-color: #54606e;
+	border-radius: 45px;
+	border-width: 3px;
+	border-style: solid;
 	outline-color: rgba(0,0,0,0);
+	font-weight: bold;
 }
 .toolPanel input:hover {
 	font-size: 28px;
@@ -53,15 +57,7 @@
 .toolPanel input::-webkit-inner-spin-button,
 .toolPanel input::-webkit-outer-spin-button {
 	-webkit-appearance: none;
-	background: #54606e url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAACXBIWXMAAAsTAAALEwEAmpwYAAABNmlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjarY6xSsNQFEDPi6LiUCsEcXB4kygotupgxqQtRRCs1SHJ1qShSmkSXl7VfoSjWwcXd7/AyVFwUPwC/0Bx6uAQIYODCJ7p3MPlcsGo2HWnYZRhEGvVbjrS9Xw5+8QMUwDQCbPUbrUOAOIkjvjB5ysC4HnTrjsN/sZ8mCoNTIDtbpSFICpA/0KnGsQYMIN+qkHcAaY6addAPAClXu4vQCnI/Q0oKdfzQXwAZs/1fDDmADPIfQUwdXSpAWpJOlJnvVMtq5ZlSbubBJE8HmU6GmRyPw4TlSaqo6MukP8HwGK+2G46cq1qWXvr/DOu58vc3o8QgFh6LFpBOFTn3yqMnd/n4sZ4GQ5vYXpStN0ruNmAheuirVahvAX34y/Axk/96FpPYgAAACBjSFJNAAB6JQAAgIMAAPn/AACA6AAAUggAARVYAAA6lwAAF2/XWh+QAAAAOElEQVR42mL4//8/Axr+jy6GTcF/dIW4FKAoZMBiHQZmcHFx+U8IE2cSOW4i6Duc4QQAAAD//wMAaTD5OqqSDOAAAAAASUVORK5CYII=) no-repeat center center;
-    position: relative;
-    width: 9px;
-    height: 30px;
-    top:0;
-    right: -25px;
-    background-size: 10px;
-    border-radius: 10px;
-    opacity: 1;
+	margin: 0;
 }
 .toolPanel input:focus{
     outline: 0;
@@ -71,23 +67,30 @@
 	position: absolute;
 	font-size: 23px;
 }
-.fontSizePreLabel {
-	right: 130px;
-  	top: 16px;
-  	background-color: #54606e;
-  	border-radius: 5px;
-  	text-align: center;
-  	white-space: nowrap;
-  	padding: 6.5px;
-  	-webkit-background-clip: padding-box;
-  	color: white!important;
+.sizeControl {
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	background-color: white;
+	z-index: 2;
 }
-.fontSizeInput {
-	top: 14px;
+.sizeControl a {
+	bottom: 7px;
+	right: 4px;
+	color: #21b9b0;
+	font-size: 30px;
+	position: relative;
 }
-.fontSizePostLabel {
-	top: 24px;
-	right: 60px;
+#fontSizeDecrement {
+	top: 26px;
+	right: 151px;
+}
+#fontSizeInput {
+	top: 12px;
+}
+#fontSizeIncrement {
+	top: 26px;
+	right: 69px;
 }
 .fontSizePostLabel::after {
 	height: 31px;
@@ -103,8 +106,16 @@
 	border-right-width: 10px;
 	border-radius: 5px;
 }
-.widthInput {
+#widthSizeDecrement {
+	top: 94px;
+	right: 151px;
+}
+#widthSizeInput {
 	top: 80px;
+}
+#widthSizeIncrement {
+	top: 94px;
+	right: 69px;
 }
 
 /*Thanks to this button generator: http://css3buttongenerator.com/ */
