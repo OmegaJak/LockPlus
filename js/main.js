@@ -364,6 +364,22 @@ var action = {
             $('.elementPanel').show()
         else
             $('.elementPanel').hide();
+    },
+    setEditMenuInputsState: function(state, maxIndex) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
+        if (state <= -1) {
+            for (var i = 0; i < maxIndex && i < constants.editArray.length; i++) {
+                var splitArray = constants.editArray[i].split("~");
+                if ((state === -2 && $('#' + splitArray[3]).children().length < 2) || (state === -1 && $('#' + splitArray[3]).children().length > 1)) {
+                    $('#' + splitArray[0]).trigger('click');
+                } else {
+                    console.log("Someone done goofed");
+                }
+            }
+        } else if (state > -1 && state < constants.editArray.length) {
+            $('#' + constants.editArray[0].split("~")[state]).trigger('click');
+        } else {
+            console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
+        }
     }
 };
 //upload images should implement into action OBJ. (TODO)
@@ -423,11 +439,18 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Toggle edit menu off
-            this.doubleClicked = false; //Not sure if this is necessary
-            action.showIconMenu(constants.toolArray, 4);
-            action.selectedItem = "";
-            $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
-            action.revertElementPanel();
+            if (event.target.id === action.selectedItem) {
+                this.doubleClicked = false; //Not sure if this is necessary
+                action.showIconMenu(constants.toolArray, 4);
+                action.selectedItem = "";
+                $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
+                action.revertElementPanel();
+            } else {
+                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)');
+                action.selectedItem = event.target.id;
+                $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
+                action.setEditMenuInputsState(-1, 2);
+            }
         } else { // Toggle edit menu on
             if(event.target.id === 'icon'){
                 action.showIconMenu(constants.iconArray, -1);
