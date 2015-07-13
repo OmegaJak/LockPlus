@@ -27,7 +27,7 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'element') { $('.elementPanel').toggle(); }
-        if (id === 'size') { this.cgfontSize(); }
+        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 1, 140, 'font-size', 'fontSize'); }
         if (id === 'width') { this.cgwidthSize(); }
         if (id === 'align') { this.cgalign(); }
         if (id === 'uppercase') {this.cguppercase();}
@@ -72,6 +72,31 @@ var action = {
         } else if ($('#widthDiv').children().length === 2) {
             $('#widthInput').remove();
             $('#width').parent().attr('title', 'Change width');
+        }
+    },
+    cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey) {
+        var splitArr = nameString.split("~");
+        var divSelector = '#' + splitArr[3];
+        var idSelector = '#' + key + 'Input';
+        var buttonSelector = '#' + splitArr[0];
+        if ($(divSelector).children().length < 2) {
+            $('<label class="' + key + 'PostLabel">' + unit + '</label>').prependTo(divSelector);
+            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" class="' + key + 'Input">').prependTo(divSelector);
+            $('<label class="' + key + 'PreLabel">' + splitArr[1].substring(6, splitArr[1].length) + ':</label>').prependTo(divSelector);
+            var elSize = $('#' + this.selectedItem).css(cssKey);
+            $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
+            $(idSelector).on("change", function() {
+                if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+                $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
+                action.savedElements.placedElements[action.selectedItem][jsCssKey] = $('#fontSizeInput').val() + unit;
+                action.saveStorage();
+            });
+            $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
+        } else if ($(divSelector).children().length >= 2) {
+            $('.' + key + 'PostLabel').remove();
+            $(idSelector).remove();
+            $('.' + key + 'PreLabel').remove();
+            $(buttonSelector).parent().attr('title', splitArr[1]);
         }
     },
     cgalign: function () {
