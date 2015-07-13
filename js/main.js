@@ -12,7 +12,11 @@ var constants = {
                     ,'uppercase~Change uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change font weight~fa fa-text-width~weightDiv' //added
                     ,'color~Change color~fa fa-eyedropper~colorDiv' //added
-                    ,'delete~Delete item~fa fa-trash-o~deleteDiv']
+                    ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    iconArray: ['iconsize~Change Icon Size~fa fa-expand'
+                , 'changeicon~Change Icon~fa fa-code-fork'
+                , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    iconList: ['blue', 'clima', 'deep', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
     savedElements : {}, //object to save elements placed
@@ -34,6 +38,25 @@ var action = {
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true)}
+        if (id === 'iconsize') { this.cgiconSize();}
+        if (id === 'changeicon') { this.populateIcons(); }
+    },
+    populateIcons: function () {
+        $('.iconList').toggle('display');
+        for (var i = 0; i < constants.iconList.length; i++) {
+            var img = document.createElement('img');
+            img.src = 'weather/' + constants.iconList[i] + '.png';
+            img.id = constants.iconList[i];
+            $('.iconList').append(img);
+        }
+    },
+    setNewIcon: function(name,val){
+        if(!val){
+            $('.iconList').toggle('display');
+        }
+        $('.icon').attr('src', 'weather/'+name+'.png');
+        action.savedElements.iconName = name;
+        this.saveStorage();
     },
     cgfontSize: function () {
         if ($('#sizeDiv').children().length < 2) {
@@ -54,6 +77,14 @@ var action = {
             $('.fontSizePostLabel').remove();
             $('#size').parent().attr('title', 'Change Font Size');
         }
+    },
+    cgiconSize: function(){
+        var prmt = window.prompt('enter size','');
+        $('#' + action.selectedItem+', .icon').css('width',prmt+'px');
+        $('#' + action.selectedItem+', .icon').css('height',prmt+'px');
+        action.savedElements.placedElements[action.selectedItem].width = prmt + 'px';
+        action.savedElements.placedElements[action.selectedItem].height = prmt + 'px';
+        action.saveStorage();
     },
     cgwidthSize: function () {
         if ($('#widthDiv').children().length < 2) {
@@ -254,7 +285,12 @@ var action = {
                 } else if (skey === 'textAlign') {
                     skey = 'text-align';
                 }
-                document.getElementById(key).style.cssText += skey + ":" + styleVal;
+               // console.log(key + skey + styleVal)
+                //document.getElementById(key).style.cssText += skey + ":" + styleVal; //use jquery instead?
+                $('#' + key).css(skey, styleVal);
+                if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
+                    $('.icon').css(skey,styleVal);
+                }
             });
         });
     },
@@ -270,6 +306,9 @@ var action = {
             }
             if (this.savedElements.placedElements){
                 this.replaceElements(); //put items back on screen
+            }
+            if(this.savedElements.iconName){
+                this.setNewIcon(this.savedElements.iconName,1); //if second paramenter dont show list
             }
         }
     },
@@ -381,6 +420,10 @@ window.onload = function () {
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
 });
+$('.iconList').on('click', function (event) { //grab clicks from toolpanel
+    action.setNewIcon(event.target.id);
+
+});
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id){
         action.elementPanel(event.target.id);
@@ -402,12 +445,17 @@ $('.screen').on('dblclick',function(event){
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
             action.revertElementPanel();
         } else { // Toggle edit menu on
+            if(event.target.id === 'icon'){
+                action.showIconMenu(constants.iconArray, -1);
+            }else{
+                action.showIconMenu(constants.editArray, -1);
+            }
             this.doubleClicked = true;
-            action.showIconMenu(constants.editArray, -1);
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
             $('.elementPanel').hide(); //Hide the element panel
+
         }
     }
 });

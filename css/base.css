@@ -42,3 +42,19 @@ body{
     left:20%;
     color:white;
 }
+.icon{
+    pointer-events:none;
+}
+.iconList{
+    position: absolute;
+    top:0;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    background-color: #21b9b0;
+    border-radius: 10px;
+}
+.iconList img{
+    width: 100px;
+    margin-left: 10px;
+}

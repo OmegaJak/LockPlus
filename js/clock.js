@@ -235,13 +235,21 @@ var weatherdivs = function () {
             feelslikedeg: '90&deg;',
             sunrise: '5:00',
             sunset: '7:00',
-            update: '7/11/15 8:05'
+            update: '7/11/15 8:05',
+            icon: 'weather/simply.png'
     };
     Object.keys(weatherElements).forEach(function (key) {
         var value = weatherElements[key],
             div = checkDiv(key);
         if (div) {
-            div.innerHTML = value;
+            if (key === 'icon') {
+                var img = document.createElement('img');
+                img.src = value;
+                img.className = 'icon';
+                div.appendChild(img);
+            } else {
+                div.innerHTML = value;
+            }
         }
     });
 };
