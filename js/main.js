@@ -28,51 +28,12 @@ var action = {
         if (id === 'save') {this.saveTheme(); }
         if (id === 'element') { $('.elementPanel').toggle(); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 1, 140, 'font-size', 'fontSize'); }
-        if (id === 'width') { this.cgwidthSize(); }
+        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 1, $('.screen').css('width').substring(0, $('.screen').css('width').length - 2), 'width', 'width'); }
         if (id === 'align') { this.cgalign(); }
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true)}
-    },
-    cgfontSize: function () {
-        if ($('#sizeDiv').children().length < 2) {
-            $('<label class="fontSizePostLabel">px</label>').prependTo('#sizeDiv');
-            $('<input type="number" id="fontSizeInput" min="1" max="70" class="fontSizeInput">').prependTo('#sizeDiv');
-            $('<label class="fontSizePreLabel">Font Size:</label>').prependTo('#sizeDiv');
-            var elFontSize = $('#' + this.selectedItem).css('font-size');
-            $('#fontSizeInput').val(elFontSize.substring(0,elFontSize.length - 2));
-            $('#fontSizeInput').on("change", function() {
-                $('#' + action.selectedItem).css('font-size', $('#fontSizeInput').val() + 'px');
-                action.savedElements.placedElements[action.selectedItem].fontSize = $('#fontSizeInput').val() + 'px';
-                action.saveStorage();
-            });
-            $('#size').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
-        } else if ($('#sizeDiv').children().length >= 2) {
-            $('.fontSizePreLabel').remove();
-            $('#fontSizeInput').remove();
-            $('.fontSizePostLabel').remove();
-            $('#size').parent().attr('title', 'Change Font Size');
-        }
-    },
-    cgwidthSize: function () {
-        if ($('#widthDiv').children().length < 2) {
-            var screenWidth = $('.screen').css('width');
-            var maxValue = $('.screen').css('width').substring(0, screenWidth.length - 2);
-            $('<input type="number" id="widthInput" min="1" max="' + maxValue + '" class="widthInput">').prependTo('#widthDiv');
-            var elWidth = $('#' + this.selectedItem).css('width');
-            $('#widthInput').val(elWidth.substring(0,elWidth.length - 2));
-            $('#widthInput').on("change", function() {
-                if (JSON.parse($('#widthInput').val()) >= JSON.parse(maxValue)) $('#widthInput').val(maxValue);
-                $('#' + action.selectedItem).css('width', $('#widthInput').val() + 'px');
-                action.savedElements.placedElements[action.selectedItem].width = $('#widthInput').val() + 'px';
-                action.saveStorage();
-            });
-            $('#width').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
-        } else if ($('#widthDiv').children().length === 2) {
-            $('#widthInput').remove();
-            $('#width').parent().attr('title', 'Change width');
-        }
     },
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey) {
         var splitArr = nameString.split("~");
@@ -80,24 +41,41 @@ var action = {
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0];
         if ($(divSelector).children().length < 2) {
-            $('<label class="' + key + 'PostLabel">' + unit + '</label>').prependTo(divSelector);
-            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" class="' + key + 'Input">').prependTo(divSelector);
-            $('<label class="' + key + 'PreLabel">' + splitArr[1].substring(6, splitArr[1].length) + ':</label>').prependTo(divSelector);
+            $('<div id="' + key + 'Decrement" class="sizeControl"></div>').prependTo(divSelector);
+            $('<a href="#" class="fa fa-minus-circle"></a>').appendTo('#' + key + 'Decrement');
+            $('#' + key + 'Decrement').on('click', function() {
+                                                    action.sizeControl('#' + key + 'Input', -1);
+                                                    action.updateSize(idSelector, max, cssKey, unit, jsCssKey);
+                                                   });
+            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '">').prependTo(divSelector);
+            $('<div id="' + key + 'Increment" class="sizeControl"></div>').prependTo(divSelector);
+            $('<a href="#" class="fa fa-plus-circle"></a>').appendTo('#' + key + 'Increment');
+            $('#' + key + 'Increment').on('click', function() {
+                                                    action.sizeControl('#' + key + 'Input', 1);
+                                                    action.updateSize(idSelector, max, cssKey, unit, jsCssKey);
+                                                   });
+
             var elSize = $('#' + this.selectedItem).css(cssKey);
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
             $(idSelector).on("change", function() {
-                if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
-                $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
-                action.savedElements.placedElements[action.selectedItem][jsCssKey] = $('#fontSizeInput').val() + unit;
-                action.saveStorage();
+                action.updateSize(idSelector, max, cssKey, unit, jsCssKey);
             });
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
         } else if ($(divSelector).children().length >= 2) {
-            $('.' + key + 'PostLabel').remove();
+            $('#' + key + 'Decrement').remove();
             $(idSelector).remove();
-            $('.' + key + 'PreLabel').remove();
+            $('#' + key + 'Increment').remove();
             $(buttonSelector).parent().attr('title', splitArr[1]);
         }
+    },
+    sizeControl: function(inputSelector, valueToAdd) {
+        $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
+    },
+    updateSize: function(idSelector, max, cssKey, unit, jsCssKey) {
+        if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+        $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
+        action.savedElements.placedElements[action.selectedItem][jsCssKey] = $('#fontSizeInput').val() + unit;
+        action.saveStorage();
     },
     cgalign: function () {
         var prmpt = window.prompt('Enter Left, Center, Right', '');
