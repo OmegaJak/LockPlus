@@ -217,7 +217,7 @@ var action = {
                 desc = element[1];
             li.id = 'p' + label;
             li.innerHTML = '<a title="'+desc+'"><label>' + label + '</label></a>';
-            if (document.getElementById(label)) li.style.backgroundColor = "rgba(0,0,0,0.2)"; // Color already-added elements
+            if (document.getElementById(label)) li.style.backgroundColor = "#21b9b0"; // Color already-added elements
             $('#' + div).append(li);
         }
     },
@@ -459,9 +459,9 @@ $('.screen').on('dblclick',function(event){
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
                 action.revertElementPanel();
             } else {
-                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)');
+                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0.2)');
                 action.selectedItem = event.target.id;
-                $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
+                $('#'+event.target.id).css('background', '#54606e');
                 action.setEditMenuInputsState(-1, 2);
             }
         } else { // Toggle edit menu on
