@@ -114,6 +114,7 @@ var action = {
             $("#colorDiv").spectrum({
                 showInitial: true,
                 showAlpha: true,
+                showInput: true,
                 preferredFormat: "rgba",
                 showPalette: true,
                 color: $('#' + this.selectedItem).css('color'),
