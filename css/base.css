@@ -1,8 +1,11 @@
 .container{
 	width: 100%;
 }
+html{
+    background: url(bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
 body{
-	background-color: #b6b6b6;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 200;
 	-webkit-font-smoothing: antialiased;
