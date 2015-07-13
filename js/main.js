@@ -291,15 +291,21 @@ var action = {
         }
     },
     addDraggable: function(id){
-        $('#'+id).draggable({
-            containment: $('.screen'),
-            stop: function(event, ui){
-                action.savedElements.placedElements[id].left = ui.position.left;
-                action.savedElements.placedElements[id].top = ui.position.top;
-                action.saveStorage();
-                //get left and top postion, save to object.
-            }
-        });
+        var contain;
+        if(id === 'icon'){
+            contain = '';
+        }else{
+            contain = $('.screen');
+        }
+            $('#'+id).draggable({
+                containment: contain,
+                stop: function(event, ui){
+                    action.savedElements.placedElements[id].left = ui.position.left;
+                    action.savedElements.placedElements[id].top = ui.position.top;
+                    action.saveStorage();
+                    //get left and top postion, save to object.
+                }
+            });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
         var div = document.createElement('div');
