@@ -217,7 +217,10 @@ var action = {
                 desc = element[1];
             li.id = 'p' + label;
             li.innerHTML = '<a title="'+desc+'"><label>' + label + '</label></a>';
-            if (document.getElementById(label)) li.style.backgroundColor = "#21b9b0"; // Color already-added elements
+            if (document.getElementById(label)) {
+                li.style.backgroundColor = "#21b9b0"; // Color already-added elements
+                li.style.borderColor = "#21b9b0";
+            }
             $('#' + div).append(li);
         }
     },
@@ -333,7 +336,8 @@ var action = {
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
-        document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0.2)"; //Add colored background to list element
+        document.getElementById('p' + id).style.backgroundColor = "#21b9b0"; //Add colored background to list element
+        document.getElementById('p' + id).style.borderColor = "#21b9b0";
     },
     removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
@@ -345,7 +349,8 @@ var action = {
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, 4);
         if (toggleElementPanel) this.revertElementPanel();
-        document.getElementById('p' + id).style.backgroundColor = "rgba(0,0,0,0)"; //Remove colored background from list element
+        document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
+        document.getElementById('p' + id).style.borderColor = "#54606e";
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
