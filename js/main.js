@@ -37,7 +37,9 @@ var action = {
     },
     cgfontSize: function () {
         if ($('#sizeDiv').children().length < 2) {
+            $('<label class="fontSizePostLabel">px</label>').prependTo('#sizeDiv');
             $('<input type="number" id="fontSizeInput" min="1" max="70" class="fontSizeInput">').prependTo('#sizeDiv');
+            $('<label class="fontSizePreLabel">Font Size:</label>').prependTo('#sizeDiv');
             var elFontSize = $('#' + this.selectedItem).css('font-size');
             $('#fontSizeInput').val(elFontSize.substring(0,elFontSize.length - 2));
             $('#fontSizeInput').on("change", function() {
@@ -46,8 +48,10 @@ var action = {
                 action.saveStorage();
             });
             $('#size').parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
-        } else if ($('#sizeDiv').children().length === 2) {
+        } else if ($('#sizeDiv').children().length >= 2) {
+            $('.fontSizePreLabel').remove();
             $('#fontSizeInput').remove();
+            $('.fontSizePostLabel').remove();
             $('#size').parent().attr('title', 'Change Font Size');
         }
     },

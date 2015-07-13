@@ -36,25 +36,44 @@
 	color:black;
 }
 .toolPanel input {
-	height: 52px;
+	height: 45px;
+	width: 50px;
+	right: 70px;
 	font-size: 25px;
-	border-radius: 3px;
+	color: #54606e;
 	position: absolute;
 	text-align: center;
 	background-color: rgba(0,0,0,0);
-	border-color: #000000;
-	border-style: solid;
-	border-width: 1px;
-	outline-width: 4px;
-	outline-color: rgba(0,0,0,0.2);
-	width:100%;
-	right: 43px;
+	border-color: rgba(0,0,0,0);
+	outline-color: rgba(0,0,0,0);
+}
+.toolPanel input:hover {
+	font-size: 28px;
+}
+.toolPanel input::-webkit-inner-spin-button,
+.toolPanel input::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+.toolPanel label {
+	color: #54606e;
+	position: absolute;
+	font-size: 23px;
+}
+.fontSizePreLabel {
+	right: 109px;
+  	top: 22px;
+  	width: 110px;
 }
 .fontSizeInput {
-	top: 2px;
+	top: 14px;
+}
+.fontSizePostLabel {
+	top: 24px;
+	right: 48px;
 }
 .widthInput {
-	top: 55.6px;
+	top: 80px;
 }
 
 /*Thanks to this button generator: http://css3buttongenerator.com/ */
