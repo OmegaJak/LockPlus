@@ -282,7 +282,7 @@ var action = {
                     infinite: false,
                     arrows: false,
                     slide: 'li',
-                    speed: 100,
+                    speed: 150,
                     vertical: true,
                     initialSlide: 2,
                     slidesToShow: numSlides,
@@ -304,7 +304,7 @@ var action = {
                 e.preventDefault();
             });
         }, 401);
-        
+
     },
     setCarouselOpacity: function(div) {
         var centerIndex = $('#' + div).find('.slick-center').attr('data-slick-index');
