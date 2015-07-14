@@ -47,6 +47,7 @@
 	border-color: #54606e;
 	border-radius: 45px;
 	border-width: 3px;
+    border-top-width: 5px;
 	border-style: solid;
 	outline-color: rgba(0,0,0,0);
 	font-weight: bold;
@@ -80,6 +81,16 @@
 	color: #21b9b0;
 	font-size: 30px;
 	position: relative;
+}
+.inputLabel::before {
+    color: white;
+    bottom: 18px;
+    right: -12px;
+    content: attr(data-title);
+    position: absolute;
+    font-size: 11px;
+    width: 120px;
+    text-align: center;
 }
 #fontSizeDecrement {
 	top: 26px;

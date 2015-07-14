@@ -7,12 +7,12 @@ var constants = {
                     ,'save~Save Theme~fa fa-upload'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
-                    ,'width~Change width~fa fa-arrows-h~widthDiv'
-                    ,'align~Change alignment~fa fa-align-center~alignDiv'
-                    ,'fonts~Change font~ fa fa-language~fontsDiv'
-                    ,'uppercase~Change uppercase~fa fa-text-height~uppercaseDiv' //added
-                    ,'weight~Change font weight~fa fa-text-width~weightDiv' //added
-                    ,'color~Change color~fa fa-eyedropper~colorDiv' //added
+                    ,'width~Change Width~fa fa-arrows-h~widthDiv'
+                    ,'align~Change Alignment~fa fa-align-center~alignDiv'
+                    ,'fonts~Change Font~ fa fa-language~fontsDiv'
+                    ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
+                    ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand'
                 , 'changeicon~Change Icon~fa fa-code-fork'
@@ -109,7 +109,7 @@ var action = {
                                                     action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
                                                    });
             $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!">').prependTo(divSelector);
-            $('<div id="' + key + 'Increment" class="sizeControl"></div>').prependTo(divSelector);
+            $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + splitArr[1].substring(6, splitArr[1].length) + '"></div>').prependTo(divSelector);
             $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Increment');
             $('#' + key + 'Increment').on('click', function() {
                                                     event.preventDefault();
@@ -482,8 +482,10 @@ var action = {
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, 4);
         if (toggleElementPanel) this.revertElementPanel();
-        document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
-        document.getElementById('p' + id).style.borderColor = "#54606e";
+        if (document.getElementById('p' + id)) {
+            document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
+            document.getElementById('p' + id).style.borderColor = "#54606e";
+        }
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
