@@ -302,7 +302,7 @@ var action = {
                     $('#' + div).slick('slickPrev');
                     action.setCarouselOpacity(div);
                 } else {
-                    if (JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                    if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
                         $('#' + div).slick('slickNext');
                         action.setCarouselOpacity(div);
                     }
