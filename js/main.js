@@ -351,6 +351,7 @@ var action = {
         $('.loader').toggle('display');
         $('.phone').toggle('display');
         $('.toolPanel').toggle('display');
+        $('.elementPanel').toggle('display');
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
