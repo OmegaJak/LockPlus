@@ -286,7 +286,7 @@ var action = {
                     infinite: false,
                     arrows: true,
                     slide: 'li',
-                    speed: 150,
+                    speed: 100,
                     vertical: true,
                     initialSlide: 2,
                     slidesToShow: numSlides,
@@ -351,7 +351,7 @@ var action = {
         $('.loader').toggle('display');
         $('.phone').toggle('display');
         $('.toolPanel').toggle('display');
-        $('.elementPanel').toggle('display');
+        $('.elementPanel').css('display','none');
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
