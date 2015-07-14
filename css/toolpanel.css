@@ -142,10 +142,12 @@
 .yesClear {
 	right: 100px;
   	top: 288px;
+    color: white!important;
 }
 .noClear {
   	right: 50px;
   	top: 288px;
+    color: white!important;
 }
 .clearLabel {
 	position: absolute;
