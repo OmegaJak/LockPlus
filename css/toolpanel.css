@@ -6,12 +6,11 @@
 /* Error: d44b29; -red */
 
 .toolPanel{
-	position: relative;
+	position: absolute;
 	width: 80px;
-	height: 700px;
-	top:150px;
-	left: 50%;
-	-webkit-transform: translate(-50%);
+	top:50%;
+	left:50%;
+	-webkit-transform: translate(-50%, -54%);
 	margin-left: -280px;
 }
 .toolPanel li{
@@ -93,14 +92,14 @@
     text-align: center;
 }
 #fontSizeDecrement {
-	top: 26px;
+	top: 40px;
 	right: 151px;
 }
 #fontSizeInput {
-	top: 12px;
+	top: 25px;
 }
 #fontSizeIncrement {
-	top: 26px;
+	top: 40px;
 	right: 69px;
 }
 .fontSizePostLabel::after {
@@ -118,14 +117,14 @@
 	border-radius: 5px;
 }
 #widthSizeDecrement {
-	top: 94px;
+	top: 110px;
 	right: 151px;
 }
 #widthSizeInput {
-	top: 80px;
+	top: 95px;
 }
 #widthSizeIncrement {
-	top: 94px;
+	top: 110px;
 	right: 69px;
 }
 

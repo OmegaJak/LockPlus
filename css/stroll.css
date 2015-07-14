@@ -22,7 +22,7 @@
 	height: 568px;
 	margin: 0;
 	padding: 0;
-	margin-left: 16%;
+	margin-left: 19%;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	list-style: none;
@@ -39,6 +39,7 @@
 		background: #21b9b0;
 		color: white;
 		font-size: 18px;
+		margin-right: 20px;
 		z-index: 2;
 		border-radius: 999px;
 		margin-top: 5px;
