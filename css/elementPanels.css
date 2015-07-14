@@ -1,47 +1,65 @@
 .elementPanel{
-  position: absolute;
-  width: 150px;
-  height: 700px;
-  top:150px;
-  left: 50%;
-  -webkit-transform: translate(-50%);
-  margin-left: 280px;
-  float: left;
+	position: absolute;
+	width: 150px;
+	height: 700px;
+	top:150px;
+	left: 50%;
+	-webkit-transform: translate(-50%);
+	margin-left: 280px;
+	float: left;
 }
-.elementPanel ul{
+.elementPanel div{
   margin:0;
   padding:0;
   text-align: left;
-  background-color: #76808B;
+  background-color: rgba(0,0,0,0); /*76808B*/
   color: white;
-  border: 8px solid #54606e;
-  border-radius: 10px;
+   list-style: none outside none;
   -webkit-background-clip: padding-box;
 }
-.elementPanel li{
-  white-space: nowrap;
-  padding: 5px;
+.elementPanel div:focus {
+    outline: none;
 }
-.elementPanel li:hover {
-    background-color: #21b9b0;
+.elementPanel li:focus{
+    outline: none;
+}
+.elementPanel li{
+	white-space: nowrap;
+    background-color: #54606e;
+    border-color: #54606e;
+    border-radius: 45px;
+    border-width: 3px;
+    border-style: solid;
+	padding: 5px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 5px;
+}
+.elementPanel a:focus {
+    outline: none;
 }
 .elementPanel label{
+    -webkit-transition-property: font-size;
+    -webkit-transition-duration: 0.15s;
     cursor: pointer;
+}
+label {
+    outline: none;
 }
 ::-webkit-scrollbar {
     width: 12px;
 }
 ::-webkit-scrollbar-track {
-   background-color: rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
 }
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0,0,0,0);
 }
 .elementPanel h3{
-  white-space: nowrap;
+	white-space: nowrap;
     cursor: pointer;
 }
 #clockList,#weatherList,#systemList {
-  height: 150px;
-  overflow: auto;
+	height: 190px;
+	overflow-y: hidden
 }

@@ -240,12 +240,79 @@ var action = {
                 desc = element[1];
             li.id = 'p' + label;
             li.innerHTML = '<a title="'+desc+'"><label>' + label + '</label></a>';
+
+            switch (i) { //This is all to smooth the transition into the slick.js carousel
+                case 0:
+                    li.style.opacity = 0.07;
+                    break;
+                case 1:
+                    li.style.opacity = 0.5;
+                    break;
+                case 2:
+                    li.style.fontSize = "30px";
+                    break;
+                case 3:
+                    li.style.opacity = 0.5;
+                    break;
+                case 4:
+                    li.style.opacity = 0.07;
+            }
+
             if (document.getElementById(label)) {
                 li.style.backgroundColor = "#21b9b0"; // Color already-added elements
                 li.style.borderColor = "#21b9b0";
             }
             $('#' + div).append(li);
         }
+
+        setTimeout(function() {
+            if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
+                var numSlides = 0;
+                var padding = '69px';
+                var numDivChildren = $('#' + div).children().length;
+                if (numDivChildren > 5) { // This is specifically for "System Elements"
+                    numSlides = 5;
+                } else {
+                    numSlides = numDivChildren - 1;
+                    padding = '28px';
+                }
+                $('#' + div).slick({
+                    centerMode: true,
+                    centerPadding: padding,
+                    infinite: false,
+                    arrows: false,
+                    slide: 'li',
+                    speed: 100,
+                    vertical: true,
+                    initialSlide: 2,
+                    slidesToShow: numSlides,
+                    verticalSwiping: true
+                });
+
+                action.setCarouselOpacity(div);
+            } else {
+                $('#' + div).attr('class', '');
+            }
+            $('#' + div).on('mousewheel', function (e) {
+                if (e.deltaY>0) {
+                    $('#' + div).slick('slickPrev');
+                    action.setCarouselOpacity(div);
+                } else {
+                    $('#' + div).slick('slickNext');
+                    action.setCarouselOpacity(div);
+                }
+                e.preventDefault();
+            });
+        }, 401);
+        
+    },
+    setCarouselOpacity: function(div) {
+        var centerIndex = $('#' + div).find('.slick-center').attr('data-slick-index');
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']').css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px'});
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
 
@@ -492,9 +559,9 @@ $('.screen').on('dblclick',function(event){
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
                 action.revertElementPanel();
             } else {
-                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0.2)');
+                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)');
                 action.selectedItem = event.target.id;
-                $('#'+event.target.id).css('background', '#54606e');
+                $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
                 action.setEditMenuInputsState(-1, 2);
             }
         } else { // Toggle edit menu on
