@@ -284,7 +284,7 @@ var action = {
                     centerMode: true,
                     centerPadding: padding,
                     infinite: false,
-                    arrows: false,
+                    arrows: true,
                     slide: 'li',
                     speed: 150,
                     vertical: true,
@@ -292,6 +292,19 @@ var action = {
                     slidesToShow: numSlides,
                     verticalSwiping: true
                 });
+
+                var prevButton = $('#' + div).find('.slick-prev')[0];
+                $(prevButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-down');
+                $(prevButton).html('');
+                $(prevButton).click(function() {action.buttonPress('prev', div);});
+
+                var nextButton = $('#' + div).find('.slick-next')[0];
+                $(nextButton).attr('class', 'slick-next slick-arrow fa fa-arrow-up');
+                $(nextButton).html('');
+                $(nextButton).click(function() {action.buttonPress('next', div);});
+
+                if (numDivChildren <= 5)
+                    $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');
 
                 action.setCarouselOpacity(div);
             } else {
@@ -319,6 +332,20 @@ var action = {
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']').css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px'});
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px'});
+    },
+    buttonPress: function(key, div) {
+        switch (key) {
+            case 'prev':
+                action.setCarouselOpacity(div);
+                break;
+            case 'next':
+                if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) < $('#' + div).find('li').length - 2) {
+                    action.setCarouselOpacity(div);
+                } else {
+                    $('#' + div).slick('slickPrev');
+                }
+                break;
+        }
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
         $('.loader').toggle('display');
