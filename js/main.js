@@ -321,7 +321,9 @@ var action = {
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px'});
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
-
+        $('.loader').toggle('display');
+        $('.phone').toggle('display');
+        $('.toolPanel').toggle('display');
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
@@ -343,6 +345,11 @@ var action = {
             $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
             $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
             $('#myform').submit();
+            $('.loader').toggle('display');
+            var div = document.createElement('div');
+                div.id = 'refresh';
+                div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
+                document.body.appendChild(div);
             },1000);
         });
 
@@ -510,9 +517,6 @@ function uploadedImage(e) {
         rd.onload = function (e) {
             return function (e) {
                 if(action.uploadSelection === 'background') {
-                     if(input.files[0].type === 'image/png'){ //if png is uploaded alert (due to server limitations).
-                        alert("It is best to use .jpg for backgrounds, if you have problems saving the plist, try jpg.");
-                     }
                     action.setBG(e.target.result);
                 } else if (action.uploadSelection === 'overlay') {
                     action.setOverlay(e.target.result);
