@@ -243,10 +243,12 @@ var weatherdivs = function () {
             div = checkDiv(key);
         if (div) {
             if (key === 'icon') {
-                var img = document.createElement('img');
-                img.src = value;
-                img.className = 'icon';
-                div.appendChild(img);
+                if (!document.getElementById(key).innerHTML.length > 0) {
+                    var img = document.createElement('img');
+                    img.src = value;
+                    img.className = 'icon';
+                    div.appendChild(img);
+                }
             } else {
                 div.innerHTML = value;
             }

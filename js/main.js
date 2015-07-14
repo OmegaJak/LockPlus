@@ -228,26 +228,28 @@ var action = {
 
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
-        });
-        setTimeout(function(){
-            var ca=document.getElementById('previewCanvas');
-                ca.setAttribute('title',"Theme saved, refresh the page");
-                ca.className = 'pCanvas';
-                ca = ca.children[0];
-            var context = ca.getContext('2d');
-            var dataURL = ca.toDataURL();
-        //document.getElementById('image').src = dataURL;
-        //alert(dataURL)
-        var devname = window.prompt('Enter your name', '');
-        var themename = window.prompt('Enter the theme name', '');
-        $('#fileName').val(themename);
-        $('#devname').val(devname);
-        $('#Tpreview').val(dataURL);
-        $('#Twallpaper').val((action.savedElements.wallpaper) ? action.savedElements.wallpaper : '');
-        $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
-        $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
-        $('#myform').submit();
+            setTimeout(function(){
+                var ca=document.getElementById('previewCanvas');
+                    ca.setAttribute('title',"Theme saved, refresh the page");
+                    ca.className = 'pCanvas';
+                    ca = ca.children[0];
+                var context = ca.getContext('2d');
+                var dataURL = ca.toDataURL();
+            //document.getElementById('image').src = dataURL;
+            //alert(dataURL)
+            var devname = window.prompt('Enter your name', '');
+            var themename = window.prompt('Enter the theme name', '');
+            $('#fileName').val(themename);
+            $('#devname').val(devname);
+            $('#Tpreview').val(dataURL);
+            $('#Ticon').val(action.savedElements.iconName || '');
+            $('#Twallpaper').val((action.savedElements.wallpaper) ? action.savedElements.wallpaper : '');
+            $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
+            $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
+            $('#myform').submit();
             },1000);
+        });
+
     },
     setBG: function (img) { //apply background to screen
         $('.screen').css('background-image', 'url(' + img + ')');
