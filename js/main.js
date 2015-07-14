@@ -9,6 +9,7 @@ var constants = {
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change width~fa fa-arrows-h~widthDiv'
                     ,'align~Change alignment~fa fa-align-center~alignDiv'
+                    ,'fonts~Change font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change font weight~fa fa-text-width~weightDiv' //added
                     ,'color~Change color~fa fa-eyedropper~colorDiv' //added
@@ -34,12 +35,34 @@ var action = {
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize'); }
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').css('width').substring(0, $('.screen').css('width').length - 2), 'width', 'width'); }
         if (id === 'align') { this.cgalign(); }
+        if (id === 'fonts') { this.cgfont();}
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
-        if (id === 'delete') { action.removeFromScreen(action.selectedItem, true)}
+        if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgiconSize();}
         if (id === 'changeicon') { this.populateIcons(); }
+    },
+    setFont: function (fontName) {
+        action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
+        this.saveStorage();
+        $('#' + action.selectedItem).css('font-family', fontName);
+        $('#fList').toggle('display');
+    },
+    cgfont: function () {
+        $('#fList').empty();
+        $('#fList').append('<li>helvetica</li>');
+        for (var i = 0; i < fontArray.length; i++) {
+            var li = document.createElement('li');
+            li.innerHTML = $('#'+action.selectedItem).text() + '-' + fontArray[i];
+            li.style.fontFamily = fontArray[i];
+            li.title = fontArray[i];
+            $('#fList').append(li);
+        };
+        $('#fList').toggle('display');
+        setTimeout(function(){
+             stroll.bind( '#font ul' );
+        },1000);
     },
     populateIcons: function () {
         $('.iconList').toggle('display');
@@ -439,6 +462,9 @@ window.onload = function () {
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
+});
+$('#fList').on('click', function (event) { //grab clicks from toolpanel
+    action.setFont(event.target.title);
 });
 $('.iconList').on('click', function (event) { //grab clicks from toolpanel
     action.setNewIcon(event.target.id);
