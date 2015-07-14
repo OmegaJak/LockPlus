@@ -272,6 +272,10 @@ var action = {
                 var numDivChildren = $('#' + div).children().length;
                 if (numDivChildren > 5) { // This is specifically for "System Elements"
                     numSlides = 5;
+                    var dummyLiOne = $('<li id="dummyOne"><a title=""><label></label></a></li>');
+                    var dummyLiTwo = $('<li id="dummyTwo"><a title=""><label></label></a></li>');
+                    $('#' + div).append(dummyLiOne);
+                    $('#' + div).append(dummyLiTwo);
                 } else {
                     numSlides = numDivChildren - 1;
                     padding = '28px';
@@ -298,8 +302,10 @@ var action = {
                     $('#' + div).slick('slickPrev');
                     action.setCarouselOpacity(div);
                 } else {
-                    $('#' + div).slick('slickNext');
-                    action.setCarouselOpacity(div);
+                    if (JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                        $('#' + div).slick('slickNext');
+                        action.setCarouselOpacity(div);
+                    }
                 }
                 e.preventDefault();
             });
