@@ -33,7 +33,7 @@ var action = {
         if (id === 'background' || id === 'overlay') { $('#bgInput').click(); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
-        if (id === 'element') { $('.elementPanel').toggle(); }
+        if (id === 'element') { $('.elementPanel').toggle('display'); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize'); }
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width'); }
         if (id === 'position') { this.cgPosition(); }
@@ -87,18 +87,19 @@ var action = {
     },
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
         var splitArr = nameString.split("~");
-        var divSelector = '#' + splitArr[3];
+        var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0];
         if (inputTopPos === undefined || !inputTopPos)
-            var inputTopPos = $(divSelector).position().top + 11;
+            var inputTopPos = $('#' + splitArr[3]).position().top + 11;
         if (inputRightPos === undefined || !inputRightPos)
             var inputRightPos =  58;
         if (inputTitle === undefined || !inputTitle)
             var inputTitle = splitArr[1].substring(6, splitArr[1].length);
         if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
             var intendedNumberOfInputs = 1;
-        if ($(divSelector).children().length < intendedNumberOfInputs * 4) {
+        if (!$(divSelector).length) {
+            $('<div id="' + key + 'DivWrapper" style="display: none;"></div>').prependTo('#' + splitArr[3]);
             $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>').prependTo(divSelector);
             $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Decrement');
             $('#' + key + 'Decrement').on('click', function() {
@@ -140,11 +141,9 @@ var action = {
                 action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
-        } else if ($(divSelector).children().length >= intendedNumberOfInputs * 4) {
-            var children = $(divSelector).children();
-            for (var i = 0; i < children.length - 1; i++) {
-                $(children[i]).remove();
-            }
+            $(divSelector).toggle('display');
+        } else {
+            var children = $(divSelector).toggle('display');
             $(buttonSelector).parent().attr('title', splitArr[1]);
         }
     },
@@ -562,7 +561,7 @@ var action = {
     },
     revertElementPanel: function() { // Returns the element panel to its previous state
         if($('.elementPanel').data('prevHiddenState'))
-            $('.elementPanel').show()
+            $('.elementPanel').toggle('display');
         else
             $('.elementPanel').hide();
     }/*, // Turns out this isn't needed at all, they can be hidden just by showing the icon menu again, but it might be useful in the future
@@ -669,7 +668,7 @@ $('.screen').on('dblclick',function(event){
             action.selectedItem = event.target.id;
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
-            $('.elementPanel').hide(); //Hide the element panel
+            if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
     }
 });
