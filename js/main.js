@@ -173,8 +173,10 @@ var action = {
         if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
             $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
             $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
-        } else if (jsCssKey === 'width') {
+        } 
+        if (jsCssKey === 'width') {
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
+            $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
         }
         action.saveStorage();
     },
@@ -562,7 +564,7 @@ var action = {
             $('.elementPanel').show()
         else
             $('.elementPanel').hide();
-    },
+    }/*, // Turns out this isn't needed at all, they can be hidden just by showing the icon menu again, but it might be useful in the future
     setEditMenuInputsState: function(state, maxIndex) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if (state <= -1) {
             for (var i = 0; i < maxIndex && i < constants.editArray.length; i++) {
@@ -576,7 +578,7 @@ var action = {
         } else {
             console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
         }
-    }
+    }*/
 };
 //upload images should implement into action OBJ. (TODO)
 function uploadedImage(e) {
@@ -645,7 +647,12 @@ $('.screen').on('dblclick',function(event){
                 $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)');
                 action.selectedItem = event.target.id;
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
-                action.setEditMenuInputsState(-1, 3);
+                if (event.target.id === 'icon') {
+                    action.showIconMenu(constants.iconArray, -1);
+                } else {
+                    action.showIconMenu(constants.editArray, -1);
+                    //action.setEditMenuInputsState(-1, 3); 
+                }
             }
         } else { // Toggle edit menu on
             if(event.target.id === 'icon'){
@@ -658,7 +665,6 @@ $('.screen').on('dblclick',function(event){
             $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
             $('.elementPanel').hide(); //Hide the element panel
-
         }
     }
 });
