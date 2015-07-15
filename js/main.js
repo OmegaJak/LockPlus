@@ -142,6 +142,9 @@ var action = {
             $(idSelector).on("change", function() {
                 action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
+            $(idSelector).on("mousewheel", function() {
+                action.updateSize(idSelector, cssKey, unit, jsCssKey);
+            });
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
         } else if ($(divSelector).children().length >= intendedNumberOfInputs * 4) {
             var children = $(divSelector).children();
