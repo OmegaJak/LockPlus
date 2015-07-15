@@ -98,7 +98,7 @@ var action = {
             var inputTitle = splitArr[1].substring(6, splitArr[1].length);
         if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
             var intendedNumberOfInputs = 1;
-        if (!$(divSelector).length) {
+        if (!$(divSelector).length) { //If the input hasn't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: none;"></div>').prependTo('#' + splitArr[3]);
             $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>').prependTo(divSelector);
             $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Decrement');
@@ -142,9 +142,9 @@ var action = {
             });
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
             $(divSelector).toggle('display');
-        } else {
+        } else { //If the input already exists
+            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
             var children = $(divSelector).toggle('display');
-            $(buttonSelector).parent().attr('title') != '' ? $(buttonSelector).parent().attr('title', '') : $(buttonSelector).parent().attr('title', splitArr[1]);
         }
     },
     cgPosition: function() {
