@@ -356,6 +356,22 @@ var action = {
                 }
                 e.preventDefault();
             });
+            $('#' + div).hover(function() {
+                $(document).keyup(function () {
+                    if (event.keyCode === 38) {
+                        $('#' + div).slick('slickPrev');
+                    } else if (event.keyCode === 40) {
+                        if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                            $('#' + div).slick('slickNext');
+                        }
+                    }
+                    action.setCarouselOpacity(div);
+                });
+            }, function() {
+                $(document).unbind("keyup");
+            });
+            
+            if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
         }, 401);
 
     },
@@ -638,6 +654,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
         }
     }
 });
+
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Toggle edit menu off
