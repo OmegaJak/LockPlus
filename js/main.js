@@ -363,11 +363,22 @@ var action = {
     },
     setCarouselOpacity: function(div) {
         var centerIndex = $('#' + div).find('.slick-center').attr('data-slick-index');
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']').css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px'});
+        var centerEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']');
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
+        $(centerEl).css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
+
+        var firstChild = $($(centerEl).children()[0]).children()[0]; // not Last Child :(
+        if ($(firstChild).html().length >= 10) {
+            $(centerEl).css('height', 34); // Make sure the height doesn't change when font size is decreased
+            if ($(firstChild).html().length > 14) {
+                $(centerEl).css("font-size", 17);
+            } else {
+                $(centerEl).css("font-size", 20);
+            }
+        }
     },
     buttonPress: function(key, div) {
         switch (key) {
@@ -638,7 +649,7 @@ $('.screen').on('dblclick',function(event){
                 $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)');
                 action.selectedItem = event.target.id;
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
-                action.setEditMenuInputsState(-1, 2);
+                action.setEditMenuInputsState(-1, 3);
             }
         } else { // Toggle edit menu on
             if(event.target.id === 'icon'){
