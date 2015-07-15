@@ -144,7 +144,7 @@ var action = {
             $(divSelector).toggle('display');
         } else {
             var children = $(divSelector).toggle('display');
-            $(buttonSelector).parent().attr('title', splitArr[1]);
+            $(buttonSelector).parent().attr('title') != '' ? $(buttonSelector).parent().attr('title', '') : $(buttonSelector).parent().attr('title', splitArr[1]);
         }
     },
     cgPosition: function() {
