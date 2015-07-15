@@ -16,6 +16,7 @@ var constants = {
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand'
+                ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork'
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconList: ['blue', 'clima', 'deep', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
@@ -42,7 +43,7 @@ var action = {
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
-        if (id === 'iconsize') { this.cgiconSize();}
+        if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width');}
         if (id === 'changeicon') { this.populateIcons(); }
     },
     setFont: function (fontName) {
@@ -82,14 +83,6 @@ var action = {
         $('.icon').attr('src', 'weather/'+name+'.png');
         action.savedElements.iconName = name;
         this.saveStorage();
-    },
-    cgiconSize: function(){
-        var prmt = window.prompt('enter size','');
-        $('#' + action.selectedItem+', .icon').css('width',prmt+'px');
-        $('#' + action.selectedItem+', .icon').css('height',prmt+'px');
-        action.savedElements.placedElements[action.selectedItem].width = prmt + 'px';
-        action.savedElements.placedElements[action.selectedItem].height = prmt + 'px';
-        action.saveStorage();
     },
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
         var splitArr = nameString.split("~");
@@ -177,7 +170,10 @@ var action = {
         if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
         $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
         action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
-        if (jsCssKey === 'width') {
+        if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
+            $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
+            $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
+        } else if (jsCssKey === 'width') {
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
         }
         action.saveStorage();
