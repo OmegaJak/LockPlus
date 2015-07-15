@@ -91,17 +91,6 @@
     width: 120px;
     text-align: center;
 }
-#fontSizeDecrement {
-	top: 40px;
-	right: 151px;
-}
-#fontSizeInput {
-	top: 25px;
-}
-#fontSizeIncrement {
-	top: 40px;
-	right: 69px;
-}
 .fontSizePostLabel::after {
 	height: 31px;
 	right: -13px;
@@ -115,17 +104,6 @@
 	border-width: 5px;
 	border-right-width: 10px;
 	border-radius: 5px;
-}
-#widthSizeDecrement {
-	top: 110px;
-	right: 151px;
-}
-#widthSizeInput {
-	top: 95px;
-}
-#widthSizeIncrement {
-	top: 110px;
-	right: 69px;
 }
 
 /*Thanks to this button generator: http://css3buttongenerator.com/ */

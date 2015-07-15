@@ -8,6 +8,7 @@ var constants = {
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv'
+                    ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'align~Change Alignment~fa fa-align-center~alignDiv'
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
@@ -33,7 +34,8 @@ var action = {
         if (id === 'save') {this.saveTheme(); }
         if (id === 'element') { $('.elementPanel').toggle(); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize'); }
-        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').css('width').substring(0, $('.screen').css('width').length - 2), 'width', 'width'); }
+        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width'); }
+        if (id === 'position') { this.cgPosition(); }
         if (id === 'align') { this.cgalign(); }
         if (id === 'fonts') { this.cgfont();}
         if (id === 'uppercase') {this.cguppercase();}
@@ -89,16 +91,26 @@ var action = {
         action.savedElements.placedElements[action.selectedItem].height = prmt + 'px';
         action.saveStorage();
     },
-    cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey) {
+    cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
         var splitArr = nameString.split("~");
         var divSelector = '#' + splitArr[3];
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0];
-        if ($(divSelector).children().length < 2) {
-            $('<div id="' + key + 'Decrement" class="sizeControl"></div>').prependTo(divSelector);
+        if (inputTopPos === undefined || !inputTopPos)
+            var inputTopPos = $(divSelector).position().top + 11;
+        if (inputRightPos === undefined || !inputRightPos)
+            var inputRightPos =  58;
+        if (inputTitle === undefined || !inputTitle)
+            var inputTitle = splitArr[1].substring(6, splitArr[1].length);
+        if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
+            var intendedNumberOfInputs = 1;
+        if ($(divSelector).children().length < intendedNumberOfInputs * 4) {
+            $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>').prependTo(divSelector);
             $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Decrement');
             $('#' + key + 'Decrement').on('click', function() {
                                                     event.preventDefault();
+                                                    var max = JSON.parse($(idSelector).attr('max'));
+                                                    var min = JSON.parse($(idSelector).attr('min'));
                                                     if (event.ctrlKey) {
                                                         action.sizeControl(idSelector, min - JSON.parse($(idSelector).val()))
                                                     } else if (event.shiftKey) {
@@ -106,13 +118,15 @@ var action = {
                                                     } else {
                                                         action.sizeControl(idSelector, -1);
                                                     }
-                                                    action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
+                                                    action.updateSize(idSelector, cssKey, unit, jsCssKey);
                                                    });
-            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!">').prependTo(divSelector);
-            $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + splitArr[1].substring(6, splitArr[1].length) + '"></div>').prependTo(divSelector);
+            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
+            $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>').prependTo(divSelector);
             $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Increment');
             $('#' + key + 'Increment').on('click', function() {
                                                     event.preventDefault();
+                                                    var max = JSON.parse($(idSelector).attr('max'));
+                                                    var min = JSON.parse($(idSelector).attr('min'));
                                                     if (event.ctrlKey) {
                                                         action.sizeControl(idSelector, max - JSON.parse($(idSelector).val()))
                                                     } else if (event.shiftKey) {
@@ -120,30 +134,49 @@ var action = {
                                                     } else {
                                                         action.sizeControl(idSelector, 1);
                                                     }
-                                                    action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
+                                                    action.updateSize(idSelector, cssKey, unit, jsCssKey);
                                                    });
 
             var elSize = $('#' + this.selectedItem).css(cssKey);
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
             $(idSelector).on("change", function() {
-                action.updateSize(idSelector, max, min, cssKey, unit, jsCssKey);
+                action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
-        } else if ($(divSelector).children().length >= 2) {
-            $('#' + key + 'Decrement').remove();
-            $(idSelector).remove();
-            $('#' + key + 'Increment').remove();
+        } else if ($(divSelector).children().length >= intendedNumberOfInputs * 4) {
+            var children = $(divSelector).children();
+            for (var i = 0; i < children.length - 1; i++) {
+                $(children[i]).remove();
+            }
             $(buttonSelector).parent().attr('title', splitArr[1]);
         }
+    },
+    cgPosition: function() {
+        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', '', '58', 'Left', 2);
+        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', '', '198', 'Top', 2);
+
+        $('#' + action.selectedItem).on('drag', function() {
+            $('#posLeftInput').val($('#' + action.selectedItem).position().left);
+            $('#posTopInput').val($('#' + action.selectedItem).position().top);
+        });
+        $('#' + action.selectedItem).resize(function() {
+            alert("test");
+            $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
+        });
     },
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
     },
-    updateSize: function(idSelector, max, min, cssKey, unit, jsCssKey) {
+    updateSize: function(idSelector, cssKey, unit, jsCssKey) {
+        var max = JSON.parse($(idSelector).attr('max'));
+        var min = JSON.parse($(idSelector).attr('min'));
         if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
         if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
         $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
         action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
+        if (jsCssKey === 'width') {
+            $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
+        }
         action.saveStorage();
     },
     cgalign: function () {
