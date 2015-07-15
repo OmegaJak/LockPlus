@@ -10,6 +10,9 @@ body{
 	font-weight: 200;
 	-webkit-font-smoothing: antialiased;
 }
+::selection {
+  background: rgba(0,0,0,0);
+}
 .input{
 	display: none;
 }

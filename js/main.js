@@ -15,9 +15,9 @@ var constants = {
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
-    iconArray: ['iconsize~Change Icon Size~fa fa-expand'
+    iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
-                , 'changeicon~Change Icon~fa fa-code-fork'
+                , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconList: ['blue', 'clima', 'deep', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
@@ -68,13 +68,14 @@ var action = {
         },1000);
     },
     populateIcons: function () {
-        $('.iconList').toggle('display');
+        $('.iconList').empty();
         for (var i = 0; i < constants.iconList.length; i++) {
             var img = document.createElement('img');
             img.src = 'weather/' + constants.iconList[i] + '.png';
             img.id = constants.iconList[i];
             $('.iconList').append(img);
         }
+        $('.iconList').toggle('display');
     },
     setNewIcon: function(name,val){
         if(!val){
@@ -619,9 +620,13 @@ $('#fList').on('click', function (event) { //grab clicks from toolpanel
     action.setFont(event.target.title);
 });
 $('.iconList').on('click', function (event) { //grab clicks from toolpanel
-    action.setNewIcon(event.target.id);
-
+    if (event.target.id != "") {
+        action.setNewIcon(event.target.id);
+    } else {
+        $('.iconList').toggle('display');
+    }
 });
+
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id){
         action.elementPanel(event.target.id);
