@@ -1,0 +1,37 @@
+html{
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
+}
+.theme{
+  position: relative;
+ width: 100px;
+ float: left;
+ margin-top: 10px;
+ margin-left: 15px;
+}
+.theme:after{
+  position: absolute;
+  top:196px;
+  margin-left: -60px;
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1px solid gray;
+}
+.themeImage{
+  position: relative;
+  width: 100px;
+  border-radius: 5px;
+  border-bottom: 30px solid black;
+  border-top: 15px solid black;
+  border-left:1px solid black;
+  border-right:1px solid black;
+}
+.themeName{
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  font-size: 8px;
+  white-space: nowrap;
+}
