@@ -161,20 +161,24 @@
 }
 .yesClear {
 	right: 100px;
-  	top: 288px;
+  	top: 306px;
     color: white!important;
 }
 .noClear {
   	right: 50px;
-  	top: 288px;
+  	top: 306px;
     color: white!important;
 }
 .clearLabel {
-	position: absolute;
-  	right: 150px;
-  	width: 160px;
-  	top: 295.5px;
-  	font-size: 18px;
+  	width: 311px;
+    right: 0;
+  	top: 302px;
+    text-align: left;
   	font-weight: bold;
-  	color:#252a30;
+  	color: white!important;
+    background-color: #54606e;
+    border-style: solid;
+    border-color: #54606e;
+    border-width: 8px;
+    border-radius: 30px;
 }
