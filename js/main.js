@@ -202,6 +202,8 @@ var action = {
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
+        if (optionsTop === 0 || !optionsTop)
+            optionsTop = $('#' + splitArr[3]).position().top + 15;
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
@@ -281,7 +283,7 @@ var action = {
     },
     cgalign: function () {
         var lastSelector;
-        this.cgOption('align', constants.editArray[3], ['left', 'center', 'right'], 234, true, function(optionSelector) {
+        this.cgOption('align', constants.editArray[3], ['left', 'center', 'right'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
@@ -319,7 +321,7 @@ var action = {
     },
     cguppercase: function () {
         var lastSelector;
-        this.cgOption('uppercase', constants.editArray[5], ['uppercase', 'capitalize', 'lowercase'], 371, true, function(optionSelector) {
+        this.cgOption('uppercase', constants.editArray[5], ['uppercase', 'capitalize', 'lowercase'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-transform', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: center; text-transform: ' + optionName + ';">' + optionName + '</label>');
@@ -327,7 +329,7 @@ var action = {
     },
     cgweight: function () {
         var lastSelector;
-        this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 439, true, function(optionSelector) {
+        this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
         }, function(optionName) {
