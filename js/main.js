@@ -339,11 +339,13 @@ var action = {
         if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(clockEl, 'clockList'); }
         if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
         if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
+        if (id === 'ml') { $('#miscList').toggle('display'); this.createLI(miscEl, 'miscList'); }
     },
     getElementPanelIdSelector: function(id) { // Sadly I can't put this into that ↑
         if (id === 'cl') return '#clockList'
         else if (id === 'wl') return '#weatherList'
-        else if (id === 'sl') return '#systemList';
+        else if (id === 'sl') return '#systemList'
+        else if (id === 'ml') return '#miscList';
     },
     clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
         if (code === -1) { // check what to do
@@ -437,6 +439,9 @@ var action = {
                     numSlides = numDivChildren - 1;
                     padding = '28px';
                 }
+
+                var startSlide = 2;
+                if (div === 'miscList') startSlide = 0;
                 $('#' + div).slick({
                     centerMode: true,
                     centerPadding: padding,
@@ -445,7 +450,7 @@ var action = {
                     slide: 'li',
                     speed: 100,
                     vertical: true,
-                    initialSlide: 2,
+                    initialSlide: startSlide,
                     slidesToShow: numSlides,
                     verticalSwiping: true
                 });

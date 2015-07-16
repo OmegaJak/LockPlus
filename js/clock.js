@@ -332,3 +332,18 @@ var systemdivs = function () {
     });
 };
 systemdivs();
+
+var miscDivs = function() {
+    'use strict';
+    var miscEl = {
+        text: 'Test'
+    };
+    Object.keys(miscEl).forEach(function (key) {
+        var value = miscEl[key];
+        var div = checkDiv(key);
+        if (div) {
+            div.innerHTML = value;
+        }
+    });
+}
+miscDivs();
