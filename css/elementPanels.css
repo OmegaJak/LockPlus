@@ -87,10 +87,20 @@ label {
     border-radius: 99px;
 }
 .elementPanel h3{
-	white-space: nowrap;
+    white-space: nowrap;
     cursor: pointer;
+    text-align: center;
+    width: 200px;
+    color: white;
+    background-color: #54606e;
+    border-color: #54606e;
+    border-width: 12px;
+    border-style: solid;
+    border-radius: 30px;
+    position: relative;
 }
 #clockList,#weatherList,#systemList {
+    left: 26px;
 	height: 190px;
 	overflow: visible;
 }

@@ -335,6 +335,11 @@ var action = {
         if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
         if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
     },
+    getElementPanelIdSelector: function(id) { // Sadly I can't put this into that ↑
+        if (id === 'cl') return '#clockList'
+        else if (id === 'wl') return '#weatherList'
+        else if (id === 'sl') return '#systemList';
+    },
     clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
         if (code === -1) { // check what to do
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
@@ -754,10 +759,17 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
 });
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
-    if(event.target.id){
+    if(event.target.id){ //Clicking to show/hide a panel
         action.elementPanel(event.target.id);
+        var elementChildren = $('.elementPanel').children();
+        for (var i = 0; i < elementChildren.length; i++) {
+            if ($(elementChildren[i]).attr('id') != event.target.id 
+                && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).children().length > 1 
+                && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).is(':visible')) 
+                    action.elementPanel($(elementChildren[i]).attr('id'));
+        }
     }
-    if(event.target.tagName === "LABEL"){
+    if(event.target.tagName === "LABEL"){ //Clicking inside an already-displayed panel
         if (document.getElementById(event.target.innerHTML)) {
             action.removeFromScreen(event.target.innerHTML, false);
         } else {
