@@ -101,7 +101,7 @@ label {
     white-space: nowrap;
     cursor: pointer;
     text-align: center;
-    width: 200px;
+    width: 210px;
     color: white;
     background-color: #54606e;
     border-color: #54606e;
@@ -110,7 +110,7 @@ label {
     border-radius: 30px;
     position: relative;
 }
-#clockList,#weatherList,#systemList {
+#clockList,#weatherList,#systemList,#miscList {
     left: 26px;
 	height: 190px;
 	overflow: visible;
