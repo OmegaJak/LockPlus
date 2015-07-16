@@ -494,11 +494,11 @@ var action = {
     setCarouselOpacity: function(div) {
         var centerIndex = $('#' + div).find('.slick-center').attr('data-slick-index');
         var centerEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']');
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']').css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
         $(centerEl).css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'pointer-events':'none', 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
 
         var firstChild = $($(centerEl).children()[0]).children()[0]; // not Last Child :(
         if ($(firstChild).html().length >= 10) {
@@ -770,10 +770,16 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
         }
     }
     if(event.target.tagName === "LABEL"){ //Clicking inside an already-displayed panel
-        if (document.getElementById(event.target.innerHTML)) {
-            action.removeFromScreen(event.target.innerHTML, false);
+        if ($(event.target).parent().parent().hasClass('slick-center')) {
+            if (document.getElementById(event.target.innerHTML)) {
+                action.removeFromScreen(event.target.innerHTML, false);
+            } else {
+               action.addtoScreen(event.target.innerHTML);
+            }
         } else {
-           action.addtoScreen(event.target.innerHTML);
+            var div = $(event.target).parent().parent().parent().parent().parent();
+            div.slick('slickGoTo', JSON.parse($(event.target).parent().parent().attr('data-slick-index')), false);
+            action.setCarouselOpacity(div.attr('id'));
         }
     }
 });
