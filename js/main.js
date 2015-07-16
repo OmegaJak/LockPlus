@@ -799,6 +799,10 @@ $('.screen').click(function(event){
         action.revertElementPanel();
     }
 });
+$(".select-menu").click(function () {
+        $(this).toggleClass("menu-on");
+        $('.menulist').toggle('display');
+});
 
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
