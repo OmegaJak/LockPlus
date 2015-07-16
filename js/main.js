@@ -161,10 +161,10 @@ var action = {
                 action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
 
-            $(buttonSelector).parent().toggleClass('leftTooltip'); //just disable the leftToolTip Class? hide tooltip
+            $(buttonSelector).parent().attr('class', ''); //just disable the leftToolTip Class? hide tooltip
             $(divSelector).toggle('display');
         } else { //If the input already exists
-            $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
+            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //enable tooltip again
             $(divSelector).toggle('display');
         }
     },
@@ -243,8 +243,7 @@ var action = {
             $(divSelector).css('display', 'none'); // Have to have display set to block before this because sizing depends on the displayed width ↑
             $(divSelector).toggle('display');
         } else { //If the options already exists
-            $(buttonSelector).parent().attr('class','leftTooltip'); //add class back to show toolTip
-            //$(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
+            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //If it's currently visible it will be hidden
             var children = $(divSelector).toggle('display');
         }
     },
