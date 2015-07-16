@@ -766,6 +766,14 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
     }
 });
 
+$('.screen').click(function(event){
+    if (event.target.id === '') {
+        $('#' + action.selectedItem).css('background-color', 'rgba(0,0,0,0)');
+        action.selectedItem = '';
+        action.showIconMenu(constants.toolArray, -1);
+    }
+});
+
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Toggle edit menu off
