@@ -733,7 +733,7 @@ function uploadedImage(e) {
 
 //event listeners
 window.onload = function () {
-    action.showIconMenu(constants.toolArray, 4);
+    action.showIconMenu(constants.toolArray, -1);
     action.loadFromStorage(); //load elements that are stored
     console.log(action.savedElements);
     console.log(action.placedElements);
