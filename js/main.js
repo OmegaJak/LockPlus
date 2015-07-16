@@ -103,11 +103,11 @@ var action = {
         var textID = unCappedID.substring(0, 1).toUpperCase() + unCappedID.substring(1);
         var divSelector = '#custom' + textID + 'DivWrapper';
         var idSelector = '#custom' + textID + 'Input';
-        var buttonSelector = '#custom' + textID;
+        var buttonSelector = '#customText';
 
         function updateStuff() {
             $('#' + action.selectedItem).html($(idSelector).val());
-            var newLength = $(idSelector).val().length * 17;
+            var newLength = $(idSelector).val().length * 16;
             $(idSelector).css("width", newLength > 150 ? newLength : 150);
             action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val();
             action.saveStorage();
@@ -118,7 +118,7 @@ var action = {
             divWrapper.prependTo('#textDiv');
 
             $(idSelector).val($('#' + this.selectedItem).html());
-            var width = $(idSelector).val().length * 17;
+            var width = $(idSelector).val().length * 16;
             $(idSelector).css('width', width > 150 ? width : 150);
 
             $(idSelector).on("change", function() { updateStuff(); });
@@ -127,6 +127,7 @@ var action = {
 
             $(buttonSelector).parent().toggleClass('leftTooltip');
             divWrapper.toggle('display');
+            $(idSelector).focus();
         } else {
             $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
             $(divSelector).toggle('display');

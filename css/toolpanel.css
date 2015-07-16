@@ -50,6 +50,10 @@
 	border-style: solid;
 	outline-color: rgba(0,0,0,0);
 	font-weight: bold;
+    -webkit-transition-property: width, font-size;
+    -webkit-transition-duration: 200ms;
+    transition-property: width, font-size;
+    transition-duration: 200ms;
 }
 .toolPanel input:hover {
 	font-size: 28px;
