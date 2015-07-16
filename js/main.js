@@ -15,6 +15,16 @@ var constants = {
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
+                    ,'size~Change Font Size~fa fa-font~sizeDiv'
+                    ,'width~Change Width~fa fa-arrows-h~widthDiv'
+                    ,'position~Change Position~fa fa-arrows~positionDiv'
+                    ,'align~Change Alignment~fa fa-align-center~alignDiv'
+                    ,'fonts~Change Font~ fa fa-language~fontsDiv'
+                    ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
+                    ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
+                    ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
@@ -42,6 +52,7 @@ var action = {
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'color') {this.cgcolor();}
+        if (id === 'customText') { this.cgText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width');}
         if (id === 'changeicon') { this.populateIcons(); }
@@ -85,6 +96,38 @@ var action = {
         action.savedElements.iconName = name;
         this.saveStorage();
     },
+    cgText: function() {
+        function updateStuff() {
+            $('#' + action.selectedItem).html($('#customTextInput').val());
+            var newLength = $('#customTextInput').val().length * 17;
+            $('#customTextInput').css("width", newLength > 150 ? newLength : 150);
+            action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $('#customTextInput').val();
+            action.saveStorage();
+        }
+        var splitArr = constants.customTextArray[0].split("~");
+        var inputTopPos = $('#' + splitArr[3]).position().top + 11;
+        var divSelector = '#customTextDivWrapper';
+        var idSelector = '#customTextInput';
+        var buttonSelector = '#customText';
+        if (!$(divSelector).length) {
+            var divWrapper = action.getInputWrapper('customText', 58, inputTopPos, 0, 0, 'Custom Text', true);
+            divWrapper.prependTo('#textDiv');
+
+            $(idSelector).val($('#' + this.selectedItem).html());
+            var width = $('#customTextInput').val().length * 17;
+            $(idSelector).css('width', width > 150 ? width : 150);
+
+            $(idSelector).on("change", function() { updateStuff(); });
+            $(idSelector).keydown(function() { updateStuff(); });
+            $(idSelector).keyup(function() { updateStuff(); });
+
+            $(buttonSelector).parent().toggleClass('leftTooltip');
+            divWrapper.toggle('display');
+        } else {
+            $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
+            $(divSelector).toggle('display');
+        }
+    },
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
@@ -99,7 +142,7 @@ var action = {
         if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
             var intendedNumberOfInputs = 1;
         if (!$(divSelector).length) { //If the input hasn't been created yet
-            action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle).prependTo('#' + splitArr[3]);
+            action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle, false).prependTo('#' + splitArr[3]);
 
             $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit) });
             $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit) });
@@ -112,13 +155,11 @@ var action = {
             $(idSelector).on("mousewheel", function() {
                 action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
-            //$(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
-            $(buttonSelector).parent().attr('class',' '); //just disable the leftToolTip Class? hide tooltip
-            //$('.leftTooltip').addClass('hidden');
+
+            $(buttonSelector).parent().toggleClass('leftTooltip'); //just disable the leftToolTip Class? hide tooltip
             $(divSelector).toggle('display');
         } else { //If the input already exists
-            $(buttonSelector).parent().attr('class','leftTooltip'); //enable the toolTip Class again.
-            //$(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
+            $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
             $(divSelector).toggle('display');
         }
     },
@@ -135,15 +176,19 @@ var action = {
         }
         action.updateSize(idSelector, cssKey, unit, jsCssKey);
     },
-    getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle) {
+    getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle, isForText) {
         var divSelector = $('<div id="' + key + 'DivWrapper" style="display: none;"></div>');
-        var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>');
-        $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(decrementButton);
-        decrementButton.prependTo(divSelector);
-        $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
-        var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>');
-        $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(incrementButton);
-        incrementButton.prependTo(divSelector);
+        if (!isForText) {
+            var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>');
+            $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(decrementButton);
+            decrementButton.prependTo(divSelector);
+            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
+            var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>');
+            $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(incrementButton);
+            incrementButton.prependTo(divSelector);
+        } else {
+            $('<input type="text" id="' + key + 'Input" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
+        }
 
         return divSelector;
     },
@@ -282,7 +327,7 @@ var action = {
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
         }, function(optionName) {
             if (optionName === 'boldness') {
-                var wrapper = action.getInputWrapper('boldness', 0, 0, 100, 900, '');
+                var wrapper = action.getInputWrapper('boldness', 0, 0, 100, 900, '', false);
                 wrapper.css('display', 'block');
 
                 var elSize = !isNaN($('#' + action.selectedItem).css('font-weight')) ? JSON.parse($('#' + action.selectedItem).css('font-weight')) : 100;
@@ -596,6 +641,7 @@ var action = {
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
+        miscDivs();
     },
     replaceElements: function(){
         Object.keys(this.savedElements.placedElements).forEach(function (key) {
@@ -613,6 +659,8 @@ var action = {
                 $('#' + key).css(skey, styleVal);
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
                     $('.icon').css(skey,styleVal);
+                } else if (key === 'text') {
+                    $('#text').html(styleVal);
                 }
             });
         });
@@ -663,6 +711,7 @@ var action = {
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
+        miscDivs();
         document.getElementById('p' + id).style.backgroundColor = "#21b9b0"; //Add colored background to list element
         document.getElementById('p' + id).style.borderColor = "#21b9b0";
     },
@@ -829,7 +878,9 @@ $('.screen').on('dblclick',function(event){
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
                 if (event.target.id === 'icon') {
                     action.showIconMenu(constants.iconArray, -1);
-                } else {
+                } else if (event.target.id === 'text') {
+                    action.showIconMenu(constants.customTextArray, -1);
+                } else{
                     action.showIconMenu(constants.editArray, -1);
                     //action.setEditMenuInputsState(-1, 3);
                 }
@@ -837,7 +888,9 @@ $('.screen').on('dblclick',function(event){
         } else { // Toggle edit menu on
             if(event.target.id === 'icon'){
                 action.showIconMenu(constants.iconArray, -1);
-            }else{
+            } else if (event.target.id === 'text') {
+                action.showIconMenu(constants.customTextArray, -1);
+            } else{
                 action.showIconMenu(constants.editArray, -1);
             }
             this.doubleClicked = true;

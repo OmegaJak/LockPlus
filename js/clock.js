@@ -339,8 +339,8 @@ var miscDivs = function() {
         text: 'Test'
     };
     Object.keys(miscEl).forEach(function (key) {
-        var value = miscEl[key];
-        var div = checkDiv(key);
+        var value = miscEl[key],
+            div = checkDiv(key);
         if (div) {
             div.innerHTML = value;
         }
