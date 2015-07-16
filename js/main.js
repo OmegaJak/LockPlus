@@ -100,7 +100,7 @@ var action = {
             var intendedNumberOfInputs = 1;
         if (!$(divSelector).length) { //If the input hasn't been created yet
             action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle).prependTo('#' + splitArr[3]);
-            
+
             $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit) });
             $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit) });
 
@@ -112,10 +112,13 @@ var action = {
             $(idSelector).on("mousewheel", function() {
                 action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
-            $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
+            //$(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
+            $(buttonSelector).parent().attr('class',' '); //just disable the leftToolTip Class? hide tooltip
+            //$('.leftTooltip').addClass('hidden');
             $(divSelector).toggle('display');
         } else { //If the input already exists
-            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
+            $(buttonSelector).parent().attr('class','leftTooltip'); //enable the toolTip Class again.
+            //$(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
             $(divSelector).toggle('display');
         }
     },
@@ -147,7 +150,7 @@ var action = {
     cgOption: function(key, nameString, options, optionsTop, adjustWidth, optionSelectedCallback, getOptionElement) {
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
-        var idSelector = '#' + key + 'Input'; 
+        var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
@@ -183,11 +186,13 @@ var action = {
                 })(i); //Variables passed as references, not values, are a bitch*/
             }
 
-            $(buttonSelector).parent().attr('title', '');
+            //$(buttonSelector).parent().attr('title', '');
+            $(buttonSelector).parent().attr('class',' '); //instead of removing the title, just remove class. hide toolTip
             $(divSelector).css('display', 'none'); // Have to have display set to block before this because sizing depends on the displayed width ↑
             $(divSelector).toggle('display');
         } else { //If the options already exists
-            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
+            $(buttonSelector).parent().attr('class','leftTooltip'); //add class back to show toolTip
+            //$(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
             var children = $(divSelector).toggle('display');
         }
     },
@@ -217,7 +222,7 @@ var action = {
         if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
             $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
             $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
-        } 
+        }
         if (jsCssKey === 'width') {
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
             $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
@@ -273,7 +278,7 @@ var action = {
     cgweight: function () {
         var lastSelector;
         this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 439, true, function(optionSelector) {
-            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight', 
+            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
         }, function(optionName) {
             if (optionName === 'boldness') {
@@ -303,7 +308,7 @@ var action = {
 
                 var inputSelector = '#boldnessInput';
                 incrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '') });
-                decrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '') });               
+                decrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '') });
 
                 wrapper.attr('id', 'boldnessOption');
                 wrapper.appendTo($("#boldnessOptionDiv"));
@@ -345,7 +350,8 @@ var action = {
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
             } else {
-                $('#clear').parent().attr('title', ''); // Hide the tooltip
+                //$('#clear').parent().attr('title', ''); // Hide the tooltip
+                $('#clear').parent().attr('class',' '); //Hide tooltip
                 $('<button type="button" class="noClear">No</button>').prependTo('#clearDiv');
                 $('<button type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
                 $('<label class="clearLabel">Are you sure?</label>').prependTo('#clearDiv');
@@ -361,7 +367,8 @@ var action = {
             $('.noClear').remove();
             $('.yesClear').remove();
             $('.clearLabel').remove();
-            $('#clear').parent().attr('title', 'Clear Theme');
+            //$('#clear').parent().attr('title', 'Clear Theme');
+            $('#clear').parent().attr('class','leftTooltip');
         } else if (code === 1) { // definitely clear the theme
             localStorage.removeItem('placedElements');
             action.savedElements = {};
@@ -486,7 +493,7 @@ var action = {
             }, function() {
                 $(document).unbind("keyup");
             });
-            
+
             if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
         }, 401);
 
@@ -763,9 +770,9 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
         action.elementPanel(event.target.id);
         var elementChildren = $('.elementPanel').children();
         for (var i = 0; i < elementChildren.length; i++) {
-            if ($(elementChildren[i]).attr('id') != event.target.id 
-                && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).children().length > 1 
-                && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).is(':visible')) 
+            if ($(elementChildren[i]).attr('id') != event.target.id
+                && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).children().length > 1
+                && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).is(':visible'))
                     action.elementPanel($(elementChildren[i]).attr('id'));
         }
     }
@@ -810,7 +817,7 @@ $('.screen').on('dblclick',function(event){
                     action.showIconMenu(constants.iconArray, -1);
                 } else {
                     action.showIconMenu(constants.editArray, -1);
-                    //action.setEditMenuInputsState(-1, 3); 
+                    //action.setEditMenuInputsState(-1, 3);
                 }
             }
         } else { // Toggle edit menu on
