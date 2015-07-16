@@ -42,6 +42,17 @@
     -webkit-transition-duration: 0.15s;
     cursor: pointer;
 }
+.elementPanelPreview a::before {
+    bottom: 34px;
+    left: 0;
+    position: absolute;
+    content: attr(title);
+    color: white;
+    font-size: 9px;
+    z-index: 50;
+    width: 150;
+    text-align: center;
+}
 .slick-arrow {
     position: absolute;
     left: 150px;

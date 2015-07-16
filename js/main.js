@@ -500,11 +500,16 @@ var action = {
     },
     setCarouselOpacity: function(div) {
         var centerIndex = $('#' + div).find('.slick-center').attr('data-slick-index');
+        var lastEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']');
         var centerEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']');
+        var nextEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']')
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']').css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $(lastEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $(lastEl).removeClass("elementPanelPreview");
         $(centerEl).css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']').css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $(centerEl).addClass("elementPanelPreview");
+        $(nextEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $(nextEl).removeClass("elementPanelPreview");
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
 
         var firstChild = $($(centerEl).children()[0]).children()[0]; // not Last Child :(
