@@ -771,6 +771,7 @@ $('.screen').click(function(event){
         $('#' + action.selectedItem).css('background-color', 'rgba(0,0,0,0)');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
+        action.revertElementPanel();
     }
 });
 
