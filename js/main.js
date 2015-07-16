@@ -1,10 +1,10 @@
 'use strict';
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
-    toolArray: ['background~Change Background~fa fa-photo'
-                    ,'overlay~Change Overlay~fa fa-clipboard'
-                    ,'element~Add Elements~fa fa-flask'
-                    ,'save~Save Theme~fa fa-upload'
+    toolArray: ['background~Change Background~fa fa-photo~backgroundDiv'
+                    ,'overlay~Change Overlay~fa fa-clipboard~overlayDiv'
+                    ,'element~Add Elements~fa fa-flask~elementDiv'
+                    ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv'
