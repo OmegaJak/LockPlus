@@ -99,38 +99,10 @@ var action = {
         if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
             var intendedNumberOfInputs = 1;
         if (!$(divSelector).length) { //If the input hasn't been created yet
-            $('<div id="' + key + 'DivWrapper" style="display: none;"></div>').prependTo('#' + splitArr[3]);
-            $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>').prependTo(divSelector);
-            $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Decrement');
-            $('#' + key + 'Decrement').on('click', function() {
-                                                    event.preventDefault();
-                                                    var max = JSON.parse($(idSelector).attr('max'));
-                                                    var min = JSON.parse($(idSelector).attr('min'));
-                                                    if (event.ctrlKey) {
-                                                        action.sizeControl(idSelector, min - JSON.parse($(idSelector).val()))
-                                                    } else if (event.shiftKey) {
-                                                        action.sizeControl(idSelector, -10);
-                                                    } else {
-                                                        action.sizeControl(idSelector, -1);
-                                                    }
-                                                    action.updateSize(idSelector, cssKey, unit, jsCssKey);
-                                                   });
-            $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
-            $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>').prependTo(divSelector);
-            $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo('#' + key + 'Increment');
-            $('#' + key + 'Increment').on('click', function() {
-                                                    event.preventDefault();
-                                                    var max = JSON.parse($(idSelector).attr('max'));
-                                                    var min = JSON.parse($(idSelector).attr('min'));
-                                                    if (event.ctrlKey) {
-                                                        action.sizeControl(idSelector, max - JSON.parse($(idSelector).val()))
-                                                    } else if (event.shiftKey) {
-                                                        action.sizeControl(idSelector, 10);
-                                                    } else {
-                                                        action.sizeControl(idSelector, 1);
-                                                    }
-                                                    action.updateSize(idSelector, cssKey, unit, jsCssKey);
-                                                   });
+            action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle).prependTo('#' + splitArr[3]);
+            
+            $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit) });
+            $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit) });
 
             var elSize = $('#' + this.selectedItem).css(cssKey);
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
@@ -143,6 +115,78 @@ var action = {
             $(buttonSelector).parent().attr('title', ''); //Not the greatest solution for hiding the tooltip (It works -J)
             $(divSelector).toggle('display');
         } else { //If the input already exists
+            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
+            $(divSelector).toggle('display');
+        }
+    },
+    handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit) {
+        event.preventDefault();
+        var max = JSON.parse($(idSelector).attr('max'));
+        var min = JSON.parse($(idSelector).attr('min'));
+        if (event.ctrlKey) {
+            action.sizeControl(idSelector, (toMultiplyBy > 0 ? max : min) - JSON.parse($(idSelector).val()))
+        } else if (event.shiftKey) {
+            action.sizeControl(idSelector, toMultiplyBy * 10);
+        } else {
+            action.sizeControl(idSelector, toMultiplyBy * 1);
+        }
+        action.updateSize(idSelector, cssKey, unit, jsCssKey);
+    },
+    getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle) {
+        var divSelector = $('<div id="' + key + 'DivWrapper" style="display: none;"></div>');
+        var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>');
+        $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(decrementButton);
+        decrementButton.prependTo(divSelector);
+        $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
+        var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>');
+        $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(incrementButton);
+        incrementButton.prependTo(divSelector);
+
+        return divSelector;
+    },
+    cgOption: function(key, nameString, options, optionsTop, adjustWidth, optionSelectedCallback, getOptionElement) {
+        var splitArr = nameString.split("~");
+        var divSelector = '#' + key + 'DivWrapper';
+        var idSelector = '#' + key + 'Input'; 
+        var buttonSelector = '#' + splitArr[0]; //The icon button
+        if (!$(divSelector).length) { //If the options haven't been created yet
+            $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
+
+            var right = 50;
+            var margin = 0;
+            for (var i = options.length - 1; i >= 0; i--) {
+                var optionDivSelector = '#' + options[i] + 'OptionDiv';
+                var optionSelector = '#' + options[i] + 'Option';
+                $('<div id="' + options[i] + 'OptionDiv" style="top: ' + optionsTop + 'px;"></div>').appendTo($(divSelector));
+                //$('<label id="' + options[i] + 'Option">' + options[i] + '</label>').appendTo($('#' + options[i] + 'OptionDiv'));
+                getOptionElement(options[i]).appendTo($('#' + options[i] + 'OptionDiv'));
+                $(optionDivSelector).css({'right': right
+                                                        ,'width': $('#' + options[i] + 'Option').width() + 10
+                                                        ,'height': $('#' + options[i] + 'Option').height() + 2
+                                                    });
+                if (adjustWidth) {
+                    $(optionSelector).css({'width' : $('#' + options[i] + 'OptionDiv').css('width')});
+                }
+                if (i === 0) {
+                    $(optionDivSelector).attr('class', 'firstOption')
+                } else if (i === options.length - 1) {
+                    $(optionDivSelector).attr('class', 'lastOption');
+                    right += JSON.parse($(optionDivSelector).css('border-right-width').replace(/\D+$/g, "")) * 2; //Hooray for regexes
+                }
+                right += ($(optionSelector).width() + margin);
+
+                (function(index){
+                    $(optionDivSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
+                })(i);
+                /*(function(index){
+                    $(optionSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
+                })(i); //Variables passed as references, not values, are a bitch*/
+            }
+
+            $(buttonSelector).parent().attr('title', '');
+            $(divSelector).css('display', 'none'); // Have to have display set to block before this because sizing depends on the displayed width ↑
+            $(divSelector).toggle('display');
+        } else { //If the options already exists
             $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
             var children = $(divSelector).toggle('display');
         }
@@ -181,10 +225,21 @@ var action = {
         action.saveStorage();
     },
     cgalign: function () {
-        var prmpt = window.prompt('Enter Left, Center, Right', '');
-        $('#' + this.selectedItem).css('text-align', prmpt);
-        action.savedElements.placedElements[this.selectedItem]['text-align'] = prmpt;
+        var lastSelector;
+        this.cgOption('align', constants.editArray[3], ['left', 'center', 'right'], 234, true, function(optionSelector) {
+            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
+        }, function(optionName) {
+            return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
+        });
+    },
+    basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
+        $('#' + action.selectedItem).css(cssKey, setTo);
+        action.savedElements.placedElements[action.selectedItem][cssKey] = setTo;
         action.saveStorage();
+        $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'});
+        if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'});
+        lastSelector = optionSelector;
+        return lastSelector;
     },
     cgcolor: function (color) {
         if (color) {
@@ -208,16 +263,72 @@ var action = {
         }
     },
     cguppercase: function () {
-        var prmpt = window.prompt('Enter uppercase, lowercase, capitalize', '');
-        $('#' + this.selectedItem).css('text-transform', prmpt);
-        action.savedElements.placedElements[this.selectedItem]['text-transform'] = prmpt;
-        action.saveStorage();
+        var lastSelector;
+        this.cgOption('uppercase', constants.editArray[5], ['uppercase', 'capitalize', 'lowercase'], 371, true, function(optionSelector) {
+            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-transform', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
+        }, function(optionName) {
+            return $('<label id="' + optionName + 'Option" style="text-align: center; text-transform: ' + optionName + ';">' + optionName + '</label>');
+        });
     },
     cgweight: function () {
-        var prmpt = window.prompt('Enter font weight (100-900 or bold, bolder, lighter, normal)', '');
-        $('#' + this.selectedItem).css('font-weight', prmpt);
-        action.savedElements.placedElements[this.selectedItem]['font-weight'] = prmpt;
-        action.saveStorage();
+        var lastSelector;
+        this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 439, true, function(optionSelector) {
+            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight', 
+                optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
+        }, function(optionName) {
+            if (optionName === 'boldness') {
+                var wrapper = action.getInputWrapper('boldness', 0, 0, 100, 900, '');
+                wrapper.css('display', 'block');
+
+                var elSize = !isNaN($('#' + action.selectedItem).css('font-weight')) ? JSON.parse($('#' + action.selectedItem).css('font-weight')) : 100;
+
+                var children = $(wrapper).children()
+                var incrementButton = $(children[0]);
+                var input = $(children[1]);
+                var decrementButton = $(children[2]);
+                input.val(elSize);
+                input.attr('step', 100);
+                input.css({'border-top-right-radius':0
+                            ,'border-bottom-right-radius':0
+                            ,'border-width':0
+                            ,'border-color':'rgba(0,0,0,0)'
+                            ,'background-color':'rgba(0,0,0,0)'
+                            ,'border-style':''});
+                wrapper.css({'width':120
+                            ,'height':45
+                            ,'background-color':'rgba(0,0,0,0)'
+                            ,'border-width':0});
+                incrementButton.css({'border-width':0});
+                decrementButton.css({'border-width':0});
+
+                var inputSelector = '#boldnessInput';
+                incrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '') });
+                decrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '') });               
+
+                wrapper.attr('id', 'boldnessOption');
+                wrapper.appendTo($("#boldnessOptionDiv"));
+                wrapper.attr('class', 'noHoverChange');
+
+                return wrapper;
+            } else {
+                return $('<label id="' + optionName + 'Option" style="text-align: center; font-weight: ' + optionName + ';">' + optionName + '</label>');
+            }
+        });
+        $('#boldnessOptionDiv').css({'height': 29
+                                    ,'width': 110});
+        $('#boldnessOption').css({'top':-9
+                                    ,'left':-12});
+        $('#boldnessOption').hover(function() {$(this).css({'background-color': 'rgba(0,0,0,0)', 'border-color':'rgba(0,0,0,0)'})});
+        $('#boldnessOption').on("change", function() {
+            $('#' + action.selectedItem).css('font-weight', $('#boldnessInput').val());
+            action.savedElements.placedElements[action.selectedItem]['font-weight'] = $('#boldnessInput').val();
+            action.saveStorage();
+        });
+        $('#boldnessOption').on("mousewheel", function() {
+            $('#' + action.selectedItem).css('font-weight', $('#boldnessInput').val());
+            action.savedElements.placedElements[action.selectedItem]['font-weight'] = $('#boldnessInput').val();
+            action.saveStorage();
+        });
     },
     elementPanel: function (id) { //show hide items in element Panel
         if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(clockEl, 'clockList'); }
