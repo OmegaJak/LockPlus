@@ -336,12 +336,16 @@ systemdivs();
 var miscDivs = function() {
     'use strict';
     var miscEl = {
-        text: 'Test'
+        textOne: 'Text',
+        textTwo: 'Text',
+        textThree: 'Text',
+        textFour: 'Text',
+        textFive: 'Text'
     };
     Object.keys(miscEl).forEach(function (key) {
         var value = miscEl[key],
             div = checkDiv(key);
-        if (div) {
+        if (div && div.innerHTML === '') {
             div.innerHTML = value;
         }
     });

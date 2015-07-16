@@ -70,7 +70,11 @@ var systemEl = ['name~Displays name of the phone'
 				, 'batterypercent~Current battery plus percent'
 				, 'unlock~text when taped unlocks device'
 				, 'chargingtxt~Charging'];
-var miscEl = ['text~Allows custom text display'];
+var miscEl = ['textOne~Allows custom text display'
+				, 'textTwo~Allows custom text display'
+				, 'textThree~Allows custom text display'
+				, 'textFour~Allows custom text display'
+				, 'textFive~Allows custom text display'];
 var fontArray = ['bebasbold'
 				,'bebaslight'
 				,'bebasneue'

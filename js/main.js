@@ -97,24 +97,28 @@ var action = {
         this.saveStorage();
     },
     cgText: function() {
-        function updateStuff() {
-            $('#' + action.selectedItem).html($('#customTextInput').val());
-            var newLength = $('#customTextInput').val().length * 17;
-            $('#customTextInput').css("width", newLength > 150 ? newLength : 150);
-            action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $('#customTextInput').val();
-            action.saveStorage();
-        }
         var splitArr = constants.customTextArray[0].split("~");
         var inputTopPos = $('#' + splitArr[3]).position().top + 11;
-        var divSelector = '#customTextDivWrapper';
-        var idSelector = '#customTextInput';
-        var buttonSelector = '#customText';
+        var unCappedID = action.selectedItem;
+        var textID = unCappedID.substring(0, 1).toUpperCase() + unCappedID.substring(1);
+        var divSelector = '#custom' + textID + 'DivWrapper';
+        var idSelector = '#custom' + textID + 'Input';
+        var buttonSelector = '#custom' + textID;
+
+        function updateStuff() {
+            $('#' + action.selectedItem).html($(idSelector).val());
+            var newLength = $(idSelector).val().length * 17;
+            $(idSelector).css("width", newLength > 150 ? newLength : 150);
+            action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val();
+            action.saveStorage();
+        }
+
         if (!$(divSelector).length) {
-            var divWrapper = action.getInputWrapper('customText', 58, inputTopPos, 0, 0, 'Custom Text', true);
+            var divWrapper = action.getInputWrapper('custom' + textID, 58, inputTopPos, 0, 0, 'Custom Text', true);
             divWrapper.prependTo('#textDiv');
 
             $(idSelector).val($('#' + this.selectedItem).html());
-            var width = $('#customTextInput').val().length * 17;
+            var width = $(idSelector).val().length * 17;
             $(idSelector).css('width', width > 150 ? width : 150);
 
             $(idSelector).on("change", function() { updateStuff(); });
@@ -486,7 +490,6 @@ var action = {
                 }
 
                 var startSlide = 2;
-                if (div === 'miscList') startSlide = 0;
                 $('#' + div).slick({
                     centerMode: true,
                     centerPadding: padding,
@@ -659,8 +662,8 @@ var action = {
                 $('#' + key).css(skey, styleVal);
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
                     $('.icon').css(skey,styleVal);
-                } else if (key === 'text') {
-                    $('#text').html(styleVal);
+                } else if (key.substring(0, 4) === 'text' && skey === 'innerHTML') {
+                    $('#' + key).html(styleVal);
                 }
             });
         });
@@ -878,7 +881,7 @@ $('.screen').on('dblclick',function(event){
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
                 if (event.target.id === 'icon') {
                     action.showIconMenu(constants.iconArray, -1);
-                } else if (event.target.id === 'text') {
+                } else if (event.target.id.substring(0, 4) === 'text') { //They're all named textOne, textTwo, etc so first four is all that's needed
                     action.showIconMenu(constants.customTextArray, -1);
                 } else{
                     action.showIconMenu(constants.editArray, -1);
@@ -888,7 +891,7 @@ $('.screen').on('dblclick',function(event){
         } else { // Toggle edit menu on
             if(event.target.id === 'icon'){
                 action.showIconMenu(constants.iconArray, -1);
-            } else if (event.target.id === 'text') {
+            } else if (event.target.id.substring(0, 4) === 'text') {
                 action.showIconMenu(constants.customTextArray, -1);
             } else{
                 action.showIconMenu(constants.editArray, -1);
