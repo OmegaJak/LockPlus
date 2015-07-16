@@ -259,7 +259,7 @@ var action = {
                 preferredFormat: "rgba",
                 showPalette: true,
                 color: $('#' + this.selectedItem).css('color'),
-                palette: [["black", "white", "rgb(0, 0, 255)"]]
+                palette: [["black", "white", "#0074d9" , "#2c3e50", "#27ae60", "#e74c3c", "#393939", "#3498db", "#2980b9", "#2ecc71", "#66cc99", "#019875", "#96281b", "#96281b", "#f64747", "#e26a6a", "#f5ab35", "#f39c12", "#f89406", "#f27935", "#6c7a89", "#95a5a6", "#bdc3c7", "#bfbfbf", "#674172", "#663399", "#8e44ad", "#9b59b6", "#db0a5b", "#d2527f", "#f62459", "#16a085", "#d2d7d3", "#4183d7", "#59abe3", "#3a539b"]]
             });
             setTimeout(function () {$('#colorDiv').spectrum('show'); }, 0); //give it time to load.
             $("#colorDiv").on('hide.spectrum', function (e, tinycolor) {
