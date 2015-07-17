@@ -996,37 +996,38 @@ $(".select-menu").click(function () {
 
 $('.screen').on('dblclick',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
-        if(this.doubleClicked){ // Toggle edit menu off
-            if (event.target.id === action.selectedItem) {
+        if(this.doubleClicked){ // Somehwhere on the screen was clicked
+            if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
                 this.doubleClicked = false; //Not sure if this is necessary
-                action.showIconMenu(constants.toolArray, 4);
-                action.selectedItem = "";
+                action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
+                action.selectedItem = ""; // Clear the selected item
                 $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
-                action.revertElementPanel();
-            } else {
-                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)');
-                action.selectedItem = event.target.id;
-                $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
-                if (event.target.id === 'icon') {
+                action.revertElementPanel(); // Put the elementPanel back to its previous state
+            } else { // User either clicked on another element, or on a new element to highlight
+                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)'); // Unhighlight the old element
+                if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+                if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
+                action.selectedItem = event.target.id; // Set the selected item to the new element
+                $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight new element
+                if (event.target.id === 'icon') { // Special case for when the element is an icon
                     action.showIconMenu(constants.iconArray, -1);
                 } else if (event.target.id.substring(0, 4) === 'text') { //They're all named textOne, textTwo, etc so first four is all that's needed
-                    action.showIconMenu(constants.customTextArray, -1);
-                } else{
+                    action.showIconMenu(constants.customTextArray, -1); // Another special case, for customText
+                } else{ // Otherwise, it's just a normal element
                     action.showIconMenu(constants.editArray, -1);
-                    //action.setEditMenuInputsState(-1, 3);
                 }
             }
-        } else { // Toggle edit menu on
-            if(event.target.id === 'icon'){
+        } else { // An element was clicked on directly
+            if(event.target.id === 'icon'){ // Special case
                 action.showIconMenu(constants.iconArray, -1);
-            } else if (event.target.id.substring(0, 4) === 'text') {
+            } else if (event.target.id.substring(0, 4) === 'text') { // Another special case
                 action.showIconMenu(constants.customTextArray, -1);
-            } else{
+            } else{ // Normal element, show edit menu
                 action.showIconMenu(constants.editArray, -1);
             }
             this.doubleClicked = true;
-            action.selectedItem = event.target.id;
-            $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)');
+            action.selectedItem = event.target.id; // Specify selected item
+            $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight specified item
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
             if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
