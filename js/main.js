@@ -836,10 +836,22 @@ var action = {
     addtoScreen: function(id){ //when item is clicked from add panel
         var div = document.createElement('div');
         div.id = id;
+        if (id.substring(0,3) === 'box') {
+            div.style.width = '50px';
+            div.style.height = '50px';
+            div.style.backgroundColor = 'red';
+            div.style.display = 'gray';
+        }
         document.getElementById('screenElements').appendChild(div);
         this.addDraggable(id);
         this.movedElements[id] = {};
         this.savedElements.placedElements = this.movedElements;
+        if (id.substring(0,3) === 'box') {
+            this.savedElements.placedElements[id].width = '50px';
+            this.savedElements.placedElements[id].height = '50px';
+            this.savedElements.placedElements[id].backgroundColor = 'red';
+            this.savedElements.placedElements[id].display = 'gray';
+        }
         this.saveStorage();
         loadClock(); //in clock.js
         weatherdivs();
@@ -1001,14 +1013,14 @@ $('.screen').on('dblclick',function(event){
                 this.doubleClicked = false; //Not sure if this is necessary
                 action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
                 action.selectedItem = ""; // Clear the selected item
-                $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
+                if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
                 action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
-                $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)'); // Unhighlight the old element
+                if (event.target.id.substring(0,3) != 'box') $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)'); // Unhighlight the old element
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
                 if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
-                $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight new element
+                if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight new element
                 if (event.target.id === 'icon') { // Special case for when the element is an icon
                     action.showIconMenu(constants.iconArray, -1);
                 } else if (event.target.id.substring(0, 4) === 'text') { //They're all named textOne, textTwo, etc so first four is all that's needed
@@ -1027,7 +1039,7 @@ $('.screen').on('dblclick',function(event){
             }
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
-            $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight specified item
+            if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight specified item
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
             if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }

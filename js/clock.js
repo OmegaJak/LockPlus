@@ -340,7 +340,12 @@ var miscDivs = function() {
         textTwo: 'Text',
         textThree: 'Text',
         textFour: 'Text',
-        textFive: 'Text'
+        textFive: 'Text',
+        boxOne: '',
+        boxTwo: '',
+        boxThree: '',
+        boxFour: '',
+        boxFive: ''
     };
     Object.keys(miscEl).forEach(function (key) {
         var value = miscEl[key],

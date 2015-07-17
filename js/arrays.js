@@ -74,7 +74,12 @@ var miscEl = ['textOne~Allows custom text display'
 				, 'textTwo~Allows custom text display'
 				, 'textThree~Allows custom text display'
 				, 'textFour~Allows custom text display'
-				, 'textFive~Allows custom text display'];
+				, 'textFive~Allows custom text display'
+				,'boxOne~Allows custom box display'
+				,'boxTwo~Allows custom box display'
+				,'boxThree~Allows custom box display'
+				,'boxFour~Allows custom box display'
+				,'boxFive~Allows custom box display'];
 var fontArray = ['android'
 				,'ailerons'
 				,'anders'
