@@ -427,6 +427,7 @@ var action = {
             action.selectedItem = '';
             action.doubleClicked = false;
             $('#screenElements').empty();
+            $('.newSVG').empty();
             action.clearTheme(0);
             action.hideElementPanelElements();
             $('.screen').css('background-image', '');
@@ -605,6 +606,7 @@ var action = {
                 var dataURL = ca.toDataURL();
             //document.getElementById('image').src = dataURL;
             //alert(dataURL)
+            $('.newSVG').empty();
             var devname = window.prompt('Enter your name', '');
             var themename = window.prompt('Enter the theme name', '');
             $('#fileName').val(themename);
@@ -629,8 +631,23 @@ var action = {
         action.savedElements.wallpaper = img;
     },
     setOverlay: function (img) { //apply overlay to screenoverlay
+        document.querySelector('.svg').src = img;
         $('.screenoverlay').css('background-image', 'url(' + img + ')');
         action.savedElements.overlay = img;
+        if(img.split('+')[0] === 'data:image/svg'){
+            setTimeout(function(){
+                showSVG('.svg', true);
+                setTimeout(function(){
+                        var inner = document.querySelector('.newSVG').innerHTML;
+                        $('.newSVG').empty();
+                        var div = document.createElement('div');
+                            div.className = 'newSVG';
+                            div.innerHTML = inner;
+                            document.querySelector('.screen').appendChild(div);
+                },0)
+            },300);
+        }
+
     },
     saveStorage: function () { //save savedElements object to localStorage
         localStorage.setItem('placedElements', JSON.stringify(action.savedElements));

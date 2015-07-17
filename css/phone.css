@@ -44,7 +44,17 @@
 	-webkit-background-clip: padding-box;
 }
 .screenoverlay{
+	left:0;
+	top:0;
 	pointer-events:none;
 	background-color: transparent;
 	outline: 1px solid #323232;
+}
+.svg{
+	position: absolute;
+	margin-left: 300px;
+	opacity: 0;
+}
+.newSVG{
+
 }
