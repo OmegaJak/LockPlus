@@ -1,6 +1,38 @@
 @font-face{
+	font-family:'ailerons';
+	src:url(fonts/user/ailerons.otf);
+}
+@font-face{
 	font-family:'android';
 	src:url(fonts/user/android.otf);
+}
+@font-face{
+	font-family:'anders';
+	src:url(fonts/user/anders.otf);
+}
+@font-face{
+	font-family:'aventura';
+	src:url(fonts/user/aventura.otf);
+}
+@font-face{
+	font-family:'azedobold';
+	src:url(fonts/user/azedobold.otf);
+}
+@font-face{
+	font-family:'azedolight';
+	src:url(fonts/user/azedolight.otf);
+}
+@font-face{
+	font-family:'bikoblack';
+	src:url(fonts/user/bikoblack.otf);
+}
+@font-face{
+	font-family:'bikobold';
+	src:url(fonts/user/bikobold.otf);
+}
+@font-face{
+	font-family:'bikoregular';
+	src:url(fonts/user/bikoregular.otf);
 }
 @font-face{
 	font-family:'bebasbold';
@@ -19,12 +51,24 @@
 	src:url(fonts/user/bebasneueregular.otf);
 }
 @font-face{
+	font-family:'building';
+	src:url(fonts/user/building.otf);
+}
+@font-face{
 	font-family:'codebold';
 	src:url(fonts/user/codebold.otf);
 }
 @font-face{
 	font-family:'codelight';
 	src:url(fonts/user/codelight.otf);
+}
+@font-face{
+	font-family:'dense';
+	src:url(fonts/user/dense.otf);
+}
+@font-face{
+	font-family:'fabfelt';
+	src:url(fonts/user/fabfelt.otf);
 }
 @font-face{
 	font-family:'futura';
@@ -35,8 +79,28 @@
 	src:url(fonts/user/higher.otf);
 }
 @font-face{
+	font-family:'ikaros';
+	src:url(fonts/user/ikaros.otf);
+}
+@font-face{
+	font-family:'infinity';
+	src:url(fonts/user/infinity.otf);
+}
+@font-face{
+	font-family:'kanji';
+	src:url(fonts/user/kanji.otf);
+}
+@font-face{
 	font-family:'lg';
 	src:url(fonts/user/lg.otf);
+}
+@font-face{
+	font-family:'makhina';
+	src:url(fonts/user/makhina.otf);
+}
+@font-face{
+	font-family:'manifesto';
+	src:url(fonts/user/manifesto.otf);
 }
 @font-face{
 	font-family:'nexabold';
