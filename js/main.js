@@ -59,9 +59,9 @@ var action = {
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); }
-        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow); }
-        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow); }
-        if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow); }
+        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
+        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
+        if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'color') {this.cgcolor();}
