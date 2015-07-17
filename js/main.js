@@ -698,10 +698,16 @@ var action = {
             $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
             $('#myform').submit();
             $('.loader').toggle('display');
-            var div = document.createElement('div');
+            var div = document.createElement('div'),
+                a = document.createElement('a');
                 div.id = 'refresh';
                 div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
+                a.className = "twitter-share-button";
+                a.id="twitterShare";
+                a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+"via%20&hashtags=LockPlus";
+                a.innerHTML = "Share via Twitter";
                 document.body.appendChild(div);
+                document.body.appendChild(a);
             },1000);
         });
 
