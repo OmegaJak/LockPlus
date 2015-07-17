@@ -14,6 +14,7 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Shadow~fa fa-cubes~shadowDiv'
+                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
@@ -24,7 +25,8 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
-                    ,'shadow~Edit Shadow~fa fa-cubes~shadowDiv'
+                    ,'shadow~Edit Text Shadow~fa fa-cubes~shadowDiv'
+                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
@@ -33,6 +35,12 @@ var constants = {
                     ,'shadowColor~Change Color~fa fa-eyedropper~shadowColorDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearShadow~Clear Shadow~fa fa-trash~clearShadowDiv'],
+    boxShadowArray: ['boxhShadow~Horizontal~fa fa-arrows-h~boxhShadowDiv'
+                    ,'boxvShadow~Vertical~fa fa-arrows-v~boxvShadowDiv'
+                    ,'boxblur~Blur Radius~fa fa-dot-circle-o~boxblurDiv'
+                    ,'boxshadowColor~Change Color~fa fa-eyedropper~boxshadowColorDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
+                    ,'boxclearShadow~Clear Shadow~fa fa-trash~boxclearShadowDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
@@ -60,12 +68,18 @@ var action = {
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); }
+        if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1); }
         if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'backToEdit') { this.showIconMenu(constants.editArray, -1); }
+        if (id === 'boxhShadow') { this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', 0, 50, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal'); }
+        if (id === 'boxvShadow') { this.cgSize('boxvShadow', constants.boxShadowArray[1], 'px', 0, 50, 'boxvShadow', 'boxvShadow', action.updateShadow, false, false, 'Vertical'); }
+        if (id === 'boxblur') { this.cgSize('boxblur', constants.boxShadowArray[2], 'px', 0, 50, 'boxblur', 'boxblur', action.updateShadow, false, false, 'Blur Radius'); }
+        if (id === 'boxshadowColor') { this.cgShadowColor(true); }
+        if (id === 'boxclearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'color') {this.cgcolor();}
         if (id === 'customText') { this.cgText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
@@ -112,7 +126,8 @@ var action = {
         this.saveStorage();
     },
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        var currentShadow = $('#' + action.selectedItem).css('text-shadow');
+        var isForBox = idSelector.includes("box");
+        var currentShadow = !isForBox ? $('#' + action.selectedItem).css('text-shadow') : $('#' + action.selectedItem).css('box-shadow');
         if (currentShadow != 'none') var splitShadow = currentShadow.split(' ')
             else var splitShadow = ['#ffffff','0px', '0px', '0px'];
 
@@ -123,12 +138,12 @@ var action = {
             splitShadow[2] = splitShadow[4];
             splitShadow[3] = splitShadow[5];
         }
-
+        
         var index = 0;
-        if (jsCssKey === 'hShadow') index = 1
-            else if (jsCssKey === 'vShadow') index = 2
-            else if (jsCssKey === 'blur') index = 3
-            else if (jsCssKey === 'color') index = 0;
+        if (jsCssKey === (!isForBox ? 'hShadow' : 'boxhShadow')) index = 1
+            else if (jsCssKey === (!isForBox ? 'vShadow' : 'boxvShadow')) index = 2
+            else if (jsCssKey === (!isForBox ? 'blur' : 'boxblur')) index = 3
+            else if (jsCssKey === (!isForBox ? 'color' : 'boxcolor')) index = 0;
 
         if (purpose === 'set') {
             var newShadow = '';
@@ -140,19 +155,31 @@ var action = {
             }
 
             newShadow = splitShadow[0] + ' ' + splitShadow[1] + ' ' + splitShadow[2] + ' ' + splitShadow[3]; // Parse into correct format for css. Could've done a loop, but that's not necessary
-            $('#' + action.selectedItem).css('text-shadow', newShadow);
-            action.savedElements.placedElements[action.selectedItem]['textShadow'] = newShadow;
+            if (!isForBox) {
+                $('#' + action.selectedItem).css('text-shadow', newShadow);
+                action.savedElements.placedElements[action.selectedItem]['textShadow'] = newShadow;
+            } else {
+                $('#' + action.selectedItem).css('box-shadow', newShadow);
+                action.savedElements.placedElements[action.selectedItem]['boxShadow'] = newShadow;
+            }
+            
             action.saveStorage();
         } else if (purpose === 'get') {
             return splitShadow[index];
         } else if (purpose === 'clear') {
-            $('#' + action.selectedItem).css('text-shadow', 'none');
-            action.savedElements.placedElements[action.selectedItem]['textShadow'] = 'none';
+            if (!isForBox) {
+                $('#' + action.selectedItem).css('text-shadow', 'none');
+                action.savedElements.placedElements[action.selectedItem]['textShadow'] = 'none';
+            } else {
+                $('#' + action.selectedItem).css('box-shadow', 'none');
+                action.savedElements.placedElements[action.selectedItem]['boxShadow'] = 'none';
+            }
             action.saveStorage();
         }
     },
-    cgShadowColor: function() {
-        $("#shadowColorDiv").spectrum({
+    cgShadowColor: function(isForBox) {
+        var selector = isForBox ? '#boxshadowColorDiv' : '#shadowColorDiv';
+        $(selector).spectrum({
             showInitial: true,
             showAlpha: true,
             showInput: true,
@@ -161,9 +188,9 @@ var action = {
             color: action.updateShadow('','','','','get'),
             palette: [["black", "white", "#0074d9" , "#2c3e50", "#27ae60", "#e74c3c", "#393939", "#3498db", "#2980b9", "#2ecc71", "#66cc99", "#019875", "#96281b", "#96281b", "#f64747", "#e26a6a", "#f5ab35", "#f39c12", "#f89406", "#f27935", "#6c7a89", "#95a5a6", "#bdc3c7", "#bfbfbf", "#674172", "#663399", "#8e44ad", "#9b59b6", "#db0a5b", "#d2527f", "#f62459", "#16a085", "#d2d7d3", "#4183d7", "#59abe3", "#3a539b"]]
         });
-        setTimeout(function () {$('#shadowColorDiv').spectrum('show'); }, 0); //give it time to load.
-        $("#shadowColorDiv").on('hide.spectrum', function (e, tinycolor) {
-            action.updateShadow('', tinycolor.toRgbString(), 'px', 'color', 'set'); //Added special case to updateShadow for this
+        setTimeout(function () {$(selector).spectrum('show'); }, 0); //give it time to load.
+        $(selector).on('hide.spectrum', function (e, tinycolor) {
+            action.updateShadow(isForBox ? 'box' : '', tinycolor.toRgbString(), 'px', 'color', 'set'); //Added special case to updateShadow for this
         });
     },
     cgText: function() {
