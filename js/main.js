@@ -132,7 +132,7 @@ var action = {
             else var splitShadow = ['#ffffff','0px', '0px', '0px'];
 
         //Dealing with stupid browser reordering
-        if (!splitShadow[0].includes('px') && splitShadow[0].includes("rgb")) {
+        if (!splitShadow[0].indexOf('px') > -1 && splitShadow[0].indexOf("rgb") > -1) {
             splitShadow[0] = splitShadow[0] + splitShadow[1] + splitShadow[2];
             splitShadow[1] = splitShadow[3];
             splitShadow[2] = splitShadow[4];
