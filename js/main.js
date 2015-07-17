@@ -126,7 +126,7 @@ var action = {
         this.saveStorage();
     },
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        var isForBox = idSelector.includes("box");
+        var isForBox = idSelector.indexOf("box") > -1;
         var currentShadow = !isForBox ? $('#' + action.selectedItem).css('text-shadow') : $('#' + action.selectedItem).css('box-shadow');
         if (currentShadow != 'none') var splitShadow = currentShadow.split(' ')
             else var splitShadow = ['#ffffff','0px', '0px', '0px'];
