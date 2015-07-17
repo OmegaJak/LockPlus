@@ -141,7 +141,7 @@ var action = {
         
         var index = 0;
         if (jsCssKey === (!isForBox ? 'hShadow' : 'boxhShadow')) index = 1
-            else if (jsCssKey === (!isForBox ? 'boxvShadow' : 'boxvShadow')) index = 2
+            else if (jsCssKey === (!isForBox ? 'vShadow' : 'boxvShadow')) index = 2
             else if (jsCssKey === (!isForBox ? 'blur' : 'boxblur')) index = 3
             else if (jsCssKey === (!isForBox ? 'color' : 'boxcolor')) index = 0;
 
