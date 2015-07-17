@@ -69,14 +69,14 @@ var action = {
         if (id === 'weight') {this.cgweight();}
         if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); }
         if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1); }
-        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
-        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
+        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
+        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'backToEdit') { this.showIconMenu(constants.editArray, -1); }
-        if (id === 'boxhShadow') { this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', 0, 50, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal'); }
-        if (id === 'boxvShadow') { this.cgSize('boxvShadow', constants.boxShadowArray[1], 'px', 0, 50, 'boxvShadow', 'boxvShadow', action.updateShadow, false, false, 'Vertical'); }
+        if (id === 'boxhShadow') { this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', -100, 100, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal'); }
+        if (id === 'boxvShadow') { this.cgSize('boxvShadow', constants.boxShadowArray[1], 'px', 100, 100, 'boxvShadow', 'boxvShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'boxblur') { this.cgSize('boxblur', constants.boxShadowArray[2], 'px', 0, 50, 'boxblur', 'boxblur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'boxshadowColor') { this.cgShadowColor(true); }
         if (id === 'boxclearShadow') { this.updateShadow('','','','','clear'); }
