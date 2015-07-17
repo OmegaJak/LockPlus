@@ -5,6 +5,7 @@ var constants = {
                     ,'overlay~Change Overlay~fa fa-clipboard~overlayDiv'
                     ,'element~Add Elements~fa fa-flask~elementDiv'
                     ,'save~Save Theme~fa fa-upload~saveDiv'
+                    ,'load~Load Theme~fa fa-download~loadDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv'
@@ -65,6 +66,7 @@ var action = {
         if (id === 'background' || id === 'overlay') { $('#bgInput').click(); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
+        if (id === 'load') { window.open(location.href.replace('#', '') + 'load')  } //load php stuff
         if (id === 'element') { $('.elementPanel').toggle('display'); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); }
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
