@@ -31,6 +31,7 @@ var constants = {
                     ,'vShadow~Vertical~fa fa-arrows-v~vShadowDiv'
                     ,'blur~Blur Radius~fa fa-dot-circle-o~blurDiv'
                     ,'shadowColor~Change Color~fa fa-eyedropper~shadowColorDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearShadow~Clear Shadow~fa fa-trash~clearShadowDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -64,6 +65,7 @@ var action = {
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
+        if (id === 'backToEdit') { this.showIconMenu(constants.editArray, -1); }
         if (id === 'color') {this.cgcolor();}
         if (id === 'customText') { this.cgText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
