@@ -13,6 +13,7 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'shadow~Edit Shadow~fa fa-cubes~shadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
@@ -23,8 +24,14 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'shadow~Edit Shadow~fa fa-cubes~shadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
+                    ,'vShadow~Vertical~fa fa-arrows-v~vShadowDiv'
+                    ,'blur~Blur Radius~fa fa-dot-circle-o~blurDiv'
+                    ,'shadowColor~Change Color~fa fa-eyedropper~shadowColorDiv'
+                    ,'clearShadow~Clear Shadow~fa fa-trash~clearShadowDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
@@ -44,17 +51,23 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'element') { $('.elementPanel').toggle('display'); }
-        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize'); }
-        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width'); }
+        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); }
+        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'position') { this.cgPosition(); }
         if (id === 'align') { this.cgalign(); }
         if (id === 'fonts') { this.cgfont();}
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
+        if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); }
+        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow); }
+        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow); }
+        if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow); }
+        if (id === 'shadowColor') {  }
+        if (id === 'clearShadow') {  }
         if (id === 'color') {this.cgcolor();}
         if (id === 'customText') { this.cgText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
-        if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width');}
+        if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
         if (id === 'changeicon') { this.populateIcons(); }
     },
     setFont: function (fontName) {
@@ -96,6 +109,31 @@ var action = {
         action.savedElements.iconName = name;
         this.saveStorage();
     },
+    updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        var currentShadow = $('#' + action.selectedItem).css('text-shadow');
+        if (currentShadow != 'none') var splitShadow = currentShadow.split(' ')
+            else var splitShadow = ['0px', '0px', '0px', '#ffffff'];
+        var index = 0;
+        if (jsCssKey === 'hShadow') index = 0
+            else if (jsCssKey === 'vShadow') index = 1
+            else if (jsCssKey === 'blur') index = 2
+            else if (jsCssKey === 'color') index = 3;
+
+        if (purpose === 'set') {
+            var newShadow = '';
+
+            if (idSelector.charAt(0) === '#') {
+                splitShadow[index] = $(idSelector).val() + unit;
+            } else {
+                splitShadow[index] = cssKey;
+            }
+
+            newShadow = splitShadow[0] + ' ' + splitShadow[1] + ' ' + splitShadow[2] + ' ' + splitShadow[3]; // Parse into correct format for css. Could've done a loop, but that's not necessary
+            $('#' + action.selectedItem).css('text-shadow', newShadow);
+        } else if (purpose === 'get') {
+            return splitShadow[index];
+        }
+    },
     cgText: function() {
         var splitArr = constants.customTextArray[0].split("~");
         var inputTopPos = $('#' + splitArr[3]).position().top + 11;
@@ -133,7 +171,7 @@ var action = {
             $(divSelector).toggle('display');
         }
     },
-    cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
+    cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, updateCallback, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
@@ -149,16 +187,17 @@ var action = {
         if (!$(divSelector).length) { //If the input hasn't been created yet
             action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle, false).prependTo('#' + splitArr[3]);
 
-            $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit) });
-            $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit) });
+            $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit, updateCallback) });
+            $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback) });
 
-            var elSize = $('#' + this.selectedItem).css(cssKey);
+            //var elSize = $('#' + this.selectedItem).css(cssKey);
+            var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
             $(idSelector).on("change", function() {
-                action.updateSize(idSelector, cssKey, unit, jsCssKey);
+                updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
             $(idSelector).on("mousewheel", function() {
-                action.updateSize(idSelector, cssKey, unit, jsCssKey);
+                updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
 
             $(buttonSelector).parent().attr('class', ''); //just disable the leftToolTip Class? hide tooltip
@@ -168,7 +207,7 @@ var action = {
             $(divSelector).toggle('display');
         }
     },
-    handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit) {
+    handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback) {
         event.preventDefault();
         var max = JSON.parse($(idSelector).attr('max'));
         var min = JSON.parse($(idSelector).attr('min'));
@@ -179,7 +218,7 @@ var action = {
         } else {
             action.sizeControl(idSelector, toMultiplyBy * 1);
         }
-        action.updateSize(idSelector, cssKey, unit, jsCssKey);
+        updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
     },
     getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle, isForText) {
         var divSelector = $('<div id="' + key + 'DivWrapper" style="display: none;"></div>');
@@ -248,8 +287,8 @@ var action = {
         }
     },
     cgPosition: function() {
-        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', '', '58', 'Left', 2);
-        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', '', '198', 'Top', 2);
+        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', action.updateSize, '', '58', 'Left', 2);
+        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', action.updateSize, '', '198', 'Top', 2);
 
         $('#' + action.selectedItem).on('drag', function() {
             $('#posLeftInput').val($('#' + action.selectedItem).position().left);
@@ -263,22 +302,26 @@ var action = {
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
     },
-    updateSize: function(idSelector, cssKey, unit, jsCssKey) {
-        var max = JSON.parse($(idSelector).attr('max'));
-        var min = JSON.parse($(idSelector).attr('min'));
-        if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
-        if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
-        $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
-        action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
-        if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
-            $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
-            $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
+    updateSize: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        if (purpose === 'set') {
+            var max = JSON.parse($(idSelector).attr('max'));
+            var min = JSON.parse($(idSelector).attr('min'));
+            if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+            if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
+            $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
+            action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
+            if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
+                $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
+                $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
+            }
+            if (jsCssKey === 'width') {
+                $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
+                $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
+            }
+            action.saveStorage();
+        } else if (purpose === 'get') {
+            return $('#' + action.selectedItem).css(cssKey);
         }
-        if (jsCssKey === 'width') {
-            $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
-            $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
-        }
-        action.saveStorage();
     },
     cgalign: function () {
         var lastSelector;
@@ -748,7 +791,7 @@ var action = {
         delete this.movedElements[id];
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
-        this.showIconMenu(constants.toolArray, 4);
+        this.showIconMenu(constants.toolArray, -1);
         if (toggleElementPanel) this.revertElementPanel();
         if (document.getElementById('p' + id)) {
             document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
