@@ -90,6 +90,22 @@ footer a {
     font-size: 23px;
     -webkit-transform: translate(0% -50%);
 }
+#twitterShare{
+    position: absolute;
+    text-align: center;
+    background-color: #21b9b0;
+    padding: 10px;
+    border-radius: 9999px;
+    top:60%;
+    left:50%;
+    text-decoration: none;
+    color:white;
+    font-size: 23px;
+    -webkit-transform: translate(-50%, -50%);
+}
+#twitterShare:hover{
+  background-color: #54606e;
+}
 .loader {
   font-size: 90px;
   text-indent: -9999em;

@@ -138,7 +138,7 @@ var action = {
             splitShadow[2] = splitShadow[4];
             splitShadow[3] = splitShadow[5];
         }
-        
+
         var index = 0;
         if (jsCssKey === (!isForBox ? 'hShadow' : 'boxhShadow')) index = 1
             else if (jsCssKey === (!isForBox ? 'vShadow' : 'boxvShadow')) index = 2
@@ -162,7 +162,7 @@ var action = {
                 $('#' + action.selectedItem).css('box-shadow', newShadow);
                 action.savedElements.placedElements[action.selectedItem]['boxShadow'] = newShadow;
             }
-            
+
             action.saveStorage();
         } else if (purpose === 'get') {
             return splitShadow[index];
@@ -731,7 +731,7 @@ var action = {
                 div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
                 a.className = "twitter-share-button";
                 a.id="twitterShare";
-                a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+"via%20&hashtags=LockPlus";
+                a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+"%20via%20&hashtags=LockPlus";
                 a.innerHTML = "Share via Twitter";
                 document.body.appendChild(div);
                 document.body.appendChild(a);
