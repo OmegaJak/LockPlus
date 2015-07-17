@@ -13,7 +13,7 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
-                    ,'shadow~Edit Shadow~fa fa-cubes~shadowDiv'
+                    ,'shadow~Edit Text Shadow~fa fa-cubes~shadowDiv'
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
@@ -41,6 +41,12 @@ var constants = {
                     ,'boxshadowColor~Change Color~fa fa-eyedropper~boxshadowColorDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'boxclearShadow~Clear Shadow~fa fa-trash~boxclearShadowDiv'],
+    boxEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
+                    ,'height~Change Height~fa fa-arrows-v~heightDiv'
+                    ,'position~Change Position~fa fa-arrows~positionDiv'
+                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
+                    ,'color~Change Color~fa fa-eyedropper~colorDiv'
+                    ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
@@ -62,6 +68,7 @@ var action = {
         if (id === 'element') { $('.elementPanel').toggle('display'); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); }
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
+        if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 10, $('.screen').height(), 'height', 'height', action.updateSize); }
         if (id === 'position') { this.cgPosition(); }
         if (id === 'align') { this.cgalign(); }
         if (id === 'fonts') { this.cgfont();}
@@ -74,7 +81,7 @@ var action = {
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
-        if (id === 'backToEdit') { this.showIconMenu(constants.editArray, -1); }
+        if (id === 'backToEdit') { action.showProperMenuForId(this.selectedItem); }
         if (id === 'boxhShadow') { this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', -100, 100, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'boxvShadow') { this.cgSize('boxvShadow', constants.boxShadowArray[1], 'px', -100, 100, 'boxvShadow', 'boxvShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'boxblur') { this.cgSize('boxblur', constants.boxShadowArray[2], 'px', 0, 50, 'boxblur', 'boxblur', action.updateShadow, false, false, 'Blur Radius'); }
@@ -902,6 +909,17 @@ var action = {
            }
         };
     },
+    showProperMenuForId: function(id) {
+        if(id === 'icon'){ // Special case
+            action.showIconMenu(constants.iconArray, -1);
+        } else if (id.substring(0, 4) === 'text') { // Another special case
+            action.showIconMenu(constants.customTextArray, -1);
+        } else if (id.substring(0, 3) === 'box') {
+            action.showIconMenu(constants.boxEditArray, -1);
+        } else{ // Normal element, show edit menu
+            action.showIconMenu(constants.editArray, -1);
+        }
+    },
     revertElementPanel: function() { // Returns the element panel to its previous state
         if($('.elementPanel').data('prevHiddenState'))
             $('.elementPanel').toggle('display');
@@ -995,7 +1013,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 
 $('.screen').click(function(event){
     if (event.target.id === '' && action.selectedItem != '') {
-        $('#' + action.selectedItem).css('background-color', 'rgba(0,0,0,0)');
+        if (action.selectedItem.substring(0,3) != 'box') $('#' + action.selectedItem).css('background-color', 'rgba(0,0,0,0)');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
         action.revertElementPanel();
@@ -1016,27 +1034,15 @@ $('.screen').on('dblclick',function(event){
                 if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
                 action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
-                if (event.target.id.substring(0,3) != 'box') $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)'); // Unhighlight the old element
+                if (action.selectedItem.substring(0,3) != 'box') $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)'); // Unhighlight the old element
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
                 if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
                 if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight new element
-                if (event.target.id === 'icon') { // Special case for when the element is an icon
-                    action.showIconMenu(constants.iconArray, -1);
-                } else if (event.target.id.substring(0, 4) === 'text') { //They're all named textOne, textTwo, etc so first four is all that's needed
-                    action.showIconMenu(constants.customTextArray, -1); // Another special case, for customText
-                } else{ // Otherwise, it's just a normal element
-                    action.showIconMenu(constants.editArray, -1);
-                }
+                action.showProperMenuForId(event.target.id);
             }
         } else { // An element was clicked on directly
-            if(event.target.id === 'icon'){ // Special case
-                action.showIconMenu(constants.iconArray, -1);
-            } else if (event.target.id.substring(0, 4) === 'text') { // Another special case
-                action.showIconMenu(constants.customTextArray, -1);
-            } else{ // Normal element, show edit menu
-                action.showIconMenu(constants.editArray, -1);
-            }
+            action.showProperMenuForId(event.target.id);
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
             if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight specified item
