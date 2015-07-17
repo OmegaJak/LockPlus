@@ -75,15 +75,28 @@ var miscEl = ['textOne~Allows custom text display'
 				, 'textThree~Allows custom text display'
 				, 'textFour~Allows custom text display'
 				, 'textFive~Allows custom text display'];
-var fontArray = ['bebasbold'
+var fontArray = ['android'
+				,'bebasbold'
 				,'bebaslight'
 				,'bebasneue'
 				,'bebasneueregular'
 				,'codebold'
 				,'codelight'
+				,'higher'
+				,'futura'
+				,'lg'
 				,'nexabold'
 				,'nexabolder'
 				,'nexalight'
+				,'poplar'
+				,'reckoner'
 				,'robotobold'
 				,'robotolight'
-				,'robotoregular'];
+				,'robotoregular'
+				,'samster'
+				, 'samsunglight'
+				, 'samsungregular'];
+
+
+
+
