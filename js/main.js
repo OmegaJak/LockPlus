@@ -45,7 +45,7 @@ var constants = {
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
-                    ,'color~Change Color~fa fa-eyedropper~colorDiv'
+                    ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -87,7 +87,8 @@ var action = {
         if (id === 'boxblur') { this.cgSize('boxblur', constants.boxShadowArray[2], 'px', 0, 50, 'boxblur', 'boxblur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'boxshadowColor') { this.cgShadowColor(true); }
         if (id === 'boxclearShadow') { this.updateShadow('','','','','clear'); }
-        if (id === 'color') {this.cgcolor();}
+        if (id === 'color') {this.cgcolor(false, 'color', 'colorDiv');}
+        if (id === 'boxColor') { this.cgcolor(false, 'background-color', 'boxColorDiv'); }
         if (id === 'customText') { this.cgText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
@@ -406,24 +407,24 @@ var action = {
         lastSelector = optionSelector;
         return lastSelector;
     },
-    cgcolor: function (color) {
+    cgcolor: function (color, cssKey, div) {
         if (color) {
-            $('#' + this.selectedItem).css('color', color);
-            action.savedElements.placedElements[this.selectedItem]['color'] = color;
+            $('#' + this.selectedItem).css(cssKey, color);
+            action.savedElements.placedElements[this.selectedItem][cssKey] = color;
             action.saveStorage();
         } else {
-            $("#colorDiv").spectrum({
+            $("#" + div).spectrum({
                 showInitial: true,
                 showAlpha: true,
                 showInput: true,
                 preferredFormat: "rgba",
                 showPalette: true,
-                color: $('#' + this.selectedItem).css('color'),
+                color: $('#' + this.selectedItem).css(cssKey),
                 palette: [["black", "white", "#0074d9" , "#2c3e50", "#27ae60", "#e74c3c", "#393939", "#3498db", "#2980b9", "#2ecc71", "#66cc99", "#019875", "#96281b", "#96281b", "#f64747", "#e26a6a", "#f5ab35", "#f39c12", "#f89406", "#f27935", "#6c7a89", "#95a5a6", "#bdc3c7", "#bfbfbf", "#674172", "#663399", "#8e44ad", "#9b59b6", "#db0a5b", "#d2527f", "#f62459", "#16a085", "#d2d7d3", "#4183d7", "#59abe3", "#3a539b"]]
             });
-            setTimeout(function () {$('#colorDiv').spectrum('show'); }, 0); //give it time to load.
-            $("#colorDiv").on('hide.spectrum', function (e, tinycolor) {
-                action.cgcolor(tinycolor.toRgbString());
+            setTimeout(function () {$('#' + div).spectrum('show'); }, 0); //give it time to load.
+            $("#" + div).on('hide.spectrum', function (e, tinycolor) {
+                action.cgcolor(tinycolor.toRgbString(), cssKey, div);
             });
         }
     },
