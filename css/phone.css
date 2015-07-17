@@ -32,6 +32,7 @@
 	left: 50%;
 	-webkit-transform: translate(-50%);
 }
+
 .screen,.screenoverlay{
 	position: absolute;
 	left:15px;
@@ -51,10 +52,9 @@
 	outline: 1px solid #323232;
 }
 .svg{
+	width: 320px;
+	height: 568px;
 	position: absolute;
 	margin-left: 300px;
 	opacity: 0;
-}
-.newSVG{
-
 }

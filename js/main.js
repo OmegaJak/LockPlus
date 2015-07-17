@@ -39,7 +39,7 @@ var action = {
     doubleClicked: false,
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
-        this.uploadSelection = id;
+            action.uploadSelection = id;
         if (id === 'background' || id === 'overlay') { $('#bgInput').click(); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
@@ -429,11 +429,14 @@ var action = {
             action.selectedItem = '';
             action.doubleClicked = false;
             $('#screenElements').empty();
-            $('.newSVG').empty();
+            $('.newSVG').remove();
+            $(".svg").remove();
             action.clearTheme(0);
             action.hideElementPanelElements();
+            $('#bgInput').after($('#bgInput').clone(true)).remove();
             $('.screen').css('background-image', '');
             $('.screenoverlay').css('background-image','');
+            $('.screen').prepend('<img class="svg"/>');
         }
     },
     hideElementPanelElements: function() {
@@ -646,8 +649,8 @@ var action = {
                             div.className = 'newSVG';
                             div.innerHTML = inner;
                             document.querySelector('.screen').appendChild(div);
-                },0)
-            },300);
+                },0);
+            },0);
         }
 
     },
@@ -828,8 +831,6 @@ function uploadedImage(e) {
 window.onload = function () {
     action.showIconMenu(constants.toolArray, -1);
     action.loadFromStorage(); //load elements that are stored
-    console.log(action.savedElements);
-    console.log(action.placedElements);
 }
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
