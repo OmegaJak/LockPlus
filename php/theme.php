@@ -10,10 +10,10 @@ foreach (glob("$dir/*.plist") as $filename) {
 	$plistDocument = new DOMDocument();
 	$plistDocument->load($path);
 	$array = parsePlist($plistDocument);
-	echo '<div class="theme"><img title="'.$name.'" onclick="alertname(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
+  echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
 }
 
-echo '<script>function alertname(d){alert("Enter this name " + d + " in LockPlus cydget to download this theme.")}</script>';
+echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
 
 
 

@@ -739,7 +739,7 @@ var action = {
                 div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
                 a.className = "twitter-share-button";
                 a.id="twitterShare";
-                a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+"%20via%20&hashtags=LockPlus";
+                a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?"+themename+"&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+",%20check%20it%20out%20here.&hashtags=LockPlus";
                 a.innerHTML = "Share via Twitter";
                 document.body.appendChild(div);
                 document.body.appendChild(a);
