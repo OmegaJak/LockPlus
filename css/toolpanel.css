@@ -25,6 +25,10 @@
 	background-color: #21b9b0;
 	color:white;
 	-webkit-background-clip: padding-box;
+    -webkit-transition-property: transform;
+    -webkit-transition-duration: 100ms;
+    transition-property: transform;
+    transition-duration: 100ms;
 }
 .toolPanel li:hover{
 	-webkit-transform:translateX(-7px);
@@ -50,6 +54,10 @@
 	border-style: solid;
 	outline-color: rgba(0,0,0,0);
 	font-weight: bold;
+    -webkit-transition-property: width, font-size;
+    -webkit-transition-duration: 200ms;
+    transition-property: width, font-size;
+    transition-duration: 200ms;
 }
 .toolPanel input:hover {
 	font-size: 28px;

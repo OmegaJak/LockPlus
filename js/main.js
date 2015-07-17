@@ -1,10 +1,10 @@
 'use strict';
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
-    toolArray: ['background~Change Background~fa fa-photo'
-                    ,'overlay~Change Overlay~fa fa-clipboard'
-                    ,'element~Add Elements~fa fa-flask'
-                    ,'save~Save Theme~fa fa-upload'
+    toolArray: ['background~Change Background~fa fa-photo~backgroundDiv'
+                    ,'overlay~Change Overlay~fa fa-clipboard~overlayDiv'
+                    ,'element~Add Elements~fa fa-flask~elementDiv'
+                    ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv'
@@ -103,11 +103,11 @@ var action = {
         var textID = unCappedID.substring(0, 1).toUpperCase() + unCappedID.substring(1);
         var divSelector = '#custom' + textID + 'DivWrapper';
         var idSelector = '#custom' + textID + 'Input';
-        var buttonSelector = '#custom' + textID;
+        var buttonSelector = '#customText';
 
         function updateStuff() {
             $('#' + action.selectedItem).html($(idSelector).val());
-            var newLength = $(idSelector).val().length * 17;
+            var newLength = $(idSelector).val().length * 16;
             $(idSelector).css("width", newLength > 150 ? newLength : 150);
             action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val();
             action.saveStorage();
@@ -118,7 +118,7 @@ var action = {
             divWrapper.prependTo('#textDiv');
 
             $(idSelector).val($('#' + this.selectedItem).html());
-            var width = $(idSelector).val().length * 17;
+            var width = $(idSelector).val().length * 16;
             $(idSelector).css('width', width > 150 ? width : 150);
 
             $(idSelector).on("change", function() { updateStuff(); });
@@ -127,6 +127,7 @@ var action = {
 
             $(buttonSelector).parent().toggleClass('leftTooltip');
             divWrapper.toggle('display');
+            $(idSelector).focus();
         } else {
             $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
             $(divSelector).toggle('display');
@@ -160,10 +161,10 @@ var action = {
                 action.updateSize(idSelector, cssKey, unit, jsCssKey);
             });
 
-            $(buttonSelector).parent().toggleClass('leftTooltip'); //just disable the leftToolTip Class? hide tooltip
+            $(buttonSelector).parent().attr('class', ''); //just disable the leftToolTip Class? hide tooltip
             $(divSelector).toggle('display');
         } else { //If the input already exists
-            $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
+            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //enable tooltip again
             $(divSelector).toggle('display');
         }
     },
@@ -201,6 +202,8 @@ var action = {
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
+        if (optionsTop === 0 || !optionsTop)
+            optionsTop = $('#' + splitArr[3]).position().top + 15;
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
@@ -240,8 +243,7 @@ var action = {
             $(divSelector).css('display', 'none'); // Have to have display set to block before this because sizing depends on the displayed width ↑
             $(divSelector).toggle('display');
         } else { //If the options already exists
-            $(buttonSelector).parent().attr('class','leftTooltip'); //add class back to show toolTip
-            //$(divSelector).is(':visible') ? $(buttonSelector).parent().attr('title', splitArr[1]) : $(buttonSelector).parent().attr('title', ''); //If it's currently visible it will be hidden
+            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //If it's currently visible it will be hidden
             var children = $(divSelector).toggle('display');
         }
     },
@@ -280,7 +282,7 @@ var action = {
     },
     cgalign: function () {
         var lastSelector;
-        this.cgOption('align', constants.editArray[3], ['left', 'center', 'right'], 234, true, function(optionSelector) {
+        this.cgOption('align', constants.editArray[3], ['left', 'center', 'right'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
@@ -318,7 +320,7 @@ var action = {
     },
     cguppercase: function () {
         var lastSelector;
-        this.cgOption('uppercase', constants.editArray[5], ['uppercase', 'capitalize', 'lowercase'], 371, true, function(optionSelector) {
+        this.cgOption('uppercase', constants.editArray[5], ['uppercase', 'capitalize', 'lowercase'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-transform', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: center; text-transform: ' + optionName + ';">' + optionName + '</label>');
@@ -326,7 +328,7 @@ var action = {
     },
     cgweight: function () {
         var lastSelector;
-        this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 439, true, function(optionSelector) {
+        this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
         }, function(optionName) {
@@ -871,7 +873,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function(event){
-    if (event.target.id === '') {
+    if (event.target.id === '' && action.selectedItem != '') {
         $('#' + action.selectedItem).css('background-color', 'rgba(0,0,0,0)');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
