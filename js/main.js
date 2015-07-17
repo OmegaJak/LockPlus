@@ -31,6 +31,7 @@ var constants = {
                     ,'vShadow~Vertical~fa fa-arrows-v~vShadowDiv'
                     ,'blur~Blur Radius~fa fa-dot-circle-o~blurDiv'
                     ,'shadowColor~Change Color~fa fa-eyedropper~shadowColorDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearShadow~Clear Shadow~fa fa-trash~clearShadowDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -59,11 +60,12 @@ var action = {
         if (id === 'uppercase') {this.cguppercase();}
         if (id === 'weight') {this.cgweight();}
         if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); }
-        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow); }
-        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow); }
-        if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow); }
-        if (id === 'shadowColor') {  }
-        if (id === 'clearShadow') {  }
+        if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', 0, 50, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
+        if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', 0, 50, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
+        if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
+        if (id === 'shadowColor') { this.cgShadowColor(); }
+        if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
+        if (id === 'backToEdit') { this.showIconMenu(constants.editArray, -1); }
         if (id === 'color') {this.cgcolor();}
         if (id === 'customText') { this.cgText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
@@ -112,12 +114,21 @@ var action = {
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         var currentShadow = $('#' + action.selectedItem).css('text-shadow');
         if (currentShadow != 'none') var splitShadow = currentShadow.split(' ')
-            else var splitShadow = ['0px', '0px', '0px', '#ffffff'];
+            else var splitShadow = ['#ffffff','0px', '0px', '0px'];
+
+        //Dealing with stupid browser reordering
+        if (!splitShadow[0].includes('px') && splitShadow[0].includes("rgb")) {
+            splitShadow[0] = splitShadow[0] + splitShadow[1] + splitShadow[2];
+            splitShadow[1] = splitShadow[3];
+            splitShadow[2] = splitShadow[4];
+            splitShadow[3] = splitShadow[5];
+        }
+
         var index = 0;
-        if (jsCssKey === 'hShadow') index = 0
-            else if (jsCssKey === 'vShadow') index = 1
-            else if (jsCssKey === 'blur') index = 2
-            else if (jsCssKey === 'color') index = 3;
+        if (jsCssKey === 'hShadow') index = 1
+            else if (jsCssKey === 'vShadow') index = 2
+            else if (jsCssKey === 'blur') index = 3
+            else if (jsCssKey === 'color') index = 0;
 
         if (purpose === 'set') {
             var newShadow = '';
@@ -130,9 +141,30 @@ var action = {
 
             newShadow = splitShadow[0] + ' ' + splitShadow[1] + ' ' + splitShadow[2] + ' ' + splitShadow[3]; // Parse into correct format for css. Could've done a loop, but that's not necessary
             $('#' + action.selectedItem).css('text-shadow', newShadow);
+            action.savedElements.placedElements[action.selectedItem]['textShadow'] = newShadow;
+            action.saveStorage();
         } else if (purpose === 'get') {
             return splitShadow[index];
+        } else if (purpose === 'clear') {
+            $('#' + action.selectedItem).css('text-shadow', 'none');
+            action.savedElements.placedElements[action.selectedItem]['textShadow'] = 'none';
+            action.saveStorage();
         }
+    },
+    cgShadowColor: function() {
+        $("#shadowColorDiv").spectrum({
+            showInitial: true,
+            showAlpha: true,
+            showInput: true,
+            preferredFormat: "rgb",
+            showPalette: true,
+            color: action.updateShadow('','','','','get'),
+            palette: [["black", "white", "#0074d9" , "#2c3e50", "#27ae60", "#e74c3c", "#393939", "#3498db", "#2980b9", "#2ecc71", "#66cc99", "#019875", "#96281b", "#96281b", "#f64747", "#e26a6a", "#f5ab35", "#f39c12", "#f89406", "#f27935", "#6c7a89", "#95a5a6", "#bdc3c7", "#bfbfbf", "#674172", "#663399", "#8e44ad", "#9b59b6", "#db0a5b", "#d2527f", "#f62459", "#16a085", "#d2d7d3", "#4183d7", "#59abe3", "#3a539b"]]
+        });
+        setTimeout(function () {$('#shadowColorDiv').spectrum('show'); }, 0); //give it time to load.
+        $("#shadowColorDiv").on('hide.spectrum', function (e, tinycolor) {
+            action.updateShadow('', tinycolor.toRgbString(), 'px', 'color', 'set'); //Added special case to updateShadow for this
+        });
     },
     cgText: function() {
         var splitArr = constants.customTextArray[0].split("~");
