@@ -110,6 +110,10 @@ label {
     border-radius: 30px;
     position: relative;
 }
+.elementPanel h3:hover{
+    background-color: #21b9b0;
+    border-color: #21b9b0;
+}
 #clockList,#weatherList,#systemList,#miscList {
     left: 26px;
 	height: 190px;
