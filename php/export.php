@@ -1,5 +1,6 @@
 <?php
 
+
 ignore_user_abort(true);
 ini_set('max_execution_time', 1200);
 ini_set('memory_limit', '512M');
@@ -35,15 +36,17 @@ if (file_exists($filename)) {
 	fwrite($file, $head . $tname . $dname . $tprev . $wkey . $okey . $ekey . $ikey . $end);
 	fclose($file);
 
-	header('Content-Type: application/octet-stream');
+	/*header('Content-Type: application/octet-stream');
 	    header('Content-Disposition: attachment; filename='.basename('themes/' . $name.'.plist'));
 	    header('Expires: 0');
 	    header('Cache-Control: must-revalidate');
 	    header('Pragma: public');
 	    header('Content-Length: ' . filesize('themes/' . $name.'.plist'));
 	    readfile('themes/' . $name.'.plist');
-	    exit;
+	    exit;*/
+echo  "<script type='text/javascript'>";
+echo "window.close();";
+echo "</script>";
 }
-
 
 ?>

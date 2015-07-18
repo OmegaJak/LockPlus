@@ -2,6 +2,7 @@
 <head>
   <title></title>
   <?php include("parse.php");?>
+  <link rel="stylesheet" type="text/css" href="../php/preview.css">
 </head>
 <body>
 <?php
@@ -14,8 +15,8 @@ foreach (glob("$dir/*.plist") as $filename) {
  $plistDocument = new DOMDocument();
  $plistDocument->load($path);
  $array = parsePlist($plistDocument);
- echo '<div class="themelist" title="'.$name.'">'.$name.'</div>';
-  //echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
+ //echo '<div class="themelist" title="'.$name.'">'.$name.'</div>';
+  echo '<div class="theme"><img title="'.$name.'" onclick="opentheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
 }
 echo "</div>";
 

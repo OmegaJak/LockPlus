@@ -27,6 +27,9 @@ html{
   border-left:1px solid black;
   border-right:1px solid black;
 }
+.themeImage:hover{
+  -webkit-transform:scale(1.01);
+}
 .themeName{
   position: relative;
   display: inline-block;
@@ -34,4 +37,10 @@ html{
   text-align: center;
   font-size: 8px;
   white-space: nowrap;
+}
+.loader{
+
+}
+.loader:after{
+  content: 'Uploading theme.'
 }

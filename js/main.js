@@ -66,7 +66,7 @@ var action = {
         if (id === 'background' || id === 'overlay') { $('#bgInput').click(); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
-        if (id === 'load') { window.open(location.href.replace('#', '') + 'load') window.close();  } //load php stuff
+        if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
         if (id === 'element') { $('.elementPanel').toggle('display'); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); }
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
@@ -167,10 +167,10 @@ var action = {
             newShadow = splitShadow[0] + ' ' + splitShadow[1] + ' ' + splitShadow[2] + ' ' + splitShadow[3]; // Parse into correct format for css. Could've done a loop, but that's not necessary
             if (!isForBox) {
                 $('#' + action.selectedItem).css('text-shadow', newShadow);
-                action.savedElements.placedElements[action.selectedItem]['textShadow'] = newShadow;
+                action.savedElements.placedElements[action.selectedItem]['text-shadow'] = newShadow;
             } else {
                 $('#' + action.selectedItem).css('box-shadow', newShadow);
-                action.savedElements.placedElements[action.selectedItem]['boxShadow'] = newShadow;
+                action.savedElements.placedElements[action.selectedItem]['box-shadow'] = newShadow;
             }
 
             action.saveStorage();
@@ -179,10 +179,10 @@ var action = {
         } else if (purpose === 'clear') {
             if (!isForBox) {
                 $('#' + action.selectedItem).css('text-shadow', 'none');
-                action.savedElements.placedElements[action.selectedItem]['textShadow'] = 'none';
+                action.savedElements.placedElements[action.selectedItem]['text-shadow'] = 'none';
             } else {
                 $('#' + action.selectedItem).css('box-shadow', 'none');
-                action.savedElements.placedElements[action.selectedItem]['boxShadow'] = 'none';
+                action.savedElements.placedElements[action.selectedItem]['box-shadow'] = 'none';
             }
             action.saveStorage();
         }
