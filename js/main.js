@@ -248,7 +248,7 @@ var action = {
         if (inputTopPos === undefined || !inputTopPos)
             var inputTopPos = $('#' + splitArr[3]).position().top + 11;
         if (inputRightPos === undefined || !inputRightPos)
-            var inputRightPos =  58;
+            var inputRightPos =  110;
         if (inputTitle === undefined || !inputTitle)
             var inputTitle = splitArr[1].substring(6, splitArr[1].length);
         if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
@@ -315,7 +315,7 @@ var action = {
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
-            var right = 50;
+            var right = 110;
             var margin = 0;
             for (var i = options.length - 1; i >= 0; i--) {
                 var optionDivSelector = '#' + options[i] + 'OptionDiv';
@@ -356,8 +356,8 @@ var action = {
         }
     },
     cgPosition: function() {
-        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', action.updateSize, '', '58', 'Left', 2);
-        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', action.updateSize, '', '198', 'Top', 2);
+        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', action.updateSize, '', '110', 'Left', 2);
+        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', action.updateSize, '', '238', 'Top', 2);
 
         $('#' + action.selectedItem).on('drag', function() {
             $('#posLeftInput').val($('#' + action.selectedItem).position().left);
@@ -898,7 +898,7 @@ var action = {
            div.id = "Test";
            var a = document.createElement('a');
            var li = document.createElement('li');
-           a.href = '#';
+           a.href = 'javascript:void(0)';
            a.className = 'leftTooltip';
            var splitArray = menuArray[i].split('~');
            a.title = splitArray[1];

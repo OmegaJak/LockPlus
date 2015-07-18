@@ -7,14 +7,28 @@
 
 .toolPanel{
 	position: absolute;
-	width: 80px;
+	width: 550px;
+	height: 560px;
+	overflow-y: scroll;
 	top:50%;
 	left:50%;
-	-webkit-transform: translate(-50%, -54%);
+	-webkit-transform: translate(-82%, -50%);
 	margin-left: -280px;
+}
+.toolPanel::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.toolPanel::-webkit-scrollbar-thumb {
+    background-color: #54606e;
+    border-radius: 99px;
+}
+.toolPanel::-webkit-scrollbar {
+    width: 10px;
+    margin-left: -20px;
 }
 .toolPanel li{
 	text-align: center;
+	margin-left: 400px;
 	padding: 5px;
 	width: 40px;
 	line-height: 40px;

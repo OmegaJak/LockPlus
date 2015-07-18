@@ -28,7 +28,7 @@ footer a {
   color: white;
 }
 ::selection {
-  background: rgba(0,0,0,0);
+  background: rgba(0,0,0,0.3); /* was there a reason this was transparent? */
 }
 .input{
 	display: none;
