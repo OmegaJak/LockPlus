@@ -29,7 +29,7 @@ html{
   border-right:1px solid black;
 }
 .themeImage:hover{
-  -webkit-transform:scale(1.01);
+  cursor: pointer;
 }
 .themeName{
   position: relative;
