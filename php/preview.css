@@ -17,6 +17,7 @@ html{
   height: 20px;
   border-radius: 100%;
   border: 1px solid gray;
+  display: none;
 }
 .themeImage{
   position: relative;
@@ -38,4 +39,9 @@ html{
   font-size: 8px;
   white-space: nowrap;
 }
+.loader{
 
+}
+.loader:after{
+  content: 'Uploading theme.'
+}
