@@ -721,11 +721,16 @@ var action = {
                     ca = ca.children[0];
                 var context = ca.getContext('2d');
                 var dataURL = ca.toDataURL();
-            //document.getElementById('image').src = dataURL;
-            //alert(dataURL)
             $('.newSVG').empty();
             var devname = window.prompt('Enter your name', '');
             var themename = window.prompt('Enter the theme name', '');
+            if(themename === ""){
+                alert("You must enter a name for this theme.");
+                location.reload();
+            }else if(devname === ""){
+                alert("You must enter a name to save this theme");
+                location.reload();
+            }else{
             $('#fileName').val(themename);
             $('#devname').val(devname);
             $('#Tpreview').val(dataURL);
@@ -745,6 +750,7 @@ var action = {
                 a.innerHTML = "Share via Twitter";
                 document.body.appendChild(div);
                 document.body.appendChild(a);
+                }
             },1000);
         });
 
