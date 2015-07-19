@@ -1,7 +1,7 @@
 .elementPanel{
 	position: absolute;
 	width: 150px;
-    top:150px;
+    top: 20%;
 	left: 50%;
 	-webkit-transform: translate(-50%);
 	margin-left: 280px;
