@@ -28,7 +28,6 @@
 }
 .toolPanel li{
 	text-align: center;
-	margin-left: 400px;
 	padding: 5px;
 	width: 40px;
 	line-height: 40px;
@@ -49,6 +48,7 @@
 	background-color: #54606e;
 }
 .toolPanel a{
+    margin-left: 400px;
 	text-decoration: none;
 	color:black;
 }
