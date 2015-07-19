@@ -710,7 +710,6 @@ var action = {
         }
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
-        //$('.loader').toggle('display');
         $('.toolPanel').css('display','none');
         $('.elementPanel').css('display','none');
         $('#tips').css('display','none');
@@ -726,15 +725,11 @@ var action = {
             $('.phone').css('display','none'); //dont hide until html2canvas has rendered it.
             $('.newSVG').empty(); //remove svg
             //Fixing what html2canvas breaks
-            $('#saveForm').addClass('formclass');
-            $('#fdevname').addClass('saveclass');
-            $('#fthemename').addClass('saveclass');
-            $('input[type="text"]').focus(function() {
-                $(this).addClass("focus");
-            });
+            $("body").append('<form id="saveForm"><h3>Enter theme details</h3><label class="flabel">Your Name</label><input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/><label class="flabel">Theme Name</label><input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/><div class="fsubmit">Submit</div><label class="errorlabel">*must fill in all inputs</label></form>');
             //end fixing what html2canvas broke
             $('.fsubmit').on('click',function(){
-                $('#saveForm').removeClass('formclass');
+                $('#saveForm').css('display','none');
+                $('.loader').toggle('display');
                    var devname = $('#fdevname').val();
                    var themename = $('#fthemename').val();
                    if(themename !== '' && devname !== ''){
@@ -746,24 +741,6 @@ var action = {
                         $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
                         $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
                         $('#myform').submit();
-                        var div = document.createElement('div'),
-                            a = document.createElement('a'),
-                            v = document.createElement('a');
-                            div.id = 'refresh';
-                            div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
-                            a.className = "twitter-share-button";
-                            a.id="twitterShare";
-                            a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?"+themename+"&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+",%20check%20it%20out%20here.&hashtags=LockPlus";
-                            a.innerHTML = "Share via Twitter";
-                            v.id="viewTheme";
-                            v.href = 'http://lockplus.us/preview?' + themename;
-                            v.innerHTML = "View theme page";
-                            document.body.appendChild(div);
-                            document.body.appendChild(a);
-                            document.body.appendChild(v);
-                            $('#fdevname').val(""); //clear for easy refresh
-                            $('#fthemename').val(""); //clear for easy refresh
-                            $('#saveForm').css('display','none'); //hide form (html2canvas issue)
 
                    }else{
                     $('.errorlabel').css('display','block');

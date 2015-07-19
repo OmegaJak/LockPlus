@@ -32,9 +32,6 @@ footer a {
 }
 #saveForm {
   position: relative;
-  top:-900px;
-}
-.formclass{
   background-color:rgba(33,185,176,0.6);
   width:20%;
   margin:15% auto;
@@ -42,6 +39,8 @@ footer a {
   overflow:hidden;
   position:relative;
   padding: 10px;
+  z-index: 999;
+  opacity: 1;
 }
 #saveForm h3{
   width: 100%;
@@ -65,19 +64,8 @@ footer a {
   padding: 5px;
   border:1px solid transparent;
 }
-.saveclass{
-  position: relative;
-  left:50%;
-  -webkit-transform: translate(-50%);
-  border-radius: 20px;
-  padding: 5px;
-  border:1px solid transparent;
-}
 #saveForm input:focus{
     outline: 0;
-}
-.focus{
-  outline: 0;
 }
 .fsubmit{
   text-align: center;
@@ -131,7 +119,7 @@ footer a {
 }
 #copyright{
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
 }
  #screenElements div{
     position: absolute;
@@ -181,47 +169,7 @@ footer a {
 
 
 /*loader*/
-#refresh{
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top:50%;
-    color:white;
-    font-size: 23px;
-    -webkit-transform: translate(0% -50%);
-}
-#twitterShare{
-    position: absolute;
-    text-align: center;
-    background-color: #21b9b0;
-    padding: 10px;
-    border-radius: 9999px;
-    top:60%;
-    left:50%;
-    text-decoration: none;
-    color:white;
-    font-size: 23px;
-    -webkit-transform: translate(-50%, -50%);
-}
-#twitterShare:hover{
-  background-color: #54606e;
-}
-#viewTheme{
-    position: absolute;
-    text-align: center;
-    background-color: #21b9b0;
-    padding: 10px;
-    border-radius: 9999px;
-    top:70%;
-    left:50%;
-    text-decoration: none;
-    color:white;
-    font-size: 23px;
-    -webkit-transform: translate(-50%, -50%);
-}
-#viewTheme:hover{
-  background-color: #54606e;
-}
+
 .loader {
   font-size: 90px;
   text-indent: -9999em;

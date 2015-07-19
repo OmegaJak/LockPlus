@@ -89,17 +89,8 @@
 <div id="previewCanvas" style="opacity:0;"></div>
 <div class="iconList" style="display:none;"></div>
 <div class="loader">Loading...</div>
-<form id="saveForm">
-	<h3>Enter theme details</h3>
-	<label class="flabel">Your Name</label>
-	<input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/>
-	<label class="flabel">Theme Name</label>
-	<input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/>
-	<div class="fsubmit">Submit</div>
-	<!--<input class="fsubmit" type="submit" value="Submit">-->
-	<label class="errorlabel">*must fill in all inputs</label>
-</form>
-<form action="php/export.php" method="POST" target="_blank" id="myform">
+
+<form action="php/export.php" method="POST" id="myform">
   <input type="hidden" name="fileName" id="fileName"/>
   <input type="hidden" name="devname" id="devname"/>
   <input type="hidden" name="Tpreview" id="Tpreview"/>
