@@ -534,7 +534,7 @@ var action = {
             $('.clearLabel').remove();
             //$('#clear').parent().attr('title', 'Clear Theme');
             $('#clear').parent().attr('class','leftTooltip');
-            $('#helpinfo').text('Not cleared, double click to edit elements.');
+            $('#helpinfo').text('Not cleared, double click to edit elements. (Also delete)');
         } else if (code === 1) { // definitely clear the theme
             localStorage.removeItem('placedElements');
             action.savedElements = {};
@@ -855,7 +855,7 @@ var action = {
             });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
-        $('#helpinfo').text('Double click element to ajust style');
+        $('#helpinfo').text('Double click element to ajust style. (Also delete)');
         var div = document.createElement('div');
         div.id = id;
         if (id.substring(0,3) === 'box') {
