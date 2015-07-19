@@ -39,6 +39,7 @@
 		<div class="select-menu">
   			<div class="select"></div>
   			<ul class="menuUL hidden">
+  				<li class="menulist"><a id="menutips">Tips</a></li>
          	 <li class="menulist"><a href="http://lockplus.info">Help</a></li>
          	 <li class="menulist"><a href="http://lockplus.info/themes">Themes</a></li>
          	 <li class="menulist"><a href="#">Creators</a></li>
@@ -82,6 +83,16 @@
 <div id="previewCanvas" style="opacity:0;"></div>
 <div class="iconList" style="display:none;"></div>
 <div class="loader">Loading...</div>
+<form id="saveForm">
+	<h3>Enter theme details</h3>
+	<label class="flabel">Your Name</label>
+	<input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/>
+	<label class="flabel">Theme Name</label>
+	<input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/>
+	<div class="fsubmit">Submit</div>
+	<!--<input class="fsubmit" type="submit" value="Submit">-->
+	<label class="errorlabel">*must fill in all inputs</label>
+</form>
 <form action="php/export.php" method="POST" target="_blank" id="myform">
   <input type="hidden" name="fileName" id="fileName"/>
   <input type="hidden" name="devname" id="devname"/>
@@ -93,7 +104,7 @@
   <input style="display:none;" type="submit" value="Submit">
 </form>
 <footer>
-	<span id="tips">
+	<span id="tips" title="tap to hide tips">
 		<span id="helpicon" class="fa fa-lightbulb-o"></span>
 		<span id="helpinfo"></span>
 	</span>

@@ -30,6 +30,75 @@ footer a {
 ::selection {
   background: rgba(0,0,0,0.3); /* was there a reason this was transparent? */
 }
+#saveForm {
+  position: relative;
+  top:-900px;
+}
+.formclass{
+  background-color:rgba(33,185,176,0.6);
+  width:20%;
+  margin:15% auto;
+  border-radius:0.4em;
+  overflow:hidden;
+  position:relative;
+  padding: 10px;
+}
+#saveForm h3{
+  width: 100%;
+  text-align: center;
+  color:white;
+}
+#saveForm label:not(.errorlabel){
+  width: 100%;
+  text-align: center;
+  margin-top:10px;
+  color:white;
+  display:block;
+  padding-bottom:9px;
+  opacity: 0.5
+}
+#saveForm input:not(.fsubmit){
+  position: relative;
+  left:50%;
+  -webkit-transform: translate(-50%);
+  border-radius: 20px;
+  padding: 5px;
+  border:1px solid transparent;
+}
+.saveclass{
+  position: relative;
+  left:50%;
+  -webkit-transform: translate(-50%);
+  border-radius: 20px;
+  padding: 5px;
+  border:1px solid transparent;
+}
+#saveForm input:focus{
+    outline: 0;
+}
+.focus{
+  outline: 0;
+}
+.fsubmit{
+  text-align: center;
+  width: 25%;
+  display: block;
+  margin: 10px auto;
+  border-radius: 20px;
+  padding: 5px;
+  border:1px solid transparent;
+  background-color: #54606e;
+  color: white;
+}
+.fsubmit:hover{
+  background-color: #252a30;
+  cursor: pointer;
+}
+.errorlabel{
+  color: white;
+  font-size: 12px;
+  display: none;
+}
 .input{
 	display: none;
 }
@@ -56,6 +125,9 @@ footer a {
   left: -44%;
   font-size: 20px;
   color:#21b9b0;
+}
+#helpicon:hover{
+  cursor: pointer;
 }
 #copyright{
   position: absolute;
@@ -132,6 +204,22 @@ footer a {
     -webkit-transform: translate(-50%, -50%);
 }
 #twitterShare:hover{
+  background-color: #54606e;
+}
+#viewTheme{
+    position: absolute;
+    text-align: center;
+    background-color: #21b9b0;
+    padding: 10px;
+    border-radius: 9999px;
+    top:70%;
+    left:50%;
+    text-decoration: none;
+    color:white;
+    font-size: 23px;
+    -webkit-transform: translate(-50%, -50%);
+}
+#viewTheme:hover{
   background-color: #54606e;
 }
 .loader {

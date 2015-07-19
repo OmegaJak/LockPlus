@@ -710,10 +710,10 @@ var action = {
         }
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
-        $('.loader').toggle('display');
-        $('.phone').toggle('display');
-        $('.toolPanel').toggle('display');
+        //$('.loader').toggle('display');
+        $('.toolPanel').css('display','none');
         $('.elementPanel').css('display','none');
+        $('#tips').css('display','none');
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
@@ -723,8 +723,53 @@ var action = {
                     ca = ca.children[0];
                 var context = ca.getContext('2d');
                 var dataURL = ca.toDataURL();
-            $('.newSVG').empty();
-            var devname = window.prompt('Enter your name', '');
+            $('.phone').css('display','none'); //dont hide until html2canvas has rendered it.
+            $('.newSVG').empty(); //remove svg
+            //Fixing what html2canvas breaks
+            $('#saveForm').addClass('formclass');
+            $('#fdevname').addClass('saveclass');
+            $('#fthemename').addClass('saveclass');
+            $('input[type="text"]').focus(function() {
+                $(this).addClass("focus");
+            });
+            //end fixing what html2canvas broke
+            $('.fsubmit').on('click',function(){
+                $('#saveForm').removeClass('formclass');
+                   var devname = $('#fdevname').val();
+                   var themename = $('#fthemename').val();
+                   if(themename !== '' && devname !== ''){
+                       $('#fileName').val(themename);
+                        $('#devname').val(devname);
+                        $('#Tpreview').val(dataURL);
+                        $('#Ticon').val(action.savedElements.iconName || '');
+                        $('#Twallpaper').val((action.savedElements.wallpaper) ? action.savedElements.wallpaper : '');
+                        $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
+                        $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
+                        $('#myform').submit();
+                        var div = document.createElement('div'),
+                            a = document.createElement('a'),
+                            v = document.createElement('a');
+                            div.id = 'refresh';
+                            div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
+                            a.className = "twitter-share-button";
+                            a.id="twitterShare";
+                            a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?"+themename+"&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+",%20check%20it%20out%20here.&hashtags=LockPlus";
+                            a.innerHTML = "Share via Twitter";
+                            v.id="viewTheme";
+                            v.href = 'http://lockplus.us/preview?' + themename;
+                            v.innerHTML = "View theme page";
+                            document.body.appendChild(div);
+                            document.body.appendChild(a);
+                            document.body.appendChild(v);
+                            $('#fdevname').val(""); //clear for easy refresh
+                            $('#fthemename').val(""); //clear for easy refresh
+                            $('#saveForm').css('display','none'); //hide form (html2canvas issue)
+
+                   }else{
+                    $('.errorlabel').css('display','block');
+                   }
+                });
+           /* var devname = window.prompt('Enter your name', '');
             var themename = window.prompt('Enter the theme name', '');
             if(themename === ""){
                 alert("You must enter a name for this theme.");
@@ -752,7 +797,7 @@ var action = {
                 a.innerHTML = "Share via Twitter";
                 document.body.appendChild(div);
                 document.body.appendChild(a);
-                }
+                }*/
             },1000);
         });
 
@@ -1069,5 +1114,19 @@ $('.screen').on('dblclick',function(event){
     }
 });
 
+
 $('#bgInput').on('change', uploadedImage);
+
+//hide-show tips
+$('#helpicon').on('click',function(){
+    $('#tips').css('display','none');
+    localStorage.setItem('hideTips',true);
+});
+$('#menutips').on('click',function(){
+    $('#tips').css('display','block');
+    localStorage.setItem('hideTips',false);
+});
+if(localStorage.hideTips === 'true'){
+     $('#tips').css('display','none');
+}
 
