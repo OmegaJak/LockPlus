@@ -769,35 +769,6 @@ var action = {
                     $('.errorlabel').css('display','block');
                    }
                 });
-           /* var devname = window.prompt('Enter your name', '');
-            var themename = window.prompt('Enter the theme name', '');
-            if(themename === ""){
-                alert("You must enter a name for this theme.");
-                location.reload();
-            }else if(devname === ""){
-                alert("You must enter a name to save this theme");
-                location.reload();
-            }else{
-            $('#fileName').val(themename);
-            $('#devname').val(devname);
-            $('#Tpreview').val(dataURL);
-            $('#Ticon').val(action.savedElements.iconName || '');
-            $('#Twallpaper').val((action.savedElements.wallpaper) ? action.savedElements.wallpaper : '');
-            $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
-            $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
-            $('#myform').submit();
-            $('.loader').toggle('display');
-            var div = document.createElement('div'),
-                a = document.createElement('a');
-                div.id = 'refresh';
-                div.innerHTML = 'Awesome ' + devname + '! ' + themename + " lockscreen has been saved, please refresh the page.";
-                a.className = "twitter-share-button";
-                a.id="twitterShare";
-                a.href = "https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?"+themename+"&text=I%20just%20created%20a%20lockscreen%20named%20"+themename+",%20check%20it%20out%20here.&hashtags=LockPlus";
-                a.innerHTML = "Share via Twitter";
-                document.body.appendChild(div);
-                document.body.appendChild(a);
-                }*/
             },1000);
         });
 
