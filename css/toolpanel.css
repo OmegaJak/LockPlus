@@ -182,19 +182,19 @@
   	text-decoration: none;
 }
 .yesClear {
-	right: 100px;
-  	top: 306px;
+	right: 160px;
+  	top: 374px;
     color: white!important;
 }
 .noClear {
-  	right: 50px;
-  	top: 306px;
+  	right: 110px;
+  	top: 374px;
     color: white!important;
 }
 .clearLabel {
   	width: 311px;
-    right: 0;
-  	top: 302px;
+    right: 60px;
+  	top: 370px;
     text-align: left;
   	font-weight: bold;
   	color: white!important;
