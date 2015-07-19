@@ -137,7 +137,7 @@
 }
 .inputLabel::before {
     color: white;
-    bottom: 18px;
+    bottom: 19px;
     right: -12px;
     content: attr(data-title);
     position: absolute;

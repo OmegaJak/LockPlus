@@ -266,6 +266,8 @@ var action = {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
             $(idSelector).on("mousewheel", function(event) {
+                if (event.deltaY > 0) $(idSelector).val(JSON.parse($(idSelector).val()) + 1)
+                    else $(idSelector).val(JSON.parse($(idSelector).val()) - 1);
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
                 event.preventDefault();
             });
@@ -870,6 +872,9 @@ var action = {
             this.savedElements.placedElements[id].height = '50px';
             this.savedElements.placedElements[id].backgroundColor = 'red';
             this.savedElements.placedElements[id].display = 'gray';
+            this.savedElements.placedElements[id].zIndex = 1;
+        } else {
+            this.savedElements.placedElements[id].zIndex = 2;
         }
         this.saveStorage();
         loadClock(); //in clock.js
