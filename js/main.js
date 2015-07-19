@@ -221,7 +221,7 @@ var action = {
         }
 
         if (!$(divSelector).length) {
-            var divWrapper = action.getInputWrapper('custom' + textID, 58, inputTopPos, 0, 0, 'Custom Text', true);
+            var divWrapper = action.getInputWrapper('custom' + textID, 116, inputTopPos, 0, 0, 'Custom Text', true);
             divWrapper.prependTo('#textDiv');
 
             $(idSelector).val($('#' + this.selectedItem).html());
@@ -856,6 +856,7 @@ var action = {
             div.style.height = '50px';
             div.style.backgroundColor = 'red';
             div.style.display = 'gray';
+            div.style.zIndex = -3;
         }
         document.getElementById('screenElements').appendChild(div);
         this.addDraggable(id);
