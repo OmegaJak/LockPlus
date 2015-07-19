@@ -857,7 +857,9 @@ var action = {
             div.style.height = '50px';
             div.style.backgroundColor = 'red';
             div.style.display = 'gray';
-            div.style.zIndex = -3;
+            div.style.zIndex = 1;
+        } else {
+            div.style.zIndex = 2;
         }
         document.getElementById('screenElements').appendChild(div);
         this.addDraggable(id);
