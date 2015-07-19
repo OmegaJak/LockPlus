@@ -265,8 +265,9 @@ var action = {
             $(idSelector).on("change", function() {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
-            $(idSelector).on("mousewheel", function() {
+            $(idSelector).on("mousewheel", function(event) {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
+                event.preventDefault();
             });
 
             $(buttonSelector).parent().attr('class', ''); //just disable the leftToolTip Class? hide tooltip
