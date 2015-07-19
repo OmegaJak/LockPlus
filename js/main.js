@@ -68,10 +68,10 @@ var action = {
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
         if (id === 'element') { $('.elementPanel').toggle('display'); $('#helpinfo').text('Choose item from right panel'); }
-        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.');}
-        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.'); }
-        if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.'); }
-        if (id === 'position') { this.cgPosition(); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.'); }
+        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize);}
+        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
+        if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
+        if (id === 'position') { this.cgPosition(); }
         if (id === 'align') { this.cgalign(); $('#helpinfo').text('Select left, right or center. Requires width to be set.');}
         if (id === 'fonts') { this.cgfont(); $('#helpinfo').text('View live preview, tap font to select.');}
         if (id === 'uppercase') {this.cguppercase(); $('#helpinfo').text('Choose uppercase, capitalize, or lowercase.');}
@@ -241,6 +241,7 @@ var action = {
         }
     },
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, updateCallback, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
+        $('#helpinfo').text('Press + and - buttons to adjust, or enter the value.');
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
@@ -262,6 +263,7 @@ var action = {
             //var elSize = $('#' + this.selectedItem).css(cssKey);
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
+            $(idSelector).on("focus", function() { $('#helpinfo').text('Try scrolling while hovering over the input text!'); })
             $(idSelector).on("change", function() {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
@@ -280,6 +282,7 @@ var action = {
         }
     },
     handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback) {
+        $('#helpinfo').text('Ctrl+click to set to max/min. Shift click to change by 10.');
         event.preventDefault();
         var max = JSON.parse($(idSelector).attr('max'));
         var min = JSON.parse($(idSelector).attr('min'));
