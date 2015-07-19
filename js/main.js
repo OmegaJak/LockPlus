@@ -546,7 +546,6 @@ var action = {
             $(".svg").remove();
             action.clearTheme(0);
             action.hideElementPanelElements();
-            if ($('.elementPanel').is(":visible")) $('.elementPanel').toggle('display');
             $('#bgInput').after($('#bgInput').clone(true)).remove();
             $('.screen').css('background-image', '');
             $('.screenoverlay').css('background-image','');
@@ -555,9 +554,9 @@ var action = {
         }
     },
     hideElementPanelElements: function() {
-        var elementPanelElements = $('.elementPanel').find($('div'));
+        var elementPanelElements = $('.elementPanel').children();
         for (var i = 0; i < elementPanelElements.length; i++) {
-            if ($(elementPanelElements[i]).is(":visible")) $(elementPanelElements[i]).toggle('display');
+            if ($(elementPanelElements[i]).is('div') && $(elementPanelElements[i]).is(":visible")) $(elementPanelElements[i - 1]).click();
         }
     },
     createLI: function(type, div) { //create add menu
