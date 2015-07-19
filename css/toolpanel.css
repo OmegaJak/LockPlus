@@ -9,11 +9,28 @@
 	position: absolute;
 	width: 550px;
 	height: 560px;
-	overflow-y: scroll;
 	top:50%;
 	left:50%;
 	-webkit-transform: translate(-82%, -50%);
 	margin-left: -280px;
+}
+.toolPanel::after {
+    content: attr(title);
+    color: white;
+    display: block;
+    position: fixed;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+    right: 40px;
+    top: -65px;
+    font-size: 26px;
+    text-align: right;
+    background-color: #54606e;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 30px;
+    border-color: #54606e;
 }
 .toolPanel::-webkit-scrollbar-track {
     background-color: transparent;
@@ -25,6 +42,12 @@
 .toolPanel::-webkit-scrollbar {
     width: 10px;
     margin-left: -20px;
+}
+.toolPanel ul {
+    overflow-y: scroll;
+    height: 560px;
+    top: -36px;
+    position: absolute;
 }
 .toolPanel li{
 	text-align: center;

@@ -904,6 +904,7 @@ var action = {
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
+        $('.toolPanel').attr('title', action.getTitleForArray(menuArray)); // Updating the title of the menu
         for (var i = 0; i < menuArray.length; i++) {
            var div = document.createElement('div');
            div.id = "Test";
@@ -928,6 +929,24 @@ var action = {
               $('#icons').append(a);
            }
         };
+    },
+    getTitleForArray: function(menuArray) { // Any icon menu that's shown needs to be added here to update its title
+        switch (menuArray) {
+            case constants.toolArray:
+                return "Main";
+            case constants.editArray:
+                return "Element";
+            case constants.customTextArray:
+                return "Custom Text";
+            case constants.shadowArray:
+                return "Element Shadow";
+            case constants.boxShadowArray:
+                return "Box Shadow";
+            case constants.boxEditArray:
+                return "Box";
+            case iconArray:
+                return "Icon";
+        }
     },
     showProperMenuForId: function(id) {
         if(id === 'icon'){ // Special case
@@ -1012,7 +1031,7 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id){ //Clicking to show/hide a panel
-        action.setHelpText('Either scroll or use the arrow buttons to navigate the element menu.');
+        action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
         action.elementPanel(event.target.id);
         var elementChildren = $('.elementPanel').children();
         for (var i = 0; i < elementChildren.length; i++) {
