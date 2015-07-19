@@ -1039,7 +1039,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 
 $('.screen').click(function(event){
     if (event.target.id === '' && action.selectedItem != '') {
-        if (action.selectedItem.substring(0,3) != 'box') $('#' + action.selectedItem).css('background-color', 'rgba(0,0,0,0)');
+        /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#' + action.selectedItem).css('outline', '0px solid transparent');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
         action.revertElementPanel();
@@ -1051,7 +1051,8 @@ $(".select-menu").click(function () {
         $('.menulist').toggle('display');
 });
 
-$('.screen').on('dblclick',function(event){
+
+$('.screen').on('click',function(event){
     action.setHelpText('Pick a style from the left menu, scroll for more options.');
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Somehwhere on the screen was clicked
@@ -1059,21 +1060,32 @@ $('.screen').on('dblclick',function(event){
                 this.doubleClicked = false; //Not sure if this is necessary
                 action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
                 action.selectedItem = ""; // Clear the selected item
-                if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0)');
+                /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '0px solid transparent');
                 action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
-                if (action.selectedItem.substring(0,3) != 'box') $('#'+action.selectedItem).css('background', 'rgba(0,0,0,0)'); // Unhighlight the old element
+                /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
                 if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
-                if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight new element
+                /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
             }
         } else { // An element was clicked on directly
             action.showProperMenuForId(event.target.id);
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
-            if (event.target.id.substring(0,3) != 'box') $('#'+event.target.id).css('background', 'rgba(0,0,0,0.2)'); // Highlight specified item
+            if (event.target.id.substring(0,3) != 'box'){
+                $('#'+event.target.id).css('outline', '1px solid #21b9b0');
+            } // Highlight specified item
+            else{
+                $('#'+event.target.id).css('outline', '1px solid #21b9b0');
+            }
+            if (event.target.id.substring(0,3) != 'box'){
+                $('#'+event.target.id).css('outline-offset', '-1px');
+            }
+            else{
+                $('#'+event.target.id).css('outline-offset', '1px');
+            }
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
             if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
