@@ -19,7 +19,7 @@
     background-color: transparent;
 }
 .toolPanel::-webkit-scrollbar-thumb {
-    background-color: #54606e;
+    background-color: transparent;
     border-radius: 99px;
 }
 .toolPanel::-webkit-scrollbar {
@@ -203,4 +203,15 @@
     border-color: #54606e;
     border-width: 8px;
     border-radius: 30px;
+}
+.scrollImg{
+  position: absolute;
+  width: 50px;
+  bottom: 10px;
+  top:50%;
+  left:50%;
+  -webkit-transform: translate(-15%, 815%);
+  margin-left: -280px;
+  display: none;
+
 }

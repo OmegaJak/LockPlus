@@ -1053,6 +1053,11 @@ $(".select-menu").click(function () {
 
 
 $('.screen').on('click',function(event){
+    if(event.target.id.substring(0,3) != 'box')  $('.scrollImg').css('display','block');
+    if(event.target.id === ''){
+        $('.scrollImg').css('display','none');
+    }
+    console.log(event.target.id)
     action.setHelpText('Pick a style from the left menu, scroll for more options.');
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Somehwhere on the screen was clicked
@@ -1089,6 +1094,14 @@ $('.screen').on('click',function(event){
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
             if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
+    }
+});
+
+$('.scrollImg').on('click' , function(){
+    if($('.toolPanel').scrollTop() >= 220){
+        $('.toolPanel').scrollTop(0);
+    }else{
+        $('.toolPanel').scrollTop($('.toolPanel').scrollTop() + 100)
     }
 });
 
