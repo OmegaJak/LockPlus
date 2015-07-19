@@ -1,7 +1,7 @@
 .phone{
 	position: absolute;
 	width: 350px;
-	height: 710px;
+	height: 700px;
 	background-color: #252a30;
 	top: 50%;
 	left: 50%;
@@ -10,7 +10,7 @@
 }
 .phone:after{
 	position: absolute;
-	top:640px;
+	top:635px;
 	content: '';
 	width: 50px;
 	height: 50px;

@@ -67,17 +67,17 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
-        if (id === 'element') { $('.elementPanel').toggle('display'); }
-        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); }
-        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
-        if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
-        if (id === 'position') { this.cgPosition(); }
-        if (id === 'align') { this.cgalign(); }
-        if (id === 'fonts') { this.cgfont();}
-        if (id === 'uppercase') {this.cguppercase();}
-        if (id === 'weight') {this.cgweight();}
-        if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); }
-        if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1); }
+        if (id === 'element') { $('.elementPanel').toggle('display'); $('#helpinfo').text('Choose item from right panel'); }
+        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.');}
+        if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.'); }
+        if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.'); }
+        if (id === 'position') { this.cgPosition(); $('#helpinfo').text('Press + and - buttons to adjust, or enter text.'); }
+        if (id === 'align') { this.cgalign(); $('#helpinfo').text('Select left, right or center. Requires width to be set.');}
+        if (id === 'fonts') { this.cgfont(); $('#helpinfo').text('View live preview, tap font to select.');}
+        if (id === 'uppercase') {this.cguppercase(); $('#helpinfo').text('Choose uppercase, capitalize, or lowercase.');}
+        if (id === 'weight') {this.cgweight(); $('#helpinfo').text('Press + and - buttons, or choose bold or normal.');}
+        if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); $('#helpinfo').text('New menu opened (shadow menu)');}
+        if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1);  $('#helpinfo').text('New menu opened (box-shadow menu)');}
         if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
@@ -534,6 +534,7 @@ var action = {
             $('.clearLabel').remove();
             //$('#clear').parent().attr('title', 'Clear Theme');
             $('#clear').parent().attr('class','leftTooltip');
+            $('#helpinfo').text('Not cleared, double click to edit elements.');
         } else if (code === 1) { // definitely clear the theme
             localStorage.removeItem('placedElements');
             action.savedElements = {};
@@ -549,6 +550,7 @@ var action = {
             $('.screen').css('background-image', '');
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
+            $('#helpinfo').text('Select Add elements to place elements.');
         }
     },
     hideElementPanelElements: function() {
@@ -816,6 +818,7 @@ var action = {
     },
     loadFromStorage: function () { //reload elements onload
         if (localStorage.placedElements) {
+             $('#helpinfo').text('Double click elements to adjust styles.');
             this.savedElements = JSON.parse(localStorage.placedElements);
             this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
             if (this.savedElements.wallpaper) { //set wallpaper
@@ -830,6 +833,8 @@ var action = {
             if(this.savedElements.iconName){
                 this.setNewIcon(this.savedElements.iconName,1); //if second paramenter dont show list
             }
+        }else{
+            $('#helpinfo').text('Select Add elements to place elements.');
         }
     },
     addDraggable: function(id){
@@ -850,6 +855,7 @@ var action = {
             });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
+        $('#helpinfo').text('Double click element to ajust style');
         var div = document.createElement('div');
         div.id = id;
         if (id.substring(0,3) === 'box') {
@@ -1026,6 +1032,7 @@ $('.screen').click(function(event){
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
         action.revertElementPanel();
+        $('#helpinfo').text('Tapping off element de-selects it. Double tap to select.');
     }
 });
 $(".select-menu").click(function () {
@@ -1034,6 +1041,7 @@ $(".select-menu").click(function () {
 });
 
 $('.screen').on('dblclick',function(event){
+    $('#helpinfo').text('Pick a style from the left menu, scroll for more options.');
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Somehwhere on the screen was clicked
             if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
