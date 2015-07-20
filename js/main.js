@@ -1091,7 +1091,7 @@ $(".select-menu").click(function () {
 
 $('.screen').on('click',function(event){
     if(event.target.id.substring(0,3) != 'box')  $('.scrollImg').css('display','block');
-    if(event.target.id === '' || event.target.id.substring(0,3) === 'box'){
+    if(event.target.id === '' || event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){
         $('.scrollImg').css('display','none');
     }
     if(event.target.id != 'screen' && event.target.id != ''){
@@ -1113,7 +1113,12 @@ $('.screen').on('click',function(event){
             }
         } else { // An element was clicked on directly
             action.showProperMenuForId(event.target.id);
-            action.setHelpText('Pick a style from the left menu, scroll for more options.');
+            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){
+                action.setHelpText('Pick a style adjustment from the left menu.');
+            }else{
+                action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+                //$('#size').click(event); //epic fail..
+            }
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
             if (event.target.id.substring(0,3) != 'box'){
