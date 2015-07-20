@@ -540,7 +540,7 @@ var action = {
             $('.clearLabel').remove();
             //$('#clear').parent().attr('title', 'Clear Theme');
             $('#clear').parent().attr('class','leftTooltip');
-            action.setHelpText('Not cleared, double click to edit elements. (Also delete)');
+            action.setHelpText('Not cleared, click to edit elements. (Also delete)');
         } else if (code === 1) { // definitely clear the theme
             localStorage.removeItem('placedElements');
             action.savedElements = {};
@@ -817,7 +817,7 @@ var action = {
     },
     loadFromStorage: function () { //reload elements onload
         if (localStorage.placedElements) {
-             action.setHelpText('Double click elements to adjust styles.');
+             action.setHelpText('Click elements to adjust styles.');
             this.savedElements = JSON.parse(localStorage.placedElements);
             this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
             if (this.savedElements.wallpaper) { //set wallpaper
@@ -854,7 +854,7 @@ var action = {
             });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
-        action.setHelpText('Double click element to ajust style. (Also delete)');
+        action.setHelpText('Click element to ajust style. (Also delete)');
         var div = document.createElement('div');
         div.id = id;
         if (id.substring(0,3) === 'box') {
@@ -972,7 +972,7 @@ var action = {
         //if (typeof shouldStillHide === typeof undefined)
           //var shouldStillHide = true;
 
-        if (isStillShowing) {
+        if (isStillShowing && $('#helpinfo').text() != text) {
           //shouldStillHide = false; // Prevent the previous timeout from triggering
           $('#tips').hide('slide', { direction: 'up'}, function() {
             action.setHelpText(text);
@@ -1080,7 +1080,7 @@ $('.screen').click(function(event){
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
         action.revertElementPanel();
-        action.setHelpText('Tapping off element de-selects it. Double tap to select.');
+        action.setHelpText('Tapping off element de-selects it. Click back on it to re-select.');
     }
 });
 $(".select-menu").click(function () {
@@ -1094,8 +1094,6 @@ $('.screen').on('click',function(event){
     if(event.target.id === '' || event.target.id.substring(0,3) === 'box'){
         $('.scrollImg').css('display','none');
     }
-    console.log(event.target.id)
-    action.setHelpText('Pick a style from the left menu, scroll for more options.');
     if(event.target.id != 'screen' && event.target.id != ''){
         if(this.doubleClicked){ // Somehwhere on the screen was clicked
             if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
@@ -1106,6 +1104,7 @@ $('.screen').on('click',function(event){
                 action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
                 /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
+                action.setHelpText('Pick a style from the left menu, scroll for more options.');
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
                 if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
@@ -1114,6 +1113,7 @@ $('.screen').on('click',function(event){
             }
         } else { // An element was clicked on directly
             action.showProperMenuForId(event.target.id);
+            action.setHelpText('Pick a style from the left menu, scroll for more options.');
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
             if (event.target.id.substring(0,3) != 'box'){

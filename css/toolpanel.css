@@ -10,7 +10,7 @@
 	width: 550px;
 	height: 560px;
 	top:50%;
-	left:50%;
+	left:52%;
 	-webkit-transform: translate(-82%, -50%);
 	margin-left: -280px;
 }
@@ -235,7 +235,7 @@
   width: 50px;
   bottom: 10px;
   top:50%;
-  left:50%;
+  left:52%;
   -webkit-transform: translate(-15%, 815%);
   margin-left: -280px;
   display: none;
