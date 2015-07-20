@@ -67,7 +67,7 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
-        if (id === 'element') { $('.elementPanel').toggle('display'); action.setHelpText('Choose item from right panel'); }
+        if (id === 'element') {  if(!$('.elementPanel').is(":visible")) action.setHelpText('Choose item from right panel'); $('.elementPanel').toggle('display'); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
@@ -249,7 +249,7 @@ var action = {
         if (inputTopPos === undefined || !inputTopPos)
             var inputTopPos = $('#' + splitArr[3]).position().top + 11;
         if (inputRightPos === undefined || !inputRightPos)
-            var inputRightPos =  110;
+            var inputRightPos =  80;
         if (inputTitle === undefined || !inputTitle)
             var inputTitle = splitArr[1].substring(6, splitArr[1].length);
         if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
@@ -362,8 +362,8 @@ var action = {
         }
     },
     cgPosition: function() {
-        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', action.updateSize, '', '110', 'Left', 2);
-        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', action.updateSize, '', '238', 'Top', 2);
+        this.cgSize('posLeft', constants.editArray[2], 'px', 0, $('.screen').width() - $('#' + action.selectedItem).width(), 'left', 'left', action.updateSize, '', '80', 'Left', 2);
+        this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', action.updateSize, '', '208', 'Top', 2);
 
         $('#' + action.selectedItem).on('drag', function() {
             $('#posLeftInput').val($('#' + action.selectedItem).position().left);
@@ -1080,7 +1080,7 @@ $('.screen').click(function(event){
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
         action.revertElementPanel();
-        action.setHelpText('Tapping off element de-selects it. Click back on it to re-select.');
+        action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     }
 });
 $(".select-menu").click(function () {
