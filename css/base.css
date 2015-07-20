@@ -91,62 +91,34 @@ footer a {
 	display: none;
 }
 #tips{
-  	width: 311px;
-  	/*line-height: 18px;*/
-  	background-color: #21b9b0;
-  	-webkit-transform: translate(-50%);
-  	padding: 5px;
-	padding-right: 4px;
-	padding-bottom: 0;
-	height: 27px;
+  width: 311px;
+  line-height: 18px;
+  background-color: #21b9b0;
+  -webkit-transform: translate(-50%);
+  padding: 5px;
+  border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
 	position: relative;
 	display: none;
 	-webkit-transform: translate3d(0,0,0);
-	position: fixed;
-	z-index: 10;
-}
-#title{
-	content: attr(title);
-	color: white;
-	display: block;
-	position: relative;
-	height: 30px;
-	width: 100%;
-	white-space: nowrap;
-	font-size: 20px;
-	text-align: center;
-	background-color: #21b9b0;
-	border-style: solid;
-	border-width: 0px;
-	border-color: transparent;
-	border-top-width: 1px;
-	border-top-color: rgba(0,0,0,0.3);
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	padding-top: 6px;
-	z-index: 2;
 }
 #helpinfo{
-  	position: relative;
-  	left: 25px;
-	top: -21px;
-  	font-size: 12px;
-  	text-align: center;
-  	width: 289px;
-	background-color: transparent;
+  position: inherit;
+  left: 25px;
+  font-size: 12px;
+  text-align: center;
+  width: 289px;
+	background-color: #21b9b0;
 	color: white;
 }
 #helpicon{
-  position: relative;
+  position: absolute;
   left: 4%;
   font-size: 20px;
   color: white;
 }
 #helpicon:hover{
   cursor: pointer;
-}
-#menuTitle {
-
 }
 #copyright{
   position: absolute;
