@@ -944,7 +944,7 @@ var action = {
                 return "Box Shadow";
             case constants.boxEditArray:
                 return "Box Styles";
-            case iconArray:
+            case constants.iconArray:
                 return "Icon Styles";
         }
     },
