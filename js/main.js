@@ -52,6 +52,8 @@ var constants = {
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
+                gridSizeTop: 160,
+                gridSizeLeft: 284,
     iconList: ['blue', 'clima', 'deep', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
@@ -1208,3 +1210,39 @@ $('#menutips').on('click',function(){
 if(localStorage.hideTips === 'true'){
      $('#tips').css('display','none');
 }
+
+/* grid stuff */
+function createGrid(sizeleft, sizetop) {
+  var i,
+  sel = $('.screen'),
+      height = sel.height(),
+      width = sel.width(),
+      ratioW = Math.floor(width / sizeleft),
+      ratioH = Math.floor(height / sizetop);
+
+  for (i = 0; i <= ratioW; i++) { // vertical grid lines
+    $('<div />').css({
+        'top': 0,
+        'left': i * sizetop,
+        'width': 1,
+        'height': height
+    })
+      .addClass('gridlines')
+      .appendTo(sel);
+  }
+
+  for (i = 0; i <= ratioH; i++) { // horizontal grid lines
+    $('<div />').css({
+        'top': i * sizeleft,
+        'left': 0,
+        'width': width,
+        'height': 1
+    })
+      .addClass('gridlines')
+      .appendTo(sel);
+    }
+
+  $('.gridlines').show();
+}
+
+//createGrid(constants.gridSizeLeft,constants.gridSizeTop);

@@ -357,5 +357,9 @@ body {-webkit-font-smoothing: antialiased;}
 .menulist {
   display: none;
 }
-
+.gridlines {
+display: none;
+position:absolute;
+background-color:rgba(255,255,255,0.1);
+}
 
