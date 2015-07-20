@@ -856,19 +856,13 @@ var action = {
         $('#'+id).draggable({
             containment: contain,
             start: function(event, ui) {
-                startX = ui.position.left;
-                startY = ui.position.top;
+                if (action.selectedItem != id)
+                    $('#' + id).click();
             },
             stop: function(event, ui){
-                var stopX = ui.position.left;
-                var stopY = ui.position.top;
-                var distanceTraveled = Math.round(Math.sqrt(Math.pow(startX - stopX, 2) + Math.pow(startY - stopY, 2)));
-                action.savedElements.placedElements[id].left = stopX;
-                action.savedElements.placedElements[id].top = stopY;
+                action.savedElements.placedElements[id].left = ui.position.left;
+                action.savedElements.placedElements[id].top = ui.position.top;
                 action.saveStorage();
-                if (distanceTraveled < 10){
-                    $('#' + id).click();
-                }
                 //get left and top postion, save to object.
             }
         });
