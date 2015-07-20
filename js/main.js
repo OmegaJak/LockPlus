@@ -1035,6 +1035,12 @@ window.onload = function () {
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
+    var target = event.target.id;
+    if(target === 'backToEdit'){ //if any menu besides main styles is shown remove scrollImg.
+        $('.scrollImg').css('display','block');
+    }else{
+        $('.scrollImg').css('display','none');
+    }
 });
 $('#fList').on('click', function (event) { //grab clicks from toolpanel
     action.setFont(event.target.title);
@@ -1146,7 +1152,6 @@ $('.screen').on('click',function(event){
 var scrollLimitForEditMenu = 120; //one place to change incase any more edits
 
 $('#icons').on('scroll',function(){
-    console.log($('#icons').scrollTop())
     if($('#icons').scrollTop() === scrollLimitForEditMenu){
         $('.scrollImg').attr('src','css/scrollup.png');
     }else if($('#icons').scrollTop() === 0){
