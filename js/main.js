@@ -963,21 +963,18 @@ var action = {
         }
     },
     showProperMenuForId: function(id) {
-        if(id === 'icon'){ // Special case
-            action.showIconMenu(constants.iconArray, -1);
-        } else if (id.substring(0, 4) === 'text') { // Another special case
-            action.showIconMenu(constants.customTextArray, -1);
-        } else if (id.substring(0, 3) === 'box') {
-            action.showIconMenu(constants.boxEditArray, -1);
-        } else{ // Normal element, show edit menu
-            action.showIconMenu(constants.editArray, -1);
-        }
+            action.showIconMenu(action.getProperMenuForId(id), -1);
     },
-    revertElementPanel: function() { // Returns the element panel to its previous state
-        if($('.elementPanel').data('prevHiddenState'))
-            $('.elementPanel').toggle('display');
-        else
-            $('.elementPanel').hide();
+    getProperMenuForId: function(id) {
+        if(id === 'icon'){ // Special case
+            return constants.iconArray;
+        } else if (id.substring(0, 4) === 'text') { // Another special case
+            return constants.customTextArray;
+        } else if (id.substring(0, 3) === 'box') {
+            return constants.boxEditArray;
+        } else{ // Normal element, show edit menu
+            return constants.editArray;
+        }
     },
     timeout: '',
     animateHelp: function(text, opacity, time){
@@ -1012,11 +1009,13 @@ var action = {
         }
 
 
-    }/*, // Turns out this isn't needed at all, they can be hidden just by showing the icon menu again, but it might be useful in the future
-    setEditMenuInputsState: function(state, maxIndex) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
+    },
+    setEditMenuInputsState: function(state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
+        if(!id) var id = '';
+        var menuArray = action.getProperMenuForId(id);
         if (state <= -1) {
             for (var i = 0; i < maxIndex && i < constants.editArray.length; i++) {
-                var splitArray = constants.editArray[i].split("~");
+                var splitArray = menuArray[i].split("~");
                 if ((state === -2 && $('#' + splitArray[3]).children().length < 2) || (state === -1 && $('#' + splitArray[3]).children().length > 1)) {
                     $('#' + splitArray[0]).trigger('click');
                 }
@@ -1026,7 +1025,7 @@ var action = {
         } else {
             console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
         }
-    }*/
+    }
 };
 //upload images should implement into action OBJ. (TODO)
 function uploadedImage(e) {
@@ -1136,6 +1135,7 @@ $('.screen').on('click',function(event){
                 action.selectedItem = event.target.id; // Set the selected item to the new element
                 /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
+                action.setEditMenuInputsState(-2, 3, event.target.id);
             }
         } else { // An element was clicked on directly
             action.showProperMenuForId(event.target.id);
@@ -1148,17 +1148,14 @@ $('.screen').on('click',function(event){
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
             if (event.target.id.substring(0,3) != 'box'){
+                $('#'+event.target.id).css('outline-offset', '-1px');
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0');
             } // Highlight specified item
             else{
+                $('#'+event.target.id).css('outline-offset', '1px');
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0');
             }
-            if (event.target.id.substring(0,3) != 'box'){
-                $('#'+event.target.id).css('outline-offset', '-1px');
-            }
-            else{
-                $('#'+event.target.id).css('outline-offset', '1px');
-            }
+            action.setEditMenuInputsState(-2, 2, event.target.id);
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
 //removed    if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
