@@ -851,15 +851,27 @@ var action = {
         }else{
             contain = $('.screen');
         }
-            $('#'+id).draggable({
-                containment: contain,
-                stop: function(event, ui){
-                    action.savedElements.placedElements[id].left = ui.position.left;
-                    action.savedElements.placedElements[id].top = ui.position.top;
-                    action.saveStorage();
-                    //get left and top postion, save to object.
+        var startX;
+        var startY;
+        $('#'+id).draggable({
+            containment: contain,
+            start: function(event, ui) {
+                startX = ui.position.left;
+                startY = ui.position.top;
+            },
+            stop: function(event, ui){
+                var stopX = ui.position.left;
+                var stopY = ui.position.top;
+                var distanceTraveled = Math.round(Math.sqrt(Math.pow(startX - stopX, 2) + Math.pow(startY - stopY, 2)));
+                action.savedElements.placedElements[id].left = stopX;
+                action.savedElements.placedElements[id].top = stopY;
+                action.saveStorage();
+                if (distanceTraveled < 10){
+                    $('#' + id).click();
                 }
-            });
+                //get left and top postion, save to object.
+            }
+        });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
         action.setHelpText('Click element to ajust style. (Also delete)');
