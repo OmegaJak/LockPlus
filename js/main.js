@@ -221,7 +221,7 @@ var action = {
         }
 
         if (!$(divSelector).length) {
-            var divWrapper = action.getInputWrapper('custom' + textID, 116, inputTopPos, 0, 0, 'Custom Text', true);
+            var divWrapper = action.getInputWrapper('custom' + textID, 78, inputTopPos, 0, 0, 'Custom Text', true);
             divWrapper.prependTo('#textDiv');
 
             $(idSelector).val($('#' + this.selectedItem).html());
@@ -321,7 +321,7 @@ var action = {
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
-            var right = 110;
+            var right = 80;
             var margin = 0;
             for (var i = options.length - 1; i >= 0; i--) {
                 var optionDivSelector = '#' + options[i] + 'OptionDiv';
