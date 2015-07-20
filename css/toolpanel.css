@@ -14,7 +14,8 @@
 	-webkit-transform: translate(-82%, -50%);
 	margin-left: -280px;
 }
-.toolPanel::after {
+
+#logo::after {
     content: attr(title);
     color: white;
     display: block;
@@ -22,8 +23,8 @@
     height: auto;
     width: auto;
     white-space: nowrap;
-    right: 12px;
-    top: -63px;
+    right: 25px;
+    bottom: 8px;
     font-size: 20px;
     text-align: right;
     background-color: #21b9b0;
@@ -37,6 +38,7 @@
     padding-right: 10px;
     padding:0 10px 0 10px;
     border-color: #21b9b0;
+    z-index: -1;
 }
 #icons::-webkit-scrollbar-track {
     background-color: transparent;
@@ -212,19 +214,19 @@
   	text-decoration: none;
 }
 .yesClear {
-	right: 126px;
-  	top: 358px;
+	right: 160px;
+  	top: 374px;
     color: white!important;
 }
 .noClear {
-  	right: 76px;
-  	top: 358px;
+  	right: 110px;
+  	top: 374px;
     color: white!important;
 }
 .clearLabel {
   	width: 311px;
-    right: 24px;
-  	top: 354px;
+    right: 60px;
+  	top: 370px;
     text-align: left;
   	font-weight: bold;
   	color: white!important;

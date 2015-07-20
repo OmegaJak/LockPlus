@@ -904,7 +904,7 @@ var action = {
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
-        $('.toolPanel').attr('title', action.getTitleForArray(menuArray)); // Updating the title of the menu
+        $('#logo').attr('title', action.getTitleForArray(menuArray)); // Updating the title of the menu
         for (var i = 0; i < menuArray.length; i++) {
            var div = document.createElement('div');
            div.id = "Test";
