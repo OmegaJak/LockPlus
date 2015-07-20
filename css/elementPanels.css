@@ -1,11 +1,13 @@
 .elementPanel{
 	position: absolute;
-	width: 150px;
+	width: 300px;
+    height: 500px;
     top: 20%;
-	left: 50%;
+	left: 60%;
 	-webkit-transform: translate(-50%);
-	margin-left: 280px;
-	float: left;
+    margin-left: 280px;
+    float: left;
+
 }
 .elementPanel div{
   margin:0;
@@ -116,6 +118,10 @@ label {
 }
 #clockList,#weatherList,#systemList,#miscList {
     left: 26px;
+    width: 200px;
 	height: 190px;
-	overflow: visible;
+	overflow: hidden;
+}
+#clockList div, #weatherList div, #systemList div, #miscList div{
+    width: 150px!important;
 }
