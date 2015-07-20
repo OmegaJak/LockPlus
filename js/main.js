@@ -202,6 +202,9 @@ var action = {
         $(selector).on('hide.spectrum', function (e, tinycolor) {
             action.updateShadow(isForBox ? 'box' : '', tinycolor.toRgbString(), 'px', 'color', 'set'); //Added special case to updateShadow for this
         });
+        $(selector).on('move.spectrum', function(e, tinycolor) {
+                action.updateShadow(isForBox ? 'box' : '', tinycolor.toRgbString(), 'px', 'color', 'set');
+             });
     },
     cgText: function() {
         var splitArr = constants.customTextArray[0].split("~");
@@ -434,6 +437,9 @@ var action = {
             $("#" + div).on('hide.spectrum', function (e, tinycolor) {
                 action.cgcolor(tinycolor.toRgbString(), cssKey, div);
             });
+            $("#" + div).on('move.spectrum', function(e, tinycolor) {
+                action.cgcolor(tinycolor.toRgbString(), cssKey, div);
+             });
         }
     },
     cguppercase: function () {
