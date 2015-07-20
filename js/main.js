@@ -1079,7 +1079,7 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
 });
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
-    if(event.target.id){ //Clicking to show/hide a panel
+    if(event.target.id && event.target.tagName === 'H3'){ //Clicking to show/hide a panel
         action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
         action.elementPanel(event.target.id);
         var elementChildren = $('.elementPanel').children();
