@@ -904,7 +904,7 @@ var action = {
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
-        $('#logo').attr('title', action.getTitleForArray(menuArray)); // Updating the title of the menu
+        $('#logo').attr('title', 'Now Showing: ' + action.getTitleForArray(menuArray)); // Updating the title of the menu
         for (var i = 0; i < menuArray.length; i++) {
            var div = document.createElement('div');
            div.id = "Test";
@@ -935,17 +935,17 @@ var action = {
             case constants.toolArray:
                 return "Main Menu";
             case constants.editArray:
-                return "Element Styles";
+                return "Element Styles Menu";
             case constants.customTextArray:
-                return "Custom Text";
+                return "Custom Text Menu";
             case constants.shadowArray:
-                return "Element Shadow";
+                return "Element Shadow Menu";
             case constants.boxShadowArray:
-                return "Box Shadow";
+                return "Box Shadow Menu";
             case constants.boxEditArray:
-                return "Box Styles";
+                return "Box Styles Menu";
             case constants.iconArray:
-                return "Icon Styles";
+                return "Icon Styles Menu";
         }
     },
     showProperMenuForId: function(id) {
