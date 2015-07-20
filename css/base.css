@@ -158,16 +158,30 @@ footer a {
 }
 .iconList{
     position: absolute;
+    width: 320px;
+    height: 568px;
     top:0;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    background-color: #21b9b0;
-    border-radius: 10px;
+    -webkit-transform: translate(-50%, -53%);
+    background-color: #54606e;
+    overflow-y: scroll;
+    z-index: 1;
+}
+.iconList::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.iconList::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 99px;
+}
+.iconList::-webkit-scrollbar {
+    width: 10px;
+    margin-left: -20px;
 }
 .iconList img{
-    width: 100px;
-    margin-left: 10px;
+    width: 90px;
+    margin-left: 13px;
 }
 
 
