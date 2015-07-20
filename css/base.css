@@ -91,34 +91,41 @@ footer a {
 	display: none;
 }
 #tips{
-  width: 311px;
-  line-height: 18px;
-  background-color: #21b9b0;
-  -webkit-transform: translate(-50%);
-  padding: 5px;
-  border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
+  	width: 311px;
+  	/*line-height: 18px;*/
+  	background-color: #21b9b0;
+  	-webkit-transform: translate(-50%);
+  	padding: 5px;
+	padding-right: 4px;
+	padding-bottom: 0;
+	height: 27px;
 	position: relative;
 	display: none;
 	-webkit-transform: translate3d(0,0,0);
+	position: fixed;
+	z-index: 1000;
 }
 #helpinfo{
-  position: inherit;
-  left: 25px;
-  font-size: 12px;
-  text-align: center;
-  width: 289px;
-	background-color: #21b9b0;
+  	position: relative;
+  	left: 25px;
+	top: -21px;
+  	font-size: 12px;
+  	text-align: center;
+  	width: 289px;
+	background-color: transparent;
 	color: white;
 }
 #helpicon{
-  position: absolute;
+  position: relative;
   left: 4%;
   font-size: 20px;
   color: white;
 }
 #helpicon:hover{
   cursor: pointer;
+}
+#menuTitle {
+
 }
 #copyright{
   position: absolute;
