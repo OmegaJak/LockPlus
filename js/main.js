@@ -976,13 +976,16 @@ var action = {
           //shouldStillHide = false; // Prevent the previous timeout from triggering
           $('#tips').hide('slide', { direction: 'up'}, function() {
             action.setHelpText(text);
+            $('#title').animate({"top":"0px"}, 400);
           });
         } else {
           $('#helpinfo').text(text);
           $('#tips').show('slide', { direction: 'up'});
+          $('#title').animate({"top":"32px"}, 400);
 
           action.timeout = setTimeout(function() {
               $('#tips').hide('slide', { direction: 'up'});
+              $('#title').animate({"top":"0px"}, 400);
           }, 3500);
         }
 
