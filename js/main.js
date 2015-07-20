@@ -983,7 +983,6 @@ var action = {
 
           action.timeout = setTimeout(function() {
               $('#tips').hide('slide', { direction: 'up'});
-              $('#title').animate({"top":"0px"}, 400);
           }, 3500);
         }
 
