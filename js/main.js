@@ -14,8 +14,8 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
-                    ,'shadow~Edit Text Shadow~fa fa-cubes~shadowDiv'
-                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
+                    ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
+                    //,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv' //not needed
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
@@ -1143,8 +1143,11 @@ $('.screen').on('click',function(event){
     }
 });
 
+var scrollLimitForEditMenu = 120; //one place to change incase any more edits
+
 $('#icons').on('scroll',function(){
-    if($('#icons').scrollTop() === 188){
+    console.log($('#icons').scrollTop())
+    if($('#icons').scrollTop() === scrollLimitForEditMenu){
         $('.scrollImg').attr('src','css/scrollup.png');
     }else if($('#icons').scrollTop() === 0){
         $('.scrollImg').attr('src','css/scroll.png');
@@ -1152,7 +1155,7 @@ $('#icons').on('scroll',function(){
 })
 
 $('.scrollImg').on('click' , function(){
-    if($('#icons').scrollTop() >= 188){
+    if($('#icons').scrollTop() >= scrollLimitForEditMenu){
         $('#icons').scrollTop(0);
     }else{
         $('#icons').scrollTop($('#icons').scrollTop() + 100);

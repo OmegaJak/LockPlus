@@ -7,6 +7,22 @@
  June - removed Internet explorer bs. (I hate errors in console)
 */
 
+/* ************* */
+/* Custom images */
+/* To add new custom image define another background image like .ctextshadow */
+/* You will need to adjust tooltips in tooltips.css */
+/* ************* */
+.sa{
+  width: 40px;
+  height: 40px;
+  background-size: 50px;
+  display: inline-block;
+}
+.ctextshadow{
+  background-image: url('custom/textshadow.svg');
+}
+/* End Custom Images */
+
 @font-face {
     font-family: 'FontAwesome';
     src: url('fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype');

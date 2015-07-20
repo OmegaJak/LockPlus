@@ -24,6 +24,9 @@
 	border-color: #54606e;
 	text-align: right;
 }
+#shadowDiv a:hover:after{ /* special case when using .svg instead of font-awesome */
+	top:-30px;
+}
 .Tooltip{
 	display: inline;
 	position: relative;
