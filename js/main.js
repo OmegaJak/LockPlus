@@ -1104,7 +1104,11 @@ $('.screen').on('click',function(event){
                 action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
                 /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
-                action.setHelpText('Pick a style from the left menu, scroll for more options.');
+                if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
+                    action.setHelpText('Pick a style adjustment from the left menu.');
+                 }else{
+                    action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+                }
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
                 if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
@@ -1114,7 +1118,7 @@ $('.screen').on('click',function(event){
         } else { // An element was clicked on directly
             action.showProperMenuForId(event.target.id);
             if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){
-                action.setHelpText('Pick a style adjustment from the left menu.');
+                action.setHelpText('Pick a style adjustment from the left menu.'); //show different text for box and icon
             }else{
                 action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
                 //$('#size').click(event); //epic fail..
