@@ -983,7 +983,7 @@ var action = {
 
           action.timeout = setTimeout(function() {
               $('#tips').hide('slide', { direction: 'up'});
-          }, 3500);
+          }, 5000);
         }
 
 
