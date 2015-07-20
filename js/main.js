@@ -3,7 +3,7 @@ var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
     toolArray: ['background~Change Background~fa fa-photo~backgroundDiv'
                     ,'overlay~Change Overlay~fa fa-clipboard~overlayDiv'
-                    ,'element~Add Elements~fa fa-flask~elementDiv'
+                    ,'element~Show Elements Panel~fa fa-flask~elementDiv'
                     ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'load~Load Theme~fa fa-download~loadDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
@@ -67,7 +67,7 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
-        if (id === 'element') {  if(!$('.elementPanel').is(":visible")) action.setHelpText('Choose item from right panel'); $('.elementPanel').toggle('display'); }
+        if (id === 'element') {  if(!$('.elementPanel').is(":visible")) action.setHelpText('Choose item from right panel'); $('.elementPanel').toggle('display'); /* show hide text -> */ ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ? $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' : $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel'; }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
@@ -902,7 +902,7 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, -1);
-        if (toggleElementPanel) this.revertElementPanel();
+        //if (toggleElementPanel) this.revertElementPanel();
         if (document.getElementById('p' + id)) {
             document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
             document.getElementById('p' + id).style.borderColor = "#54606e";
@@ -1102,7 +1102,7 @@ $('.screen').click(function(event){
         /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#' + action.selectedItem).css('outline', '0px solid transparent');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
-        action.revertElementPanel();
+        //action.revertElementPanel();
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     }
 });
@@ -1124,7 +1124,7 @@ $('.screen').on('click',function(event){
                 action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
                 action.selectedItem = ""; // Clear the selected item
                 /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '0px solid transparent');
-                action.revertElementPanel(); // Put the elementPanel back to its previous state
+                //action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
                 /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
                 if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
@@ -1133,7 +1133,7 @@ $('.screen').on('click',function(event){
                     action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
                 }
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-                if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
+//removed        if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
                 /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
@@ -1161,7 +1161,7 @@ $('.screen').on('click',function(event){
                 $('#'+event.target.id).css('outline-offset', '1px');
             }
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
-            if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
+//removed    if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
     }
 });
