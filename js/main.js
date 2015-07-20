@@ -965,10 +965,31 @@ var action = {
         else
             $('.elementPanel').hide();
     },
+    timeout: '',
     setHelpText: function(text) {
-        $('#helpinfo').text(text);
-        $('#tips').css('height', $('#helpinfo').height());
-        $('#helpicon').css('height', ($('#helpinfo').height() / 2) + 10);
+        var isStillShowing = $('#tips').is(":visible");
+        clearTimeout(action.timeout);
+        //if (typeof shouldStillHide === typeof undefined)
+          //var shouldStillHide = true;
+
+        if (isStillShowing) {
+          //shouldStillHide = false; // Prevent the previous timeout from triggering
+          $('#tips').hide('slide', { direction: 'up'}, function() {
+            action.setHelpText(text);
+          });
+        } else {
+          $('#helpinfo').text(text);
+          $('#tips').show('slide', { direction: 'up'});
+
+          action.timeout = setTimeout(function() {
+            //if (shouldStillHide)
+              $('#tips').hide('slide', { direction: 'up'}, function() {
+
+              });
+          }, 1500);
+        }
+
+
     }/*, // Turns out this isn't needed at all, they can be hidden just by showing the icon menu again, but it might be useful in the future
     setEditMenuInputsState: function(state, maxIndex) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if (state <= -1) {
@@ -1146,4 +1167,3 @@ $('#menutips').on('click',function(){
 if(localStorage.hideTips === 'true'){
      $('#tips').css('display','none');
 }
-

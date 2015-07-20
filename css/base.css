@@ -91,28 +91,31 @@ footer a {
 	display: none;
 }
 #tips{
-  width: 320px;
-  height: 20px;
-  bottom: 17px;
+  width: 311px;
   line-height: 18px;
-  background-color: rgba(0,0,0,0.3);
-  left: 50%;
+  background-color: #21b9b0;
   -webkit-transform: translate(-50%);
   padding: 5px;
-  border-radius: 999px;
+  border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	position: relative;
+	display: none;
+	-webkit-transform: translate3d(0,0,0);
 }
 #helpinfo{
   position: inherit;
   left: 25px;
   font-size: 12px;
   text-align: center;
-  width: 300px;
+  width: 289px;
+	background-color: #21b9b0;
+	color: white;
 }
 #helpicon{
   position: absolute;
-  left: -44%;
+  left: 4%;
   font-size: 20px;
-  color:#21b9b0;
+  color: white;
 }
 #helpicon:hover{
   cursor: pointer;
@@ -318,4 +321,3 @@ body {-webkit-font-smoothing: antialiased;}
 .menulist {
   display: none;
 }
-
