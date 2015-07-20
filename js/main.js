@@ -982,11 +982,8 @@ var action = {
           $('#tips').show('slide', { direction: 'up'});
 
           action.timeout = setTimeout(function() {
-            //if (shouldStillHide)
-              $('#tips').hide('slide', { direction: 'up'}, function() {
-
-              });
-          }, 1500);
+              $('#tips').hide('slide', { direction: 'up'});
+          }, 3500);
         }
 
 
@@ -1154,6 +1151,16 @@ $('.scrollImg').on('click' , function(){
 });
 
 $('#bgInput').on('change', uploadedImage);
+
+//notification hover
+$('#tips').mouseenter(function() {
+  clearInterval(action.timeout);
+});
+$('#tips').mouseleave(function() {
+  action.timeout = setTimeout(function() {
+      $('#tips').hide('slide', { direction: 'up'});
+  }, 1250);
+});
 
 //hide-show tips
 $('#helpicon').on('click',function(){
