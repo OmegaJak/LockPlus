@@ -966,23 +966,34 @@ var action = {
             $('.elementPanel').hide();
     },
     timeout: '',
+    animateHelp: function(text, opacity, time){
+        $( "#tips" ).animate({
+            opacity: opacity,
+            top: 'toggle'
+            }, time, function() {
+                if(text){
+                    action.setHelpText(text)
+                }
+            });
+    },
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
         //if (typeof shouldStillHide === typeof undefined)
           //var shouldStillHide = true;
-
         if (isStillShowing && $('#helpinfo').text() != text) {
           //shouldStillHide = false; // Prevent the previous timeout from triggering
-          $('#tips').hide('slide', { direction: 'up'}, function() {
+         /* $('#tips').hide('slide', { direction: 'up'}, function() {
             action.setHelpText(text);
-          });
+          });*/
+        action.animateHelp(text, 1, 300);
         } else {
           $('#helpinfo').text(text);
-          $('#tips').show('slide', { direction: 'up'});
-
+         // $('#tips').show('slide', { direction: 'up'});
+          action.animateHelp(false, 1, 300);
           action.timeout = setTimeout(function() {
-              $('#tips').hide('slide', { direction: 'up'});
+              //$('#tips').hide('slide', { direction: 'up'});
+              action.animateHelp(false, 0, 200);
           }, 5000);
         }
 
