@@ -933,9 +933,9 @@ var action = {
     getTitleForArray: function(menuArray) { // Any icon menu that's shown needs to be added here to update its title
         switch (menuArray) {
             case constants.toolArray:
-                return "Main";
+                return "Main Menu";
             case constants.editArray:
-                return "Element";
+                return "Element Styles";
             case constants.customTextArray:
                 return "Custom Text";
             case constants.shadowArray:
@@ -943,9 +943,9 @@ var action = {
             case constants.boxShadowArray:
                 return "Box Shadow";
             case constants.boxEditArray:
-                return "Box";
+                return "Box Styles";
             case iconArray:
-                return "Icon";
+                return "Icon Styles";
         }
     },
     showProperMenuForId: function(id) {
@@ -1073,7 +1073,7 @@ $(".select-menu").click(function () {
 
 $('.screen').on('click',function(event){
     if(event.target.id.substring(0,3) != 'box')  $('.scrollImg').css('display','block');
-    if(event.target.id === ''){
+    if(event.target.id === '' || event.target.id.substring(0,3) === 'box'){
         $('.scrollImg').css('display','none');
     }
     console.log(event.target.id)
@@ -1116,11 +1116,19 @@ $('.screen').on('click',function(event){
     }
 });
 
+$('#icons').on('scroll',function(){
+    if($('#icons').scrollTop() === 188){
+        $('.scrollImg').attr('src','css/scrollup.png');
+    }else if($('#icons').scrollTop() === 0){
+        $('.scrollImg').attr('src','css/scroll.png');
+    }
+})
+
 $('.scrollImg').on('click' , function(){
-    if($('.toolPanel').scrollTop() >= 220){
-        $('.toolPanel').scrollTop(0);
+    if($('#icons').scrollTop() >= 188){
+        $('#icons').scrollTop(0);
     }else{
-        $('.toolPanel').scrollTop($('.toolPanel').scrollTop() + 100)
+        $('#icons').scrollTop($('#icons').scrollTop() + 100);
     }
 });
 
