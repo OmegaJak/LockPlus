@@ -9,10 +9,11 @@
 	position: absolute;
 	width: 550px;
 	height: 560px;
-	top:50%;
+	top:51%;
 	left:52%;
 	-webkit-transform: translate(-82%, -50%);
 	margin-left: -280px;
+	z-index: -1;
 }
 .toolPanel::after {
     content: attr(title);
@@ -22,18 +23,21 @@
     height: auto;
     width: auto;
     white-space: nowrap;
-    right: 40px;
+    right: 3px;
     top: -65px;
-    font-size: 26px;
+    font-size: 20px;
     text-align: right;
-    background-color: #54606e;
+    background-color: #21b9b0;
     border-style: solid;
     border-width: 5px;
+	border-right-width: 35px;
     border-radius: 30px;
+	border-bottom-right-radius: 0px;
+	border-top-right-radius: 0px;
     padding-left: 10px;
     padding-right: 10px;
     padding:0 10px 0 10px;
-    border-color: #54606e;
+    border-color: #21b9b0;
 }
 #icons::-webkit-scrollbar-track {
     background-color: transparent;
@@ -236,7 +240,7 @@
   bottom: 10px;
   top:50%;
   left:52%;
-  -webkit-transform: translate(-15%, 730%);
+  -webkit-transform: translate(-15%, 815%);
   margin-left: -280px;
   display: none;
 
