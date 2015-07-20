@@ -40,16 +40,20 @@
     border-color: #21b9b0;
     z-index: -1;
 }
+#icons{
+  padding-right: 7px;
+}
 #icons::-webkit-scrollbar-track {
     background-color: transparent;
 }
 #icons::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 99px;
+    background-color: #21b9b0;
+    -webkit-background-clip: padding-box;
+    border-radius: 5px;
 }
 #icons::-webkit-scrollbar {
     width: 10px;
-    margin-left: -20px;
+    margin-left: 0px;
 }
 .toolPanel ul {
     overflow-y: scroll;
