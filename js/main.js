@@ -637,15 +637,15 @@ var action = {
                     verticalSwiping: true
                 });
 
-                var prevButton = $('#' + div).find('.slick-prev')[0];
-                $(prevButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-down');
+                var prevButton = $('#' + div).find('.slick-next')[0];
+                $(prevButton).attr('class', 'slick-next slick-arrow fa fa-arrow-down');
                 $(prevButton).html('');
-                $(prevButton).click(function() {action.buttonPress('prev', div);});
+                $(prevButton).click(function() {action.buttonPress('next', div);});
 
-                var nextButton = $('#' + div).find('.slick-next')[0];
-                $(nextButton).attr('class', 'slick-next slick-arrow fa fa-arrow-up');
+                var nextButton = $('#' + div).find('.slick-prev')[0];
+                $(nextButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-up');
                 $(nextButton).html('');
-                $(nextButton).click(function() {action.buttonPress('next', div);});
+                $(nextButton).click(function() {action.buttonPress('prev', div);});
 
                 if (numDivChildren <= 5)
                     $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');

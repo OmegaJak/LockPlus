@@ -78,10 +78,10 @@
     text-decoration: none;
 }
 .slick-prev {
-    top: 146px;
+    top: 0px;
 }
 .slick-next {
-    top: 0px;
+    top: 146px;
 }
 .slick-list {
     height: 51px!important;
