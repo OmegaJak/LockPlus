@@ -1,59 +1,29 @@
 <html>
 <head>
 	<title>LockPlus Saved</title>
-<style type="text/css">
-html{
-    background: url(../css/bg.jpg) no-repeat center center fixed ;
-    background-size: cover;
-}
-body{
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-weight: 200;
-	-webkit-font-smoothing: antialiased;
-}
-#refresh{
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top:50%;
-    color:white;
-    font-size: 30px;
-    -webkit-transform: translate(0% -50%);
-}
-.img{
-	position: absolute;
-	top:13%;
-	left:43%;
-	-webkit-transform: translate(-50% -50%);
-}
-.buttons{
-	position: absolute;
-	top:60%;
-	left:50%;
-    -webkit-transform: translate(-50%);
-}
-.btn{
-    position: relative;
-    text-align: center;
-    background-color: #21b9b0;
-    padding: 10px;
-    border-radius: 9999px;
-    text-decoration: none;
-    color:white;
-    font-size: 19px;
-    margin-left:10px;
-}
-.btn:hover{
-  background-color: #54606e;
-}
-</style>
+     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+<div id="animations">
+<svg width="400px" height="400px"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" stroke="#000000">
+            <path d="M99.556968,144.845323 C99.556968,144.845323 94.4755721,106.274531 122.574566,74.9536573 C150.67356,43.6327832 188.025579,45.4613938 188.025579,45.4613938 C188.025579,45.4613938 228.675325,42.3194516 256.363369,74.7221621 C284.051412,107.124873 278.886289,142.133307 278.886289,142.133307" id="Path-1"></path>
+            <path d="M295.612806,183.834992 C295.612806,183.834992 270.145826,120.328907 191.011648,120.328905 C111.87747,120.328903 73.2336292,188.190466 73.2336347,237.634678 C73.2336401,287.07889 112.256289,355.302272 191.016744,355.302275 C269.777199,355.302278 296.941193,288.740218 296.941193,288.740218" id="Path-2"></path>
+            <path d="M193.496851,176.855013 C193.496851,176.651481 157.803663,177.435972 157.803663,213.511368 C157.803663,213.511367 158.827982,229.856307 170.606803,238.3923 C182.385624,246.928294 179.329653,261.221197 179.329653,261.221197 L208.089605,261.221197 C208.089605,261.221197 206.875851,244.643536 216.976354,237.884388 C227.076857,231.125239 228.007742,213.511368 228.007742,213.511368 C228.007742,213.511368 227.419989,176.651481 193.496851,176.855013 Z" id="Path-3"></path>
+            <path d="M211.92868,268.830623 C211.913168,266.623538 210.107994,264.834343 207.90415,264.834343 L179.996442,264.834343 C177.789268,264.834343 176,266.625641 176,268.830623 L176,274.981678 C176,277.188763 177.785246,278.977958 179.990179,278.977958 L208.009821,278.977958 C210.213536,278.977958 211.98741,277.186659 211.971912,274.981678 L211.92868,268.830623 Z" id="Path-4"></path>
+            <path d="M180.374686,281.854927 L207.832499,281.854927 C207.832499,281.854927 206.785617,291.173129 194.29441,291.173129 C181.803204,291.173129 180.374686,281.854927 180.374686,281.854927 Z" id="Path-5"></path>
+            <path d="M299.964412,224.753092 L300.380297,206.708311 C300.380297,206.708311 299.93573,197.906213 311.597236,197.906212 C323.258742,197.906212 323.391794,207.213428 323.391794,207.213428 L323.391794,224.638867 L340.45484,224.638867 C340.45484,224.638867 350.582057,226.282783 350.582057,236.332537 C350.582057,246.382291 342.294636,248.152589 342.294636,248.152589 L323.55897,248.152589 L323.55897,264.840389 C323.55897,264.840389 323.822816,275.291862 312.101556,275.291863 C300.380297,275.291863 300.10304,264.959276 300.10304,264.959276 L300.10304,248.18871 L282.16692,248.18871 C282.16692,248.18871 272.97253,247.125919 272.97253,235.882393 C272.972531,224.638867 284.509749,224.983342 284.509749,224.983342 L299.964412,224.753092 Z" id="Path-6"></path>
+        </g>
+    </g>
+</svg>
+<img id="image" src="june.png">
+</div>
+<script src="js/index.js"></script>
 	<?php
 	$query = $_SERVER['QUERY_STRING'];
-	echo '<img class="img" src="thumb.png" width="200"/>';
-	echo '<div id="refresh">Great job! <b>'.$query.'</b> lockscreen has been saved.</div>';
+	echo '<div id="refresh">Great job! <b>'.str_replace("%20"," ",$query).'</b> lockscreen has been saved.</div>';
 	echo '<div class="buttons"><a id="twitterShare" class="twitter-share-button btn" href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.$query.'&text=I%20just%20created%20a%20lockscreen%20named%20'.$query.',%20check%20it%20out%20here.&hashtags=LockPlus">Share via Twitter</a>';
 	echo '<a id="viewTheme" class="btn" href="http://lockplus.us/preview?'.$query.'">View theme page</a>';
 	echo '<a id="makeAnother" class="btn" href="http://lockplus.us">Create another</a></div>'

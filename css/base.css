@@ -336,26 +336,43 @@ body {-webkit-font-smoothing: antialiased;}
  background: rgba(111,111,111,.0);
 }
 .menuUL {
-  text-align: center;
-  width: 100%;
+  width: 100px;
+  position: absolute;
+  right:70px;
   padding-left: 0;
 }
-.select-menu li {
+.menuUL li {
   position: relative;
   list-style: none;
   padding-bottom: 15px;
-  top: 20px;
-  left:-100px;
+  padding: 4px;
+  background-color: #21b9b0;
+  margin-top: 5px;
+  border-radius: 999px;
+  text-align: center;
 }
-.select-menu li a {
+.menuUL li a {
   text-decoration: none;
   color: white;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
+}
+#menutips:after{
+  position: absolute;
+  left:74px;
+  top:-4px;
+  width: 24px;
+  height: 24px;
+  content:attr(title);
+  padding:5px;
+  background-color:#54606e;
+  border-radius: 100%;
+  border:3px solid #21b9b0;
 }
 
 .menulist {
   display: none;
+  text-align: center;
 }
 .gridlines {
 display: none;

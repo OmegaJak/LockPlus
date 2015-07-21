@@ -1158,10 +1158,6 @@ $('.screen').click(function(event){
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     }
 });
-$(".select-menu").click(function () {
-        $(this).toggleClass("menu-on");
-        $('.menulist').toggle('display');
-});
 
 $('.screen').on('click',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
@@ -1225,18 +1221,6 @@ $('#tips').mouseleave(function() {
   }, 1250);
 });
 
-//hide-show tips
-$('#helpicon').on('click',function(){
-    $('#tips').css('display','none');
-    localStorage.setItem('hideTips',true);
-});
-$('#menutips').on('click',function(){
-    $('#tips').css('display','block');
-    localStorage.setItem('hideTips',false);
-});
-if(localStorage.hideTips === 'true'){
-     $('#tips').css('display','none');
-}
 
 /* grid stuff */
 function createGrid(sizeleft, sizetop) {
@@ -1271,5 +1255,30 @@ function createGrid(sizeleft, sizetop) {
 
   $('.gridlines').show();
 }
-
 //createGrid(constants.gridSizeLeft,constants.gridSizeTop);
+
+
+/* Top right menu */
+$('#menutips').on('click',function(){
+    if($('#tips').css('top') === "-300px"){
+        $('#tips').css('top','100px');
+        localStorage.setItem('hideTips',false);
+        $(this).attr('title','On');
+    }else{
+        $('#tips').css('top','-300px');
+        localStorage.setItem('hideTips',true);
+        $(this).attr('title','Off');
+    }
+});
+
+if(localStorage.hideTips === 'true'){
+     $('#tips').css('top','-300px');
+     $('#menutips').attr('title','Off');
+}
+$(".select-menu").click(function () {
+    $(this).toggleClass("menu-on");
+    $('.menulist').toggle();
+   // $('.menulist').toggle('display');
+});
+/* End Top right menu */
+
