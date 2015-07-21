@@ -1210,6 +1210,10 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
     }
 });
 
+$('.subCategory').on('click',function(event){ //click event for subCategories
+    alert("test");
+});
+
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id && event.target.tagName === 'H3'){ //Clicking to show/hide a panel
         action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
