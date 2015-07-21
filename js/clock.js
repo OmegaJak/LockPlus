@@ -208,6 +208,7 @@ function loadClock() {
         refresh: 1000,
         success: function (clock) {
             'use strict';
+            window.cF = clock;
             var clockElements = {
                 clock: clock.hour() + ":" + clock.minute(),
                 zclock: clock.zhour() + ":" + clock.minute(),

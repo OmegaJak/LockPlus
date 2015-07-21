@@ -123,85 +123,85 @@ var elementPanel = {
         title: "Clock Elements",
         clocks: {
             title: "Clock",
-            clock: "12:00",
-            clockline: "12|00",
-            zclock: "01:00",
-            clockpm: "12:00am",
-            ttext: "Five Thirty"
+            clock: cF.hour() + ":" + cF.minute(),
+            clockline: cF.hour() + "|" + cF.minute(),
+            zclock: cF.zhour() + ":" + cF.minute(),
+            clockpm: cF.hour() + ":" + cF.minute() + cF.am(),
+            ttext: cF.hourtext() + " " + cF.minuteonetext() + ' ' + cF.minutetwotext()
         },
         hours: {
             title: "Hour",
-            zhour: "05",
-            hour: "12",
-            htext: "Five"
+            zhour: cF.zhour(),
+            hour: cF.hour(),
+            htext: cF.minuteonetext() + ' ' + cF.minutetwotext()
         },
         minutes: {
             title: "Minute",
-            min: "30",
-            mtext: "Thirty"
+            min: cF.minute(),
+            mtext: cF.minuteonetext() + ' ' + cF.minutetwotext()
         },
         pm: {
             title: "PM",
-            pm: "PM"
+            pm: cF.am()
         },
         dates: {
             title: "Date",
-            date: "10",
-            dateplus: "10th",
-            datetext: "Tenth"
+            date: cF.date(),
+            dateplus: cF.dateplus(),
+            datetext: cF.datetext()
         },
         prevdates: {
             title: "Previous Date",
-            prevdate: "9"
+            prevdate: cF.prevdate()
         },
         nextdates: {
             title: "Next Date",
-            nextdate: "10"
+            nextdate: cF.nextdate()
         },
         days: {
             title: "Day",
-            day: "Monday",
-            sday: "Mon",
+            day: cF.daytext(),
+            sday: cF.sdaytext(),
         },
         prevdays: {
             title: "Previous Day",
-            prevday: "Sunday",
-            sprevday: "Sun"
+            prevday: cF.prevdate(),
+            sprevday: cF.sprevday()
         },
         nextdays: {
             title: "Next Day",
-            nextday: "Tuesday",
-            snextday: "Tue"
+            nextday: cF.nextdaytext(),
+            snextday: cF.snextday()
         },
         months: {
             title: "Month",
-            month: "Feburary",
-            smonth: "Feb",
+            month: cF.monthtext(),
+            smonth: cF.smonthtext(),
         },
         prevmonths: {
             title: "Previous Month",
-            prevmonth: "January",
-            sprevmonth: "Jan",
+            prevmonth: cF.prevmonthtext(),
+            sprevmonth: cF.sprevmonth(),
         },
         nextmonths: {
             title: "Next Month",
-            nextmonth: "March",
-            snextmonth: "Mar"
+            nextmonth: cF.nextmonthtext(),
+            snextmonth: cF.snextmonth()
         },
         years: {
             title: "Year",
-            year: "2015"
+            year: cF.year()
         },
         strings: {
             title: "Strings",
-            datestring: "Day, Month Date",
-            datedotmonth: "5.June",
-            dateslashmonth: "5/June",
-            datedash: "day-month-date",
-            datemonth: "20 July",
-            monthdot: "January.30",
-            monthline: "Month|Date|Year",
-            mdy: "5/10/2015"
+            datestring: cF.daytext() + ", " + cF.monthtext() + " " + cF.date(),
+            datedotmonth: cF.date() + '.' + cF.monthtext(),
+            dateslashmonth: cF.date() + "/" + cF.monthtext(),
+            datedash: cF.daytext() + "-" + cF.monthtext() + "-" + cF.date(),
+            datemonth: cF.date() + " " + cF.monthtext(),
+            monthdot: cF.monthtext() + "." + cF.date(),
+            monthline: cF.monthtext() + "|" + cF.date() + "|" + cF.year(),
+            mdy: cF.month() + "/" + cF.date() + "/" + cF.year()
         }
     },
     weatherElements: {
