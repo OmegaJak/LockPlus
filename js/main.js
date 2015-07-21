@@ -333,6 +333,16 @@ var action = {
 
         return divSelector;
     },
+    /**
+    * -----Parameters-----
+    * key: The prefix for all elements in this input. Ex: 'align'
+    * nameString: The relevant string, seperated by "~", properly formatted, from constants. Ex: constants.editArray[3]
+    * options: An array of the names of the options. Ex: ['left', 'center', 'right']
+    * optionsTop: The top position of the options. Ex: 10
+    * adjustWidth: Manually set the width of the options I think? Ex: false
+    * optionSelectedCallback: The function to call when an option has been selected. Must take id as a parameter.
+    * getOptionElement: The function to call to create the actual element contained in the option div. Must take take optionName.
+    */
     cgOption: function(key, nameString, options, optionsTop, adjustWidth, optionSelectedCallback, getOptionElement) {
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
@@ -705,8 +715,18 @@ var action = {
     parseElementsArray: function(array) {
         Object.keys(array).forEach(function (key) {
             if (array[key].constructor === Object) { // if this is another array
-                action.parseElementsArray(array[key]);
-            } else if (key === 'name') {
+                if (array[key].length > 2) {
+                    action.parseElementsArray(array[key]);
+                } else {
+                    Object.keys(array[key]).forEach(function (key) { // Gotta do custom stuff in this situation, not just recursion
+                        if (key === 'title') {
+                            // thing.setLabel(array[key])
+                        } else {
+                            // thing.setId(key)
+                        }
+                    });
+                }
+            } else if (key === 'title') {
                 //Set the name of the upper category
             } else { //It's an item in the subcategory
                 // thing.setLabel(array[key]);
