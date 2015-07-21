@@ -15,7 +15,6 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
-                    //,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv' //not needed
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
@@ -26,8 +25,7 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
-                    ,'shadow~Edit Text Shadow~fa fa-cubes~shadowDiv'
-                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
+                    ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
