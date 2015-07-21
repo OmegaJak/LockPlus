@@ -261,7 +261,6 @@ var action = {
     * intendedNumberOfInputs: Optional(ish). Necessary if multiple inputs are going to be shown. Ex: 2
     */
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, updateCallback, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
-        //action.setHelpText('Press + and - buttons to adjust, or enter the value.');
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
@@ -280,7 +279,6 @@ var action = {
             $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit, updateCallback) });
             $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback) });
 
-            //var elSize = $('#' + this.selectedItem).css(cssKey);
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
             $(idSelector).on("focus", function() { action.setHelpText('Try scrolling while hovering over the input text!'); })
@@ -357,7 +355,6 @@ var action = {
                 var optionDivSelector = '#' + options[i] + 'OptionDiv';
                 var optionSelector = '#' + options[i] + 'Option';
                 $('<div id="' + options[i] + 'OptionDiv" style="top: ' + optionsTop + 'px;"></div>').appendTo($(divSelector));
-                //$('<label id="' + options[i] + 'Option">' + options[i] + '</label>').appendTo($('#' + options[i] + 'OptionDiv'));
                 getOptionElement(options[i]).appendTo($('#' + options[i] + 'OptionDiv'));
                 $(optionDivSelector).css({'right': right
                                                         ,'width': $('#' + options[i] + 'Option').width() + 10
@@ -377,12 +374,8 @@ var action = {
                 (function(index){
                     $(optionDivSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
                 })(i);
-                /*(function(index){
-                    $(optionSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
-                })(i); //Variables passed as references, not values, are a bitch*/
             }
 
-            //$(buttonSelector).parent().attr('title', '');
             $(buttonSelector).parent().attr('class',' '); //instead of removing the title, just remove class. hide toolTip
             $(divSelector).css('display', 'none'); // Have to have display set to block before this because sizing depends on the displayed width ↑
             $(divSelector).toggle('display');
@@ -554,7 +547,6 @@ var action = {
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
             } else {
-                //$('#clear').parent().attr('title', ''); // Hide the tooltip
                 $('#clear').parent().attr('class',' '); //Hide tooltip
                 $('<button type="button" class="noClear">No</button>').prependTo('#clearDiv');
                 $('<button type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
@@ -571,7 +563,6 @@ var action = {
             $('.noClear').remove();
             $('.yesClear').remove();
             $('.clearLabel').remove();
-            //$('#clear').parent().attr('title', 'Clear Theme');
             $('#clear').parent().attr('class','leftTooltip');
             action.setHelpText('Not cleared, click to edit elements. (Also delete)');
         } else if (code === 1) { // definitely clear the theme
@@ -859,8 +850,6 @@ var action = {
                 } else if (skey === 'textAlign') {
                     skey = 'text-align';
                 }
-               // console.log(key + skey + styleVal)
-                //document.getElementById(key).style.cssText += skey + ":" + styleVal; //use jquery instead?
                 $('#' + key).css(skey, styleVal);
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
                     $('.icon').css(skey,styleVal);
@@ -957,7 +946,6 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, -1);
-        //if (toggleElementPanel) this.revertElementPanel();
         if (document.getElementById('p' + id)) {
             document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
             document.getElementById('p' + id).style.borderColor = "#54606e";
@@ -1037,20 +1025,12 @@ var action = {
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
-        //if (typeof shouldStillHide === typeof undefined)
-          //var shouldStillHide = true;
         if (isStillShowing && $('#helpinfo').text() != text) {
-          //shouldStillHide = false; // Prevent the previous timeout from triggering
-         /* $('#tips').hide('slide', { direction: 'up'}, function() {
-            action.setHelpText(text);
-          });*/
-        action.animateHelp(text, 1, 300);
+            action.animateHelp(text, 1, 300);
         } else {
           $('#helpinfo').text(text);
-         // $('#tips').show('slide', { direction: 'up'});
           action.animateHelp(false, 1, 300);
           action.timeout = setTimeout(function() {
-              //$('#tips').hide('slide', { direction: 'up'});
               action.animateHelp(false, 0, 200);
           }, 5000);
         }
@@ -1151,10 +1131,9 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 
 $('.screen').click(function(event){
     if (event.target.id === '' && action.selectedItem != '') {
-        /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#' + action.selectedItem).css('outline', '0px solid transparent');
+        $('#' + action.selectedItem).css('outline', '0px solid transparent');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
-        //action.revertElementPanel();
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     }
 });
@@ -1170,19 +1149,18 @@ $('.screen').on('click',function(event){
                 this.doubleClicked = false; //Not sure if this is necessary
                 action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
                 action.selectedItem = ""; // Clear the selected item
-                /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '0px solid transparent');
+                $('#'+event.target.id).css('outline', '0px solid transparent');
                 //action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
-                /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
+                $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
                 if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
                     action.setHelpText('Pick a style adjustment from the left menu.');
                  }else{
                     action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
                 }
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-//removed        if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
-                /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
                 action.setEditMenuInputsState(-2, 3, event.target.id);
             }
@@ -1192,7 +1170,6 @@ $('.screen').on('click',function(event){
                 action.setHelpText('Pick a style adjustment from the left menu.'); //show different text for box and icon
             }else{
                 action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
-                //$('#size').click(event); //epic fail..
             }
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
@@ -1206,7 +1183,6 @@ $('.screen').on('click',function(event){
             }
             action.setEditMenuInputsState(-2, 2, event.target.id);
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
-//removed    if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
     }
 });
