@@ -736,7 +736,7 @@ var action = {
             $('#' + div).append(li);
         }*/
 
-        /*setTimeout(function() {
+        setTimeout(function() {
             if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
                 var numSlides = 0;
                 var padding = '69px';
@@ -765,6 +765,9 @@ var action = {
                     slidesToShow: numSlides,
                     verticalSwiping: true
                 });
+
+                $($('#' + div).find('[aria-live=polite]')).attr('style', 'width: 500px');
+                $('.slick-slide').css('float', 'none');
 
                 var prevButton = $('#' + div).find('.slick-next')[0];
                 $(prevButton).attr('class', 'slick-next slick-arrow fa fa-arrow-down');
@@ -811,7 +814,7 @@ var action = {
             });
 
             if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
-        }, 401);*/
+        }, 401);
 
     },
     parseElementsArray: function(array, divSelector) {

@@ -6,8 +6,6 @@
 	left: 55%;
 	-webkit-transform: translate(-50%);
     margin-left: 280px;
-    float: left;
-
 }
 .elementPanel div{
   margin:0;
@@ -117,12 +115,27 @@ label {
     background-color: #21b9b0;
     border-color: #21b9b0;
 }
+.categoryTitle {
+	cursor: pointer;
+}
+.subCategory {
+	cursor: pointer;
+	position: absolute;
+	left: 150px;
+	top: -31px;
+	list-style: none outside none;
+}
+.subCategory li {
+	height: 20px;
+	font-size: 20px;
+}
 #clockList,#weatherList,#systemList,#miscList {
     left: 26px;
-    width: 200px;
+    width: 500px;
 	height: 190px;
-	overflow: hidden;
+	overflow: visible;
+	display: inline;
 }
-#clockList div, #weatherList div, #systemList div, #miscList div{
+#clockList li, #weatherList li, #systemList li, #miscList li{
     width: 150px!important;
 }
