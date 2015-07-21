@@ -12,6 +12,7 @@
 	content: attr(title);
 	position: absolute;
 	z-index: -2;
+	padding-left: 10px;
 	white-space: nowrap;
 	pointer-events:none;
 	border-style: solid;
