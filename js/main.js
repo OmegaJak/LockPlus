@@ -531,7 +531,7 @@ var action = {
         });
     },
     elementPanel: function (id) { //show hide items in element Panel
-        if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(clockEl, 'clockList'); }
+        if (id === 'cl') { $('#clockList').toggle('display'); this.createNewLI(elementPanel.clockElements, 'clockList'); }
         if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
         if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
         if (id === 'ml') { $('#miscList').toggle('display'); this.createLI(miscEl, 'miscList'); }
@@ -701,11 +701,124 @@ var action = {
         }, 401);
 
     },
-    parseElementsArray: function(array) {
+    createNewLI: function(type, div) { //create add menu
+        $('#' + div).empty();
+        action.parseElementsArray(type, '#' + div);
+        /*for (var i = 0; i < type.length; i++) {
+            var li = document.createElement('li'),
+                element = type[i].split('~'),
+                label = element[0],
+                desc = element[1];
+            li.id = 'p' + label;
+            li.innerHTML = '<a title="'+label+'"><label>' + desc + '</label></a>';
+
+            switch (i) { //This is all to smooth the transition into the slick.js carousel
+                case 0:
+                    li.style.opacity = 0.07;
+                    break;
+                case 1:
+                    li.style.opacity = 0.5;
+                    break;
+                case 2:
+                    li.style.fontSize = "30px";
+                    break;
+                case 3:
+                    li.style.opacity = 0.5;
+                    break;
+                case 4:
+                    li.style.opacity = 0.07;
+            }
+
+            if (document.getElementById(label)) {
+                li.style.backgroundColor = "#21b9b0"; // Color already-added elements
+                li.style.borderColor = "#21b9b0";
+            }
+            $('#' + div).append(li);
+        }*/
+
+        /*setTimeout(function() {
+            if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
+                var numSlides = 0;
+                var padding = '69px';
+                var numDivChildren = $('#' + div).children().length;
+                if (numDivChildren > 5) { // This is specifically for "System Elements"
+                    numSlides = 5;
+                    var dummyLiOne = $('<li id="dummyOne"><a title=""><label></label></a></li>');
+                    var dummyLiTwo = $('<li id="dummyTwo"><a title=""><label></label></a></li>');
+                    $('#' + div).append(dummyLiOne);
+                    $('#' + div).append(dummyLiTwo);
+                } else {
+                    numSlides = numDivChildren - 1;
+                    padding = '28px';
+                }
+
+                var startSlide = 2;
+                $('#' + div).slick({
+                    centerMode: true,
+                    centerPadding: padding,
+                    infinite: false,
+                    arrows: true,
+                    slide: 'li',
+                    speed: 100,
+                    vertical: true,
+                    initialSlide: startSlide,
+                    slidesToShow: numSlides,
+                    verticalSwiping: true
+                });
+
+                var prevButton = $('#' + div).find('.slick-next')[0];
+                $(prevButton).attr('class', 'slick-next slick-arrow fa fa-arrow-down');
+                $(prevButton).html('');
+                $(prevButton).click(function() {action.buttonPress('next', div);});
+
+                var nextButton = $('#' + div).find('.slick-prev')[0];
+                $(nextButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-up');
+                $(nextButton).html('');
+                $(nextButton).click(function() {action.buttonPress('prev', div);});
+
+                if (numDivChildren <= 5)
+                    $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');
+
+                action.setCarouselOpacity(div);
+            } else {
+                $('#' + div).attr('class', '');
+            }
+            $('#' + div).on('mousewheel', function (e) {
+                if (e.deltaY>0) {
+                    $('#' + div).slick('slickPrev');
+                    action.setCarouselOpacity(div);
+                } else {
+                    if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                        $('#' + div).slick('slickNext');
+                        action.setCarouselOpacity(div);
+                    }
+                }
+                e.preventDefault();
+            });
+            $('#' + div).hover(function() {
+                $(document).keyup(function () {
+                    if (event.keyCode === 38) {
+                        $('#' + div).slick('slickPrev');
+                    } else if (event.keyCode === 40) {
+                        if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                            $('#' + div).slick('slickNext');
+                        }
+                    }
+                    action.setCarouselOpacity(div);
+                });
+            }, function() {
+                $(document).unbind("keyup");
+            });
+
+            if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
+        }, 401);*/
+
+    },
+    parseElementsArray: function(array, divSelector) {
         Object.keys(array).forEach(function (key) {
             if (array[key].constructor === Object) { // if this is another array
                 if (Object.keys(array[key]).length > 2) {
-                    action.parseElementsArray(array[key]);
+                    action.parseElementsArray(array[key], divSelector);
                 } else {
                     Object.keys(array[key]).forEach(function (key) { // Gotta do custom stuff in this situation, not just recursion
                         if (key === 'title') {
@@ -715,11 +828,21 @@ var action = {
                         }
                     });
                 }
-            } else if (key === 'title') {
-                //Set the name of the upper category
+            } else if (key === 'title') { // Create the parent category li item
+                var baseName = array[key].toLowerCase().replace(/\s/g, ''); //Lowercase and remove spaces
+                var parentId =  baseName + 'Category'; 
+                var parentLinkId = baseName + 'CategoryLink';
+                var subCategoryId = baseName + 'SubCategory';
+                $('<li id="' + parentId + '">').appendTo($(divSelector));
+                $('<a id="' + parentLinkId + '">').appendTo($('#' + parentId));
+                $('<label>' + array[key] + '</label>').appendTo($('#' + parentLinkId));
+                $('<ul style="display: none" id="' + subCategoryId + '"></ul>').appendTo('#' + parentId);
             } else { //It's an item in the subcategory
-                // thing.setLabel(array[key]);
-                // thing.setId(key)
+                var subCategorySelector = '#' + array['title'].toLowerCase().replace(/\s/g, '') + 'SubCategory';
+                var subCategoryElementParentId = key + 'Parent';
+                $('<li id="' + subCategoryElementParentId + '"></li>').appendTo($(subCategorySelector));
+                $('<a id="' + key + '">').appendTo($('#' + subCategoryElementParentId));
+                $('<label>' + array[key] + '</label>').appendTo($('#' + key));
             }
         });
     },
@@ -1098,8 +1221,6 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
         $('.iconList').toggle('display');
     }
 });
-
-action.parseElementsArray(elementPanel);
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id && event.target.tagName === 'H3'){ //Clicking to show/hide a panel
