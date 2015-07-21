@@ -832,6 +832,11 @@ var action = {
             } else { //It's an item in the subcategory
                 var subCategorySelector = '#' + array['title'].toLowerCase().replace(/\s/g, '') + 'SubCategory';
                 $('<li id="' + key + 'Picker" data-element="' + key + '">' + array[key] + '</li>').appendTo($(subCategorySelector));
+
+                if ($('#' + key).length) { //It's already been added to the screen
+                    $('#' + key + 'Picker').css('background-color', '#21b9b0');
+                    $('#' + key + 'Picker').css('border-color', '#21b9b0');
+                }
             }
         });
     },
