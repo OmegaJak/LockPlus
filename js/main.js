@@ -685,6 +685,18 @@ var action = {
         }, 401);
 
     },
+    parseElementsArray: function(array) {
+        Object.keys(array).forEach(function (key) {
+            if (array[key].constructor === Object) { // if this is another array
+                action.parseElementsArray(array[key]);
+            } else if (key === 'name') {
+                //Set the name of the upper category
+            } else { //It's an item in the subcategory
+                // thing.setLabel(array[key]);
+                // thing.setId(key)
+            }
+        });
+    },
     setCarouselOpacity: function(div) {
         var centerIndex = $('#' + div).find('.slick-center').attr('data-slick-index');
         var lastEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']');
@@ -1113,7 +1125,6 @@ $(".select-menu").click(function () {
         $(this).toggleClass("menu-on");
         $('.menulist').toggle('display');
 });
-
 
 $('.screen').on('click',function(event){
     if(event.target.id != 'screen' && event.target.id != ''){
