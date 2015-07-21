@@ -705,18 +705,8 @@ var action = {
     parseElementsArray: function(array) {
         Object.keys(array).forEach(function (key) {
             if (array[key].constructor === Object) { // if this is another array
-                if (array[key].length > 2) {
-                    action.parseElementsArray(array[key]);
-                } else {
-                    Object.keys(array[key]).forEach(function (key) { // Gotta do custom stuff in this situation, not just recursion
-                        if (key === 'title') {
-                            // thing.setLabel(array[key])
-                        } else {
-                            // thing.setId(key)
-                        }
-                    }
-                }
-            } else if (key === 'title') {
+                action.parseElementsArray(array[key]);
+            } else if (key === 'name') {
                 //Set the name of the upper category
             } else { //It's an item in the subcategory
                 // thing.setLabel(array[key]);
