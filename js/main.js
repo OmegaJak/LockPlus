@@ -245,6 +245,23 @@ var action = {
             $(divSelector).toggle('display');
         }
     },
+    /**
+    * -----Parameters-----
+    * key: The prefix for all elements in this input. Ex: 'fontSize'
+    * nameString: The relevant string, seperated by "~", properly formatted, from constants. Ex: constants.editArray[0]
+    * unit: The css unit for what you're editing. Ex: 'px'
+    * min: The minimum value for the number input. Inclusive. Ex: 0
+    * max: The maximum value for the number input. Inclusive. Ex: 50
+    * cssKey: The string for the css property to set. Ex:"font-size"
+    * jsCssKey: The string for the css property, as referenced from javascript. Ex:"fontSize"
+    * updateCallback: The function to call when the input is updated. Must accept the parameters
+    *                idSelector, cssKey, unit, jsCssKey, and 'get' versus 'set' to either get the
+    *                current value to set the value. Ex: action.updateSize
+    * inputTopPos: Optional. The top position of the input. Ex: 120
+    * inputRightPos: Optional. The right position of the input. Ex: 70
+    * inputTitle: Optional. The text to show above the input. Ex: "Font Size"
+    * intendedNumberOfInputs: Optional(ish). Necessary if multiple inputs are going to be shown. Ex: 2
+    */
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, updateCallback, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
         //action.setHelpText('Press + and - buttons to adjust, or enter the value.');
         var splitArr = nameString.split("~");
