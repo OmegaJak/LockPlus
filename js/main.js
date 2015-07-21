@@ -715,7 +715,7 @@ var action = {
     parseElementsArray: function(array) {
         Object.keys(array).forEach(function (key) {
             if (array[key].constructor === Object) { // if this is another array
-                if (array[key].length > 2) {
+                if (Object.keys(array[key]).length > 2) {
                     action.parseElementsArray(array[key]);
                 } else {
                     Object.keys(array[key]).forEach(function (key) { // Gotta do custom stuff in this situation, not just recursion
@@ -1120,6 +1120,8 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
         $('.iconList').toggle('display');
     }
 });
+
+action.parseElementsArray(elementPanel);
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id && event.target.tagName === 'H3'){ //Clicking to show/hide a panel
