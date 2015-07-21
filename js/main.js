@@ -817,32 +817,16 @@ var action = {
     parseElementsArray: function(array, divSelector) {
         Object.keys(array).forEach(function (key) {
             if (array[key].constructor === Object) { // if this is another array
-                if (Object.keys(array[key]).length > 2) {
-                    action.parseElementsArray(array[key], divSelector);
-                } else {
-                    Object.keys(array[key]).forEach(function (key) { // Gotta do custom stuff in this situation, not just recursion
-                        if (key === 'title') {
-                            // thing.setLabel(array[key])
-                        } else {
-                            // thing.setId(key)
-                        }
-                    });
-                }
+                action.parseElementsArray(array[key], divSelector);
             } else if (key === 'title') { // Create the parent category li item
                 var baseName = array[key].toLowerCase().replace(/\s/g, ''); //Lowercase and remove spaces
-                var parentId =  baseName + 'Category'; 
-                var parentLinkId = baseName + 'CategoryLink';
+                var parentId =  baseName + 'Category';
                 var subCategoryId = baseName + 'SubCategory';
-                $('<li id="' + parentId + '">').appendTo($(divSelector));
-                $('<a id="' + parentLinkId + '">').appendTo($('#' + parentId));
-                $('<label>' + array[key] + '</label>').appendTo($('#' + parentLinkId));
-                $('<ul style="display: none" id="' + subCategoryId + '"></ul>').appendTo('#' + parentId);
+                $('<li id="' + parentId + '">' + array[key] + '</li>').appendTo($(divSelector));
+                $('<ul style="display: none" id="' + subCategoryId + '" class="subCategory"></ul>').appendTo('#' + parentId);
             } else { //It's an item in the subcategory
                 var subCategorySelector = '#' + array['title'].toLowerCase().replace(/\s/g, '') + 'SubCategory';
-                var subCategoryElementParentId = key + 'Parent';
-                $('<li id="' + subCategoryElementParentId + '"></li>').appendTo($(subCategorySelector));
-                $('<a id="' + key + '">').appendTo($('#' + subCategoryElementParentId));
-                $('<label>' + array[key] + '</label>').appendTo($('#' + key));
+                $('<li id="' + key + 'Picker" data-element="' + key + '">' + array[key] + '</li>').appendTo($(subCategorySelector));
             }
         });
     },
@@ -1378,4 +1362,3 @@ $(".select-menu").click(function () {
    // $('.menulist').toggle('display');
 });
 /* End Top right menu */
-
