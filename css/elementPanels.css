@@ -54,6 +54,7 @@
     z-index: 50;
     width: 150;
     text-align: center;
+    display: none;
 }
 .slick-arrow {
     position: absolute;

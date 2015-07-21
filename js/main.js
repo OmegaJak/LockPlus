@@ -581,7 +581,7 @@ var action = {
                 label = element[0],
                 desc = element[1];
             li.id = 'p' + label;
-            li.innerHTML = '<a title="'+desc+'"><label>' + label + '</label></a>';
+            li.innerHTML = '<a title="'+label+'"><label>' + desc + '</label></a>';
 
             switch (i) { //This is all to smooth the transition into the slick.js carousel
                 case 0:
@@ -1086,11 +1086,12 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
         }
     }
     if(event.target.tagName === "LABEL"){ //Clicking inside an already-displayed panel
+        var title = $(event.target).parent()[0].title; //changed from innerHTML to parent's title
         if ($(event.target).parent().parent().hasClass('slick-center')) {
-            if (document.getElementById(event.target.innerHTML)) {
-                action.removeFromScreen(event.target.innerHTML, false);
+            if (document.getElementById(title)) {
+                action.removeFromScreen(title, false);
             } else {
-               action.addtoScreen(event.target.innerHTML);
+               action.addtoScreen(title);
             }
         } else {
             var div = $(event.target).parent().parent().parent().parent().parent();
