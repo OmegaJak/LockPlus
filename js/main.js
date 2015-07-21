@@ -823,7 +823,7 @@ var action = {
                 var parentId =  baseName + 'Category';
                 var parentLinkId = baseName + 'CategoryLink';
                 var subCategoryId = baseName + 'SubCategory';
-                $('<li id="' + parentId + '">' + array[key] + '</li>').appendTo($(divSelector));
+                $('<li id="' + parentId + '" class="categoryTitle">' + array[key] + '</li>').appendTo($(divSelector));
                 $('<ul style="display: none" id="' + subCategoryId + '" class="subCategory"></ul>').appendTo('#' + parentId);
             } else { //It's an item in the subcategory
                 var subCategorySelector = '#' + array['title'].toLowerCase().replace(/\s/g, '') + 'SubCategory';
