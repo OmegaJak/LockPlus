@@ -714,7 +714,7 @@ var action = {
                         } else {
                             // thing.setId(key)
                         }
-                    }
+                    });
                 }
             } else if (key === 'title') {
                 //Set the name of the upper category
