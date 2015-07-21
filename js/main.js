@@ -246,7 +246,7 @@ var action = {
         }
     },
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, updateCallback, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
-        action.setHelpText('Press + and - buttons to adjust, or enter the value.');
+        //action.setHelpText('Press + and - buttons to adjust, or enter the value.');
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
