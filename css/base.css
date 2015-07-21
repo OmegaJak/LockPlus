@@ -347,7 +347,7 @@ body {-webkit-font-smoothing: antialiased;}
   padding-bottom: 15px;
   padding: 4px;
   background-color: #21b9b0;
-  margin-top: 5px;
+  margin-top: 10px;
   border-radius: 999px;
   text-align: center;
 }
@@ -369,14 +369,39 @@ body {-webkit-font-smoothing: antialiased;}
   border-radius: 100%;
   border:3px solid #21b9b0;
 }
+#gridtips:after{
+  position: absolute;
+  left:74px;
+  top:-4px;
+  width: 24px;
+  height: 24px;
+  content:attr(title);
+  padding:5px;
+  background-color:#54606e;
+  border-radius: 100%;
+  border:3px solid #21b9b0;
+}
 
 .menulist {
   display: none;
   text-align: center;
 }
+
+
+.grids{
+  width: 320px;
+  height: 568px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  overflow: hidden;
+  margin-top: -16px;
+  pointer-events:none;
+}
 .gridlines {
-display: none;
-position:absolute;
-background-color:rgba(255,255,255,0.1);
+  display: none;
+  position:absolute;
+  background-color:rgba(255,255,255,0.1);
 }
 

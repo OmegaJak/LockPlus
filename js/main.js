@@ -830,7 +830,7 @@ var action = {
                 }
             } else if (key === 'title') { // Create the parent category li item
                 var baseName = array[key].toLowerCase().replace(/\s/g, ''); //Lowercase and remove spaces
-                var parentId =  baseName + 'Category'; 
+                var parentId =  baseName + 'Category';
                 var parentLinkId = baseName + 'CategoryLink';
                 var subCategoryId = baseName + 'SubCategory';
                 $('<li id="' + parentId + '">').appendTo($(divSelector));
@@ -1322,7 +1322,7 @@ $('#tips').mouseleave(function() {
 /* grid stuff */
 function createGrid(sizeleft, sizetop) {
   var i,
-  sel = $('.screen'),
+  sel = $('.grids'),
       height = sel.height(),
       width = sel.width(),
       ratioW = Math.floor(width / sizeleft),
@@ -1364,6 +1364,16 @@ $('#menutips').on('click',function(){
     }else{
         $('#tips').css('top','-300px');
         localStorage.setItem('hideTips',true);
+        $(this).attr('title','Off');
+    }
+});
+$('#gridtips').on('click',function(){
+    if($('.gridlines').css('display') === undefined){
+        $(this).attr('title','On');
+        createGrid(constants.gridSizeLeft,constants.gridSizeTop);
+        localStorage.setItem('gridTips',true);
+    }else{
+        $('.grids').empty();
         $(this).attr('title','Off');
     }
 });
