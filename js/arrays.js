@@ -120,7 +120,6 @@ var fontArray = ['android'
 
 var elementPanel = {
     clockElements: {
-        title: "Clock Elements",
         clocks: {
             title: "Clock",
             clock: cF.hour() + ":" + cF.minute(),
@@ -205,7 +204,6 @@ var elementPanel = {
         }
     },
     weatherElements: {
-        title: "Weather Elements",
         temps: {
             title: "Temp",
             temp: "76",
@@ -225,7 +223,7 @@ var elementPanel = {
             lowdegplus: "70°F"
         },
         lowhigh: {
-            title: "Low/High",
+            title: "Low+High",
             highdashlow: "80-70",
             highdashlowdeg: "80°-70°",
             highslashlow: "80/70",
@@ -281,7 +279,6 @@ var elementPanel = {
 
     },
     systemElements: {
-        title: "System Elements",
         phone: {
             title: "Phone name",
             name: "My iPhone"
@@ -302,7 +299,6 @@ var elementPanel = {
         }
     },
     miscElements: {
-        title: "Misc Elements",
         text: {
             title: "Text Elements",
             textOne: "Custom Text 1",

@@ -15,7 +15,6 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
-                    //,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv' //not needed
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
@@ -26,8 +25,7 @@ var constants = {
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
-                    ,'shadow~Edit Text Shadow~fa fa-cubes~shadowDiv'
-                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
+                    ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
@@ -263,7 +261,6 @@ var action = {
     * intendedNumberOfInputs: Optional(ish). Necessary if multiple inputs are going to be shown. Ex: 2
     */
     cgSize: function(key, nameString, unit, min, max, cssKey, jsCssKey, updateCallback, inputTopPos, inputRightPos, inputTitle, intendedNumberOfInputs) {
-        //action.setHelpText('Press + and - buttons to adjust, or enter the value.');
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
         var idSelector = '#' + key + 'Input';
@@ -282,7 +279,6 @@ var action = {
             $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit, updateCallback) });
             $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback) });
 
-            //var elSize = $('#' + this.selectedItem).css(cssKey);
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
             $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
             $(idSelector).on("focus", function() { action.setHelpText('Try scrolling while hovering over the input text!'); })
@@ -359,7 +355,6 @@ var action = {
                 var optionDivSelector = '#' + options[i] + 'OptionDiv';
                 var optionSelector = '#' + options[i] + 'Option';
                 $('<div id="' + options[i] + 'OptionDiv" style="top: ' + optionsTop + 'px;"></div>').appendTo($(divSelector));
-                //$('<label id="' + options[i] + 'Option">' + options[i] + '</label>').appendTo($('#' + options[i] + 'OptionDiv'));
                 getOptionElement(options[i]).appendTo($('#' + options[i] + 'OptionDiv'));
                 $(optionDivSelector).css({'right': right
                                                         ,'width': $('#' + options[i] + 'Option').width() + 10
@@ -379,12 +374,8 @@ var action = {
                 (function(index){
                     $(optionDivSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
                 })(i);
-                /*(function(index){
-                    $(optionSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
-                })(i); //Variables passed as references, not values, are a bitch*/
             }
 
-            //$(buttonSelector).parent().attr('title', '');
             $(buttonSelector).parent().attr('class',' '); //instead of removing the title, just remove class. hide toolTip
             $(divSelector).css('display', 'none'); // Have to have display set to block before this because sizing depends on the displayed width ↑
             $(divSelector).toggle('display');
@@ -540,7 +531,7 @@ var action = {
         });
     },
     elementPanel: function (id) { //show hide items in element Panel
-        if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(clockEl, 'clockList'); }
+        if (id === 'cl') { $('#clockList').toggle('display'); this.createNewLI(elementPanel.clockElements, 'clockList'); }
         if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
         if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
         if (id === 'ml') { $('#miscList').toggle('display'); this.createLI(miscEl, 'miscList'); }
@@ -556,7 +547,6 @@ var action = {
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
             } else {
-                //$('#clear').parent().attr('title', ''); // Hide the tooltip
                 $('#clear').parent().attr('class',' '); //Hide tooltip
                 $('<button type="button" class="noClear">No</button>').prependTo('#clearDiv');
                 $('<button type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
@@ -573,7 +563,6 @@ var action = {
             $('.noClear').remove();
             $('.yesClear').remove();
             $('.clearLabel').remove();
-            //$('#clear').parent().attr('title', 'Clear Theme');
             $('#clear').parent().attr('class','leftTooltip');
             action.setHelpText('Not cleared, click to edit elements. (Also delete)');
         } else if (code === 1) { // definitely clear the theme
@@ -712,11 +701,124 @@ var action = {
         }, 401);
 
     },
-    parseElementsArray: function(array) {
+    createNewLI: function(type, div) { //create add menu
+        $('#' + div).empty();
+        action.parseElementsArray(type, '#' + div);
+        /*for (var i = 0; i < type.length; i++) {
+            var li = document.createElement('li'),
+                element = type[i].split('~'),
+                label = element[0],
+                desc = element[1];
+            li.id = 'p' + label;
+            li.innerHTML = '<a title="'+label+'"><label>' + desc + '</label></a>';
+
+            switch (i) { //This is all to smooth the transition into the slick.js carousel
+                case 0:
+                    li.style.opacity = 0.07;
+                    break;
+                case 1:
+                    li.style.opacity = 0.5;
+                    break;
+                case 2:
+                    li.style.fontSize = "30px";
+                    break;
+                case 3:
+                    li.style.opacity = 0.5;
+                    break;
+                case 4:
+                    li.style.opacity = 0.07;
+            }
+
+            if (document.getElementById(label)) {
+                li.style.backgroundColor = "#21b9b0"; // Color already-added elements
+                li.style.borderColor = "#21b9b0";
+            }
+            $('#' + div).append(li);
+        }*/
+
+        /*setTimeout(function() {
+            if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
+                var numSlides = 0;
+                var padding = '69px';
+                var numDivChildren = $('#' + div).children().length;
+                if (numDivChildren > 5) { // This is specifically for "System Elements"
+                    numSlides = 5;
+                    var dummyLiOne = $('<li id="dummyOne"><a title=""><label></label></a></li>');
+                    var dummyLiTwo = $('<li id="dummyTwo"><a title=""><label></label></a></li>');
+                    $('#' + div).append(dummyLiOne);
+                    $('#' + div).append(dummyLiTwo);
+                } else {
+                    numSlides = numDivChildren - 1;
+                    padding = '28px';
+                }
+
+                var startSlide = 2;
+                $('#' + div).slick({
+                    centerMode: true,
+                    centerPadding: padding,
+                    infinite: false,
+                    arrows: true,
+                    slide: 'li',
+                    speed: 100,
+                    vertical: true,
+                    initialSlide: startSlide,
+                    slidesToShow: numSlides,
+                    verticalSwiping: true
+                });
+
+                var prevButton = $('#' + div).find('.slick-next')[0];
+                $(prevButton).attr('class', 'slick-next slick-arrow fa fa-arrow-down');
+                $(prevButton).html('');
+                $(prevButton).click(function() {action.buttonPress('next', div);});
+
+                var nextButton = $('#' + div).find('.slick-prev')[0];
+                $(nextButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-up');
+                $(nextButton).html('');
+                $(nextButton).click(function() {action.buttonPress('prev', div);});
+
+                if (numDivChildren <= 5)
+                    $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');
+
+                action.setCarouselOpacity(div);
+            } else {
+                $('#' + div).attr('class', '');
+            }
+            $('#' + div).on('mousewheel', function (e) {
+                if (e.deltaY>0) {
+                    $('#' + div).slick('slickPrev');
+                    action.setCarouselOpacity(div);
+                } else {
+                    if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                        $('#' + div).slick('slickNext');
+                        action.setCarouselOpacity(div);
+                    }
+                }
+                e.preventDefault();
+            });
+            $('#' + div).hover(function() {
+                $(document).keyup(function () {
+                    if (event.keyCode === 38) {
+                        $('#' + div).slick('slickPrev');
+                    } else if (event.keyCode === 40) {
+                        if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                            $('#' + div).slick('slickNext');
+                        }
+                    }
+                    action.setCarouselOpacity(div);
+                });
+            }, function() {
+                $(document).unbind("keyup");
+            });
+
+            if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
+        }, 401);*/
+
+    },
+    parseElementsArray: function(array, divSelector) {
         Object.keys(array).forEach(function (key) {
             if (array[key].constructor === Object) { // if this is another array
-                if (array[key].length > 2) {
-                    action.parseElementsArray(array[key]);
+                if (Object.keys(array[key]).length > 2) {
+                    action.parseElementsArray(array[key], divSelector);
                 } else {
                     Object.keys(array[key]).forEach(function (key) { // Gotta do custom stuff in this situation, not just recursion
                         if (key === 'title') {
@@ -726,11 +828,21 @@ var action = {
                         }
                     });
                 }
-            } else if (key === 'title') {
-                //Set the name of the upper category
+            } else if (key === 'title') { // Create the parent category li item
+                var baseName = array[key].toLowerCase().replace(/\s/g, ''); //Lowercase and remove spaces
+                var parentId =  baseName + 'Category'; 
+                var parentLinkId = baseName + 'CategoryLink';
+                var subCategoryId = baseName + 'SubCategory';
+                $('<li id="' + parentId + '">').appendTo($(divSelector));
+                $('<a id="' + parentLinkId + '">').appendTo($('#' + parentId));
+                $('<label>' + array[key] + '</label>').appendTo($('#' + parentLinkId));
+                $('<ul style="display: none" id="' + subCategoryId + '"></ul>').appendTo('#' + parentId);
             } else { //It's an item in the subcategory
-                // thing.setLabel(array[key]);
-                // thing.setId(key)
+                var subCategorySelector = '#' + array['title'].toLowerCase().replace(/\s/g, '') + 'SubCategory';
+                var subCategoryElementParentId = key + 'Parent';
+                $('<li id="' + subCategoryElementParentId + '"></li>').appendTo($(subCategorySelector));
+                $('<a id="' + key + '">').appendTo($('#' + subCategoryElementParentId));
+                $('<label>' + array[key] + '</label>').appendTo($('#' + key));
             }
         });
     },
@@ -861,8 +973,6 @@ var action = {
                 } else if (skey === 'textAlign') {
                     skey = 'text-align';
                 }
-               // console.log(key + skey + styleVal)
-                //document.getElementById(key).style.cssText += skey + ":" + styleVal; //use jquery instead?
                 $('#' + key).css(skey, styleVal);
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
                     $('.icon').css(skey,styleVal);
@@ -959,7 +1069,6 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, -1);
-        //if (toggleElementPanel) this.revertElementPanel();
         if (document.getElementById('p' + id)) {
             document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
             document.getElementById('p' + id).style.borderColor = "#54606e";
@@ -1039,20 +1148,12 @@ var action = {
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
-        //if (typeof shouldStillHide === typeof undefined)
-          //var shouldStillHide = true;
         if (isStillShowing && $('#helpinfo').text() != text) {
-          //shouldStillHide = false; // Prevent the previous timeout from triggering
-         /* $('#tips').hide('slide', { direction: 'up'}, function() {
-            action.setHelpText(text);
-          });*/
-        action.animateHelp(text, 1, 300);
+            action.animateHelp(text, 1, 300);
         } else {
           $('#helpinfo').text(text);
-         // $('#tips').show('slide', { direction: 'up'});
           action.animateHelp(false, 1, 300);
           action.timeout = setTimeout(function() {
-              //$('#tips').hide('slide', { direction: 'up'});
               action.animateHelp(false, 0, 200);
           }, 5000);
         }
@@ -1151,10 +1252,9 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 
 $('.screen').click(function(event){
     if (event.target.id === '' && action.selectedItem != '') {
-        /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#' + action.selectedItem).css('outline', '0px solid transparent');
+        $('#' + action.selectedItem).css('outline', '0px solid transparent');
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
-        //action.revertElementPanel();
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     }
 });
@@ -1166,19 +1266,18 @@ $('.screen').on('click',function(event){
                 this.doubleClicked = false; //Not sure if this is necessary
                 action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
                 action.selectedItem = ""; // Clear the selected item
-                /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '0px solid transparent');
+                $('#'+event.target.id).css('outline', '0px solid transparent');
                 //action.revertElementPanel(); // Put the elementPanel back to its previous state
             } else { // User either clicked on another element, or on a new element to highlight
-                /*if (action.selectedItem.substring(0,3) != 'box')*/ $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
+                $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
                 if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
                     action.setHelpText('Pick a style adjustment from the left menu.');
                  }else{
                     action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
                 }
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-//removed        if ($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
                 action.selectedItem = event.target.id; // Set the selected item to the new element
-                /*if (event.target.id.substring(0,3) != 'box')*/ $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
                 action.setEditMenuInputsState(-2, 3, event.target.id);
             }
@@ -1188,7 +1287,6 @@ $('.screen').on('click',function(event){
                 action.setHelpText('Pick a style adjustment from the left menu.'); //show different text for box and icon
             }else{
                 action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
-                //$('#size').click(event); //epic fail..
             }
             this.doubleClicked = true;
             action.selectedItem = event.target.id; // Specify selected item
@@ -1202,7 +1300,6 @@ $('.screen').on('click',function(event){
             }
             action.setEditMenuInputsState(-2, 2, event.target.id);
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
-//removed    if($('.elementPanel').is(':visible')) $('.elementPanel').toggle('display'); //Hide the element panel
         }
     }
 });
