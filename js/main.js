@@ -1051,8 +1051,8 @@ var action = {
         weatherdivs();
         systemdivs();
         miscDivs();
-        document.getElementById('p' + id).style.backgroundColor = "#21b9b0"; //Add colored background to list element
-        document.getElementById('p' + id).style.borderColor = "#21b9b0";
+        document.getElementById(id + 'Picker').style.backgroundColor = "#21b9b0"; //Add colored background to list element
+        document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
     },
     removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
         var parent = document.getElementById('screenElements'),
@@ -1063,9 +1063,9 @@ var action = {
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
         this.saveStorage(); //save localStorage
         this.showIconMenu(constants.toolArray, -1);
-        if (document.getElementById('p' + id)) {
-            document.getElementById('p' + id).style.backgroundColor = "#54606e"; //Remove colored background from list element
-            document.getElementById('p' + id).style.borderColor = "#54606e";
+        if (document.getElementById(id + 'Picker')) {
+            document.getElementById(id + 'Picker').style.backgroundColor = "#54606e"; //Remove colored background from list element
+            document.getElementById(id + 'Picker').style.borderColor = "#54606e";
         }
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
@@ -1241,7 +1241,12 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
             action.setCarouselOpacity(div.attr('id'));
         }
     } else if ($(event.target).parent().hasClass('subCategory')) {
-        alert("Booyah");
+        var id = $(event.target).attr('data-element');
+        if (document.getElementById(id)) {
+            action.removeFromScreen(id, false);
+        } else {
+           action.addtoScreen(id);
+        }
     }
 });
 
