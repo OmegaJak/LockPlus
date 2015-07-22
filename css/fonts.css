@@ -3,6 +3,10 @@
 	src:url(fonts/user/ailerons.otf);
 }
 @font-face{
+	font-family:'alpine';
+	src:url(fonts/user/alpine.otf);
+}
+@font-face{
 	font-family:'android';
 	src:url(fonts/user/android.otf);
 }
@@ -55,6 +59,14 @@
 	src:url(fonts/user/building.otf);
 }
 @font-face{
+	font-family:'canter';
+	src:url(fonts/user/canter.otf);
+}
+@font-face{
+	font-family:'clemente';
+	src:url(fonts/user/clemente.otf);
+}
+@font-face{
 	font-family:'codebold';
 	src:url(fonts/user/codebold.otf);
 }
@@ -67,6 +79,10 @@
 	src:url(fonts/user/dense.otf);
 }
 @font-face{
+	font-family:'din';
+	src:url(fonts/user/din.otf);
+}
+@font-face{
 	font-family:'fabfelt';
 	src:url(fonts/user/fabfelt.otf);
 }
@@ -75,8 +91,24 @@
 	src:url(fonts/user/futura.otf);
 }
 @font-face{
+	font-family:'gasaltbold';
+	src:url(fonts/user/gasaltbold.otf);
+}
+@font-face{
+	font-family:'gasaltthin';
+	src:url(fonts/user/gasaltthin.otf);
+}
+@font-face{
+	font-family:'gasaltreg';
+	src:url(fonts/user/gasaltreg.otf);
+}
+@font-face{
 	font-family:'higher';
 	src:url(fonts/user/higher.otf);
+}
+@font-face{
+	font-family:'huxlee';
+	src:url(fonts/user/huxlee.otf);
 }
 @font-face{
 	font-family:'ikaros';
@@ -99,6 +131,10 @@
 	src:url(fonts/user/makhina.otf);
 }
 @font-face{
+	font-family:'manbow';
+	src:url(fonts/user/manbow.otf);
+}
+@font-face{
 	font-family:'manifesto';
 	src:url(fonts/user/manifesto.otf);
 }
@@ -113,6 +149,10 @@
 @font-face{
 	font-family:'nexalight';
 	src:url(fonts/user/nexalight.otf);
+}
+@font-face{
+	font-family:'penelope';
+	src:url(fonts/user/penelope.otf);
 }
 @font-face{
 	font-family:'poplar';
@@ -145,4 +185,16 @@
 @font-face{
 	font-family:'samsungregular';
 	src:url(fonts/user/samsungregular.otf);
+}
+@font-face{
+	font-family:'signer';
+	src:url(fonts/user/signer.otf);
+}
+@font-face{
+	font-family:'scriptina';
+	src:url(fonts/user/scriptina.otf);
+}
+@font-face{
+	font-family:'tiza';
+	src:url(fonts/user/tiza.otf);
 }
