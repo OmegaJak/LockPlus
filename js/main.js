@@ -345,7 +345,7 @@ var action = {
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
         if (optionsTop === 0 || !optionsTop)
-            optionsTop = $('#' + splitArr[3]).position().top + 15;
+            optionsTop = $('#' + splitArr[3]).position().top + 85;
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
