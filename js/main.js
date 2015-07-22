@@ -648,7 +648,7 @@ var action = {
                     padding = '28px';
                 }
 
-                var startSlide = 1;
+                var startSlide = 0;
                 $('#' + div).slick({
                     centerMode: true,
                     centerPadding: padding,
@@ -678,7 +678,6 @@ var action = {
                 if (numDivChildren <= 5)
                     $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');
 
-                $('#' + div).slick('slickNext');
                 action.setCarouselOpacity(div);
             } else {
                 $('#' + div).attr('class', '');
