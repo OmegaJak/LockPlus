@@ -43,6 +43,7 @@ var constants = {
     boxEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
+                    ,'radius~Change Radius~fa fa-circle~radiusDiv'
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
@@ -81,6 +82,7 @@ var action = {
         if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
+        if (id === 'radius') { this.cgSize('radiusSize', constants.boxEditArray[3], 'px', 0, $('#' + action.selectedItem).width() / 2, 'border-radius', 'borderRadius', action.updateSize, false, false, 'Box Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'backToEdit') { action.showProperMenuForId(this.selectedItem); }
@@ -111,7 +113,7 @@ var action = {
             $('#elementDiv').children('a:first')[0].title = "Show Elements Panel"
         else
             $('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
-            
+
         $('.elementPanel').toggle('some random text here thatll really just turn into 400');
     },
     setFont: function (fontName) {
@@ -417,6 +419,13 @@ var action = {
     },
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
+    },
+    updateRadius: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        if (purpose === 'set') {
+
+        } else if (purpose === 'get') {
+            return $('#' + action.selectedItem).css('border-radius');
+        }
     },
     updateSize: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'set') {
@@ -975,6 +984,9 @@ var action = {
             div.style.backgroundColor = 'red';
             div.style.display = 'gray';
             div.style.zIndex = 1;
+            div.style.borderColor = 'red';
+            div.style.borderStyle = 'solid';
+            div.style.borderWidth = '0px';
         } else {
             div.style.zIndex = 2;
         }
@@ -988,6 +1000,9 @@ var action = {
             this.savedElements.placedElements[id].backgroundColor = 'red';
             this.savedElements.placedElements[id].display = 'gray';
             this.savedElements.placedElements[id].zIndex = 1;
+            this.savedElements.placedElements[id].borderColor = 'red';
+            this.savedElements.placedElements[id].borderStyle = 'solid';
+            this.savedElements.placedElements[id].borderWidth = '0px';
         } else {
             this.savedElements.placedElements[id].zIndex = 2;
         }
