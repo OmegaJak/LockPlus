@@ -126,8 +126,8 @@ label {
 	list-style: none outside none;
 }
 .subCategory li {
-	height: 20px;
-	font-size: 20px;
+	height: 16px;
+	font-size: 17px;
 }
 #clockList,#weatherList,#systemList,#miscList {
     left: 26px;
