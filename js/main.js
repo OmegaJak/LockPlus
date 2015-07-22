@@ -1032,6 +1032,10 @@ var action = {
         $('#'+id).draggable({
             containment: contain,
             start: function(event, ui) {
+                /* if dLine class has title the same as id remove it */
+                /* remove it on start to not mess with it's own movement */
+                /* it will snap to itself this solves that issue */
+                $(".dLine[title='"+id+"']").remove();
                 if (action.selectedItem != id)
                     $('#' + id).click();
             },
@@ -1039,8 +1043,19 @@ var action = {
                 action.savedElements.placedElements[id].left = ui.position.left;
                 action.savedElements.placedElements[id].top = ui.position.top;
                 action.saveStorage();
-                //get left and top postion, save to object.
-            }
+                /* Create a div around the element which can be used for snapping */
+                var snapper = $('<div>',{'class' : 'dLine', 'title' : id}),
+                    el = $('#'+id),
+                    position = el.position();
+                snapper.insertBefore(el);
+                snapper.css({
+                    top: position.top + 'px',
+                    left: position.left + 'px',
+                    width: el.width(),
+                    height: el.height()
+                })
+            },
+            snap: '.dLine' //snap other items to that div.
         });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
