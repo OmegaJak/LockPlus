@@ -420,13 +420,6 @@ var action = {
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
     },
-    updateRadius: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        if (purpose === 'set') {
-
-        } else if (purpose === 'get') {
-            return $('#' + action.selectedItem).css('border-radius');
-        }
-    },
     updateSize: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'set') {
             var max = JSON.parse($(idSelector).attr('max'));
