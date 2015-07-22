@@ -629,8 +629,14 @@ var action = {
     },
     createLI: function(type, div) { //create add menu
         $('#' + div).empty();
-        action.parseElementsArray(type, '#' + div);
 
+
+if(div === 'weatherList' || div === 'clockList' || div === 'systemList' || div === 'miscList'){ //only need this on these lists.
+        $('#weatherList').css('visibility','hidden');
+        $('#clockList').css('visibility','hidden');
+        $('#systemList').css('visibility','hidden');
+        $('#miscList').css('visibility','hidden');
+        action.parseElementsArray(type, '#' + div);
         setTimeout(function() {
             if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
                 var numSlides = 0;
@@ -710,7 +716,14 @@ var action = {
             });
 
             if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
-        }, 401);
+            setTimeout(function(){
+                $('#weatherList').css('visibility','visible');
+                $('#clockList').css('visibility','visible');
+                $('#systemList').css('visibility','visible');
+                $('#miscList').css('visibility','visible');
+            },300); //cures the initial showing and removal, if we can detect if a list is over this could be even shorter
+        }, 0);
+}
 
     },
     parseElementsArray: function(array, divSelector) {
