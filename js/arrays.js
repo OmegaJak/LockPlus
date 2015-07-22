@@ -132,7 +132,7 @@ var elementPanel = {
             title: "Hour",
             zhour: cF.zhour(),
             hour: cF.hour(),
-            htext: cF.minuteonetext() + ' ' + cF.minutetwotext()
+            htext: cF.hourtext()
         },
         minutes: {
             title: "Minute",
