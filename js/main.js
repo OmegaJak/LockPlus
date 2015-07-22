@@ -558,12 +558,15 @@ var action = {
             action.saveStorage();
         });
     },
+    showPanel: function(list){
+        $('#'+list).css('visibility','visible'); //new function instead of running createLI again.
+    },
     elementPanel: function (id, duration) { //show hide items in element Panel
         var duration = typeof duration != 'undefined' ? duration : 400;
-        if (id === 'cl') { $('#clockList').toggle(duration); this.createLI(elementPanel.clockElements, 'clockList'); }
-        if (id === 'wl') { $('#weatherList').toggle(duration); this.createLI(elementPanel.weatherElements, 'weatherList'); }
-        if (id === 'sl') { $('#systemList').toggle(duration); this.createLI(elementPanel.systemElements, 'systemList'); }
-        if (id === 'ml') { $('#miscList').toggle(duration); this.createLI(elementPanel.miscElements, 'miscList'); }
+        if (id === 'cl') { $('#clockList').toggle(duration); /*this.createLI(elementPanel.clockElements, 'clockList');*/ this.showPanel('clockList'); }
+        if (id === 'wl') { $('#weatherList').toggle(duration); /*this.createLI(elementPanel.weatherElements, 'weatherList');*/ this.showPanel('weatherList') }
+        if (id === 'sl') { $('#systemList').toggle(duration); /*this.createLI(elementPanel.systemElements, 'systemList');*/ this.showPanel('systemList'); }
+        if (id === 'ml') { $('#miscList').toggle(duration); /*this.createLI(elementPanel.miscElements, 'miscList');*/ this.showPanel('miscList'); }
     },
     getElementPanelIdSelector: function(id) { // Sadly I can't put this into that ↑
         if (id === 'cl') return '#clockList'
@@ -629,15 +632,7 @@ var action = {
     },
     createLI: function(type, div) { //create add menu
         $('#' + div).empty();
-
-
-if(div === 'weatherList' || div === 'clockList' || div === 'systemList' || div === 'miscList'){ //only need this on these lists.
-        $('#weatherList').css('visibility','hidden');
-        $('#clockList').css('visibility','hidden');
-        $('#systemList').css('visibility','hidden');
-        $('#miscList').css('visibility','hidden');
         action.parseElementsArray(type, '#' + div);
-        setTimeout(function() {
             if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
                 var numSlides = 0;
                 var padding = '69px';
@@ -714,17 +709,7 @@ if(div === 'weatherList' || div === 'clockList' || div === 'systemList' || div =
             }, function() {
                 $(document).unbind("keyup");
             });
-
             if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
-            setTimeout(function(){
-                $('#weatherList').css('visibility','visible');
-                $('#clockList').css('visibility','visible');
-                $('#systemList').css('visibility','visible');
-                $('#miscList').css('visibility','visible');
-            },300); //cures the initial showing and removal, if we can detect if a list is over this could be even shorter
-        }, 0);
-}
-
     },
     parseElementsArray: function(array, divSelector) {
         Object.keys(array).forEach(function (key) {
