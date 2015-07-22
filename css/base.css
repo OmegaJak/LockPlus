@@ -181,11 +181,10 @@ footer a {
     top:0;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -53%);
+    -webkit-transform: translate(-50%, -52.5%);
     background-color: #54606e;
     overflow-y: scroll;
     z-index: 1;
-    opacity: 0;
 }
 .iconList::-webkit-scrollbar-track {
     background-color: transparent;
