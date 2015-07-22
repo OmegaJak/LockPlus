@@ -857,7 +857,12 @@ var action = {
 
         // Subcategory showing
         lastEl.find('ul').first().hide('display');
-        centerEl.find('ul').first().show('display');
+
+        var centerUl = $(centerEl).find('ul').first();
+        centerUl.show('display', function() {
+            centerUl.css('top', '-' + ((centerUl.height()/2) + 2) + 'px'); // Center the ul
+        });
+
         nextEl.find('ul').first().hide('display');
 
         var firstChild = $($(centerEl).children()[0]).children()[0]; // not Last Child :(
