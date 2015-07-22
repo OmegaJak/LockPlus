@@ -110,7 +110,7 @@ var action = {
         ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ?
             $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' :
             $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel';
-        setTimeout(function(){$('.elementPanel').toggle('display');},400)
+        $('.elementPanel').toggle('some random text here thatll really just turn into 400');
     },
     setFont: function (fontName) {
         action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
@@ -558,11 +558,12 @@ var action = {
             action.saveStorage();
         });
     },
-    elementPanel: function (id) { //show hide items in element Panel
-        if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(elementPanel.clockElements, 'clockList'); }
-        if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(elementPanel.weatherElements, 'weatherList'); }
-        if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(elementPanel.systemElements, 'systemList'); }
-        if (id === 'ml') { $('#miscList').toggle('display'); this.createLI(elementPanel.miscElements, 'miscList'); }
+    elementPanel: function (id, duration) { //show hide items in element Panel
+        var duration = typeof duration != 'undefined' ? duration : 400;
+        if (id === 'cl') { $('#clockList').toggle(duration); this.createLI(elementPanel.clockElements, 'clockList'); }
+        if (id === 'wl') { $('#weatherList').toggle(duration); this.createLI(elementPanel.weatherElements, 'weatherList'); }
+        if (id === 'sl') { $('#systemList').toggle(duration); this.createLI(elementPanel.systemElements, 'systemList'); }
+        if (id === 'ml') { $('#miscList').toggle(duration); this.createLI(elementPanel.miscElements, 'miscList'); }
     },
     getElementPanelIdSelector: function(id) { // Sadly I can't put this into that ↑
         if (id === 'cl') return '#clockList'
@@ -571,10 +572,10 @@ var action = {
         else if (id === 'ml') return '#miscList';
     },
     toggleAllElementPanels: function() {
-        action.elementPanel('cl');
-        action.elementPanel('wl');
-        action.elementPanel('sl');
-        action.elementPanel('ml');
+        action.elementPanel('cl', 0);
+        action.elementPanel('wl', 0);
+        action.elementPanel('sl', 0);
+        action.elementPanel('ml', 0);
     },
     clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
         if (code === -1) { // check what to do
