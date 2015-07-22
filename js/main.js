@@ -755,6 +755,28 @@ var action = {
         //centerUl.css('top', '-' + (((numLis * 32 + (5*(numLis - 1))) / 2) - 13) + 'px');
         centerUl.show(); // Show the subcategory for the center ul
 
+        /*if (centerEl.is(":visible") && !($(centerEl).is(":animated")))
+            centerEl.animate({'opacity':'0.6'}, {duration: 350});
+
+        action.bounceyTimeout = setTimeout(function() {
+            if (centerEl.is(":visible") && !($(centerEl).is(":animated")))
+                centerEl.animate({'opacity':'1'}, {duration: 350});
+        }, 360);*/
+
+        /*var centerChildren = centerUl.children();
+        for (var i = 0; i < centerChildren.length; i++) {
+            var currentChild = $(centerChildren[i]);
+            if (currentChild.is(":visible") && !($(centerChildren[i]).is(":animated")))
+                currentChild.animate({'height':'32px', 'font-size':'21px'}, {duration: 100});
+        }
+        action.bounceyTimeout = setTimeout(function() {
+            for (var i = 0; i < centerChildren.length; i++) {
+                var currentChild = $(centerChildren[i]);
+                if (currentChild.is(":visible") && !($(centerChildren[i]).is(":animated")))
+                    currentChild.animate({'height':'16px', 'font-size':'16px'}, {duration: 100});
+            }
+        }, 110);*/
+
         nextEl.find('ul').first().hide(); // Make sure the other ones are hidden
         // ---- //
 
