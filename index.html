@@ -120,5 +120,18 @@
 <script src="js/main.js"></script>
 <script src="js/svg.js"></script>
 <link rel="stylesheet" type="text/css" href="css/fonts.css">
+<div class="font_preload" style="position:absolute;opacity: 0"></div>
+<script type="text/javascript">
+
+$( window ).load(function() {
+    var fpre = document.querySelector('.font_preload');
+	for (var i = 0; i < fontArray.length; i++) {
+		var f = document.createElement('SPAN');
+		f.setAttribute('style','font-family:'+fontArray[i]+';');
+		f.innerHTML = "test";
+		fpre.appendChild(f);
+	}
+});
+</script>
 </body>
 </html>
