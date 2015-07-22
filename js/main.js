@@ -760,10 +760,11 @@ var action = {
         nextEl.find('ul').first().hide('slide'); // Make sure the other ones are hidden
         // ---- //
 
-        var firstChild = $($(centerEl).children()[0]).children()[0]; // not Last Child :(
-        if ($(firstChild).html().length >= 10) {
+        var text = centerEl.clone().children().remove().end().text(); // Hooray for StackOverflow
+                // clone the element, select the children, remove all children, go back to selected element, get text
+        if (text.length >= 10) {
             $(centerEl).css('height', 34); // Make sure the height doesn't change when font size is decreased
-            if ($(firstChild).html().length > 14) {
+            if (text.length > 14) {
                 $(centerEl).css("font-size", 17);
             } else {
                 $(centerEl).css("font-size", 20);
