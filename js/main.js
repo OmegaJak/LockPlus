@@ -44,6 +44,11 @@ var constants = {
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'radius~Change Radius~fa fa-circle~radiusDiv'
+                    ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
+                    ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
+                    ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
+                    ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
@@ -1088,6 +1093,8 @@ var action = {
             return constants.iconArray;
         } else if (id.substring(0, 4) === 'text') { // Another special case
             return constants.customTextArray;
+        } else if (id.substring(0, 9) === 'boxCircle') {
+            return constants.circleEditArray;
         } else if (id.substring(0, 3) === 'box') {
             return constants.boxEditArray;
         } else{ // Normal element, show edit menu
