@@ -547,11 +547,12 @@ var action = {
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
             } else {
+                 var label = $('#clearDiv').position().top + 13, //auto align clear label
+                     button = label + 4;
                 $('#clear').parent().attr('class',' '); //Hide tooltip
-                $('<button type="button" class="noClear">No</button>').prependTo('#clearDiv');
-                $('<button type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
-                $('<label class="clearLabel">Are you sure?</label>').prependTo('#clearDiv');
-
+                $('<button style="top:'+button+'px" type="button" class="noClear">No</button>').prependTo('#clearDiv');
+                $('<button style="top:'+button+'px" type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
+                $('<label style="top:'+label+'px" class="clearLabel">Are you sure?</label>').prependTo('#clearDiv');
                 $('.yesClear').click(function() {
                     action.clearTheme(1);
                 });
@@ -1348,7 +1349,6 @@ function createGrid(sizeleft, sizetop) {
   $('.gridlines').show();
 }
 //createGrid(constants.gridSizeLeft,constants.gridSizeTop);
-
 
 /* Top right menu */
 $('#menutips').on('click',function(){
