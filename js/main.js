@@ -413,6 +413,18 @@ var action = {
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
             }
             if (jsCssKey === 'width') {
+                 /* Check to see if setting width overflows screen */
+                /* While changing the width, and the element bounds goes out of screen, move item left to stop overflow */
+
+                var elWidth = $('#' + action.selectedItem).width(), //current set width
+                    elPos = $('#' + action.selectedItem).position().left, //element position from the left
+                    elDiff = elWidth - ($('.screen').width() - elPos); //check difference in screen width compared to element position + set width
+
+                if(elDiff > 0){
+                    $('#' + action.selectedItem).css('left', (elPos - elDiff) +'px'); //make adjustments to the element
+                    action.savedElements.placedElements[action.selectedItem].left = elPos - elDiff + 'px'; //updated placedElements obj
+                }
+
                 $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
                 $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
             }
@@ -1277,6 +1289,9 @@ $('#snaptips').on('click',function(){
         $(this).attr('title','On');
     }
 });
+if(localStorage.snap == 'true'){
+    $('#snaptips').attr('title','On');
+}
 
 if(localStorage.hideTips === 'true'){
      $('#tips').css('top','-300px');
