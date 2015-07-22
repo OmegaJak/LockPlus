@@ -67,7 +67,7 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
-        if (id === 'element') {  if(!$('.elementPanel').is(":visible")) action.setHelpText('Choose item from right panel'); $('.elementPanel').toggle('display'); /* show hide text -> */ ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ? $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' : $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel'; }
+        if (id === 'element') { if(!$('.elementPanel').is(":visible")) action.setHelpText('Choose item from right panel'); $('.elementPanel').toggle('display'); action.toggleAllElementPanels();/* show hide text -> */ ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ? $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' : $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel'; }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
@@ -553,6 +553,12 @@ var action = {
         else if (id === 'wl') return '#weatherList'
         else if (id === 'sl') return '#systemList'
         else if (id === 'ml') return '#miscList';
+    },
+    toggleAllElementPanels: function() {
+        action.elementPanel('cl');
+        action.elementPanel('wl');
+        action.elementPanel('sl');
+        action.elementPanel('ml');
     },
     clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
         if (code === -1) { // check what to do
@@ -1100,6 +1106,10 @@ function uploadedImage(e) {
 //event listeners
 window.onload = function () {
     action.showIconMenu(constants.toolArray, -1);
+    $('#clockList').toggle('display'); action.createLI(elementPanel.clockElements, 'clockList');
+    $('#weatherList').toggle('display'); action.createLI(elementPanel.weatherElements, 'weatherList');
+    $('#systemList').toggle('display'); action.createLI(elementPanel.systemElements, 'systemList');
+    $('#miscList').toggle('display'); action.createLI(elementPanel.miscElements, 'miscList');
     action.loadFromStorage(); //load elements that are stored
 }
 
