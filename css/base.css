@@ -288,14 +288,21 @@ body {-webkit-font-smoothing: antialiased;}
   width: 50px;
   height: 50px;
   cursor: pointer;
-  right: 10px;
-  top:5px;
+  right: -5px;
+  top:-5px;
   -webkit-transform:scale(0.5);
+  background-color: #21b9b0;
+  border-radius: 100%;
+  border: 15px solid #21b9b0;
+}
+.select-menu:hover{
+  background-color: #252a30;
+  border: 15px solid #252a30;
 }
 .select {
   position: absolute;
   background: white;
-  margin-top: 20px;
+  margin-top: 23px;
   width: 100%;
   height: 5px;
   opacity: 1;
@@ -386,8 +393,6 @@ body {-webkit-font-smoothing: antialiased;}
   display: none;
   text-align: center;
 }
-
-
 .grids{
   width: 320px;
   height: 568px;
