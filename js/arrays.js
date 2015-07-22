@@ -1,7 +1,7 @@
 var weatherEl = ['temp~76'//
 				, 'tempdeg~76°'//
 				, 'tempdegplus~76°F'//
-				, 'icon~Icon'
+				, 'icon~Icon'//
 				, 'high~80 "high"'//
 				, 'highdeg~80° "high"'//
 				, 'highdegplus~80°F "high"'//
@@ -209,6 +209,10 @@ var elementPanel = {
             temp: "76",
             tempdeg: "76°",
             tempdegplus: "76°F"
+        },
+        icon:{
+            title: "Icon",
+            icon: "Weather"
         },
         highs: {
             title: "High",
