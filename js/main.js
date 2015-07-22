@@ -106,10 +106,12 @@ var action = {
             }
         }
 
-        /* show hide text -> */
-        ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ?
-            $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' :
-            $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel';
+        /* show/hide text -> */
+        if ($('.elementPanel').is(":visible"))
+            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel"
+        else
+            $('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
+            
         $('.elementPanel').toggle('some random text here thatll really just turn into 400');
     },
     setFont: function (fontName) {
@@ -1022,7 +1024,14 @@ var action = {
            a.href = 'javascript:void(0)';
            a.className = 'leftTooltip';
            var splitArray = menuArray[i].split('~');
-           a.title = splitArray[1];
+           if (splitArray[0] === "element") {
+                if ($('.elementPanel').is(":visible"))
+                    a.title = "Hide Elements Panel"
+                else
+                    a.title = "Show Elements Panel";
+           } else {
+               a.title = splitArray[1];
+           }
            li.className = splitArray[2];
            li.id = splitArray[0];
            a.appendChild(li);
