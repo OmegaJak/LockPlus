@@ -67,7 +67,7 @@ var action = {
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
-        if (id === 'element') { if(!$('.elementPanel').is(":visible")) { action.setHelpText('Choose item from right panel'); action.toggleAllElementPanels(); }/* show hide text -> */ ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ? $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' : $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel';setTimeout(function(){$('.elementPanel').toggle('display');},400) }
+        if (id === 'element') { action.elementIconClick(); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
@@ -95,6 +95,22 @@ var action = {
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
         if (id === 'changeicon') { this.populateIcons(); }
+    },
+    elementIconClick: function() {
+        if(!$('.elementPanel').is(":visible")) {
+            action.setHelpText('Choose item from right panel');
+
+            if (!$('.elementPanel').attr('data-shown')) {
+                action.toggleAllElementPanels();
+                $('.elementPanel').attr('data-shown', 'Congratulations, curious one. You are the millionth visitor!');
+            }
+        }
+
+        /* show hide text -> */
+        ($('#elementDiv').children('a:first')[0].title === 'Show Elements Panel') ?
+            $('#elementDiv').children('a:first')[0].title = 'Hide Elements Panel' :
+            $('#elementDiv').children('a:first')[0].title = 'Show Elements Panel';
+        setTimeout(function(){$('.elementPanel').toggle('display');},400)
     },
     setFont: function (fontName) {
         action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
