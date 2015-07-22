@@ -56,7 +56,7 @@
 }
 .slick-arrow {
     position: absolute;
-    left: 150px;
+    left: -40px;
     cursor: pointer;
     position: absolute;
     -webkit-border-radius: 3;
@@ -71,6 +71,7 @@
     outline-width: 4px;
     outline-color: rgba(0,0,0,0);
     -webkit-background-clip: padding-box;
+	z-index: 50;
 }
 .slick-arrow button:hover {
     background-color: #54606e;
@@ -134,7 +135,7 @@ label {
 	margin-bottom: 5px;
 }
 #clockList,#weatherList,#systemList,#miscList {
-    left: 26px;
+    left: 50px;
     width: 500px;
 	height: 190px;
 	overflow: visible;
