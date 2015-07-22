@@ -620,10 +620,10 @@ var action = {
                     vertical: true,
                     initialSlide: startSlide,
                     slidesToShow: numSlides,
-                    verticalSwiping: true
+                    verticalSwiping: false
                 });
 
-                $($('#' + div).find('[aria-live=polite]')).attr('style', 'width: 500px');
+                $($('#' + div).find('[aria-live=polite]')).css('width', '500px');
                 $('.slick-slide').css('float', 'none');
 
                 var prevButton = $('#' + div).find('.slick-next')[0];
