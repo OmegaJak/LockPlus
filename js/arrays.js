@@ -136,7 +136,7 @@ var elementPanel = {
         },
         minutes: {
             title: "Minute",
-            min: cF.minute(),
+            minute: cF.minute(),
             mtext: cF.minuteonetext() + ' ' + cF.minutetwotext()
         },
         pm: {
@@ -317,5 +317,3 @@ var elementPanel = {
         }
     }
 };
-
-
