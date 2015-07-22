@@ -552,7 +552,7 @@ var action = {
                 $('#clear').parent().attr('class',' '); //Hide tooltip
                 $('<button style="top:'+button+'px" type="button" class="noClear">No</button>').prependTo('#clearDiv');
                 $('<button style="top:'+button+'px" type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
-                $('<label style="top:'+label+'px" class="clearLabel">Are you sure?</label>').prependTo('#clearDiv');
+                $('<label style="top:'+label+'px" class="clearLabel">Clear Theme?</label>').prependTo('#clearDiv');
                 $('.yesClear').click(function() {
                     action.clearTheme(1);
                 });
