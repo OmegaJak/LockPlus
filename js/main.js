@@ -894,18 +894,20 @@ var action = {
                 action.savedElements.placedElements[id].top = ui.position.top;
                 action.saveStorage();
                 /* Create a div around the element which can be used for snapping */
-                var snapper = $('<div>',{'class' : 'dLine', 'title' : id}),
-                    el = $('#'+id),
-                    position = el.position();
-                snapper.insertBefore(el);
-                snapper.css({
-                    top: position.top + 'px',
-                    left: position.left + 'px',
-                    width: el.width(),
-                    height: el.height()
-                })
+                if(localStorage.snap == 'true'){
+                    var snapper = $('<div>',{'class' : 'dLine', 'title' : id}),
+                        el = $('#'+id),
+                        position = el.position();
+                    snapper.insertBefore(el);
+                    snapper.css({
+                        top: position.top + 'px',
+                        left: position.left + 'px',
+                        width: el.width(),
+                        height: el.height()
+                    });
+                }
             },
-            snap: '.dLine' //snap other items to that div.
+                snap: '.dLine' //snap other items to that div.
         });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
@@ -1263,6 +1265,16 @@ $('#gridtips').on('click',function(){
     }else{
         $('.grids').empty();
         $(this).attr('title','Off');
+    }
+});
+$('#snaptips').on('click',function(){
+    if(localStorage.snap == 'true'){
+        localStorage.snap = 'false';
+        $(this).attr('title','Off');
+        $(".dLine").remove();
+    }else{
+        localStorage.snap = 'true';
+        $(this).attr('title','On');
     }
 });
 

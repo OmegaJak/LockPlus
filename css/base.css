@@ -388,6 +388,18 @@ body {-webkit-font-smoothing: antialiased;}
   border-radius: 100%;
   border:3px solid #21b9b0;
 }
+#snaptips:after{
+  position: absolute;
+  left:74px;
+  top:-4px;
+  width: 24px;
+  height: 24px;
+  content:attr(title);
+  padding:5px;
+  background-color:#54606e;
+  border-radius: 100%;
+  border:3px solid #21b9b0;
+}
 
 .menulist {
   display: none;
@@ -411,7 +423,7 @@ body {-webkit-font-smoothing: antialiased;}
 }
 
 .dLine {
-    border: 1px solid transparent;
+    outline: 1px solid green;
     height: 0;
     position: absolute;
     width: 0;
