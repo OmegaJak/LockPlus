@@ -739,11 +739,11 @@ var action = {
         var centerEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']');
         var nextEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']');
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
-        $(lastEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $(lastEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto','border':'1px solid transparent'});
         $(lastEl).removeClass("elementPanelPreview");
-        $(centerEl).css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px'});
+        $(centerEl).css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px','border':'2px solid #21b9b0'});
         $(centerEl).addClass("elementPanelPreview");
-        $(nextEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto'});
+        $(nextEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto','border':'1px solid transparent'});
         $(nextEl).removeClass("elementPanelPreview");
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
 
@@ -1119,12 +1119,14 @@ function uploadedImage(e) {
 
 //event listeners
 window.onload = function () {
-    action.showIconMenu(constants.toolArray, -1);
-    $('#clockList').toggle('display'); action.createLI(elementPanel.clockElements, 'clockList');
-    $('#weatherList').toggle('display'); action.createLI(elementPanel.weatherElements, 'weatherList');
-    $('#systemList').toggle('display'); action.createLI(elementPanel.systemElements, 'systemList');
-    $('#miscList').toggle('display'); action.createLI(elementPanel.miscElements, 'miscList');
     action.loadFromStorage(); //load elements that are stored
+    setTimeout(function(){
+        action.showIconMenu(constants.toolArray, -1);
+        $('#clockList').toggle('display'); action.createLI(elementPanel.clockElements, 'clockList');
+        $('#weatherList').toggle('display'); action.createLI(elementPanel.weatherElements, 'weatherList');
+        $('#systemList').toggle('display'); action.createLI(elementPanel.systemElements, 'systemList');
+        $('#miscList').toggle('display'); action.createLI(elementPanel.miscElements, 'miscList');
+    },0); //if going to load immediately wait for everything visible to show first.
 }
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
