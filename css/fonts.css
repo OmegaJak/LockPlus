@@ -187,6 +187,26 @@
 	src:url(fonts/user/samsungregular.otf);
 }
 @font-face{
+	font-family:'sanfranlight';
+	src:url(fonts/user/sanfranlight.otf);
+}
+@font-face{
+	font-family:'sanfranthin';
+	src:url(fonts/user/sanfranthin.otf);
+}
+@font-face{
+	font-family:'sanfranreg';
+	src:url(fonts/user/sanfranreg.otf);
+}
+@font-face{
+	font-family:'sanfranbold';
+	src:url(fonts/user/sanfranbold.otf);
+}
+@font-face{
+	font-family:'sanfranheavy';
+	src:url(fonts/user/sanfranheavy.otf);
+}
+@font-face{
 	font-family:'signer';
 	src:url(fonts/user/signer.otf);
 }
