@@ -125,6 +125,7 @@ label {
 	/*top: -31px;*/
 	top:50%;
 	-webkit-transform: translateY(-50%);
+    margin-top: 0px;
 	list-style: none outside none;
 }
 .subCategory li {
