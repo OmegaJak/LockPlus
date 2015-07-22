@@ -750,14 +750,14 @@ var action = {
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
 
         // Subcategory showing //
-        lastEl.find('ul').first().hide('slide'); // Make sure the other ones are hidden
+        lastEl.find('ul').first().hide(); // Make sure the other ones are hidden
 
         var centerUl = $(centerEl).find('ul').first();
         var numLis = centerUl.children().length;
         //centerUl.css('top', '-' + (((numLis * 32 + (5*(numLis - 1))) / 2) - 13) + 'px');
-        centerUl.show('slide'); // Show the subcategory for the center ul
+        centerUl.show(); // Show the subcategory for the center ul
 
-        nextEl.find('ul').first().hide('slide'); // Make sure the other ones are hidden
+        nextEl.find('ul').first().hide(); // Make sure the other ones are hidden
         // ---- //
 
         var text = centerEl.clone().children().remove().end().text(); // Hooray for StackOverflow
