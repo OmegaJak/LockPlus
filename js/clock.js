@@ -346,7 +346,12 @@ var miscDivs = function() {
         boxTwo: '',
         boxThree: '',
         boxFour: '',
-        boxFive: ''
+        boxFive: '',
+        boxCircleOne: '',
+        boxCircleTwo: '',
+        boxCircleThree: '',
+        boxCircleFour: '',
+        boxCircleFive: ''
     };
     Object.keys(miscEl).forEach(function (key) {
         var value = miscEl[key],

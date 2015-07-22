@@ -254,6 +254,14 @@ var elementPanel = {
             boxThree: "Custom Box 3",
             boxFour: "Custom Box 4",
             boxFive: "Custom Box 5"
-        }
+        },
+		circle: {
+			title: "Circles",
+			boxCircleOne: "Custom Circle 1",
+			boxCircleTwo: "Custom Circle 2",
+			boxCircleThree: "Custom Circle 3",
+			boxCircleFour: "Custom Circle 4",
+			boxCircleFive: "Custom Circle 5"
+		}
     }
 };

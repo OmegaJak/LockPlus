@@ -980,6 +980,9 @@ var action = {
             div.style.borderColor = 'red';
             div.style.borderStyle = 'solid';
             div.style.borderWidth = '0px';
+            if (id.substring(3, 9) === 'Circle') {
+                div.style.borderRadius = '25px';
+            }
         } else {
             div.style.zIndex = 2;
         }
@@ -996,6 +999,9 @@ var action = {
             this.savedElements.placedElements[id].borderColor = 'red';
             this.savedElements.placedElements[id].borderStyle = 'solid';
             this.savedElements.placedElements[id].borderWidth = '0px';
+            if (id.substring(3, 9) === 'Circle') {
+                this.savedElements.placedElements[id].borderRadius = '25px';
+            }
         } else {
             this.savedElements.placedElements[id].zIndex = 2;
         }
