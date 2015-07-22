@@ -223,7 +223,7 @@ var elementPanel = {
             lowdegplus: "70°F"
         },
         lowhigh: {
-            title: "Low+High",
+            title: "High and Low",
             highdashlow: "80-70",
             highdashlowdeg: "80°-70°",
             highslashlow: "80/70",

@@ -345,7 +345,7 @@ var action = {
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
         if (optionsTop === 0 || !optionsTop)
-            optionsTop = $('#' + splitArr[3]).position().top + 85;
+            optionsTop = $('#' + splitArr[3]).position().top + 15;
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
@@ -413,18 +413,6 @@ var action = {
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
             }
             if (jsCssKey === 'width') {
-                /* Check to see if setting width overflows screen */
-                /* While changing the width, and the element bounds goes out of screen, move item left to stop overflow */
-
-                var elWidth = $('#' + action.selectedItem).width(), //current set width
-                    elPos = $('#' + action.selectedItem).position().left, //element position from the left
-                    elDiff = elWidth - ($('.screen').width() - elPos); //check difference in screen width compared to element position + set width
-
-                if(elDiff > 0){
-                    $('#' + action.selectedItem).css('left', (elPos - elDiff) +'px'); //make adjustments to the element
-                    action.savedElements.placedElements[action.selectedItem].left = elPos - elDiff + 'px'; //updated placedElements obj
-                }
-
                 $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
                 $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
             }
@@ -543,10 +531,10 @@ var action = {
         });
     },
     elementPanel: function (id) { //show hide items in element Panel
-        if (id === 'cl') { $('#clockList').toggle('display'); this.createNewLI(elementPanel.clockElements, 'clockList'); }
-        if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(weatherEl, 'weatherList'); }
-        if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(systemEl, 'systemList'); }
-        if (id === 'ml') { $('#miscList').toggle('display'); this.createLI(miscEl, 'miscList'); }
+        if (id === 'cl') { $('#clockList').toggle('display'); this.createLI(elementPanel.clockElements, 'clockList'); }
+        if (id === 'wl') { $('#weatherList').toggle('display'); this.createLI(elementPanel.weatherElements, 'weatherList'); }
+        if (id === 'sl') { $('#systemList').toggle('display'); this.createLI(elementPanel.systemElements, 'systemList'); }
+        if (id === 'ml') { $('#miscList').toggle('display'); this.createLI(elementPanel.miscElements, 'miscList'); }
     },
     getElementPanelIdSelector: function(id) { // Sadly I can't put this into that ↑
         if (id === 'cl') return '#clockList'
@@ -559,12 +547,11 @@ var action = {
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
             } else {
-                 var label = $('#clearDiv').position().top + 13, //auto align clear label
-                     button = label + 4;
                 $('#clear').parent().attr('class',' '); //Hide tooltip
-                $('<button style="top:'+button+'px" type="button" class="noClear">No</button>').prependTo('#clearDiv');
-                $('<button style="top:'+button+'px" type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
-                $('<label style="top:'+label+'px" class="clearLabel">Clear Theme?</label>').prependTo('#clearDiv');
+                $('<button type="button" class="noClear">No</button>').prependTo('#clearDiv');
+                $('<button type="button" class="yesClear">Yes</button>').prependTo('#clearDiv');
+                $('<label class="clearLabel">Are you sure?</label>').prependTo('#clearDiv');
+
                 $('.yesClear').click(function() {
                     action.clearTheme(1);
                 });
@@ -604,150 +591,7 @@ var action = {
     },
     createLI: function(type, div) { //create add menu
         $('#' + div).empty();
-        for (var i = 0; i < type.length; i++) {
-            var li = document.createElement('li'),
-                element = type[i].split('~'),
-                label = element[0],
-                desc = element[1];
-            li.id = 'p' + label;
-            li.innerHTML = '<a title="'+label+'"><label>' + desc + '</label></a>';
-
-            switch (i) { //This is all to smooth the transition into the slick.js carousel
-                case 0:
-                    li.style.opacity = 0.07;
-                    break;
-                case 1:
-                    li.style.opacity = 0.5;
-                    break;
-                case 2:
-                    li.style.fontSize = "30px";
-                    break;
-                case 3:
-                    li.style.opacity = 0.5;
-                    break;
-                case 4:
-                    li.style.opacity = 0.07;
-            }
-
-            if (document.getElementById(label)) {
-                li.style.backgroundColor = "#21b9b0"; // Color already-added elements
-                li.style.borderColor = "#21b9b0";
-            }
-            $('#' + div).append(li);
-        }
-
-        setTimeout(function() {
-            if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
-                var numSlides = 0;
-                var padding = '69px';
-                var numDivChildren = $('#' + div).children().length;
-                if (numDivChildren > 5) { // This is specifically for "System Elements"
-                    numSlides = 5;
-                    var dummyLiOne = $('<li id="dummyOne"><a title=""><label></label></a></li>');
-                    var dummyLiTwo = $('<li id="dummyTwo"><a title=""><label></label></a></li>');
-                    $('#' + div).append(dummyLiOne);
-                    $('#' + div).append(dummyLiTwo);
-                } else {
-                    numSlides = numDivChildren - 1;
-                    padding = '28px';
-                }
-
-                var startSlide = 2;
-                $('#' + div).slick({
-                    centerMode: true,
-                    centerPadding: padding,
-                    infinite: false,
-                    arrows: true,
-                    slide: 'li',
-                    speed: 100,
-                    vertical: true,
-                    initialSlide: startSlide,
-                    slidesToShow: numSlides,
-                    verticalSwiping: true
-                });
-
-                var prevButton = $('#' + div).find('.slick-next')[0];
-                $(prevButton).attr('class', 'slick-next slick-arrow fa fa-arrow-down');
-                $(prevButton).html('');
-                $(prevButton).click(function() {action.buttonPress('next', div);});
-
-                var nextButton = $('#' + div).find('.slick-prev')[0];
-                $(nextButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-up');
-                $(nextButton).html('');
-                $(nextButton).click(function() {action.buttonPress('prev', div);});
-
-                if (numDivChildren <= 5)
-                    $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');
-
-                action.setCarouselOpacity(div);
-            } else {
-                $('#' + div).attr('class', '');
-            }
-            $('#' + div).on('mousewheel', function (e) {
-                if (e.deltaY>0) {
-                    $('#' + div).slick('slickPrev');
-                    action.setCarouselOpacity(div);
-                } else {
-                    if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
-                        $('#' + div).slick('slickNext');
-                        action.setCarouselOpacity(div);
-                    }
-                }
-                e.preventDefault();
-            });
-            $('#' + div).hover(function() {
-                $(document).keyup(function () {
-                    if (event.keyCode === 38) {
-                        $('#' + div).slick('slickPrev');
-                    } else if (event.keyCode === 40) {
-                        if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
-                            $('#' + div).slick('slickNext');
-                        }
-                    }
-                    action.setCarouselOpacity(div);
-                });
-            }, function() {
-                $(document).unbind("keyup");
-            });
-
-            if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
-        }, 401);
-
-    },
-    createNewLI: function(type, div) { //create add menu
-        $('#' + div).empty();
         action.parseElementsArray(type, '#' + div);
-        /*for (var i = 0; i < type.length; i++) {
-            var li = document.createElement('li'),
-                element = type[i].split('~'),
-                label = element[0],
-                desc = element[1];
-            li.id = 'p' + label;
-            li.innerHTML = '<a title="'+label+'"><label>' + desc + '</label></a>';
-
-            switch (i) { //This is all to smooth the transition into the slick.js carousel
-                case 0:
-                    li.style.opacity = 0.07;
-                    break;
-                case 1:
-                    li.style.opacity = 0.5;
-                    break;
-                case 2:
-                    li.style.fontSize = "30px";
-                    break;
-                case 3:
-                    li.style.opacity = 0.5;
-                    break;
-                case 4:
-                    li.style.opacity = 0.07;
-            }
-
-            if (document.getElementById(label)) {
-                li.style.backgroundColor = "#21b9b0"; // Color already-added elements
-                li.style.borderColor = "#21b9b0";
-            }
-            $('#' + div).append(li);
-        }*/
 
         setTimeout(function() {
             if ($('#' + div).attr('class') === '' || typeof $('#' + div).attr('class') === typeof undefined) {
@@ -776,10 +620,10 @@ var action = {
                     vertical: true,
                     initialSlide: startSlide,
                     slidesToShow: numSlides,
-                    verticalSwiping: true
+                    verticalSwiping: false
                 });
 
-                $($('#' + div).find('[aria-live=polite]')).attr('style', 'width: 500px');
+                $($('#' + div).find('[aria-live=polite]')).css('width', '500px');
                 $('.slick-slide').css('float', 'none');
 
                 var prevButton = $('#' + div).find('.slick-next')[0];
@@ -867,15 +711,18 @@ var action = {
         $(nextEl).removeClass("elementPanelPreview");
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
 
-        // Subcategory showing
-        lastEl.find('ul').first().hide('display');
+        // Subcategory showing //
+        lastEl.find('ul').first().hide('display'); // Make sure the other ones are hidden
 
         var centerUl = $(centerEl).find('ul').first();
-        centerUl.show('display', function() {
-            centerUl.css('top', '-' + ((centerUl.height()/2) + 2) + 'px'); // Center the ul
-        });
+        centerUl.show('display', function() { // Show the subcategory for the center ul
 
-        nextEl.find('ul').first().hide('display');
+        });
+        var numLis = centerUl.children().length;
+        centerUl.css('top', '-' + (((numLis * 32 + (5*(numLis - 1))) / 2) + 7) + 'px'); // callback to center the ul
+
+        nextEl.find('ul').first().hide('display'); // Make sure the other ones are hidden
+        // ---- //
 
         var firstChild = $($(centerEl).children()[0]).children()[0]; // not Last Child :(
         if ($(firstChild).html().length >= 10) {
@@ -1391,6 +1238,7 @@ function createGrid(sizeleft, sizetop) {
   $('.gridlines').show();
 }
 //createGrid(constants.gridSizeLeft,constants.gridSizeTop);
+
 
 /* Top right menu */
 $('#menutips').on('click',function(){
