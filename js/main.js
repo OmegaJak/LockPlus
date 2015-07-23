@@ -396,14 +396,14 @@ var action = {
             $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback) });
 
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
-            $(idSelector).val(elSize.substring(0,elSize.length - unit.length));
+            $(idSelector).val(Math.round(JSON.parse(elSize.substring(0,elSize.length - unit.length))));
             $(idSelector).on("focus", function() { action.setHelpText('Try scrolling while hovering over the input text!'); })
             $(idSelector).on("change", function() {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
             $(idSelector).on("mousewheel", function(event) {
-                if (event.deltaY > 0) $(idSelector).val(JSON.parse($(idSelector).val()) + 1)
-                    else $(idSelector).val(JSON.parse($(idSelector).val()) - 1);
+                if (event.deltaY > 0) $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) + 1))
+                    else $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) - 1));
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
                 event.preventDefault();
             });
@@ -505,8 +505,8 @@ var action = {
         this.cgSize('posTop', constants.editArray[2], 'px', 0, $('.screen').height() - $('#' + action.selectedItem).height(), 'top', 'top', action.updateSize, '', '208', 'Top', 2);
 
         $('#' + action.selectedItem).on('drag', function() {
-            $('#posLeftInput').val($('#' + action.selectedItem).position().left);
-            $('#posTopInput').val($('#' + action.selectedItem).position().top);
+            $('#posLeftInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().left)));
+            $('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
         });
         $('#' + action.selectedItem).resize(function() {
             alert("test");
@@ -537,9 +537,9 @@ var action = {
                  /* Check to see if setting width overflows screen */
                 /* While changing the width, and the element bounds goes out of screen, move item left to stop overflow */
 
-                var elWidth = $('#' + action.selectedItem).width(), //current set width
-                    elPos = $('#' + action.selectedItem).position().left, //element position from the left
-                    elDiff = elWidth - ($('.screen').width() - elPos); //check difference in screen width compared to element position + set width
+                var elWidth = Math.round($('#' + action.selectedItem).width()), //current set width
+                    elPos = Math.round($('#' + action.selectedItem).position().left), //element position from the left
+                    elDiff = Math.round(elWidth - ($('.screen').width() - elPos)); //check difference in screen width compared to element position + set width
 
                 if(elDiff > 0){
                     $('#' + action.selectedItem).css('left', (elPos - elDiff) +'px'); //make adjustments to the element
