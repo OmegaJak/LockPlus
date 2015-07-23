@@ -137,7 +137,9 @@ label {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-.subCategory li:last-child{
+.subCategory li:hover{
+    box-shadow: 0px 0px 0px 2px #21b9b0;
+    -webkit-box-shadow: 0px 0px 0px 2px #21b9b0;
 }
 #textelementsSubCategory li:first-child, #squaresSubCategory li:first-child{ /*fix textElements */
     margin-top:80px;
