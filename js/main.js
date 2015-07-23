@@ -128,13 +128,42 @@ var action = {
             }
         }
 
-        /* show/hide text -> */
-        if ($('.elementPanel').is(":visible"))
-            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel"
-        else
+        /* show/hide text and smooth animation */
+        if ($('.elementPanel').is(":visible")) {
+            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel";
+            $(".elementPanel").animate({
+                opacity: 0,
+                marginTop: '-300px'
+            }, {
+                duration: 200,
+                specialEasing: {
+                    opacity: "linear",
+                    marginTop: "easeInOutCirc"
+                },
+                complete: function() {
+                    $('.elementPanel').toggle();
+                }
+            });
+        } else {
             $('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
-
-        $('.elementPanel').toggle('some random text here thatll really just turn into 400');
+            $('.elementPanel').css({
+                opacity: '0',
+                //left: '53%',
+                marginTop: '-300px'
+            });
+            $('.elementPanel').toggle();
+            $(".elementPanel").animate({
+                opacity: 1,
+                marginTop: 0
+            }, {
+                duration: 200,
+                specialEasing: {
+                    opacity: "linear",
+                    marginTop: "easeInOutCirc"
+                },
+                complete: function() {}
+            });
+        }
     },
     setFont: function (fontName) {
         action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
@@ -495,6 +524,11 @@ var action = {
             if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
             $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
             action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
+            //if(action.selectedItem)
+            if(action.selectedItem.substring(3,9) === 'Circle'){
+                $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
+                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
+            }
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
@@ -1035,13 +1069,13 @@ var action = {
             div.style.width = '50px';
             div.style.height = '50px';
             div.style.backgroundColor = 'red';
-            div.style.display = 'gray';
+            //div.style.display = 'gray';
             div.style.zIndex = 1;
             div.style.borderColor = 'red';
             div.style.borderStyle = 'solid';
             div.style.borderWidth = '0px';
             if (id.substring(3, 9) === 'Circle') {
-                div.style.borderRadius = '25px';
+                div.style.borderRadius = '999px';
             }
         } else {
             div.style.zIndex = 2;
@@ -1054,13 +1088,13 @@ var action = {
             this.savedElements.placedElements[id].width = '50px';
             this.savedElements.placedElements[id].height = '50px';
             this.savedElements.placedElements[id]['background-color'] = 'red';
-            this.savedElements.placedElements[id].display = 'gray';
+            //this.savedElements.placedElements[id].display = 'gray';
             this.savedElements.placedElements[id]['z-index'] = 1;
             this.savedElements.placedElements[id]['border-color'] = 'red';
             this.savedElements.placedElements[id]['border-style'] = 'solid';
             this.savedElements.placedElements[id]['border-width'] = '0px';
             if (id.substring(3, 9) === 'Circle') {
-                this.savedElements.placedElements[id]['border-radius'] = '25px';
+                this.savedElements.placedElements[id]['border-radius'] = '999px';
             }
         } else {
             this.savedElements.placedElements[id]['z-index'] = 2;
