@@ -128,6 +128,8 @@ label {
 	-webkit-transform: translateY(-50%);
     margin-top: 0px;
 	list-style: none outside none;
+    /*height: 240px!important;
+    overflow: scroll;*/ /*could be scrolling list*/
 }
 .subCategory li {
 	height: 16px;
@@ -135,12 +137,27 @@ label {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+.subCategory li:last-child{
+}
+#textelementsSubCategory li:first-child, #squaresSubCategory li:first-child{ /*fix textElements */
+    margin-top:80px;
+}
+#circlesSubCategory li:first-child{ /*make where circles top doesn't clip*/
+    margin-top: 10px;
+}
+
+.slick-list{
+    height: 190px!important; /*force slick to be bigger to make up for sub category with 9 items*/
+}
 #clockList,#weatherList,#systemList,#miscList {
     left: 50px;
     width: 500px;
 	height: 190px;
 	overflow: visible;
 	display: inline;
+}
+#dummyOne,#dummyTwo{  /*clean up slick dummy divs*/
+    opacity: 0!important;
 }
 #clockList li, #weatherList li, #systemList li, #miscList li{
     width: 150px!important;
