@@ -151,6 +151,11 @@ label {
 
 .slick-list{
     height: 190px!important; /*force slick to be bigger to make up for sub category with 9 items*/
+    width: 360px!important;
+}
+
+.slick-slider{ /*defined width to stop page wanting to scroll horizontally*/
+    width: 370px!important;
 }
 #clockList,#weatherList,#systemList,#miscList {
     left: 50px;
