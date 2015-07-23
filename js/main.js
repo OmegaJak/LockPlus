@@ -768,7 +768,8 @@ var action = {
         $(nextEl).removeClass("elementPanelPreview");
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
 
-        // Subcategory showing //
+        // Subcategory showing/hiding //
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').find('ul').first().hide();
         lastEl.find('ul').first().hide(); // Make sure the other ones are hidden
 
         var centerUl = $(centerEl).find('ul').first();
@@ -777,6 +778,7 @@ var action = {
         centerUl.show(); // Show the subcategory for the center ul
 
         nextEl.find('ul').first().hide(); // Make sure the other ones are hidden
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').find('ul').first().hide();
         // ---- //
 
         var text = centerEl.clone().children().remove().end().text(); // Hooray for StackOverflow
@@ -1197,25 +1199,18 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
                 && $(action.getElementPanelIdSelector($(elementChildren[i]).attr('id'))).is(':visible'))
                     action.elementPanel($(elementChildren[i]).attr('id'));
         }
-    } else if(event.target.tagName === "LABEL"){ //Clicking inside an already-displayed panel
-        var title = $(event.target).parent()[0].title; //changed from innerHTML to parent's title
-        if ($(event.target).parent().parent().hasClass('slick-center')) {
-            if (document.getElementById(title)) {
-                action.removeFromScreen(title, false);
-            } else {
-               action.addtoScreen(title);
-            }
-        } else {
-            var div = $(event.target).parent().parent().parent().parent().parent();
-            div.slick('slickGoTo', JSON.parse($(event.target).parent().parent().attr('data-slick-index')), false);
-            action.setCarouselOpacity(div.attr('id'));
-        }
     } else if ($(event.target).parent().hasClass('subCategory')) {
         var id = $(event.target).attr('data-element');
         if (document.getElementById(id)) {
             action.removeFromScreen(id, false);
         } else {
            action.addtoScreen(id);
+        }
+    } else if ($(event.target).hasClass('categoryTitle')) {
+        if (!$(event.target).hasClass('slick-center')) {
+            var div = $(event.target).parent().parent().parent();
+            div.slick('slickGoTo', JSON.parse($(event.target).attr('data-slick-index')), false);
+            action.setCarouselOpacity(div.attr('id'));
         }
     }
 });
