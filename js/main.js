@@ -13,6 +13,7 @@ var constants = {
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'align~Change Alignment~fa fa-align-center~alignDiv'
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
+                    ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
@@ -24,6 +25,7 @@ var constants = {
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'align~Change Alignment~fa fa-align-center~alignDiv'
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'
+                    ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
@@ -40,21 +42,29 @@ var constants = {
                     ,'boxshadowColor~Change Color~fa fa-eyedropper~boxshadowColorDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'boxclearShadow~Clear Shadow~fa fa-trash~boxclearShadowDiv'],
+    transformArray: ['rotation~Change Rotation Angle~fa fa-repeat~rotationDiv'
+                    ,'skewX~Change X Skew~fa fa-windows~skewXDiv'
+                    ,'skewY~Change Y Skew~fa fa-windows~skewYDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
+                    ,'clearTransform~Clear Transformations~fa fa-trash~clearTransformsDiv'],
     boxEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'radius~Change Radius~fa fa-circle~radiusDiv'
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
+                    ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
+                    ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
+                ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
@@ -88,6 +98,11 @@ var action = {
         if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
         if (id === 'radius') { this.cgSize('radiusSize', constants.boxEditArray[3], 'px', 0, $('#' + action.selectedItem).width() / 2, 'border-radius', 'borderRadius', action.updateSize, false, false, 'Box Radius'); }
+        if (id === 'transform') { action.showIconMenu(constants.transformArray, -1); }
+        if (id === 'rotation') { this.cgSize('rotationAngle', constants.transformArray[0], 'deg', 0, 360, 'rotate', 'rotate', action.updateTransform, false, false, 'Rotation Angle'); }
+        if (id === 'skewX') { this.cgSize('skewXAngle', constants.transformArray[1], 'deg', 0, 360, 'skewX', 'skewX', action.updateTransform, false, false, 'X Skew Angle'); }
+        if (id === 'skewY') { this.cgSize('skewYAngle', constants.transformArray[2], 'deg', 0, 360, 'skewY', 'skewY', action.updateTransform, false, false, 'Y Skew Angle'); }
+        if (id === 'clearTransform') { action.updateTransform('','','','','clear'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'backToEdit') { action.showProperMenuForId(this.selectedItem); }
@@ -112,43 +127,14 @@ var action = {
                 $('.elementPanel').attr('data-shown', 'Congratulations, curious one. You are the millionth visitor!');
             }
         }
-        /* show/hide text and smooth animation */
-        if ($('.elementPanel').is(":visible")) {
-            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel";
-            $(".elementPanel").animate({
-                opacity: 0,
-                marginTop: '-300px'
-            }, {
-                duration: 200,
-                specialEasing: {
-                    opacity: "linear",
-                    marginTop: "easeInOutCirc"
-                },
-                complete: function() {
-                    $('.elementPanel').toggle();
-                }
-            });
-        } else {
+
+        /* show/hide text -> */
+        if ($('.elementPanel').is(":visible"))
+            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel"
+        else
             $('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
-            $('.elementPanel').css({
-                opacity: '0',
-                //left: '53%',
-                marginTop: '-300px'
-            });
-            $('.elementPanel').toggle();
-            $(".elementPanel").animate({
-                opacity: 1,
-                marginTop: 0
-            }, {
-                duration: 200,
-                specialEasing: {
-                    opacity: "linear",
-                    marginTop: "easeInOutCirc"
-                },
-                complete: function() {}
-            });
-        }
-        //$('.elementPanel').toggle('some random text here thatll really just turn into 400');
+
+        $('.elementPanel').toggle('some random text here thatll really just turn into 400');
     },
     setFont: function (fontName) {
         action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
@@ -188,6 +174,53 @@ var action = {
         $('.icon').attr('src', 'weather/'+name+'.png');
         action.savedElements.iconName = name;
         this.saveStorage();
+    },
+    updateTransform: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        var currentTransform = document.getElementById(action.selectedItem).style.transform; /*$('#' + action.selectedItem).css('transform')*/
+        if (currentTransform != '') var splitArray = currentTransform.replace(/deg/g, '').split(/[()]/);
+            else var splitArray = ['rotate', '0', ' skewX', '0', ' skewY', '0'];
+        // "rotate(0) skewX(0) skewY(0)"
+
+        var index = 0;
+        switch (cssKey) {
+            case "rotate":
+                index = 1;
+                break;
+            case "skewX":
+                index = 3;
+                break;
+            case "skewY":
+                index = 5;
+                break;
+        }
+
+        if (purpose === 'set') {
+            splitArray[index] = $(idSelector).val();
+
+            var compiledTransform = '';
+            for (var i = 0; i < splitArray.length; i++) {
+                if (splitArray[i] != '') {
+                    if (isNaN(splitArray[i]))
+                        splitArray[i] = splitArray[i] + '('
+                    else
+                        splitArray[i] = splitArray[i] + 'deg)';
+
+                    compiledTransform += splitArray[i];
+                }
+            }
+
+            $('#' + action.selectedItem).css('transform', compiledTransform);
+            action.savedElements.placedElements[action.selectedItem]['transform'] = compiledTransform;
+
+            action.saveStorage();
+        } else if (purpose === 'get') {
+            return splitArray[index] + unit;
+        } else if (purpose === 'clear') {
+            $('#' + action.selectedItem).css('transform', '');
+            action.savedElements.placedElements[action.selectedItem]['transform'] = '';
+
+            action.saveStorage();
+        }
     },
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         var isForBox = idSelector.indexOf("box") > -1;
@@ -462,11 +495,6 @@ var action = {
             if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
             $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
             action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
-            //if(action.selectedItem)
-            if(action.selectedItem.substring(3,9) === 'Circle'){
-                $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
-                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
-            }
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
@@ -1007,13 +1035,13 @@ var action = {
             div.style.width = '50px';
             div.style.height = '50px';
             div.style.backgroundColor = 'red';
-            //div.style.display = 'gray';
+            div.style.display = 'gray';
             div.style.zIndex = 1;
             div.style.borderColor = 'red';
             div.style.borderStyle = 'solid';
             div.style.borderWidth = '0px';
             if (id.substring(3, 9) === 'Circle') {
-                div.style.borderRadius = '999px';
+                div.style.borderRadius = '25px';
             }
         } else {
             div.style.zIndex = 2;
@@ -1026,13 +1054,13 @@ var action = {
             this.savedElements.placedElements[id].width = '50px';
             this.savedElements.placedElements[id].height = '50px';
             this.savedElements.placedElements[id]['background-color'] = 'red';
-            //this.savedElements.placedElements[id].display = 'gray';
+            this.savedElements.placedElements[id].display = 'gray';
             this.savedElements.placedElements[id]['z-index'] = 1;
             this.savedElements.placedElements[id]['border-color'] = 'red';
             this.savedElements.placedElements[id]['border-style'] = 'solid';
             this.savedElements.placedElements[id]['border-width'] = '0px';
             if (id.substring(3, 9) === 'Circle') {
-                this.savedElements.placedElements[id]['border-radius'] = '999px';
+                this.savedElements.placedElements[id]['border-radius'] = '25px';
             }
         } else {
             this.savedElements.placedElements[id]['z-index'] = 2;
