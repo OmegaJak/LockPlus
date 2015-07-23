@@ -112,14 +112,43 @@ var action = {
                 $('.elementPanel').attr('data-shown', 'Congratulations, curious one. You are the millionth visitor!');
             }
         }
-
-        /* show/hide text -> */
-        if ($('.elementPanel').is(":visible"))
-            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel"
-        else
+        /* show/hide text and smooth animation */
+        if ($('.elementPanel').is(":visible")) {
+            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel";
+            $(".elementPanel").animate({
+                opacity: 0,
+                marginTop: '-300px'
+            }, {
+                duration: 200,
+                specialEasing: {
+                    opacity: "linear",
+                    marginTop: "easeInOutCirc"
+                },
+                complete: function() {
+                    $('.elementPanel').toggle();
+                }
+            });
+        } else {
             $('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
-
-        $('.elementPanel').toggle('some random text here thatll really just turn into 400');
+            $('.elementPanel').css({
+                opacity: '0',
+                //left: '53%',
+                marginTop: '-300px'
+            });
+            $('.elementPanel').toggle();
+            $(".elementPanel").animate({
+                opacity: 1,
+                marginTop: 0
+            }, {
+                duration: 200,
+                specialEasing: {
+                    opacity: "linear",
+                    marginTop: "easeInOutCirc"
+                },
+                complete: function() {}
+            });
+        }
+        //$('.elementPanel').toggle('some random text here thatll really just turn into 400');
     },
     setFont: function (fontName) {
         action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
