@@ -205,7 +205,7 @@ var action = {
         this.saveStorage();
     },
     updateTransform: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        var currentTransform = document.getElementById(action.selectedItem).style.transform; /*$('#' + action.selectedItem).css('transform')*/
+        var currentTransform = document.getElementById(action.selectedItem).style.webkitTransform; /*$('#' + action.selectedItem).css('transform')*/
         if (currentTransform != '') var splitArray = currentTransform.replace(/deg/g, '').split(/[()]/);
             else var splitArray = ['rotate', '0', ' skewX', '0', ' skewY', '0'];
         // "rotate(0) skewX(0) skewY(0)"
@@ -238,15 +238,15 @@ var action = {
                 }
             }
 
-            $('#' + action.selectedItem).css('transform', compiledTransform);
-            action.savedElements.placedElements[action.selectedItem]['transform'] = compiledTransform;
+            $('#' + action.selectedItem).css('webkit-transform', compiledTransform);
+            action.savedElements.placedElements[action.selectedItem]['webkit-transform'] = compiledTransform;
 
             action.saveStorage();
         } else if (purpose === 'get') {
             return splitArray[index] + unit;
         } else if (purpose === 'clear') {
-            $('#' + action.selectedItem).css('transform', '');
-            action.savedElements.placedElements[action.selectedItem]['transform'] = '';
+            $('#' + action.selectedItem).css('webkit-transform', '');
+            action.savedElements.placedElements[action.selectedItem]['webkit-transform'] = '';
 
             action.saveStorage();
         }
