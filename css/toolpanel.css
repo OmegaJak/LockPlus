@@ -117,6 +117,7 @@
 .toolPanel input::-webkit-inner-spin-button,
 .toolPanel input::-webkit-outer-spin-button {
 	-webkit-appearance: none;
+  appearance: none;
 	margin: 0;
 }
 .toolPanel input:focus{

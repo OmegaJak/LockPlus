@@ -13,6 +13,7 @@
 	top:50%;
 	left:50%;
 	-webkit-transform: translate(-50%, -52.8%);
+	transform: translate(-50%, -52.8%);
 	text-transform: capitalize;
 }
 

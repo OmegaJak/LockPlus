@@ -75,6 +75,7 @@
     outline-width: 4px;
     outline-color: rgba(0,0,0,0);
     -webkit-background-clip: padding-box;
+    background-clip: padding-box;
 	z-index: 50;
 }
 .slick-arrow button:hover {

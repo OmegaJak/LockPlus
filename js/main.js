@@ -417,16 +417,17 @@ var action = {
     },
     handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback) {
         action.setHelpText('Ctrl+click to set to max/min. Shift click to change by 10.');
-        event.preventDefault();
+       // event.preventDefault(); //no event in firefox:(
         var max = JSON.parse($(idSelector).attr('max'));
         var min = JSON.parse($(idSelector).attr('min'));
-        if (event.ctrlKey) {
+      /*  if (event.ctrlKey) {
             action.sizeControl(idSelector, (toMultiplyBy > 0 ? max : min) - JSON.parse($(idSelector).val()))
         } else if (event.shiftKey) {
             action.sizeControl(idSelector, toMultiplyBy * 10);
         } else {
             action.sizeControl(idSelector, toMultiplyBy * 1);
-        }
+        }*/
+        action.sizeControl(idSelector, toMultiplyBy * 1);
         updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
     },
     getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle, isForText) {
