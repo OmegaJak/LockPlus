@@ -2,6 +2,7 @@
 <head>
 	<title>LockPlus Saved</title>
      <link rel="stylesheet" href="css/style.css">
+     <script src='../js/prefixfree.min.js'></script>
 </head>
 <body>
 <div id="animations">

@@ -5,6 +5,7 @@
     top: 20%;
 	left: 55%;
 	-webkit-transform: translate(-50%)translateZ(0px);
+    transform: translate(-50%)translateZ(0px);
     margin-left: 280px;
 }
 .elementPanel div{
@@ -15,6 +16,7 @@
   color: white;
    list-style: none outside none;
   -webkit-background-clip: padding-box;
+  background-clip: padding-box;
 }
 .elementPanel div:focus {
     outline: none;
@@ -39,7 +41,9 @@
 }
 .elementPanel label{
     -webkit-transition-property: font-size;
+    transition-property: font-size;
     -webkit-transition-duration: 0.15s;
+    transition-duration: 0.15s;
     cursor: pointer;
 }
 .elementPanelPreview a::before {
@@ -126,6 +130,7 @@ label {
 	/*top: -31px;*/
 	top:50%;
 	-webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     margin-top: 0px;
 	list-style: none outside none;
     /*height: 240px!important;
@@ -140,6 +145,7 @@ label {
 .subCategory li:hover{
     box-shadow: 0px 0px 0px 2px #21b9b0;
     -webkit-box-shadow: 0px 0px 0px 2px #21b9b0;
+    box-shadow: 0px 0px 0px 2px #21b9b0;
 }
 #textelementsSubCategory li:first-child, #squaresSubCategory li:first-child{ /*fix textElements */
     margin-top:80px;

@@ -15,18 +15,21 @@ body{
     color:white;
     font-size: 30px;
     -webkit-transform: translate(0% -50%);
+    transform: translate(0% -50%);
 }
 .img{
   position: absolute;
   top:13%;
   left:43%;
   -webkit-transform: translate(-50% -50%);
+  transform: translate(-50% -50%);
 }
 .buttons{
   position: absolute;
   top:60%;
   left:50%;
     -webkit-transform: translate(-50%);
+    transform: translate(-50%);
 }
 .btn{
     position: relative;
@@ -54,14 +57,19 @@ body{
   left:50%;
   top:50%;
   -webkit-transform:translate(-50% -50%);
+  transform:translate(-50% -50%);
 }
 #image.ani{
    -webkit-animation: fade 1.5s forwards;
+   animation: fade 1.5s forwards;
    -webkit-animation-delay: 2s;
+   animation-delay: 2s;
 }
 svg{
   -webkit-animation: fade-out 1.5s forwards;
+  animation: fade-out 1.5s forwards;
    -webkit-animation-delay: 2s;
+   animation-delay: 2s;
 }
 
 @-webkit-keyframes fade {
@@ -69,6 +77,14 @@ svg{
   100% { opacity: 1;}
 }
 @-webkit-keyframes fade-out {
+  0%   { opacity: 1; }
+  100% { opacity: 0;}
+}
+@keyframes fade {
+  0%   { opacity: 0; }
+  100% { opacity: 1;}
+}
+@keyframes fade-out {
   0%   { opacity: 1; }
   100% { opacity: 0;}
 }

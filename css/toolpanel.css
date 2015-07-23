@@ -12,6 +12,7 @@
 	top:51%;
 	left:52%;
 	-webkit-transform: translate(-82%, -50%);
+  transform: translate(-82%, -50%);
 	margin-left: -280px;
 }
 
@@ -73,13 +74,15 @@
 	background-color: #21b9b0;
 	color:white;
 	-webkit-background-clip: padding-box;
+  background-clip: padding-box;
     -webkit-transition-property: transform;
-    -webkit-transition-duration: 100ms;
     transition-property: transform;
+    -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
 }
 .toolPanel li:hover{
 	-webkit-transform:translateX(-7px);
+  transform:translateX(-7px);
 	background-color: #54606e;
 }
 .toolPanel a{
@@ -104,8 +107,8 @@
 	outline-color: rgba(0,0,0,0);
 	font-weight: bold;
     -webkit-transition-property: width, font-size;
+        transition-property: width, font-size;
     -webkit-transition-duration: 200ms;
-    transition-property: width, font-size;
     transition-duration: 200ms;
 }
 .toolPanel input:hover {
@@ -147,6 +150,7 @@
     border-color: #54606e;
     cursor: pointer;
     -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
 }
 .options div:hover {
     background-color: #21b9b0;
@@ -212,6 +216,7 @@
   	outline-width: 4px;
   	outline-color: rgba(0,0,0,0.2);
   	-webkit-background-clip: padding-box;
+    background-clip: padding-box;
 }
 .toolPanel button:hover {
   	background-color: #54606e;
@@ -253,6 +258,7 @@
   top:50%;
   left:52%;
   -webkit-transform: translate(-15%, 815%);
+  transform: translate(-15%, 815%);
   margin-left: -280px;
   display: none;
 

@@ -9,6 +9,7 @@ body{
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 200;
 	-webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 footer img{
   position: absolute;
@@ -60,6 +61,7 @@ footer a {
   position: relative;
   left:50%;
   -webkit-transform: translate(-50%);
+  transform: translate(-50%);
   border-radius: 20px;
   padding: 5px;
   border:1px solid transparent;
@@ -97,6 +99,7 @@ footer a {
   top:50%;
   left:50%;
   -webkit-transform: translate3d(-50%,-50%,0);
+  transform: translate3d(-50%,-50%,0);
   margin-top: -276px;
   overflow: hidden;
   pointer-events:none;
@@ -159,12 +162,14 @@ footer a {
     top: 50%;
     left: 25%;
     -webkit-transform: translate(-25%, -54%);
+    transform: translate(-25%, -54%);
 }
 .pCanvas{
     position: absolute;
     top: 50%;
     left: 25%;
     -webkit-transform: translate(-25%, -54%);
+    transform: translate(-25%, -54%);
 }
 .pCanvas:after{
     position: absolute;
@@ -184,6 +189,7 @@ footer a {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -52.5%);
+    transform: translate(-50%, -52.5%);
     background-color: #54606e;
     overflow-y: scroll;
     z-index: 1;
@@ -283,7 +289,6 @@ footer a {
 }
 
 
-body {-webkit-font-smoothing: antialiased;}
 .select-menu {
   position: absolute;
   width: 50px;
@@ -292,6 +297,7 @@ body {-webkit-font-smoothing: antialiased;}
   right: -10px;
   top:-10px;
   -webkit-transform:scale(0.5);
+  transform:scale(0.5);
   background-color: #21b9b0;
   border-radius: 100%;
   border: 15px solid #21b9b0;
@@ -413,6 +419,7 @@ body {-webkit-font-smoothing: antialiased;}
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   overflow: hidden;
   margin-top: -16px;
   pointer-events:none;

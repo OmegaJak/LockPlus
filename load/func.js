@@ -1,3 +1,3 @@
 function opentheme(title) {
-   location.href = location.href.replace('#', '') + 'get.php?theme=' + title;
+   location.href =  'http://lockplus.us/load/get.php?theme=' + title;
 }

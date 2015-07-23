@@ -7,6 +7,7 @@
 <body>
 <?php
 $dir    = '../php/themes';
+echo '<script type="text/javascript" src="func.js"></script>';
 echo "<div id='themelist'>";
 foreach (glob("$dir/*.plist") as $filename) {
  //echo $filename;
@@ -20,8 +21,6 @@ foreach (glob("$dir/*.plist") as $filename) {
 }
 echo "</div>";
 
-
-echo '<script type="text/javascript" src="func.js"></script>';
 ?>
 </body>
 </html>

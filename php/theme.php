@@ -2,6 +2,7 @@
 error_reporting(0);
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<link rel="stylesheet" href="preview.css" type="text/css">';
+echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
 
 $dir    = 'themes';
 foreach (glob("$dir/*.plist") as $filename) {
@@ -13,7 +14,6 @@ foreach (glob("$dir/*.plist") as $filename) {
   echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
 }
 
-echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
 
 
 
