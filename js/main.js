@@ -44,12 +44,12 @@ var constants = {
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'radius~Change Radius~fa fa-circle~radiusDiv'
-                    ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
+                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
-                    ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
+                    ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
@@ -74,7 +74,7 @@ var action = {
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
         if (id === 'element') { action.elementIconClick(); }
-        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'font-size', action.updateSize);}
+        if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 140, 'font-size', 'fontSize', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
         if (id === 'position') { this.cgPosition(); }
@@ -87,7 +87,7 @@ var action = {
         if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
-        if (id === 'radius') { this.cgSize('radiusSize', constants.boxEditArray[3], 'px', 0, $('#' + action.selectedItem).width() / 2, 'border-radius', 'border-radius', action.updateSize, false, false, 'Box Radius'); }
+        if (id === 'radius') { this.cgSize('radiusSize', constants.boxEditArray[3], 'px', 0, $('#' + action.selectedItem).width() / 2, 'border-radius', 'borderRadius', action.updateSize, false, false, 'Box Radius'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'backToEdit') { action.showProperMenuForId(this.selectedItem); }
@@ -636,7 +636,20 @@ var action = {
     hideElementPanelElements: function() {
         var elementPanelElements = $('.elementPanel').children();
         for (var i = 0; i < elementPanelElements.length; i++) {
-            if ($(elementPanelElements[i]).is('div') && $(elementPanelElements[i]).is(":visible")) $(elementPanelElements[i - 1]).click();
+            if ($(elementPanelElements[i]).is('div')) {
+                if ($(elementPanelElements[i]).is(":visible")) {
+                    $(elementPanelElements[i - 1]).click();
+                }
+
+                var subcategoryChildren = $($(elementPanelElements[i]).find('div')).find('li');
+                for (var j = 0; j < subcategoryChildren.length; j++) {
+                    var child = $(subcategoryChildren[j]);
+                    if (typeof child.attr('data-element') != 'undefined' && child.css('background-color') != "#54606e" && child.css('background-color') != "rgb(84, 96, 110)") {
+                        child.css('background-color','#54606e');
+                        child.css('border-color','#54606e');
+                    }
+                }
+            }
         }
     },
     createLI: function(type, div) { //create add menu
@@ -762,28 +775,6 @@ var action = {
         var numLis = centerUl.children().length;
         //centerUl.css('top', '-' + (((numLis * 32 + (5*(numLis - 1))) / 2) - 13) + 'px');
         centerUl.show(); // Show the subcategory for the center ul
-
-        /*if (centerEl.is(":visible") && !($(centerEl).is(":animated")))
-            centerEl.animate({'opacity':'0.6'}, {duration: 350});
-
-        action.bounceyTimeout = setTimeout(function() {
-            if (centerEl.is(":visible") && !($(centerEl).is(":animated")))
-                centerEl.animate({'opacity':'1'}, {duration: 350});
-        }, 360);*/
-
-        /*var centerChildren = centerUl.children();
-        for (var i = 0; i < centerChildren.length; i++) {
-            var currentChild = $(centerChildren[i]);
-            if (currentChild.is(":visible") && !($(centerChildren[i]).is(":animated")))
-                currentChild.animate({'height':'32px', 'font-size':'21px'}, {duration: 100});
-        }
-        action.bounceyTimeout = setTimeout(function() {
-            for (var i = 0; i < centerChildren.length; i++) {
-                var currentChild = $(centerChildren[i]);
-                if (currentChild.is(":visible") && !($(centerChildren[i]).is(":animated")))
-                    currentChild.animate({'height':'16px', 'font-size':'16px'}, {duration: 100});
-            }
-        }, 110);*/
 
         nextEl.find('ul').first().hide(); // Make sure the other ones are hidden
         // ---- //
