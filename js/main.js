@@ -525,7 +525,7 @@ var action = {
             $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
             action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
             //if(action.selectedItem)
-            if(action.selectedItem.substring(3,9) === 'Circle'){
+            if(action.selectedItem.substring(3,9) === 'Circle' && cssKey === 'width'){
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
             }
