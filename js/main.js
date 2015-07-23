@@ -1273,7 +1273,11 @@ $('.screen').on('click',function(event){
                 action.selectedItem = event.target.id; // Set the selected item to the new element
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
-                action.setEditMenuInputsState(-2, 3, event.target.id);
+                if (event.target.id.substring(0,9) === 'boxCircle') {
+                    action.setEditMenuInputsState(-2, 2, event.target.id);
+                } else {
+                    action.setEditMenuInputsState(-2, 3, event.target.id);
+                }
             }
         } else { // An element was clicked on directly
             action.showProperMenuForId(event.target.id);
@@ -1292,7 +1296,11 @@ $('.screen').on('click',function(event){
                 $('#'+event.target.id).css('outline-offset', '1px');
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0');
             }
-            action.setEditMenuInputsState(-2, 2, event.target.id);
+            if (event.target.id.substring(0,9) === 'boxCircle') {
+                action.setEditMenuInputsState(-2, 2, event.target.id);
+            } else {
+                action.setEditMenuInputsState(-2, 3, event.target.id);
+            }
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
         }
     }
