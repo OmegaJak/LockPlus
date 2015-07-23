@@ -906,6 +906,12 @@ var action = {
         $('.toolPanel').css('display','none');
         $('.elementPanel').css('display','none');
         $('#tips').css('display','none');
+       $('#screenElements').children().each(function(  ) {
+            //console.log(this);
+            //$('#'+this.id).removeClass();
+            //$('#'+this.id).addClass('test');
+        });
+
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
@@ -1084,6 +1090,9 @@ var action = {
         this.addDraggable(id);
         this.movedElements[id] = {};
         this.savedElements.placedElements = this.movedElements;
+        $('#'+id).css('position','absolute'); //fix for html2canvas
+        $('#'+id).css('font-size','30px'); //fix for html2canvas
+        $('#'+id).css('color','white'); //fix for html2canvas
         if (id.substring(0,3) === 'box') {
             this.savedElements.placedElements[id].width = '50px';
             this.savedElements.placedElements[id].height = '50px';
