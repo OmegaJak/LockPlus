@@ -146,6 +146,8 @@ footer a {
     position: absolute;
     color:white;
     font-size: 30px;
+    top:248px;
+    left:130px;
     white-space: nowrap;
     z-index: 1;
     width: auto;
