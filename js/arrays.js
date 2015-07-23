@@ -250,7 +250,7 @@ var elementPanel = {
         box: {
             title: "Squares",
             boxOne: "Custom Box 1",
-            boxTwp: "Custom Box 2",
+            boxTwo: "Custom Box 2",
             boxThree: "Custom Box 3",
             boxFour: "Custom Box 4",
             boxFive: "Custom Box 5"

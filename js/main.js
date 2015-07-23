@@ -462,6 +462,11 @@ var action = {
             if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
             $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
             action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
+            //if(action.selectedItem)
+            if(action.selectedItem.substring(3,9) === 'Circle'){
+                $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
+                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
+            }
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
@@ -1002,13 +1007,13 @@ var action = {
             div.style.width = '50px';
             div.style.height = '50px';
             div.style.backgroundColor = 'red';
-            div.style.display = 'gray';
+            //div.style.display = 'gray';
             div.style.zIndex = 1;
             div.style.borderColor = 'red';
             div.style.borderStyle = 'solid';
             div.style.borderWidth = '0px';
             if (id.substring(3, 9) === 'Circle') {
-                div.style.borderRadius = '25px';
+                div.style.borderRadius = '999px';
             }
         } else {
             div.style.zIndex = 2;
@@ -1021,13 +1026,13 @@ var action = {
             this.savedElements.placedElements[id].width = '50px';
             this.savedElements.placedElements[id].height = '50px';
             this.savedElements.placedElements[id]['background-color'] = 'red';
-            this.savedElements.placedElements[id].display = 'gray';
+            //this.savedElements.placedElements[id].display = 'gray';
             this.savedElements.placedElements[id]['z-index'] = 1;
             this.savedElements.placedElements[id]['border-color'] = 'red';
             this.savedElements.placedElements[id]['border-style'] = 'solid';
             this.savedElements.placedElements[id]['border-width'] = '0px';
             if (id.substring(3, 9) === 'Circle') {
-                this.savedElements.placedElements[id]['border-radius'] = '25px';
+                this.savedElements.placedElements[id]['border-radius'] = '999px';
             }
         } else {
             this.savedElements.placedElements[id]['z-index'] = 2;
