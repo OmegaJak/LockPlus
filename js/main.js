@@ -420,11 +420,18 @@ var action = {
             else var splitShadow = ['#ffffff','0px', '0px', '0px'];
 
         //Dealing with stupid browser reordering
-        if (!splitShadow[0].indexOf('px') > -1 && splitShadow[0].indexOf("rgb") > -1) {
-            splitShadow[0] = splitShadow[0] + splitShadow[1] + splitShadow[2];
-            splitShadow[1] = splitShadow[3];
-            splitShadow[2] = splitShadow[4];
-            splitShadow[3] = splitShadow[5];
+        if (!splitShadow[0].indexOf('px') > -1 && splitShadow[0].indexOf("rgb") > -1) { //If the first splitShadow index doesn't contain 'px' and does contain 'rgb'
+            if (splitShadow[0].indexOf('rgba') > -1) {
+                splitShadow[0] = splitShadow[0] + splitShadow[1] + splitShadow[2] + splitShadow[3];
+                splitShadow[1] = splitShadow[4];
+                splitShadow[2] = splitShadow[5];
+                splitShadow[3] = splitShadow[6];
+            } else {
+                splitShadow[0] = splitShadow[0] + splitShadow[1] + splitShadow[2];
+                splitShadow[1] = splitShadow[3];
+                splitShadow[2] = splitShadow[4];
+                splitShadow[3] = splitShadow[5];
+            }
         }
 
         var index = 0;
