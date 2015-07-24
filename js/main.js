@@ -130,6 +130,7 @@ var action = {
         if (id === 'changeicon') { this.populateIcons(); }
 
         //Gradients
+        if (id.toLowerCase().includes('gradient') && $('#' + action.selectedItem).css('background').substring(0,3) != 'lin' && id != 'linearGradient') { $('#' + action.selectedItem).css('background','linear-gradient(179deg,red,yellow 50%,blue 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,red,yellow 50%,blue 90%)"; action.saveStorage(); }
         if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
         if (id === 'gradientType') { this.cgGradientPurpose(); }
         if (id === 'linearGradientAngle') { this.cgSize('rotateLinearGradient', constants.linearGradientArray[1], 'deg', -179, 179, 'rotate', 'rotate', action.updateGradient, false, false, 'Rotate Gradient'); }
@@ -278,7 +279,7 @@ var action = {
         } else {
             var splitArray = ['linear-gradient','179','red','yellow','50','blue','90'];
         }
-        // "linear-gradient(45deg,red,yellow 15%,green 55%,purple 92%)"
+        // "linear-gradient(179deg,red,yellow 50%,blue 90%)"
 
         for (var i = 0; i < splitArray.length; i++) {
             if (splitArray[i] === '') {
