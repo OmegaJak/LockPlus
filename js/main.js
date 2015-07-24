@@ -54,8 +54,6 @@ var constants = {
                     ,'linearGradientStartColor~Change Start Color~fa fa-eyedropper~linearGradientStartColorDiv'
                     ,'linearGradientStopColorOne~Change Color Stop 1~fa fa-eyedropper~linearGradientStopColorOneDiv'
                     ,'linearGradientStopColorTwo~Change Color Stop 2~fa fa-eyedropper~linearGradientStopColorTwoDiv'
-                    ,'linearGradientStopColorThree~Change Color Stop 3~fa fa-eyedropper~linearGradientStopColorThreeDiv'
-                    ,'linearGradientStopColorFour~Change Color Stop 4~fa fa-eyedropper~linearGradientStopColorFourDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearGradient~Clear Gradient~fa fa-trash~clearGradientDiv'],
     boxEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
@@ -274,7 +272,7 @@ var action = {
 
             var splitArray = currentGradient.replace(/deg/g, '').replace(/[%]/g, '').split(/[(), ]/);
         } else {
-            var splitArray = ['linear-gradient','45','red','yellow','95'];
+            var splitArray = ['linear-gradient','179','red','yellow','50','blue','90'];
         }
         // "linear-gradient(45deg,red,yellow 15%,green 55%,purple 92%)"
 
@@ -291,14 +289,30 @@ var action = {
             index = 1;
         } else {
             if (JSON.parse(keyArr[1])*2 + 1 >= splitArray.length) {
-                splitArray.push("blue");
-                splitArray.push("100");
-            }
+                if (purpose === 'set') {
+                    if (keyArr[0] === 'pos') {
+                        index = splitArray.length - 1;
+                    } else {
+                        splitArray.push("blue");
+                        splitArray.push("100");
+                        index = splitArray.length - 2;
+                    }
+                } else if (purpose === 'get') {
+                    splitArray.push("blue");
+                    splitArray.push("100");
 
-            if (keyArr[0] === 'color') {
-                index = JSON.parse(keyArr[1])*2 + 1;
-            } else if (keyArr[0] === 'pos') {
-                index = JSON.parse(keyArr[1])*2 + 2;
+                    if (keyArr[0] === 'color') {
+                        index = splitArray.length - 2;
+                    } else if (keyArr[0] === 'pos') {
+                        index = splitArray.length - 1;
+                    }
+                }
+            } else {
+                if (keyArr[0] === 'color') {
+                    index = JSON.parse(keyArr[1])*2 + 1;
+                } else if (keyArr[0] === 'pos') {
+                    index = JSON.parse(keyArr[1])*2 + 2;
+                }
             }
         }
 
