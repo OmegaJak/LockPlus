@@ -259,6 +259,10 @@ var action = {
         if (purpose === 'clear') {
            $('#' + action.selectedItem).css('background', '');
            action.savedElements.placedElements[action.selectedItem]['background'] = '';
+           $('#' + action.selectedItem).css('-webkit-background-clip', '');
+           action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
+           $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
+           action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = '';
 
            action.saveStorage();
            return 'nothing';
@@ -721,7 +725,7 @@ var action = {
                 $('#' + action.selectedItem).css('-webkit-background-clip', '');
                 action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
                 $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
-                action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
+                action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = '';
             } else if (optionSelector === '#textOption') {
                 $('#' + action.selectedItem).css('-webkit-background-clip', 'text');
                 action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = 'text';
