@@ -235,7 +235,7 @@ var action = {
             showInitial: true,
             showAlpha: true,
             showInput: true,
-            preferredFormat: "hex",
+            preferredFormat: "rgba",
             showPalette: true,
             color: action.updateGradient('',cssKey,'','','get'),
             palette: [["black", "white", "#0074d9" , "#2c3e50", "#27ae60", "#e74c3c", "#393939", "#3498db", "#2980b9", "#2ecc71", "#66cc99", "#019875", "#96281b", "#96281b", "#f64747", "#e26a6a", "#f5ab35", "#f39c12", "#f89406", "#f27935", "#6c7a89", "#95a5a6", "#bdc3c7", "#bfbfbf", "#674172", "#663399", "#8e44ad", "#9b59b6", "#db0a5b", "#d2527f", "#f62459", "#16a085", "#d2d7d3", "#4183d7", "#59abe3", "#3a539b"]]
@@ -243,18 +243,11 @@ var action = {
         setTimeout(function () {$(selector).spectrum('show'); }, 0);
 
         $(selector).on('hide.spectrum', function (e, tinycolor) {
-            action.updateGradient('', cssKey, '', tinycolor.toHexString(), 'set');
+            action.updateGradient('', cssKey, '', tinycolor.toRgbString(), 'set');
         });
         $(selector).on('move.spectrum', function(e, tinycolor) {
-            action.updateGradient('', cssKey, '', tinycolor.toHexString(), 'set');
+            action.updateGradient('', cssKey, '', tinycolor.toRgbString(), 'set');
         });
-    },
-    rgbToHex: function(rgb) { // Thanks to http://stackoverflow.com/questions/9585973/javascript-regular-expression-for-rgb-values for this
-        rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-        return (rgb && rgb.length === 4) ? "#" +
-            ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-            ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-            ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
     },
     updateGradient: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'clear') {
@@ -273,7 +266,9 @@ var action = {
 
         if (currentGradient != '') {
             //Some browsers convert to rgb, but that messes with the splitting done below. So replace rgb with hex.
-            currentGradient = currentGradient.replace(/rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/g, function(match) { return action.rgbToHex(match); })
+            currentGradient = currentGradient.replace(/(rgba?\([^)]+\))/gmi, function(match) {
+                return match.replace(/[/(]/g,'{').replace(/[,]/g,'.').replace(/[/)]/g,'}').replace(/[ ]/g,'');
+            });
 
             var splitArray = currentGradient.replace(/deg/g, '').replace(/[%]/g, '').split(/[(), ]/);
         } else {
@@ -285,6 +280,8 @@ var action = {
             if (splitArray[i] === '') {
                 splitArray.splice(i, 1);
                 i--;
+            } else if (splitArray[i].match(/[.]/g) != null) {
+                splitArray[i] = splitArray[i].replace(/[{]/g,'(').replace(/[.]/g,',').replace(/[}]/g,')');
             }
         }
 
