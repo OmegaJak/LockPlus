@@ -561,8 +561,8 @@ var action = {
         if (!$(divSelector).length) { //If the input hasn't been created yet
             action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle, false).prependTo('#' + splitArr[3]);
 
-            $('#' + key + 'Decrement').on('click', function() { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit, updateCallback) });
-            $('#' + key + 'Increment').on('click', function() { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback) });
+            $('#' + key + 'Decrement').on('click', function(event) { action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit, updateCallback, event) });
+            $('#' + key + 'Increment').on('click', function(event) { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback, event) });
 
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
             $(idSelector).val(Math.round(JSON.parse(elSize.substring(0,elSize.length - unit.length))));
@@ -584,18 +584,18 @@ var action = {
             $(divSelector).toggle('display');
         }
     },
-    handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback) {
+    handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback, event) {
         action.setHelpText('Ctrl+click to set to max/min. Shift click to change by 10.');
-       // event.preventDefault(); //no event in firefox:(
+        event.preventDefault();
         var max = JSON.parse($(idSelector).attr('max'));
         var min = JSON.parse($(idSelector).attr('min'));
-      /*  if (event.ctrlKey) {
+        if (event.ctrlKey) {
             action.sizeControl(idSelector, (toMultiplyBy > 0 ? max : min) - JSON.parse($(idSelector).val()))
         } else if (event.shiftKey) {
             action.sizeControl(idSelector, toMultiplyBy * 10);
         } else {
             action.sizeControl(idSelector, toMultiplyBy * 1);
-        }*/
+        }
         action.sizeControl(idSelector, toMultiplyBy * 1);
         updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
     },
@@ -828,8 +828,8 @@ var action = {
                 decrementButton.css({'border-width':0});
 
                 var inputSelector = '#boldnessInput';
-                incrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '') });
-                decrementButton.on('click', function() { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '') });
+                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', event) });
+                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', event) });
 
                 wrapper.attr('id', 'boldnessOption');
                 wrapper.appendTo($("#boldnessOptionDiv"));
