@@ -28,6 +28,12 @@
 #shadowDiv a:hover:after{ /* special case when using .svg instead of font-awesome */
 	top:-30px;
 }
+#skewXDiv a:hover:after{ /* special case when using .svg instead of font-awesome */
+	top:-30px;
+}
+#skewYDiv a:hover:after{ /* special case when using .svg instead of font-awesome */
+	top:-30px;
+}
 .Tooltip{
 	display: inline;
 	position: relative;

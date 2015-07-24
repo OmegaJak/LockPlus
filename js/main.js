@@ -45,8 +45,8 @@ var constants = {
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'boxclearShadow~Clear Shadow~fa fa-trash~boxclearShadowDiv'],
     transformArray: ['rotation~Change Rotation Angle~fa fa-repeat~rotationDiv'
-                    ,'skewX~Change X Skew~fa fa-windows~skewXDiv'
-                    ,'skewY~Change Y Skew~fa fa-windows~skewYDiv'
+                    ,'skewX~Change X Skew~sa cskewx~skewXDiv'
+                    ,'skewY~Change Y Skew~sa cskewy~skewYDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearTransform~Clear Transformations~fa fa-trash~clearTransformsDiv'],
     linearGradientArray: ['gradientType~Gradient Type~fa fa-square~gradientTypeDiv'

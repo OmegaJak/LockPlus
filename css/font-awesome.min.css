@@ -21,6 +21,12 @@
 .ctextshadow{
   background-image: url('custom/textshadow.svg');
 }
+.cskewx{
+  background-image: url('custom/skewx.svg');
+}
+.cskewy{
+  background-image: url('custom/skewy.svg');
+}
 /* End Custom Images */
 
 @font-face {
