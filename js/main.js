@@ -285,6 +285,14 @@ var action = {
 
         var index = 0;
         var keyArr = cssKey.split("~");
+
+        if ((keyArr[0] === 'pos' || cssKey === 'rotate') && purpose === 'set' ) {
+            var max = JSON.parse($(idSelector).attr('max'));
+            var min = JSON.parse($(idSelector).attr('min'));
+            if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+            if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
+        }
+
         if (cssKey === 'rotate') {
             index = 1;
         } else {
