@@ -17,6 +17,7 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
+                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
                     ,'size~Change Font Size~fa fa-font~sizeDiv'
@@ -29,6 +30,7 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
+                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
                     ,'vShadow~Vertical~fa fa-arrows-v~vShadowDiv'
@@ -47,6 +49,15 @@ var constants = {
                     ,'skewY~Change Y Skew~fa fa-windows~skewYDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearTransform~Clear Transformations~fa fa-trash~clearTransformsDiv'],
+    linearGradientArray: ['gradientType~Gradient Type~fa fa-square~gradientTypeDiv'
+                    ,'linearGradientAngle~Change Gradient Angle~fa fa-repeat~linearGradientAngleDiv'
+                    ,'linearGradientStartColor~Change Start Color~fa fa-eyedropper~linearGradientStartColorDiv'
+                    ,'linearGradientStopColorOne~Change Color Stop 1~fa fa-eyedropper~linearGradientStopColorOneDiv'
+                    ,'linearGradientStopColorTwo~Change Color Stop 2~fa fa-eyedropper~linearGradientStopColorTwoDiv'
+                    ,'linearGradientStopColorThree~Change Color Stop 3~fa fa-eyedropper~linearGradientStopColorThreeDiv'
+                    ,'linearGradientStopColorFour~Change Color Stop 4~fa fa-eyedropper~linearGradientStopColorFourDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
+                    ,'clearGradient~Clear Gradient~fa fa-trash~clearGradientDiv'],
     boxEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -54,12 +65,14 @@ var constants = {
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
+                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
+                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -117,6 +130,17 @@ var action = {
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
         if (id === 'changeicon') { this.populateIcons(); }
+
+        //Gradients
+        if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
+        if (id === 'gradientType') { this.cgGradientPurpose(); }
+        if (id === 'linearGradientAngle') { this.cgSize('rotateLinearGradient', constants.linearGradientArray[1], 'deg', -179, 179, 'rotate', 'rotate', action.updateGradient, false, false, 'Rotate Gradient'); }
+        if (id === 'linearGradientStartColor') { this.cgLinearGradientColor(constants.linearGradientArray[2], 'color~0.5'); }
+        if (id === 'linearGradientStopColorOne') { this.cgLinearGradientColor(constants.linearGradientArray[3], 'color~1'); this.cgSize('linGradientStopOnePercent', constants.linearGradientArray[3], '%', 0, 100, 'pos~1', 'pos~1', action.updateGradient, false, false, 'Stop 1 Distance'); }
+        if (id === 'linearGradientStopColorTwo') { this.cgLinearGradientColor(constants.linearGradientArray[4], 'color~2'); this.cgSize('linGradientStopTwoPercent', constants.linearGradientArray[4], '%', 0, 100, 'pos~2', 'pos~2', action.updateGradient, false, false, 'Stop 2 Distance'); }
+        if (id === 'linearGradientStopColorThree') { this.cgLinearGradientColor(constants.linearGradientArray[5], 'color~3'); this.cgSize('linGradientStopThreePercent', constants.linearGradientArray[5], '%', 0, 100, 'pos~3', 'pos~3', action.updateGradient, false, false, 'Stop 3 Distance'); }
+        if (id === 'linearGradientStopColorFour') { this.cgLinearGradientColor(constants.linearGradientArray[6], 'color~4'); this.cgSize('linGradientStopFourPercent', constants.linearGradientArray[6], '%', 0, 100, 'pos~4', 'pos~4', action.updateGradient, false, false, 'Stop 4 Distance'); }
+        if (id === 'clearGradient') { this.updateGradient('','','','','clear'); }
     },
     elementIconClick: function() {
         if(!$('.elementPanel').is(":visible")) {
@@ -203,6 +227,119 @@ var action = {
         $('.icon').attr('src', 'weather/'+name+'.png');
         action.savedElements.iconName = name;
         this.saveStorage();
+    },
+    cgLinearGradientColor: function(gradientString, cssKey) {
+        var splitArray = gradientString.split("~");
+        var selector = '#' + splitArray[3];
+
+        $(selector).spectrum({
+            showInitial: true,
+            showAlpha: true,
+            showInput: true,
+            preferredFormat: "hex",
+            showPalette: true,
+            color: action.updateGradient('',cssKey,'','','get'),
+            palette: [["black", "white", "#0074d9" , "#2c3e50", "#27ae60", "#e74c3c", "#393939", "#3498db", "#2980b9", "#2ecc71", "#66cc99", "#019875", "#96281b", "#96281b", "#f64747", "#e26a6a", "#f5ab35", "#f39c12", "#f89406", "#f27935", "#6c7a89", "#95a5a6", "#bdc3c7", "#bfbfbf", "#674172", "#663399", "#8e44ad", "#9b59b6", "#db0a5b", "#d2527f", "#f62459", "#16a085", "#d2d7d3", "#4183d7", "#59abe3", "#3a539b"]]
+        });
+        setTimeout(function () {$(selector).spectrum('show'); }, 0);
+
+        $(selector).on('hide.spectrum', function (e, tinycolor) {
+            action.updateGradient('', cssKey, '', tinycolor.toHexString(), 'set');
+        });
+        $(selector).on('move.spectrum', function(e, tinycolor) {
+            action.updateGradient('', cssKey, '', tinycolor.toHexString(), 'set');
+        });
+    },
+    rgbToHex: function(rgb) { // Thanks to http://stackoverflow.com/questions/9585973/javascript-regular-expression-for-rgb-values for this
+        rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+        return (rgb && rgb.length === 4) ? "#" +
+            ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+            ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+            ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+    },
+    updateGradient: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        if (purpose === 'clear') {
+           $('#' + action.selectedItem).css('background', '');
+           action.savedElements.placedElements[action.selectedItem]['background'] = '';
+
+           action.saveStorage();
+           return 'nothing';
+       }
+
+        var currentGradient = document.getElementById(action.selectedItem).style.background;
+
+        if (currentGradient != '') {
+            //Some browsers convert to rgb, but that messes with the splitting done below. So replace rgb with hex.
+            currentGradient = currentGradient.replace(/rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/g, function(match) { return action.rgbToHex(match); })
+
+            var splitArray = currentGradient.replace(/deg/g, '').replace(/[%]/g, '').split(/[(), ]/);
+        } else {
+            var splitArray = ['linear-gradient','45','red','yellow','95'];
+        }
+        // "linear-gradient(45deg,red,yellow 15%,green 55%,purple 92%)"
+
+        for (var i = 0; i < splitArray.length; i++) {
+            if (splitArray[i] === '') {
+                splitArray.splice(i, 1);
+                i--;
+            }
+        }
+
+        var index = 0;
+        var keyArr = cssKey.split("~");
+        if (cssKey === 'rotate') {
+            index = 1;
+        } else {
+            if (JSON.parse(keyArr[1])*2 + 1 >= splitArray.length) {
+                splitArray.push("blue");
+                splitArray.push("100");
+            }
+
+            if (keyArr[0] === 'color') {
+                index = JSON.parse(keyArr[1])*2 + 1;
+            } else if (keyArr[0] === 'pos') {
+                index = JSON.parse(keyArr[1])*2 + 2;
+            }
+        }
+
+        if (purpose === 'set') {
+            if (index <= 1 || keyArr[0] === 'pos') {
+                splitArray[index] = $(idSelector).val();
+            } else if (keyArr[0] === 'color') {
+                splitArray[index] = jsCssKey;
+            }
+
+            var compiledGradient = '';
+            for (var i = 0; i < splitArray.length; i++) {
+                if (!isNaN(splitArray[i])) {
+                    if (i === 1) {
+                        splitArray[i] = splitArray[i] + 'deg';
+                    } else {
+                        splitArray[i] = splitArray[i] + '%';
+                    }
+
+                    if (i === splitArray.length - 1 || ((i + 1 === splitArray.length - 1) && splitArray[i + 1] === '')) {
+                        splitArray[i] = splitArray[i] + ')';
+                    } else {
+                        splitArray[i] = splitArray[i] + ',';
+                    }
+                } else if (i === 0) {
+                    splitArray[i] = splitArray[i] + '(';
+                } else if (i === 2) {
+                    splitArray[i] = splitArray[i] + ',';
+                }else if (i > 2) {
+                    splitArray[i] = splitArray[i] + ' ';
+                }
+                compiledGradient += splitArray[i];
+            }
+
+            $('#' + action.selectedItem).css('background', compiledGradient);
+            action.savedElements.placedElements[action.selectedItem]['background'] = compiledGradient;
+
+            action.saveStorage();
+        } else if (purpose === 'get') {
+            return splitArray[index] + unit;
+        }
     },
     updateTransform: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         var currentTransform = document.getElementById(action.selectedItem).style.transform; /*$('#' + action.selectedItem).css('transform')*/
@@ -554,6 +691,29 @@ var action = {
         } else if (purpose === 'get') {
             return $('#' + action.selectedItem).css(cssKey);
         }
+    },
+    cgGradientPurpose: function() {
+        var lastSelector;
+        this.cgOption('gradientType', constants.linearGradientArray[0], ['background', 'text'], 14, true, function(optionSelector) {
+            if (optionSelector === '#backgroundOption') {
+                $('#' + action.selectedItem).css('-webkit-background-clip', '');
+                action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
+                $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
+                action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
+            } else if (optionSelector === '#textOption') {
+                $('#' + action.selectedItem).css('-webkit-background-clip', 'text');
+                action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = 'text';
+                $('#' + action.selectedItem).css('-webkit-text-fill-color', 'transparent');
+                action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = 'transparent';
+            }
+            action.saveStorage();
+
+            $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'});
+            if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'});
+            lastSelector = optionSelector;
+        }, function(optionName) {
+            return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
+        });
     },
     cgalign: function () {
         var lastSelector;
