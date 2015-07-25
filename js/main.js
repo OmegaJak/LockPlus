@@ -17,7 +17,7 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
-                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
+                    //,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
                     ,'size~Change Font Size~fa fa-font~sizeDiv'
@@ -30,7 +30,7 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
-                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
+                    //,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
                     ,'vShadow~Vertical~fa fa-arrows-v~vShadowDiv'
@@ -69,14 +69,14 @@ var constants = {
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
-                    ,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
+                    //,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
-                    ,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
+                    //,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
