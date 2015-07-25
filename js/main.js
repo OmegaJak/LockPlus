@@ -79,7 +79,7 @@ var constants = {
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
-    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:''}, //If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of
+    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
