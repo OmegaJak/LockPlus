@@ -242,6 +242,7 @@ var action = {
 
         $(selector).spectrum({
             showInitial: true,
+            localStorageKey: 'spectrum',
             showAlpha: true,
             showInput: true,
             preferredFormat: "rgba",
@@ -488,6 +489,7 @@ var action = {
         var selector = isForBox ? '#boxshadowColorDiv' : '#shadowColorDiv';
         $(selector).spectrum({
             showInitial: true,
+            localStorageKey: 'spectrum',
             showAlpha: true,
             showInput: true,
             preferredFormat: "rgb",
@@ -783,6 +785,7 @@ var action = {
         } else {
             $("#" + div).spectrum({
                 showInitial: true,
+                localStorageKey: 'spectrum',
                 showAlpha: true,
                 showInput: true,
                 preferredFormat: "rgba",
