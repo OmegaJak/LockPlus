@@ -56,6 +56,12 @@ var constants = {
                     ,'linearGradientStopColorTwo~Change Color Stop 2~fa fa-eyedropper~linearGradientStopColorTwoDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearGradient~Clear Gradient~fa fa-trash~clearGradientDiv'],
+    linearBoxGradientArray: ['linearGradientAngle~Change Gradient Angle~fa fa-repeat~linearGradientAngleDiv'
+                    ,'linearGradientStartColor~Change Start Color~fa fa-eyedropper~linearGradientStartColorDiv'
+                    ,'linearGradientStopColorOne~Change Color Stop 1~fa fa-eyedropper~linearGradientStopColorOneDiv'
+                    ,'linearGradientStopColorTwo~Change Color Stop 2~fa fa-eyedropper~linearGradientStopColorTwoDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
+                    ,'clearGradient~Clear Gradient~fa fa-trash~clearGradientDiv'],
     boxEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'height~Change Height~fa fa-arrows-v~heightDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -63,14 +69,14 @@ var constants = {
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
-                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
+                    ,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
-                    ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
+                    ,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -79,7 +85,7 @@ var constants = {
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
-    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
+    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
@@ -131,8 +137,9 @@ var action = {
         if (id === 'changeicon') { this.populateIcons(); }
 
         //Gradients
-        if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient') {
+        if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient') {
             $('#' + action.selectedItem).css('background','linear-gradient(179deg,red,yellow 50%,blue 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,red,yellow 50%,blue 90%)"; action.saveStorage(); }
+        if (id === 'linearBoxGradient') { this.showIconMenu(constants.linearBoxGradientArray, -1); }
         if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
         if (id === 'gradientType') { this.cgGradientPurpose(); }
         if (id === 'linearGradientAngle') { this.cgSize('rotateLinearGradient', constants.linearGradientArray[1], 'deg', -179, 179, 'rotate', 'rotate', action.updateGradient, false, false, 'Rotate Gradient'); }
@@ -255,11 +262,15 @@ var action = {
         if (purpose === 'clear') {
            $('#' + action.selectedItem).css('background', '');
            action.savedElements.placedElements[action.selectedItem]['background'] = '';
-           $('#' + action.selectedItem).css('-webkit-background-clip', '');
-           action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
-           $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
-           action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = '';
-
+           if (action.selectedItem.indexOf("box") > -1) { // TODO: Save the box's color before setting the gradient, then restore it to the same color here.
+               $('#' + action.selectedItem).css('background-color','red'); // Without this the box ends up as not showing anything at all
+               action.savedElements.placedElements[action.selectedItem]['background-color'] = 'red';
+           } else {
+               $('#' + action.selectedItem).css('-webkit-background-clip', '');
+               action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
+               $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
+               action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = '';
+           }
            action.saveStorage();
            return 'nothing';
        }
