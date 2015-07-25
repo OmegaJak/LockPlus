@@ -585,13 +585,13 @@ var action = {
         }
     },
     handleInputButtonEvent: function(idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback, event) {
-        action.setHelpText('Ctrl+click to set to max/min. Shift click to change by 10.');
+        action.setHelpText('Shift+click to set to max/min. Alt+click to change by 10.');
         event.preventDefault();
         var max = JSON.parse($(idSelector).attr('max'));
         var min = JSON.parse($(idSelector).attr('min'));
-        if (event.altKey) {
+        if (event.shiftKey) {
             action.sizeControl(idSelector, (toMultiplyBy > 0 ? max : min) - JSON.parse($(idSelector).val()))
-        } else if (event.shiftKey) {
+        } else if (event.altKey) {
             action.sizeControl(idSelector, toMultiplyBy * 10);
         } else {
             action.sizeControl(idSelector, toMultiplyBy * 1);
@@ -602,11 +602,11 @@ var action = {
         var divSelector = $('<div id="' + key + 'DivWrapper" style="display: none;"></div>');
         if (!isForText) {
             var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>');
-            $('<a href="#" class="fa fa-minus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(decrementButton);
+            $('<a href="#" class="fa fa-minus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(decrementButton);
             decrementButton.prependTo(divSelector);
             $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
             var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>');
-            $('<a href="#" class="fa fa-plus-circle" title="Try control+clicking and shift+clicking!"></a>').appendTo(incrementButton);
+            $('<a href="#" class="fa fa-plus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(incrementButton);
             incrementButton.prependTo(divSelector);
         } else {
             $('<input type="text" id="' + key + 'Input" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
