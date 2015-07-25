@@ -106,12 +106,12 @@ var action = {
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 10, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
         if (id === 'position') { this.cgPosition(); }
-        if (id === 'align') { this.cgalign(); action.setHelpText('Select left, right or center. Requires width to be set.');}
-        if (id === 'fonts') { this.cgfont(); action.setHelpText('View live preview, tap font to select.');}
-        if (id === 'uppercase') {this.cguppercase(); action.setHelpText('Choose uppercase, capitalize, or lowercase.');}
-        if (id === 'weight') {this.cgweight(); action.setHelpText('Press + and - buttons, or choose bold or normal.');}
-        if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); action.setHelpText('New menu opened (shadow menu)');}
-        if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1);  action.setHelpText('New menu opened (box-shadow menu)');}
+        if (id === 'align') { this.cgalign(); /*action.setHelpText('Select left, right or center. Requires width to be set.');*/}
+        if (id === 'fonts') { this.cgfont(); /*action.setHelpText('View live preview, tap font to select.');*/}
+        if (id === 'uppercase') {this.cguppercase();/* action.setHelpText('Choose uppercase, capitalize, or lowercase.');*/}
+        if (id === 'weight') {this.cgweight(); /*action.setHelpText('Press + and - buttons, or choose bold or normal.');*/}
+        if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); /*action.setHelpText('New menu opened (shadow menu)');*/}
+        if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1);  /*action.setHelpText('New menu opened (box-shadow menu)');*/}
         if (id === 'hShadow') { this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'vShadow') { this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'blur') { this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius'); }
