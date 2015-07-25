@@ -137,7 +137,7 @@ var action = {
         if (id === 'changeicon') { this.populateIcons(); }
 
         //Gradients
-        if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient') {
+        if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
             $('#' + action.selectedItem).css('background','linear-gradient(179deg,red,yellow 50%,blue 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,red,yellow 50%,blue 90%)"; action.saveStorage(); }
         if (id === 'linearBoxGradient') { this.showIconMenu(constants.linearBoxGradientArray, -1); }
         if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
