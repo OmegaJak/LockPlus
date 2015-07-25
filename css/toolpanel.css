@@ -150,8 +150,6 @@
     border-radius: 30px;
     border-color: #54606e;
     cursor: pointer;
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
 }
 .options div:hover {
     background-color: #21b9b0;

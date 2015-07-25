@@ -79,6 +79,7 @@ var constants = {
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
+    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:''}, //If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of
     iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
@@ -630,7 +631,7 @@ var action = {
         var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
         if (optionsTop === 0 || !optionsTop)
-            optionsTop = $('#' + splitArr[3]).position().top + 82;
+            optionsTop = $('#' + splitArr[3]).position().top + 11;
         if (!$(divSelector).length) { //If the options haven't been created yet
             $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
 
@@ -748,7 +749,7 @@ var action = {
     },
     cgalign: function () {
         var lastSelector;
-        this.cgOption('align', constants.editArray[3], ['left', 'center', 'right'], 0, true, function(optionSelector) {
+        this.cgOption('align', constants.editArray[4], ['left', 'center', 'right'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
@@ -789,7 +790,7 @@ var action = {
     },
     cguppercase: function () {
         var lastSelector;
-        this.cgOption('uppercase', constants.editArray[5], ['uppercase', 'capitalize', 'lowercase'], 0, true, function(optionSelector) {
+        this.cgOption('uppercase', constants.editArray[7], ['uppercase', 'capitalize', 'lowercase'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-transform', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: center; text-transform: ' + optionName + ';">' + optionName + '</label>');
@@ -797,7 +798,7 @@ var action = {
     },
     cgweight: function () {
         var lastSelector;
-        this.cgOption('weight', constants.editArray[6], ['boldness','bold','normal'], 0, true, function(optionSelector) {
+        this.cgOption('weight', constants.editArray[8], ['boldness','bold','normal'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
         }, function(optionName) {
@@ -1420,14 +1421,19 @@ var action = {
     setEditMenuInputsState: function(state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if(!id) var id = '';
         var menuArray = action.getProperMenuForId(id);
+        if (!maxIndex) var maxIndex = constants.editArray.length;
         if (state <= -1) {
-            for (var i = 0; i < maxIndex && i < constants.editArray.length; i++) {
+            for (var i = 0; i < maxIndex && i < menuArray.length; i++) {
                 var splitArray = menuArray[i].split("~");
-                if ((state === -2 && $('#' + splitArray[3]).children().length < 2) || (state === -1 && $('#' + splitArray[3]).children().length > 1)) {
+
+                //Doesn't click anything that's blaclist, has 'delete' in it, has 'clear' in it, or has 'color' in it
+                var shouldPreload = constants.preloadBlacklist[splitArray[0]] != '' && splitArray[0].indexOf('delete') === -1 && splitArray[0].indexOf('clear') === -1 && splitArray[0].indexOf('color') === -1;
+
+                if (shouldPreload && ((state === -2 && $('#' + splitArray[3]).children().length < 2) || (state === -1 && $('#' + splitArray[3]).children().length > 1))) {
                     $('#' + splitArray[0]).trigger('click');
                 }
             }
-        } else if (state > -1 && state < constants.editArray.length) {
+        } else if (state > -1 && state < menuArray.length) {
             $('#' + constants.editArray[0].split("~")[state]).trigger('click');
         } else {
             console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
@@ -1542,9 +1548,9 @@ $('.screen').on('click',function(event){
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
                 action.showProperMenuForId(event.target.id);
                 if (event.target.id.substring(0,9) === 'boxCircle') {
-                    action.setEditMenuInputsState(-2, 2, event.target.id);
+                    action.setEditMenuInputsState(-2, false, event.target.id);
                 } else {
-                    action.setEditMenuInputsState(-2, 3, event.target.id);
+                    action.setEditMenuInputsState(-2, false, event.target.id);
                 }
             }
         } else { // An element was clicked on directly
@@ -1565,9 +1571,9 @@ $('.screen').on('click',function(event){
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0');
             }
             if (event.target.id.substring(0,9) === 'boxCircle') {
-                action.setEditMenuInputsState(-2, 2, event.target.id);
+                action.setEditMenuInputsState(-2, false, event.target.id);
             } else {
-                action.setEditMenuInputsState(-2, 3, event.target.id);
+                action.setEditMenuInputsState(-2, false, event.target.id);
             }
             $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
         }
