@@ -589,14 +589,13 @@ var action = {
         event.preventDefault();
         var max = JSON.parse($(idSelector).attr('max'));
         var min = JSON.parse($(idSelector).attr('min'));
-        if (event.ctrlKey) {
+        if (event.altKey) {
             action.sizeControl(idSelector, (toMultiplyBy > 0 ? max : min) - JSON.parse($(idSelector).val()))
         } else if (event.shiftKey) {
             action.sizeControl(idSelector, toMultiplyBy * 10);
         } else {
             action.sizeControl(idSelector, toMultiplyBy * 1);
         }
-        action.sizeControl(idSelector, toMultiplyBy * 1);
         updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
     },
     getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle, isForText) {
