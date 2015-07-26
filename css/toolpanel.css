@@ -151,10 +151,6 @@
     border-color: #54606e;
     cursor: pointer;
 }
-.options div:hover {
-    background-color: #21b9b0;
-    border-color: #21b9b0;
-}
 .options div+div{
     border-radius: 0px;
     border-right-width: 0px;

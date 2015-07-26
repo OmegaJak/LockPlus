@@ -676,6 +676,15 @@ var action = {
                 (function(index){
                     $(optionDivSelector).click(function() {optionSelectedCallback('#' + options[index] + 'Option')});
                 })(i);
+                $(optionDivSelector).mouseover(function() {
+                    $(this).css("background-color","#21b9b0");
+                    $(this).css("border-color","#21b9b0");
+                }).mouseout(function() {
+                    if ($(this).attr('data-selected') === 'false' || typeof $(this).attr('data-selected') === 'undefined') {
+                        $(this).css("background-color","#54606e");
+                        $(this).css("border-color","#54606e");
+                    }
+                });
             }
 
             $(buttonSelector).parent().attr('class',' '); //instead of removing the title, just remove class. hide toolTip
@@ -756,8 +765,8 @@ var action = {
             }
             action.saveStorage();
 
-            $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'});
-            if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'});
+            $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'}).attr('data-selected','true');
+            if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'}).attr('data-selected','false');
             lastSelector = optionSelector;
         }, function(optionName) {
             return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
@@ -775,8 +784,8 @@ var action = {
         $('#' + action.selectedItem).css(cssKey, setTo);
         action.savedElements.placedElements[action.selectedItem][cssKey] = setTo;
         action.saveStorage();
-        $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'});
-        if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'});
+        $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'}).attr('data-selected','true');
+        if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'}).attr('data-selected','false');
         lastSelector = optionSelector;
         return lastSelector;
     },
