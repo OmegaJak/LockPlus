@@ -416,14 +416,14 @@ var action = {
             }
 
             $('#' + action.selectedItem).css('transform', compiledTransform);
-            action.savedElements.placedElements[action.selectedItem]['transform'] = compiledTransform;
+            action.savedElements.placedElements[action.selectedItem]['-webkit-transform'] = compiledTransform;
 
             action.saveStorage();
         } else if (purpose === 'get') {
             return splitArray[index] + unit;
         } else if (purpose === 'clear') {
             $('#' + action.selectedItem).css('transform', '');
-            action.savedElements.placedElements[action.selectedItem]['transform'] = '';
+            action.savedElements.placedElements[action.selectedItem]['-webkit-transform'] = '';
 
             action.saveStorage();
         }
