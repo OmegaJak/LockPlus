@@ -2688,7 +2688,8 @@ NodeContainer.prototype.parseTextShadows = function() {
                 color: new Color(s[0]),
                 offsetX: s[1] ? parseFloat(s[1].replace('px', '')) : 0,
                 offsetY: s[2] ? parseFloat(s[2].replace('px', '')) : 0,
-                blur: s[3] ? s[3].replace('px', '') : 0
+                //blur: s[3] ? s[3].replace('px', '') : 0
+                blur: s[3] ? parseFloat(s[3].replace('px', '')) : 0
             });
         }
     }
@@ -3216,7 +3217,19 @@ NodeParser.prototype.paintText = function(container) {
         return punycode.ucs2.encode([character]);
     });
 
-    var weight = container.parent.fontWeight();
+      var color = container.parent.css('color');
+      var fontFamily = container.parent.css('fontFamily');
+      var fontSize = container.parent.css('fontSize');
+      var fontStyle = container.parent.css('fontStyle');
+      var fontVariant = container.parent.css('fontVariant');
+      var fontWeight = container.parent.fontWeight();
+      var textShadow = container.parent.parseTextShadows().reverse();
+      var fontMetrics = this.fontMetrics.getMetrics(fontFamily, fontSize);
+      this.renderer.font(color, fontStyle, fontVariant, fontWeight, fontSize, fontFamily);
+      var renderShadowAlone = textShadow.length;
+
+
+/*    var weight = container.parent.fontWeight();
     var size = container.parent.css('fontSize');
     var family = container.parent.css('fontFamily');
     var shadows = container.parent.parseTextShadows();
@@ -3225,15 +3238,35 @@ NodeParser.prototype.paintText = function(container) {
     if (shadows.length) {
         // TODO: support multiple text shadows
         this.renderer.fontShadow(shadows[0].color, shadows[0].offsetX, shadows[0].offsetY, shadows[0].blur);
-    } else {
-        this.renderer.clearShadow();
-    }
+    } else { */
+if (renderShadowAlone === 0) {
+        this.renderer.clearShadow(); //kept
+    } else if (renderShadowAlone === 1) {
+      color = new Color(color);
+      if (color && (color.a === null || color.a === 1.0)) {
+        this.renderer.fontShadow(textShadow[0].color, textShadow[0].offsetX, textShadow[0].offsetY, textShadow[0].blur);
+        renderShadowAlone = false;
+        }
+      }
 
     this.renderer.clip(container.parent.clip, function() {
-        textList.map(this.parseTextBounds(container), this).forEach(function(bounds, index) {
-            if (bounds) {
-                this.renderer.text(textList[index], bounds.left, bounds.bottom);
-                this.renderTextDecoration(container.parent, bounds, this.fontMetrics.getMetrics(family, size));
+        var textBounds = this.parseTextBounds(container);
+        var fillStyle = this.renderer.ctx.fillStyle;
+        textList.map(textBounds, this).forEach(function(bounds, index) {
+          var text = textList[index];
+          if (bounds && bounds.width) {
+            if (renderShadowAlone) {
+              var dx = this.renderer.width;
+              this.renderer.setVariable('fillStyle', '#000');
+              textShadow.forEach(function(shadow) {
+                this.renderer.fontShadow(shadow.color, shadow.offsetX - dx, shadow.offsetY, shadow.blur);
+                this.renderer.text(text, bounds.left + dx, bounds.bottom);
+                this.renderTextDecoration(container.parent, bounds, fontMetrics);
+                 }, this);
+              this.renderer.setVariable('fillStyle', fillStyle);
+               }
+               this.renderer.text(text, bounds.left, bounds.bottom);
+               this.renderTextDecoration(container.parent, bounds, fontMetrics);
             }
         }, this);
     }, this);
@@ -3403,7 +3436,7 @@ function calculateCurvePoints(bounds, borderRadius, borders) {
         brv = borderRadius[2][1],
         blh = borderRadius[3][0],
         blv = borderRadius[3][1];
-
+/* fix for border radius by June */
     var halfHeight = Math.floor(height / 2);
     tlh = tlh > halfHeight ? halfHeight : tlh;
     tlv = tlv > halfHeight ? halfHeight : tlv;
@@ -4030,8 +4063,8 @@ CanvasRenderer.prototype.font = function(color, style, variant, weight, size, fa
 
 CanvasRenderer.prototype.fontShadow = function(color, offsetX, offsetY, blur) {
     this.setVariable("shadowColor", color.toString())
-        .setVariable("shadowOffsetY", offsetX)
-        .setVariable("shadowOffsetX", offsetY)
+        .setVariable("shadowOffsetX", offsetX)
+        .setVariable("shadowOffsetY", offsetY)
         .setVariable("shadowBlur", blur);
 };
 
@@ -4049,11 +4082,10 @@ CanvasRenderer.prototype.setTransform = function(transform) {
     this.ctx.translate(-transform.origin[0], -transform.origin[1]);
 };
 
-CanvasRenderer.prototype.setVariable = function(property, value) {
-    if (this.variables[property] !== value) {
-        this.variables[property] = this.ctx[property] = value;
+CanvasRenderer.prototype.setVariable = function(property, value) { //fix for double shadows
+    if (this.ctx[property] !== value) {
+       this.ctx[property] = value;
     }
-
     return this;
 };
 
