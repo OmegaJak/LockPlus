@@ -1132,6 +1132,13 @@ var action = {
             //$('#'+this.id).addClass('test');
         });
 
+/*var canvas = document.getElementById("canvas"),
+    html_container = document.querySelector(".screen"),
+    html = html_container.innerHTML;
+rasterizeHTML.drawHTML(html, canvas);*/
+
+/* Could be alt to html2canvas */
+
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
@@ -1313,6 +1320,7 @@ var action = {
         $('#'+id).css('position','absolute'); //fix for html2canvas
         $('#'+id).css('font-size','30px'); //fix for html2canvas
         $('#'+id).css('color','white'); //fix for html2canvas
+        $('#'+id).css('font-family','helvetica');
         if (id.substring(0,3) === 'box') {
             this.savedElements.placedElements[id].width = '50px';
             this.savedElements.placedElements[id].height = '50px';
@@ -1352,6 +1360,7 @@ var action = {
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
+        $('.elementPanel').scrollTop(0);
         $('#logo').attr('title', 'Now Showing: ' + action.getTitleForArray(menuArray)); // Updating the title of the menu
         for (var i = 0; i < menuArray.length; i++) {
            var div = document.createElement('div');
