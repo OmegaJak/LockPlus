@@ -89,6 +89,9 @@ function clock(options) {
                     minute: function () {
                         return (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
                     },
+                    second: function () {
+                        return (d.getSeconds() < 10) ? "0" + d.getSeconds() : d.getSeconds();
+                    },
                     rawminute: function () {
                         return d.getMinutes();
                     },
@@ -217,6 +220,7 @@ function loadClock() {
                 zhour: clock.zhour(),
                 hour: clock.hour(),
                 minute: clock.minute(),
+                second: clock.second(),
                 pm: clock.am(),
                 ttext: clock.hourtext() + " " + clock.minuteonetext() + ' ' + clock.minutetwotext(),
                 htext: clock.hourtext(),

@@ -75,6 +75,10 @@ var elementPanel = {
             minute: cF.minute(),
             mtext: cF.minuteonetext() + ' ' + cF.minutetwotext()
         },
+       /* seconds:{
+            title: "Seconds",
+            second: cF.second()
+        },*/
         pm: {
             title: "PM",
             pm: cF.am()
@@ -100,7 +104,7 @@ var elementPanel = {
         },
         prevdays: {
             title: "Previous Day",
-            prevday: cF.prevdate(),
+            yestday: cF.yesterdaydaytext(),
             sprevday: cF.sprevday()
         },
         nextdays: {

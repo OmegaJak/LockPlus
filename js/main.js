@@ -1136,7 +1136,6 @@ var action = {
     html_container = document.querySelector(".screen"),
     html = html_container.innerHTML;
 rasterizeHTML.drawHTML(html, canvas);*/
-
 /* Could be alt to html2canvas */
 
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
