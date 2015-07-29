@@ -323,8 +323,8 @@ var systemdivs = function () {
     var systemEl = {
         name: 'JunesiPhone', //[[UIDevice currentDevice] name];
         firmware: 'Version 8.3 (Build 12F70)', //[NSProcessInfo processInfo].operatingSystemVersionString;
-        battery: '85', //Math.round([[UIDevice currentDevice]batteryLevel] * 100);
-        batterypercent: '85%',
+        battery: '100', //Math.round([[UIDevice currentDevice]batteryLevel] * 100);
+        batterypercent: '100%',
         chargingtxt: 'Charging',
         unlock: 'Unlock'
     };

@@ -75,10 +75,10 @@ var elementPanel = {
             minute: cF.minute(),
             mtext: cF.minuteonetext() + ' ' + cF.minutetwotext()
         },
-       /* seconds:{
+        seconds:{
             title: "Seconds",
             second: cF.second()
-        },*/
+        },
         pm: {
             title: "PM",
             pm: cF.am()
@@ -233,8 +233,8 @@ var elementPanel = {
         },
         battery: {
             title: "Battery",
-            battery: "85",
-            batterypercent: "85%",
+            battery: "100",
+            batterypercent: "100%",
             chargingtxt: "Charging"
         },
         unlock: {
