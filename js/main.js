@@ -1334,6 +1334,10 @@ rasterizeHTML.drawHTML(html, canvas);*/
             }
         } else {
             this.savedElements.placedElements[id]['z-index'] = 2;
+            this.savedElements.placedElements[id]['color'] = 'white';
+            this.savedElements.placedElements[id]['font-family'] = 'helvetica';
+            this.savedElements.placedElements[id]['position'] = 'absolute';
+            this.savedElements.placedElements[id]['font-size'] = '30px';
         }
         this.saveStorage();
         loadClock(); //in clock.js
