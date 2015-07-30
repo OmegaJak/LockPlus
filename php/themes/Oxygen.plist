@@ -19,7 +19,7 @@ data:image/jpeg;base64,/9j/4SA4RXhpZgAATU0AKgAAAAgACAESAAMAAAABAAEAAAEaAAUAAAABA
 </string>
 <key>Elements</key>
 <string>
-{"clockline":{"left":216,"top":299,"fontSize":"58px","width":"104px","font-family":"bebasneue","text-transform":null,"color":"rgb(15, 147, 191)"},"condition":{"left":0,"top":1,"font-family":"bebasneue","fontSize":"40px","color":"rgb(15, 147, 191)","text-align":"Center","width":"320px"},"batterypercent":{"font-family":"bebaslight","left":16,"top":318,"color":"rgb(15, 147, 191)","fontSize":"32px"},"unlock":{"left":121,"top":520,"font-family":"bebasneue","color":"rgb(15, 147, 191)","text-align":"Center","fontSize":"40px"}}</string>
+{"clockline":{"left":216,"top":299,"font-size":"58px","width":"104px","font-family":"bebasneue","text-transform":null,"color":"rgb(15, 147, 191)"},"condition":{"left":0,"top":1,"font-family":"bebasneue","font-size":"40px","color":"rgb(15, 147, 191)","text-align":"Center","width":"320px"},"batterypercent":{"font-family":"bebaslight","left":16,"top":318,"color":"rgb(15, 147, 191)","font-size":"32px"},"unlock":{"left":121,"top":520,"font-family":"bebasneue","color":"rgb(15, 147, 191)","text-align":"Center","font-size":"40px"}}</string>
 <key>IconName</key>
 <string>
 </string>

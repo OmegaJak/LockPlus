@@ -19,7 +19,7 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAI4CAYAAAAbCTCbAAAgAElEQVR4Xu
 </string>
 <key>Elements</key>
 <string>
-{"boxOne":{"width":"320px","height":"150px","backgroundColor":"red","display":"gray","left":0,"top":418,"background-color":"rgb(82, 181, 213)"},"clock":{"left":9,"top":417,"fontSize":"66px","font-family":"samsunglight","font-weight":"normal"},"icon":{"left":215,"top":433,"width":"70px"},"datestring":{"left":16,"top":494,"fontSize":"18px","color":"rgba(255, 255, 255, 0.8)"},"boxTwo":{"width":"280px","height":"1px","backgroundColor":"red","display":"gray","left":19,"top":530,"background-color":"rgba(255, 255, 255, 0.8)"},"textOne":{"left":"0px","top":540,"innerHTML":"-Swipe-","fontSize":"18px","width":"320px","text-align":"center","color":"rgba(255, 255, 255, 0.8)"}}</string>
+{"boxOne":{"width":"320px","height":"150px","background-color":"red","display":"gray","left":0,"top":418,"background-color":"rgb(82, 181, 213)"},"clock":{"left":9,"top":417,"font-size":"66px","font-family":"samsunglight","font-weight":"normal"},"icon":{"left":215,"top":433,"width":"70px"},"datestring":{"left":16,"top":494,"font-size":"18px","color":"rgba(255, 255, 255, 0.8)"},"boxTwo":{"width":"280px","height":"1px","background-color":"red","display":"gray","left":19,"top":530,"background-color":"rgba(255, 255, 255, 0.8)"},"textOne":{"left":"0px","top":540,"innerHTML":"-Swipe-","font-size":"18px","width":"320px","text-align":"center","color":"rgba(255, 255, 255, 0.8)"}}</string>
 <key>IconName</key>
 <string>
 MNMLW</string>

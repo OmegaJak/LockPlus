@@ -1,18 +1,53 @@
 <?php
+require_once "pages/Paginated.php";
+require_once "pages/DoubleBarLayout.php";
+?>
+
+<?php
 error_reporting(0);
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<link rel="stylesheet" href="preview.css" type="text/css">';
 echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
+echo '<style>.nav{position: absolute;text-align: center;top: 10px;margin: 0 auto;width: 100%;}</style>';
 
 $dir    = 'themes';
-foreach (glob("$dir/*.plist") as $filename) {
+$list = glob("$dir/*.plist");
+function mtimecmp($a, $b) {
+        $mt_a = filemtime($a);
+        $mt_b = filemtime($b);
+        if ($mt_a == $mt_b)
+            return 0;
+        else if ($mt_a < $mt_b)
+            return -1;
+        else
+            return 1;
+    }
+usort($list, "mtimecmp");
+$reversed = array_reverse($list);
+
+$page = $_GET['page'];
+$pagedResults = new Paginated($reversed, 24, $page);
+
+while($row = $pagedResults->fetchPagedRow()) {  //when $row is false loop terminates
+    $path = $row;
+    $name = basename($row,'.plist');
+    $plistDocument = new DOMDocument();
+    $plistDocument->load($path);
+    $array = parsePlist($plistDocument);
+    echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
+  }
+
+  $pagedResults->setLayout(new DoubleBarLayout());
+  echo $pagedResults->fetchPagedNavigation();
+
+/*foreach ($reversed as $filename) {
 	$path = $filename;
 	$name = basename($filename,'.plist');
 	$plistDocument = new DOMDocument();
 	$plistDocument->load($path);
 	$array = parsePlist($plistDocument);
   echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
-}
+}*/
 
 
 
