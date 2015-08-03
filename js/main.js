@@ -1329,6 +1329,9 @@ rasterizeHTML.drawHTML(html, canvas);*/
             this.savedElements.placedElements[id]['border-color'] = 'red';
             this.savedElements.placedElements[id]['border-style'] = 'solid';
             this.savedElements.placedElements[id]['border-width'] = '0px';
+            this.savedElements.placedElements[id]['position'] = 'absolute';
+            this.savedElements.placedElements[id]['top'] = '248px';
+            this.savedElements.placedElements[id]['left'] = '130px';
             if (id.substring(3, 9) === 'Circle') {
                 this.savedElements.placedElements[id]['border-radius'] = '999px';
             }
@@ -1338,6 +1341,8 @@ rasterizeHTML.drawHTML(html, canvas);*/
             this.savedElements.placedElements[id]['font-family'] = 'helvetica';
             this.savedElements.placedElements[id]['position'] = 'absolute';
             this.savedElements.placedElements[id]['font-size'] = '30px';
+            this.savedElements.placedElements[id]['top'] = '248px';
+            this.savedElements.placedElements[id]['left'] = '130px';
         }
         this.saveStorage();
         loadClock(); //in clock.js
