@@ -1437,6 +1437,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
         }
     },
     timeout: '',
+    lastNotificationTime: false,
     animateHelp: function(text, opacity, time){
         $( "#tips" ).animate({
             opacity: opacity,
@@ -1450,17 +1451,20 @@ rasterizeHTML.drawHTML(html, canvas);*/
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
-        if (isStillShowing && $('#helpinfo').text() != text) {
-            action.animateHelp(text, 1, 300);
-        } else {
+        if (isStillShowing && $('#helpinfo').text() != text) { //Hide the old help text
+            var now = Date.now();
+            if (action.lastNotificationTime && now - action.lastNotificationTime > 50) {
+                action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
+                action.animateHelp(text, 1, 300);
+            }
+        } else { // Show a new tip
           $('#helpinfo').text(text);
+          action.lastNotificationTime = Date.now();
           action.animateHelp(false, 1, 300);
           action.timeout = setTimeout(function() {
               action.animateHelp(false, 0, 200);
           }, 5000);
         }
-
-
     },
     setEditMenuInputsState: function(state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if(!id) var id = '';
