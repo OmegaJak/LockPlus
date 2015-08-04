@@ -1,4 +1,6 @@
-var lang = (window.navigator.language.length >= 2) ? window.navigator.language.split('-')[0] : 'en';
+//var lang = (window.navigator.language.length >= 2) ? window.navigator.language.split('-')[0] : 'en';
+
+var lang = 'en';
 var celsius = false;
 
 function checkDiv(div) {
