@@ -906,6 +906,7 @@ var action = {
         action.elementPanel('ml', 0);
     },
     clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
+        console.log(code);
         if (code === -1) { // check what to do
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
@@ -926,10 +927,7 @@ var action = {
                 });
             }
         } else if (code === 0) { // hide confirmation
-            $('.noClear').remove();
-            $('.yesClear').remove();
-            $('.clearLabel').remove();
-            $('#clear').parent().attr('class','leftTooltip');
+            action.hideClearLabel();
             action.setHelpText('Not cleared, click to edit elements. (Also delete)');
         } else if (code === 1) { // definitely clear the theme
             localStorage.removeItem('placedElements');
@@ -940,14 +938,20 @@ var action = {
             $('#screenElements').empty();
             $('.newSVG').remove();
             $(".svg").remove();
-            action.clearTheme(0);
+            action.hideClearLabel(); // Avoid showing the help text for not clearing the label, just hiding it
             action.hideElementPanelElements();
             $('#bgInput').after($('#bgInput').clone(true)).remove();
             $('.screen').css('background-image', '');
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
-            action.setHelpText('Select Add elements to place elements.');
+            action.setHelpText('Cleared. Click "Show Elements Panel" to place elements.');
         }
+    },
+    hideClearLabel: function() {
+        $('.noClear').remove();
+        $('.yesClear').remove();
+        $('.clearLabel').remove();
+        $('#clear').parent().attr('class','leftTooltip');
     },
     hideElementPanelElements: function() {
         var elementPanelElements = $('.elementPanel').children();
