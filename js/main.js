@@ -886,12 +886,15 @@ var action = {
     showPanel: function(list){
         $('#'+list).css('visibility','visible'); //new function instead of running createLI again.
     },
+    showPanelHelpText: function(list) {
+        if ($('#'+list).css('display') === 'none') action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
+    },
     elementPanel: function (id, duration) { //show hide items in element Panel
         var duration = typeof duration != 'undefined' ? duration : 400;
-        if (id === 'cl') { $('#clockList').toggle(duration); /*this.createLI(elementPanel.clockElements, 'clockList');*/ this.showPanel('clockList'); }
-        if (id === 'wl') { $('#weatherList').toggle(duration); /*this.createLI(elementPanel.weatherElements, 'weatherList');*/ this.showPanel('weatherList') }
-        if (id === 'sl') { $('#systemList').toggle(duration); /*this.createLI(elementPanel.systemElements, 'systemList');*/ this.showPanel('systemList'); }
-        if (id === 'ml') { $('#miscList').toggle(duration); /*this.createLI(elementPanel.miscElements, 'miscList');*/ this.showPanel('miscList'); }
+        if (id === 'cl') { $('#clockList').toggle(duration, action.showPanelHelpText('clockList')); /*this.createLI(elementPanel.clockElements, 'clockList');*/ this.showPanel('clockList'); }
+        if (id === 'wl') { $('#weatherList').toggle(duration, action.showPanelHelpText('weatherList')); /*this.createLI(elementPanel.weatherElements, 'weatherList');*/ this.showPanel('weatherList') }
+        if (id === 'sl') { $('#systemList').toggle(duration, action.showPanelHelpText('systemList')); /*this.createLI(elementPanel.systemElements, 'systemList');*/ this.showPanel('systemList'); }
+        if (id === 'ml') { $('#miscList').toggle(duration, action.showPanelHelpText('miscList')); /*this.createLI(elementPanel.miscElements, 'miscList');*/ this.showPanel('miscList'); }
     },
     getElementPanelIdSelector: function(id) { // Sadly I can't put this into that ↑
         if (id === 'cl') return '#clockList'
@@ -1545,7 +1548,7 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if(event.target.id && event.target.tagName === 'H3'){ //Clicking to show/hide a panel
-        action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
+        //action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
         action.elementPanel(event.target.id);
         var elementChildren = $('.elementPanel').children();
         for (var i = 0; i < elementChildren.length; i++) {
