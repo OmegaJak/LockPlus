@@ -266,6 +266,10 @@ var elementPanel = {
 			boxCircleThree: "Custom Circle 3",
 			boxCircleFour: "Custom Circle 4",
 			boxCircleFive: "Custom Circle 5"
-		}
+		},
+        app: {
+            title: "Apps",
+            app1: "Mail"
+        }
     }
 };

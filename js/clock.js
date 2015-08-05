@@ -357,13 +357,19 @@ var miscDivs = function() {
         boxCircleTwo: '',
         boxCircleThree: '',
         boxCircleFour: '',
-        boxCircleFive: ''
+        boxCircleFive: '',
+        app1: 'Mail-com.apple.mobilemail'
     };
     Object.keys(miscEl).forEach(function (key) {
         var value = miscEl[key],
             div = checkDiv(key);
-        if (div && div.innerHTML === '') {
-            div.innerHTML = value;
+        if(div && key === 'app1'){
+            div.innerHTML = value.split('-')[0];
+            div.setAttribute('data-target',value.split('-')[1]);
+        }else{
+            if (div && div.innerHTML === '') {
+                div.innerHTML = value;
+            }
         }
     });
 }
