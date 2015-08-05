@@ -657,11 +657,17 @@ var action = {
                 var optionDivSelector = '#' + options[i] + 'OptionDiv';
                 var optionSelector = '#' + options[i] + 'Option';
                 $('<div id="' + options[i] + 'OptionDiv" style="top: ' + optionsTop + 'px;"></div>').appendTo($(divSelector));
-                getOptionElement(options[i]).appendTo($('#' + options[i] + 'OptionDiv'));
+                var optionElement = getOptionElement(options[i]);
+                optionElement.appendTo($('#' + options[i] + 'OptionDiv'));
                 $(optionDivSelector).css({'right': right
                                                         ,'width': $('#' + options[i] + 'Option').width() + 10
                                                         ,'height': $('#' + options[i] + 'Option').height() + 2
                                                     });
+                if (typeof optionElement.attr('data-selected') != 'undefined' && JSON.parse(optionElement.attr('data-selected'))) {
+                    optionElement.parent().attr('data-selected','true');
+                    optionElement.parent().css("background-color","#21b9b0");
+                    optionElement.parent().css("border-color","#21b9b0");
+                }
                 if (adjustWidth) {
                     $(optionSelector).css({'width' : $('#' + options[i] + 'OptionDiv').css('width')});
                 }
@@ -773,11 +779,15 @@ var action = {
         });
     },
     cgalign: function () {
-        var lastSelector;
+        var lastSelector = '#' + $('#' + action.selectedItem).css('text-align') + 'Option';
         this.cgOption('align', constants.editArray[4], ['left', 'center', 'right'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
-            return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
+            var optionElement = $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
+            if ($('#' + action.selectedItem).css('text-align') === optionName) {
+                optionElement.attr('data-selected','true');
+            }
+            return optionElement;
         });
     },
     basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
