@@ -358,12 +358,24 @@ var miscDivs = function() {
         boxCircleThree: '',
         boxCircleFour: '',
         boxCircleFive: '',
-        app1: 'Mail-com.apple.mobilemail'
+        app1: 'Mail-com.apple.mobilemail',
+        app2: 'SMS-com.apple.MobileSMS',
+        app3: 'Phone-com.apple.mobilephone',
+        app4: 'Twitter-com.atebits.Tweetie2',
+        app5: 'Tweetbot3-com.tapbots.Tweetbot3',
+        app6: 'Telegram-ph.telegra.Telegraph',
+        app7: 'Instagram-com.burbn.instagram',
+        app8: 'Pandora-com.pandora',
+        app9: 'Spotify-com.spotify.client',
+        app10: 'Facebook-com.facebook.Facebook',
+        app11: 'Kik-com.kik.chat',
+        app12: 'YouTube-com.google.ios.youtube',
+        app13: 'WhatsApp-net.whatsapp.WhatsApp'
     };
     Object.keys(miscEl).forEach(function (key) {
         var value = miscEl[key],
             div = checkDiv(key);
-        if(div && key === 'app1'){
+        if(div && key.substring(0,3) === 'app'){
             div.innerHTML = value.split('-')[0];
             div.setAttribute('data-target',value.split('-')[1]);
         }else{

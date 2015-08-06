@@ -267,9 +267,24 @@ var elementPanel = {
 			boxCircleFour: "Custom Circle 4",
 			boxCircleFive: "Custom Circle 5"
 		},
-        app: {
-            title: "Apps",
-            app1: "Mail"
+        apps: {
+            title: "Apps 1",
+            app1: "Mail",
+            app2: "SMS",
+            app3: "Phone",
+            app4: "Twitter",
+            app5: "Tweetbot",
+            app6: "Telegram"
+        },
+        apps2:{
+            title: "Apps 2",
+            app7: "Instagram",
+            app8: "Pandora",
+            app9: "Spotify",
+            app10: "Facebook",
+            app11: "Kik",
+            app12: "YouTube",
+            app13: "WhatsApp"
         }
     }
 };
