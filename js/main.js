@@ -783,11 +783,12 @@ var action = {
         this.cgOption('align', constants.editArray[4], ['left', 'center', 'right'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
-            var optionElement = $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
+            /*var optionElement = $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
             if ($('#' + action.selectedItem).css('text-align') === optionName) {
                 optionElement.attr('data-selected','true');
             }
-            return optionElement;
+            return optionElement;*/
+            return action.getBasicOptionElement(optionName, 'text-align: ' + optionName, 'text-align');
         });
     },
     basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
@@ -798,6 +799,13 @@ var action = {
         if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'}).attr('data-selected','false');
         lastSelector = optionSelector;
         return lastSelector;
+    },
+    getBasicOptionElement: function(optionName, style, cssKey) {
+        var optionElement = $('<label id="' + optionName + 'Option" style="' + style + ';">' + optionName + '</label>');
+        if ($('#' + action.selectedItem).css(cssKey) === optionName) {
+            optionElement.attr('data-selected','true');
+        }
+        return optionElement;
     },
     cgcolor: function (color, cssKey, div) {
         if (color) {
@@ -826,11 +834,12 @@ var action = {
         }
     },
     cguppercase: function () {
-        var lastSelector;
+        var lastSelector = '#' + $('#' + action.selectedItem).css('text-transform') + 'Option';
         this.cgOption('uppercase', constants.editArray[7], ['uppercase', 'capitalize', 'lowercase'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-transform', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
-            return $('<label id="' + optionName + 'Option" style="text-align: center; text-transform: ' + optionName + ';">' + optionName + '</label>');
+            //return $('<label id="' + optionName + 'Option" style="text-align: center; text-transform: ' + optionName + ';">' + optionName + '</label>');
+            return action.getBasicOptionElement(optionName, 'text-align: center; text-transform: ' + optionName, 'text-transform');
         });
     },
     cgweight: function () {
@@ -865,8 +874,8 @@ var action = {
                 decrementButton.css({'border-width':0});
 
                 var inputSelector = '#boldnessInput';
-                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', event) });
-                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', event) });
+                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', function() {}, event); });
+                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', function() {}, event); });
 
                 wrapper.attr('id', 'boldnessOption');
                 wrapper.appendTo($("#boldnessOptionDiv"));
