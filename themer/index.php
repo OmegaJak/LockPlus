@@ -9,10 +9,46 @@
    -webkit-tap-highlight-color: rgba(0,0,0,0);
  }
   #container { display: inline-block; }
+  h3 {
+      left: 18px;
+      position: relative;
+  }
+  body {
+      background-color: #21b9b0;
+      color: white;
+  }
+  input {
+      border-radius: 20px;
+      padding: 5px;
+      border: 1px solid transparent;
+      position: relative;
+      left: 16px;
+      color: gray;
+  }
+  input:focus {
+      outline: 0;
+  }
+  input[type=submit] {
+      text-align: center;
+      width: 100px;
+      display: block;
+      margin: 10px auto;
+      border-radius: 20px;
+      padding: 5px;
+      border: 1px solid transparent;
+      background-color: #54606e;
+      color: white;
+      cursor: pointer;
+      position: relative;
+      left: 16px;
+  }
+  input[type=submit]:hover {
+      background-color: #39414A;
+  }
   li{
     list-style-type: none;
     text-align: left;
-    background-color: #21b9b0;
+    background-color: #54606e;
     padding: 5px;
     margin: 5px;
     text-align: center;
@@ -21,6 +57,7 @@
   }
   li:hover{
     cursor: pointer;
+    background-color: #39414A;
   }
   </style>
 </head>
@@ -42,7 +79,8 @@
   </div>
       <center>
       <form action="themer.php" method="GET">
-      Enter Themer: <input type="text" name="name"><br>
+          <h3>Enter Themer:</h3>
+          <input type="text" name="name"><br>
       <input type="submit">
     </form>
   </center>
