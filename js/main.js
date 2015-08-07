@@ -1477,11 +1477,17 @@ rasterizeHTML.drawHTML(html, canvas);*/
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
-        if (isStillShowing && $('#helpinfo').text() != text) { //Hide the old help text
-            var now = Date.now();
-            if (action.lastNotificationTime && now - action.lastNotificationTime > 50) {
-                action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
-                action.animateHelp(text, 1, 300);
+        if (isStillShowing) { //Hide the old help text
+            if ($('#helpinfo').text() != text) {
+                var now = Date.now();
+                if (action.lastNotificationTime && now - action.lastNotificationTime > 50) {
+                    action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
+                    action.animateHelp(text, 1, 300);
+                }
+            } else {
+                action.timeout = setTimeout(function() {
+                    action.animateHelp(false, 0, 200);
+                }, 5000);
             }
         } else { // Show a new tip
           $('#helpinfo').text(text);
