@@ -6,6 +6,7 @@
   body {
    text-align: center;
    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
+   -webkit-tap-highlight-color: rgba(0,0,0,0);
  }
   #container { display: inline-block; }
   li{
@@ -16,6 +17,7 @@
     margin: 5px;
     text-align: center;
     border-radius: 5px;
+    color:white;
   }
   li:hover{
     cursor: pointer;
