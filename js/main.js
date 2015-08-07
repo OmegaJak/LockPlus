@@ -1468,41 +1468,37 @@ rasterizeHTML.drawHTML(html, canvas);*/
         $( "#tips" ).animate({
             opacity: opacity,
             top: 'toggle'
-        }, time, function() {
-            if(text){
-                action.setHelpText(text)
+        }, time, function() { // Called when it's done animating
+            if (text) {
+                action.setHelpText(text); // This is what does the 'queuing effect' kinda
             }
         });
     },
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
-        if (!$('#tips').is(':animated')) {
-            if (isStillShowing) { //Hide the old help text
+        if (!$('#tips').is(':animated')) { // Don't do anything if it's animating
+            if (isStillShowing) { //If it's already showing, hide the old help text
                 if ($('#helpinfo').text() != text) {
                     var now = Date.now();
-                    if (action.lastNotificationTime && now - action.lastNotificationTime > 50) {
+                    if (action.lastNotificationTime && now - action.lastNotificationTime > 50) { //If it's a person clicking things, not backend calls
                         action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
-                        action.animateHelp(text, 1, 300);
+                        action.animateHelp(text, 1, 300); // Show the new text
                     }
-                } else {
+                } else { // If it's the same tip, and it's already showing, reset the countdown to hiding the tip
                     action.timeout = setTimeout(function() {
                         action.animateHelp(false, 0, 200);
                     }, 5000);
                 }
             } else { // Show a new tip
-                $('#helpinfo').text(text);
-                action.lastNotificationTime = Date.now();
-                action.animateHelp(false, 1, 300);
-                action.timeout = setTimeout(function() {
+                $('#helpinfo').text(text); // Actually set the text
+                action.lastNotificationTime = Date.now(); // For spam checking purposes
+                action.animateHelp(false, 1, 300); // Show the tip
+                action.timeout = setTimeout(function() { // In 5 seconds, hide the tip
                     action.animateHelp(false, 0, 200);
                 }, 5000);
             }
         }
-
-        //console.log('Animated: ' + $('#tips').is(':animated'));
-        //console.log('Showing: ' + isStillShowing);
-
     },
     setEditMenuInputsState: function(state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if(!id) var id = '';
