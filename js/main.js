@@ -1468,35 +1468,41 @@ rasterizeHTML.drawHTML(html, canvas);*/
         $( "#tips" ).animate({
             opacity: opacity,
             top: 'toggle'
-            }, time, function() {
-                if(text){
-                    action.setHelpText(text)
-                }
-            });
+        }, time, function() {
+            if(text){
+                action.setHelpText(text)
+            }
+        });
     },
     setHelpText: function(text) {
         var isStillShowing = $('#tips').is(":visible");
         clearTimeout(action.timeout);
-        if (isStillShowing) { //Hide the old help text
-            if ($('#helpinfo').text() != text) {
-                var now = Date.now();
-                if (action.lastNotificationTime && now - action.lastNotificationTime > 50) {
-                    action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
-                    action.animateHelp(text, 1, 300);
+        if (!$('#tips').is(':animated')) {
+            if (isStillShowing) { //Hide the old help text
+                if ($('#helpinfo').text() != text) {
+                    var now = Date.now();
+                    if (action.lastNotificationTime && now - action.lastNotificationTime > 50) {
+                        action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
+                        action.animateHelp(text, 1, 300);
+                    }
+                } else {
+                    action.timeout = setTimeout(function() {
+                        action.animateHelp(false, 0, 200);
+                    }, 5000);
                 }
-            } else {
+            } else { // Show a new tip
+                $('#helpinfo').text(text);
+                action.lastNotificationTime = Date.now();
+                action.animateHelp(false, 1, 300);
                 action.timeout = setTimeout(function() {
                     action.animateHelp(false, 0, 200);
                 }, 5000);
             }
-        } else { // Show a new tip
-          $('#helpinfo').text(text);
-          action.lastNotificationTime = Date.now();
-          action.animateHelp(false, 1, 300);
-          action.timeout = setTimeout(function() {
-              action.animateHelp(false, 0, 200);
-          }, 5000);
         }
+
+        //console.log('Animated: ' + $('#tips').is(':animated'));
+        //console.log('Showing: ' + isStillShowing);
+
     },
     setEditMenuInputsState: function(state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if(!id) var id = '';
