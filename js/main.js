@@ -1179,11 +1179,9 @@ rasterizeHTML.drawHTML(html, canvas);*/
             $("body").append('<form id="saveForm"><h3>Enter theme details</h3><label class="flabel">Your Name</label><input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/><label class="flabel">Theme Name</label><input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/><div class="fsubmit">Submit</div><label class="errorlabel">*must fill in all inputs</label></form>');
             //end fixing what html2canvas broke
             $('.fsubmit').on('click',function(){
-                $('#saveForm').css('display','none');
-                $('.loader').toggle('display');
                    var devname = $('#fdevname').val();
                    var themename = $('#fthemename').val();
-                   if(themename !== '' && devname !== ''){
+                   if(themename !== '' && devname !== '' && /^[a-zA-Z0-9- ]*$/.test(themename) == true){
                        $('#fileName').val(themename);
                         $('#devname').val(devname);
                         $('#Tpreview').val(dataURL);
@@ -1192,8 +1190,13 @@ rasterizeHTML.drawHTML(html, canvas);*/
                         $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
                         $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
                         $('#myform').submit();
+                        $('#saveForm').css('display','none');
+                        $('.loader').toggle('display');
 
                    }else{
+                    if(/^[a-zA-Z0-9- ]*$/.test(themename) == false){
+                        document.querySelector('.errorlabel').innerHTML = "* Please remove symbols from theme name.";
+                    }
                     $('.errorlabel').css('display','block');
                    }
                 });
