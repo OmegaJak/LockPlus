@@ -2,11 +2,12 @@ html{
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
 }
 .nav{
-  position: absolute;
+  position: relative;
   text-align: center;
-  top: 10px;
+  bottom: 10px;
   margin: 0 auto;
   width: 100%;
+  padding-top: 40px;
 }
 .theme{
   position: relative;
