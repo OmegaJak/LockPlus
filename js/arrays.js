@@ -284,6 +284,9 @@ var elementPanel = {
             app10: "Facebook",
             app11: "Kik",
             app12: "YouTube",
+        },
+        apps3:{
+            title: "Apps 3",
             app13: "WhatsApp"
         }
     }

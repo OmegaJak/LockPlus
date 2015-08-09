@@ -122,7 +122,7 @@ if (file_exists($row)) {
     $dev = $xml->dict->string[1];
 	$artist = preg_replace("/[^A-Za-z0-9 ]/", '', $dev);
     $entered =  preg_replace("/[^A-Za-z0-9 ]/", '', $entered);
-    if($entered === $artist){
+    if(strtolower($entered) === strtolower($artist)){
     	$name = $xml->dict->string;
     	$preview = $xml->dict->string[2];
     	echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/><span class="themeName">'.$name.'</span></div>';
