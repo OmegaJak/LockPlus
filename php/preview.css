@@ -12,7 +12,7 @@ html{
 .theme{
   position: relative;
  width: 100px;
- float: left;
+ display: inline-block;
  margin-top: 40px;
  margin-left: 15px;
 }
