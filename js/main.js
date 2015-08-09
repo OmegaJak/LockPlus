@@ -1170,18 +1170,27 @@ rasterizeHTML.drawHTML(html, canvas);*/
 /* Could be alt to html2canvas */
 
 //fix for rotated elements
+
         var children = document.getElementById('screenElements').children;
         for (var i = 0; i < children.length; i++) {
            var transform =  $(children[i]).css('transform');
-           if(transform !== 'none'){
+        if(transform !== 'none'){
+            var id = children[i].id;
             var Tp = $(children[i]).css('top').replace(/[^-\d\.]/g, '');
             var Lf = $(children[i]).css('left').replace(/[^-\d\.]/g, '');
             $(children[i]).css({
                 'top' : Tp - 350 + 'px',
                 'left' : Lf - 170 + 'px'
             });
-           }
+            //$("#"+id).css('top',(Tp - 350) + 'px');
+            //$('#'+id).css('left',(Lf - 170) + 'px');
         }
+            /*$(children[i]).css({
+                'top' : Tp - 350 + 'px',
+                'left' : Lf - 170 + 'px'
+            });*/
+           }
+
 
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
