@@ -138,7 +138,7 @@ var action = {
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
-            $('#' + action.selectedItem).css('background','linear-gradient(red,yellow 50%,blue 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,red,yellow 50%,blue 90%)"; action.saveStorage(); }
+            $('#' + action.selectedItem).css('background','linear-gradient(rgb(255,0,0),rgb(255,255,0) 50%,rgb(0,0,255) 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,rgb(255,0,0),rgb(255,255,0) 50%,rgb(0,0,255) 90%)"; action.saveStorage(); }
         if (id === 'linearBoxGradient') { this.showIconMenu(constants.linearBoxGradientArray, -1); }
         if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
         if (id === 'gradientType') { this.cgGradientPurpose(); }
@@ -292,7 +292,7 @@ var action = {
 
             var splitArray = currentGradient.replace(/deg/g, '').replace(/[%]/g, '').split(/[(), ]/);
         } else {
-            var splitArray = ['linear-gradient','179','red','yellow','50','blue','90'];
+            var splitArray = ['linear-gradient','179','rgb(255,0,0)','rgb(255,255,0)','50','rgb(0,0,255)','90'];
         }
         // "linear-gradient(179deg,red,yellow 50%,blue 90%)"
 
@@ -323,12 +323,12 @@ var action = {
                     if (keyArr[0] === 'pos') {
                         index = splitArray.length - 1;
                     } else {
-                        splitArray.push("blue");
+                        splitArray.push("rgb(0,0,255)");
                         splitArray.push("100");
                         index = splitArray.length - 2;
                     }
                 } else if (purpose === 'get') {
-                    splitArray.push("blue");
+                    splitArray.push("rgb(0,0,255)");
                     splitArray.push("100");
 
                     if (keyArr[0] === 'color') {
