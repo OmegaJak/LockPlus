@@ -138,11 +138,11 @@ var action = {
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
-            $('#' + action.selectedItem).css('background','linear-gradient(179deg,red,yellow 50%,blue 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,red,yellow 50%,blue 90%)"; action.saveStorage(); }
+            $('#' + action.selectedItem).css('background','linear-gradient(red,yellow 50%,blue 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,red,yellow 50%,blue 90%)"; action.saveStorage(); }
         if (id === 'linearBoxGradient') { this.showIconMenu(constants.linearBoxGradientArray, -1); }
         if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
         if (id === 'gradientType') { this.cgGradientPurpose(); }
-        if (id === 'linearGradientAngle') { this.cgSize('rotateLinearGradient', constants.linearGradientArray[1], 'deg', -179, 179, 'rotate', 'rotate', action.updateGradient, false, false, 'Rotate Gradient'); }
+        if (id === 'linearGradientAngle') { this.cgSize('rotateLinearGradient', constants.linearGradientArray[1], 'deg', 0, 360, 'rotate', 'rotate', action.updateGradient, false, false, 'Rotate Gradient'); }
         if (id === 'linearGradientStartColor') { this.cgLinearGradientColor(constants.linearGradientArray[2], 'color~0.5'); }
         if (id === 'linearGradientStopColorOne') { this.cgLinearGradientColor(constants.linearGradientArray[3], 'color~1'); this.cgSize('linGradientStopOnePercent', constants.linearGradientArray[3], '%', 0, 100, 'pos~1', 'pos~1', action.updateGradient, false, false, 'Stop 1 Distance'); }
         if (id === 'linearGradientStopColorTwo') { this.cgLinearGradientColor(constants.linearGradientArray[4], 'color~2'); this.cgSize('linGradientStopTwoPercent', constants.linearGradientArray[4], '%', 0, 100, 'pos~2', 'pos~2', action.updateGradient, false, false, 'Stop 2 Distance'); }
@@ -284,6 +284,11 @@ var action = {
             currentGradient = currentGradient.replace(/(rgba?\([^)]+\))/gmi, function(match) {
                 return match.replace(/[/(]/g,'{').replace(/[,]/g,'!').replace(/[/)]/g,'}').replace(/[ ]/g,'');
             });
+
+            var gradPieces = currentGradient.split('(');
+            if (isNaN(gradPieces[1].substring(0, 1))) {
+                currentGradient = gradPieces[0] + '(180deg,' + gradPieces[1];
+            }
 
             var splitArray = currentGradient.replace(/deg/g, '').replace(/[%]/g, '').split(/[(), ]/);
         } else {
