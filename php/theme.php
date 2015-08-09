@@ -4,10 +4,66 @@ require_once "pages/DoubleBarLayout.php";
 ?>
 
 <?php
+echo '<style>
+  body {
+
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
+   -webkit-tap-highlight-color: rgba(0,0,0,0);
+ }
+  h3 {
+    margin: 0 auto;
+    margin-left:30px;
+      text-align:center;
+      display:block;
+      padding-bottom:5px;
+      color:#54606e;
+  }
+  body {
+      background-color: #21b9b0;
+  }
+  input {
+      border-radius: 20px;
+      padding: 5px;
+      border: 1px solid transparent;
+      position: relative;
+      left: 16px;
+      color: gray;
+
+  }
+  form{
+       text-align: center;
+  }
+  input:focus {
+      outline: 0;
+  }
+  input[type=submit] {
+      text-align: center;
+      width: 100px;
+      display: block;
+      margin: 10px auto;
+      border-radius: 20px;
+      padding: 5px;
+      border: 1px solid transparent;
+      background-color: #54606e;
+      color: white;
+      cursor: pointer;
+      position: relative;
+      left: 16px;
+  }
+  input[type=submit]:hover {
+      background-color: #39414A;
+  }
+  </style>';
 error_reporting(0);
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<link rel="stylesheet" href="preview.css" type="text/css">';
 echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
+echo '<form action="search.php" method="GET">
+</br>
+          <h3>Search Themes</h3>
+          <input type="text" name="name"><br>
+      <input type="submit">
+    </form>';
 
 $dir    = 'themes';
 $list = glob("$dir/*.plist");
