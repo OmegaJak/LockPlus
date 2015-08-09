@@ -1,6 +1,10 @@
 html{
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
 }
+#contain{
+  width: 100%;
+  height: auto;
+}
 .nav{
   position: relative;
   text-align: center;

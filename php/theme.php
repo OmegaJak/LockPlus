@@ -8,7 +8,6 @@ error_reporting(0);
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<link rel="stylesheet" href="preview.css" type="text/css">';
 echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
-echo '<style>.nav{position: absolute;text-align: center;top: 10px;margin: 0 auto;width: 100%;}</style>';
 
 $dir    = 'themes';
 $list = glob("$dir/*.plist");
@@ -27,7 +26,7 @@ $reversed = array_reverse($list);
 
 $page = $_GET['page'];
 $pagedResults = new Paginated($reversed, 24, $page);
-
+echo '<div id="contain">';
 while($row = $pagedResults->fetchPagedRow()) {  //when $row is false loop terminates
     $path = $row;
     $name = basename($row,'.plist');
@@ -36,7 +35,7 @@ while($row = $pagedResults->fetchPagedRow()) {  //when $row is false loop termin
     $array = parsePlist($plistDocument);
     echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
   }
-
+echo "</div>";
   $pagedResults->setLayout(new DoubleBarLayout());
   echo $pagedResults->fetchPagedNavigation();
 
