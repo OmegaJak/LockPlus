@@ -10,10 +10,7 @@ error_reporting(0);
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<link rel="stylesheet" href="../php/preview.css" type="text/css">';
 echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
-echo '  <style>body {
-      background-color: #21b9b0;
-
-  }</style>';
+echo '  <style>body {text-align:center;background-color: #21b9b0;}</style>';
 $dir    = '../php/themes';
 
 $list = glob("$dir/*.plist");
