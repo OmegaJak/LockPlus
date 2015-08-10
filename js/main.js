@@ -1,12 +1,16 @@
 'use strict';
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
-    toolArray: ['background~Change Background~fa fa-photo~backgroundDiv'
+    toolArray: ['background~Background~fa fa-photo~backgroundDiv'
                     ,'overlay~Change Overlay~fa fa-clipboard~overlayDiv'
                     ,'element~Show Elements Panel~fa fa-flask~elementDiv'
                     ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'load~Load Theme~fa fa-download~loadDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
+    backgroundArray: ['cgBackground~Change Background~fa fa-photo~cgBackgroundDiv'
+                     ,'openBackground~Open Background~fa fa-external-link-square~openBackgroundDiv'
+                     ,'backToTools~Back~fa fa-arrow-left~backToToolsDiv'
+                     ,'clearBackground~Clear Background~fa fa-trash~clearBackgroundDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -97,7 +101,11 @@ var action = {
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
-        if (id === 'background' || id === 'overlay') { $('#bgInput').click(); }
+        if (id === 'overlay' || id === 'cgBackground') { $('#bgInput').click(); }
+        if (id === 'background') { this.showIconMenu(constants.backgroundArray, -1); }
+        if (id === 'openBackground') { this.openBackground(); }
+        if (id === 'clearBackground') { this.setBG(''); }
+        if (id === 'backToTools') { this.showIconMenu(constants.toolArray, -1); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
         if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
@@ -907,6 +915,18 @@ var action = {
             action.saveStorage();
         });
     },
+    openBackground: function() {
+        if ($('.screen').css('background-image') != '') {
+            var newWindow = window.open('');
+
+            var backgroundImage = $('.screen').css('background-image');
+            var imgSrc = backgroundImage.substring(4,backgroundImage.length);
+            imgSrc = imgSrc.substring(0,imgSrc.length - 1);
+
+            $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));
+            $('head', newWindow.document).append($('<title>Wallpaper</title>'));
+        }
+    },
     showPanel: function(list){
         $('#'+list).css('visibility','visible'); //new function instead of running createLI again.
     },
@@ -1233,8 +1253,14 @@ rasterizeHTML.drawHTML(html, canvas);*/
 
     },
     setBG: function (img) { //apply background to screen
-        $('.screen').css('background-image', 'url(' + img + ')');
-        action.savedElements.wallpaper = img;
+        if (img != '') {
+            $('.screen').css('background-image', 'url(' + img + ')')
+            action.savedElements.wallpaper = img;
+        } else {
+            $('.screen').css('background-image', '');
+            action.savedElements.wallpaper = null;
+        }
+        action.saveStorage();
     },
     setOverlay: function (img) { //apply overlay to screenoverlay
         document.querySelector('.svg').src = img;
@@ -1253,7 +1279,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 },0);
             },0);
         }
-
+        action.saveStorage();
     },
     saveStorage: function () { //save savedElements object to localStorage
         localStorage.setItem('placedElements', JSON.stringify(action.savedElements));
@@ -1568,12 +1594,11 @@ function uploadedImage(e) {
         rd = new FileReader;
         rd.onload = function (e) {
             return function (e) {
-                if(action.uploadSelection === 'background') {
+                if(action.uploadSelection === 'cgBackground') {
                     action.setBG(e.target.result);
                 } else if (action.uploadSelection === 'overlay') {
                     action.setOverlay(e.target.result);
                 }
-                action.saveStorage();
             };
         }(us);
         rd.readAsDataURL(us);
@@ -1778,19 +1803,6 @@ $('#snaptips').on('click',function(){
     }else{
         localStorage.snap = 'true';
         $(this).attr('title','On');
-    }
-});
-$('#downloadwallpaper').on('click',function() {
-    var src = $('wallpaper').attr('src');
-    if ($('wallpaper').attr('src') != '') {
-        var newWindow = window.open('');
-
-        var backgroundImage = $('.screen').css('background-image');
-        var imgSrc = backgroundImage.substring(4,backgroundImage.length);
-        imgSrc = imgSrc.substring(0,imgSrc.length - 1);
-
-        $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));
-        $('head', newWindow.document).append($('<title>Wallpaper</title>'));
     }
 });
 if(localStorage.snap == 'true'){
