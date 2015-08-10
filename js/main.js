@@ -1179,8 +1179,8 @@ rasterizeHTML.drawHTML(html, canvas);*/
             var Tp = $(children[i]).css('top').replace(/[^-\d\.]/g, '');
             var Lf = $(children[i]).css('left').replace(/[^-\d\.]/g, '');
             $(children[i]).css({
-                'top' : Tp - 352 + 'px',
-                'left' : Lf - 172 + 'px'
+                'top' : Tp - 350 + 'px',
+                'left' : Lf - 175 + 'px'
             });
             //$("#"+id).css('top',(Tp - 350) + 'px');
             //$('#'+id).css('left',(Lf - 170) + 'px');
