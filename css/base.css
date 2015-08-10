@@ -419,6 +419,7 @@ footer a {
 .menulist {
   display: none;
   text-align: center;
+  z-index: 1000;
 }
 .grids{
   width: 320px;
@@ -444,4 +445,3 @@ footer a {
     position: absolute;
     width: 0;
 }
-
