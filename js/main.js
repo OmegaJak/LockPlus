@@ -1505,6 +1505,8 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 return "Linear Gradient Menu";
             case constants.linearBoxGradientArray:
                 return "Linear Box Gradient Menu";
+            case constants.backgroundArray:
+                return "Background Menu";
         }
     },
     showProperMenuForId: function(id) {
