@@ -1,14 +1,9 @@
-<?php
-require_once "pages/Paginated.php";
-require_once "pages/DoubleBarLayout.php";
-?>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/preview.css" type="text/css">
+<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>
 
 <?php
 error_reporting(0);
-echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<link rel="stylesheet" href="preview.css" type="text/css">';
-echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
-
 $dir    = 'themes';
 $list = glob("$dir/*.plist");
 function mtimecmp($a, $b) {
@@ -24,22 +19,7 @@ function mtimecmp($a, $b) {
 usort($list, "mtimecmp");
 $reversed = array_reverse($list);
 
-/*$page = $_GET['page'];
-$pagedResults = new Paginated($reversed, 24, $page);
 
-while($row = $pagedResults->fetchPagedRow()) {  //when $row is false loop terminates
-    $path = $row;
-    $name = basename($row,'.plist');
-    $plistDocument = new DOMDocument();
-    $plistDocument->load($path);
-    $array = parsePlist($plistDocument);
-    echo $name;
-    echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $array['ThemePreview'] . '"/><span class="themeName">'.$name.'</span></div>';
-  }
-
-  $pagedResults->setLayout(new DoubleBarLayout());
-  echo $pagedResults->fetchPagedNavigation();
-*/
 $devs = array();
 $counts = array();
 $themes = array();
@@ -68,32 +48,24 @@ foreach ($reversed as $filename) {
 
 $result = array_unique($counts);
 $total = count($result);
-echo 'Total Creators: '. $total . '<br/>';
+echo '<span style="color:white;">Total Creators: '. $total . '</span><br/>';
 
 $resulttheme = array_unique($themes);
 $totalthemes = count($resulttheme);
-echo 'Total Themes: '. $totalthemes . '<br/>';
+echo '<span style="color:white;">Total Themes: '. $totalthemes . '</span><br/>';
 
 
 foreach($devs as $key=>$subarray)
 {
-    echo '<b>'.$key.'</b>';
+    echo '<section><div class="themerstat"><b>'.$key.'</b><span class="countstat">  ('.count($subarray).') themes</span></div>';
     foreach($devs[$key] as $subarray)
     {
-        echo '<a href="http://LockPlus.us/preview/?'.$subarray.'">' . $subarray . '</a>  ';
+        echo '<span><a class="liststat" href="http://LockPlus.us/preview/?'.$subarray.'"><br><div class="themestat"><img class="themeimg" src="themepreview/'.$subarray.'.jpg" width="40"/></div></a>  ';
     }
-    echo '<br>';
+    echo '<br></section>';
 }
 
-while (list($key, $val) = each($devs)) {
- // echo $key . "(" . $val . ')<br/>';
-    //echo "$key => $val\n";
-}
 
-/*
-foreach ( $result as $item ) {
-        echo $item . "<br/>";
-    }*/
 
 
 function parseValue( $valueNode ) {
