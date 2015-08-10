@@ -186,6 +186,7 @@ function mtimecmp($a, $b) {
 
 
     usort($images, "mtimecmp");
+    $images = array_reverse($images);
 
 if($_GET['page']){
 	$page = $_GET['page'];

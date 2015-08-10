@@ -74,6 +74,24 @@ if (is_dir('thumbs') === false){
 }
 $images = glob("*.{jpg,JPG,PNG,jpeg,png,gif}", GLOB_BRACE);
 
+
+
+function mtimecmp($a, $b) {
+        $mt_a = filemtime($a);
+        $mt_b = filemtime($b);
+
+        if ($mt_a == $mt_b)
+            return 0;
+        else if ($mt_a < $mt_b)
+            return -1;
+        else
+            return 1;
+    }
+
+   usort($images, "mtimecmp");
+   $images = array_reverse($images);
+
+
 ?>
 
 <html>
@@ -170,20 +188,6 @@ html, body {
 	<div id="imgcontainer">
 		<?php
 
-function mtimecmp($a, $b) {
-        $mt_a = filemtime($a);
-        $mt_b = filemtime($b);
-
-        if ($mt_a == $mt_b)
-            return 0;
-        else if ($mt_a < $mt_b)
-            return -1;
-        else
-            return 1;
-    }
-
-
-    usort($images, "mtimecmp");
 
 if($_GET['page']){
 	$page = $_GET['page'];
