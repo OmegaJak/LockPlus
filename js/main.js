@@ -1475,6 +1475,10 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 return "Box Styles Menu";
             case constants.iconArray:
                 return "Icon Styles Menu";
+            case constants.linearGradientArray:
+                return "Linear Gradient Menu";
+            case constants.linearBoxGradientArray:
+                return "Linear Box Gradient Menu";
         }
     },
     showProperMenuForId: function(id) {
