@@ -916,7 +916,7 @@ var action = {
         });
     },
     openBackground: function() {
-        if ($('.screen').css('background-image') != '') {
+        if ($('.screen').css('background-image') != 'none') {
             var newWindow = window.open('');
 
             var backgroundImage = $('.screen').css('background-image');
