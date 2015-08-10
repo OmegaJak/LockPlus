@@ -1780,6 +1780,19 @@ $('#snaptips').on('click',function(){
         $(this).attr('title','On');
     }
 });
+$('#downloadwallpaper').on('click',function() {
+    var src = $('wallpaper').attr('src');
+    if ($('wallpaper').attr('src') != '') {
+        var newWindow = window.open('');
+
+        var backgroundImage = $('.screen').css('background-image');
+        var imgSrc = backgroundImage.substring(4,backgroundImage.length);
+        imgSrc = imgSrc.substring(0,imgSrc.length - 1);
+
+        $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));
+        $('head', newWindow.document).append($('<title>Wallpaper</title>'));
+    }
+});
 if(localStorage.snap == 'true'){
     $('#snaptips').attr('title','On');
 }
