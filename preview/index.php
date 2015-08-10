@@ -7,7 +7,6 @@
   <?php include("parse.php");?>
 </head>
 <body>
-
   <?php echo '<div title="'.$name.'"  class="bgImage" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),url(' . $array['ThemePreview'] . ');"></div>' ?>
 <div class="preview">
   <div class="imgpreview">
@@ -17,6 +16,7 @@
     </div>
   </div>
   <div class="creator">
+     <span style="font-size:10px;"><span style="position:relative;font-size:20px;top:4px;">&#9888;</span> Gradients do not render on text</span></br></br>
     <?php echo '<div id="name">Creator: '. $array['DevName'] . '</div>'?>
     <?php echo '<div id="theme">Theme: '. str_replace("%20"," ",$name) . '</div>'?>
     <?php echo '<div id="size">Filesize: '. formatSizeUnits(filesize(str_replace("%20"," ",$path))) . '</div>'?>
