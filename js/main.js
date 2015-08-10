@@ -925,6 +925,8 @@ var action = {
 
             $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));
             $('head', newWindow.document).append($('<title>Wallpaper</title>'));
+        } else {
+            action.setHelpText('No wallpaper set. Click "Change Background" above to set one.');
         }
     },
     showPanel: function(list){
