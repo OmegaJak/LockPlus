@@ -100,6 +100,9 @@ function clock(options) {
                     am: function () {
                         return (d.getHours() > 11) ? "pm" : "am";
                     },
+                    tod: function () {
+                        return (d.getHours() > 11) ? "Afternoon" : "Morning";
+                    },
                     date: function () {
                         return d.getDate();
                     },
@@ -224,6 +227,7 @@ function loadClock() {
                 minute: clock.minute(),
                 second: clock.second(),
                 pm: clock.am(),
+                tod: clock.tod(),
                 ttext: clock.hourtext() + " " + clock.minuteonetext() + ' ' + clock.minutetwotext(),
                 htext: clock.hourtext(),
                 mtext: clock.minuteonetext() + ' ' + clock.minutetwotext(),
@@ -250,7 +254,7 @@ function loadClock() {
                 sprevmonth: clock.sprevmonth(),
                 monthdot : clock.monthtext() + "." + clock.date(),
                 monthline : clock.monthtext() + "|" + clock.date() + "|" + clock.year(),
-                mdy : clock.month() + "/" + clock.date() + "/" + clock.year(),
+                mdy : (clock.month() + 1) + "/" + clock.date() + "/" + clock.year(),
                 datestring : clock.daytext() + ", " + clock.monthtext() + " " + clock.date(),
                 datedash : clock.daytext() + "-" + clock.monthtext() + "-" + clock.date(),
                 year: clock.year()

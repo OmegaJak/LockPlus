@@ -83,6 +83,10 @@ var elementPanel = {
             title: "PM",
             pm: cF.am()
         },
+        tod: {
+            title: "TOD",
+            tod: cF.tod()
+        },
         dates: {
             title: "Date",
             date: cF.date(),
