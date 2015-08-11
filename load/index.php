@@ -7,7 +7,7 @@ require_once "pages/DoubleBarLayout.php";
 ?>
 
   <?php include("parse.php");?>
-  <link rel="stylesheet" type="text/css" href="../php/preview.css">
+  <link rel="stylesheet" type="text/css" href="../css/preview.css">
 </head>
 <body>
 <?php

@@ -1317,7 +1317,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 }
                 $('#' + key).css(skey, styleVal);
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
-                    $('.icon').css(skey,styleVal);
+                    $('#icon').css(skey,styleVal);
                 } else if (key.substring(0, 4) === 'text' && skey === 'innerHTML') {
                     $('#' + key).html(styleVal);
                 }
