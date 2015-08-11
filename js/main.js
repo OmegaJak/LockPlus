@@ -10,6 +10,7 @@ var constants = {
     backgroundArray: ['cgBackground~Change Background~fa fa-photo~cgBackgroundDiv'
                      ,'openBackground~Open Background~fa fa-external-link-square~openBackgroundDiv'
                      ,'backgroundBlur~Change Background Blur~fa fa-bullseye~backgroundBlurDiv'
+                     ,'openBlurryBackground~Open Blurred Background~fa fa-external-link~openBlurryBackgroundDiv'
                      ,'backToTools~Back~fa fa-arrow-left~backToToolsDiv'
                      ,'clearBackground~Clear Background~fa fa-trash~clearBackgroundDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
@@ -104,8 +105,9 @@ var action = {
             action.uploadSelection = id;
         if (id === 'overlay' || id === 'cgBackground') { $('#bgInput').click(); }
         if (id === 'background') { this.showIconMenu(constants.backgroundArray, -1); }
-        if (id === 'openBackground') { this.openBackground(); }
+        if (id === 'openBackground') { this.openBackground('original'); }
         if (id === 'backgroundBlur') { this.cgSize('backgroundBlur', constants.backgroundArray[2], '', 0, 100, 'backBlur', 'backBlur', action.backgroundBlur, false, false, 'Background Blur'); }
+        if (id === 'openBlurryBackground') { this.openBackground('blurry'); }
         if (id === 'clearBackground') { this.setBG(''); }
         if (id === 'backToTools') { this.showIconMenu(constants.toolArray, -1); }
         if (id === 'clear') { action.clearTheme(-1) }
@@ -942,15 +944,26 @@ var action = {
             action.saveStorage();
         });
     },
-    openBackground: function() {
+    openBackground: function(purpose) { // either 'original' or 'blurry'
         if ($('#wallpaper').attr('src') != 'none') {
             var newWindow = window.open('');
 
-            var clone = $('#wallpaper').clone();
-            clone.attr('style','');
-            clone.attr('width','');
-            clone.attr('height','');
-            $('body', newWindow.document).append(clone);
+            if (purpose === 'blurry') {
+                var newCanvas = document.getElementById('blurcanvas').cloneNode();
+                newCanvas.className = '';
+                //newCanvas.getContext('2d').drawImage(document.getElementById('blurcanvas'),0,0);
+                stackBlurImage('wallpaper',newCanvas,localStorage.getItem('wallpaperBlur'),false);
+                var imageData = newCanvas.toDataURL();
+                var image = document.createElement('img');
+                image.src = imageData;
+                image.style.display = 'block';
+            } else if (purpose === 'original') {
+                var image = $('#wallpaper').clone();
+                image.attr('style','');
+                image.attr('width','');
+                image.attr('height','');
+            }
+            $('body', newWindow.document).append(image);
             $('head', newWindow.document).append($('<title>Wallpaper</title>'));
 
         } else {
