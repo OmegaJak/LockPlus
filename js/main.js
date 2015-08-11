@@ -156,7 +156,7 @@ var action = {
         if (id === 'affixes') { this.showIconMenu(constants.affixArray, -1); }
         if (id === 'customPrefix') { this.cgAffix('prefix'); }
         if (id === 'customSuffix') { this.cgAffix('suffix'); }
-        if (id === 'clearAffixes') {  }
+        if (id === 'clearAffixes') { this.cgAffix('clear'); }
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
@@ -559,6 +559,15 @@ var action = {
             }, function(idSelector) {
                 return action.affixCallbacks(idSelector,'suffix','get');
             });
+        } else if (type === 'clear') {
+            $('#' + action.selectedItem).html($('#' + action.selectedItem).html().replace($('#' + action.selectedItem).attr('data-prefix'),''));
+            $('#' + action.selectedItem).html($('#' + action.selectedItem).html().replace($('#' + action.selectedItem).attr('data-suffix'),''));
+            $('#' + action.selectedItem).attr('data-prefix', '');
+            $('#' + action.selectedItem).attr('data-suffix', '');
+            action.savedElements.placedElements[action.selectedItem]['data-suffix'] = '';
+            action.savedElements.placedElements[action.selectedItem]['data-prefix'] = '';
+            action.saveStorage();
+            action.showProperMenuForId(action.selectedItem);
         }
     },
     affixCallbacks: function(idSelector, type, purpose) { //type is 'prefix' or 'suffix'
