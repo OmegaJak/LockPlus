@@ -1658,6 +1658,42 @@ rasterizeHTML.drawHTML(html, canvas);*/
         }
     }
 };
+function resizeWall(img, width, height) {
+    var canvas = document.createElement('canvas'),
+        ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL();
+}
+
+var tempWall;
+function chooseWallSize(size){
+var iPhone = size, newWidth, newHeight;
+
+switch(iPhone) {
+    case 'i5':
+        newWidth = 640;
+        newHeight = 1136;
+        break;
+    case 'i6':
+        newWidth = 750;
+        newHeight = 1334;
+        break;
+    case '6Plus':
+        newWidth = 1080;
+        newHeight = 1920;
+        break;
+}
+ var img = new Image;
+    img.onload = resize;
+    img.src = tempWall;
+    function resize() {
+        var newWall = resizeWall(this, newWidth, newHeight);
+        action.setBG(newWall);
+        $('#wallSelector').css('display','none');
+    }
+}
 //upload images should implement into action OBJ. (TODO)
 function uploadedImage(e) {
     var input = e.currentTarget, //added to provide alert if png is used
@@ -1670,7 +1706,9 @@ function uploadedImage(e) {
         rd.onload = function (e) {
             return function (e) {
                 if(action.uploadSelection === 'cgBackground') {
-                    action.setBG(e.target.result);
+                    $('#wallSelector').css('display','block');
+                    tempWall = e.target.result;
+                    //action.setBG(e.target.result);
                 } else if (action.uploadSelection === 'overlay') {
                     action.setOverlay(e.target.result);
                 }

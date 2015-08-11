@@ -445,3 +445,47 @@ footer a {
     position: absolute;
     width: 0;
 }
+#wallSelector{
+  position: absolute;
+  top:50%;
+  left:50%;
+  -webkit-transform: translate(-50%, -50%);
+  width: 40%;
+  height: 20%;
+  background-color:  #54606e;
+  z-index: 99999;
+  border-radius: 10px;
+}
+#wallSelector span{
+  position: absolute;
+  margin-top: 3px;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+#wallSelector li{
+  position: relative;
+  top:50%;
+  left:50%;
+  -webkit-transform: translate(-205%, -50%);
+  width: 80px;
+  height: 80px;
+  background-color: #21b9b0;
+  border-radius: 99px;
+  text-align: center;
+  list-style-type: none;
+  display: inline-block;
+  line-height: 80px;
+  margin-left: 20px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+#wallSelector li:after{
+  position: absolute;
+  top:45px;
+  left:0px;
+  padding: 5px;
+  font-size: 15px;
+  content: attr(title);
+}
