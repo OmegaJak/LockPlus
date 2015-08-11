@@ -1336,7 +1336,8 @@ rasterizeHTML.drawHTML(html, canvas);*/
 
             var blur = localStorage.getItem('wallpaperBlur');
             if (blur != null && blur != '' && JSON.parse(blur) > 0)
-                stackBlurImage('wallpaper','blurcanvas',blur,false);
+                blur = 0;
+            stackBlurImage('wallpaper','blurcanvas',blur,false);
             //action.isBlurred = true;
 
             var wallpaper = document.getElementById('wallpaper');
@@ -1713,6 +1714,7 @@ switch(iPhone) {
     img.src = tempWall;
     function resize() {
         var newWall = resizeWall(this, newWidth, newHeight);
+        localStorage.setItem('wallpaperBlur',null);
         action.setBG(newWall);
         $('#wallSelector').css('display','none');
     }
