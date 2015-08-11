@@ -455,6 +455,7 @@ footer a {
   background-color:  #54606e;
   z-index: 99999;
   border-radius: 10px;
+  -webkit-box-shadow: 0px 10px 30px 10px rgba(0,0,0,0.6);
 }
 #wallSelector span{
   position: absolute;
@@ -468,23 +469,28 @@ footer a {
   top:50%;
   left:50%;
   -webkit-transform: translate(-205%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background-color: #21b9b0;
   border-radius: 99px;
   text-align: center;
   list-style-type: none;
   display: inline-block;
-  line-height: 80px;
+  line-height: 60px;
   margin-left: 20px;
   font-size: 30px;
   color: white;
   cursor: pointer;
+  border:6px solid rgba(0,0,0,0.2);
+  -webkit-background-clip: padding-box;
+}
+#wallSelector li:hover{
+  background-color: #54606e;
 }
 #wallSelector li:after{
   position: absolute;
   top:45px;
-  left:0px;
+  left:-5px;
   padding: 5px;
   font-size: 15px;
   content: attr(title);
