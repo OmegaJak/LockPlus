@@ -490,8 +490,9 @@ footer a {
 #wallSelector li:after{
   position: absolute;
   top:45px;
-  left:-5px;
+  left:-6px;
   padding: 5px;
   font-size: 15px;
   content: attr(title);
+  pointer-events:none;
 }
