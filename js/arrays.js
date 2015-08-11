@@ -56,6 +56,32 @@ var fontArray = ['android'
 
 var elementPanel = {
     clockElements: {
+        strings: {
+            title: "Strings",
+            datestring: cF.daytext() + ", " + cF.monthtext() + " " + cF.date(),
+            datedash: cF.daytext() + "-" + cF.monthtext() + "-" + cF.date(),
+            datespace: cF.daytext() + " " + cF.monthtext() + " " + cF.date(),
+            datedotmonth: cF.date() + '.' + cF.monthtext(),
+            monthdot: cF.monthtext() + "." + cF.date(),
+            dateslashmonth: cF.date() + "/" + cF.monthtext(),
+            mdy: cF.month() + "/" + cF.date() + "/" + cF.year()
+        },
+        strings2: {
+            title: "Strings2",
+            datemonth: cF.date() + " " + cF.monthtext(),
+            datemonthrev: cF.monthtext() + " " + cF.date(),
+            monthlinespace: cF.monthtext() + " | " + cF.date() + " | " + cF.year(),
+            monthline: cF.monthtext() + "|" + cF.date() + "|" + cF.year(),
+            daydate: cF.daytext() + " " + cF.date(),
+            daydotdate: cF.daytext() + "." + cF.date(),
+            datestringrev: cF.monthtext() + " " + cF.date() + ", " + cF.daytext()
+        },
+        strings3: {
+            title: "Strings3",
+            daydatemonth: cF.daytext() + " | " + cF.date() + " " + cF.monthtext(),
+            hrmin: cF.hourtext() + '.' + cF.minute(),
+            hrmintx: (cF.minutetwotext() !== "") ? cF.hourtext() + '.' + cF.minuteonetextdot() +  '.' + cF.minutetwotext() : cF.hourtext() + '.' + cF.minuteonetextdot() + cF.minutetwotext()
+        },
         clocks: {
             title: "Clock",
             clock: cF.hour() + ":" + cF.minute(),
@@ -134,25 +160,21 @@ var elementPanel = {
         years: {
             title: "Year",
             year: cF.year()
-        },
-        strings: {
-            title: "Strings",
-            datestring: cF.daytext() + ", " + cF.monthtext() + " " + cF.date(),
-            datedotmonth: cF.date() + '.' + cF.monthtext(),
-            dateslashmonth: cF.date() + "/" + cF.monthtext(),
-            datedash: cF.daytext() + "-" + cF.monthtext() + "-" + cF.date(),
-            datemonth: cF.date() + " " + cF.monthtext(),
-            monthdot: cF.monthtext() + "." + cF.date(),
-            monthline: cF.monthtext() + "|" + cF.date() + "|" + cF.year(),
-            mdy: cF.month() + "/" + cF.date() + "/" + cF.year()
         }
     },
     weatherElements: {
+        wstring: {
+            title: "String",
+            tempcon: "76 Cloudy",
+            tempcon1: "76°f Cloudy",
+            tempcon2: "76° Cloudy",
+            windstr: "25mph N"
+        },
         temps: {
             title: "Temp",
             temp: "76",
             tempdeg: "76°",
-            tempdegplus: "76°F"
+            tempdegplus: "76°f"
         },
         icon:{
             title: "Icon",
@@ -162,13 +184,13 @@ var elementPanel = {
             title: "High",
             high: "80",
             highdeg: "80°",
-            highdegplus: "80°F"
+            highdegplus: "80°f"
         },
         lows: {
             title: "Low",
             low: "70",
             lowdeg: "70°",
-            lowdegplus: "70°F"
+            lowdegplus: "70°f"
         },
         lowhigh: {
             title: "High and Low",

@@ -134,6 +134,13 @@ function clock(options) {
                         }
                         return "";
                     },
+                    minuteonetextdot: function () {
+                        var minuteone = ["", "one", "o.two", "o.three", "o.four", "o.five", "o.six", "o.seven", "o.eight", "o.nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "Sixteen", "Seventeen", "eighteen", "Nineteen", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty"];
+                        if (minuteone[this.rawminute()] !== undefined) {
+                            return minuteone[this.rawminute()];
+                        }
+                        return "";
+                    },
                     minutetwotext: function () {
                         var minutetwo = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", ""];
                         if (minutetwo[this.rawminute()] !== undefined) {
@@ -224,6 +231,8 @@ function loadClock() {
                 clockpm : clock.hour() + ":" + clock.minute() + clock.am(),
                 zhour: clock.zhour(),
                 hour: clock.hour(),
+                hrmin: clock.hourtext() + '.' + clock.minute(),
+                hrmintx: (clock.minutetwotext() !== "") ? clock.hourtext() + '.' + clock.minuteonetextdot() +  '.' + clock.minutetwotext() : clock.hourtext() + '.' + clock.minuteonetextdot() + clock.minutetwotext(),
                 minute: clock.minute(),
                 second: clock.second(),
                 pm: clock.am(),
@@ -237,6 +246,8 @@ function loadClock() {
                 dateplus: clock.dateplus(),
                 datetext: clock.datetext(),
                 day: clock.daytext(),
+                daydate: clock.daytext() + " " + clock.date(),
+                datestringrev: clock.monthtext() + " " + clock.date() + ", " + clock.daytext(),
                 nextday: clock.nextdaytext(),
                 yestday: clock.yesterdaydaytext(),
                 sday: clock.sdaytext(),
@@ -249,15 +260,20 @@ function loadClock() {
                 datedotmonth: clock.date() + '.' + clock.monthtext(),
                 dateslashmonth : clock.date() + "/" + clock.monthtext(),
                 datemonth : clock.date() + " " + clock.monthtext(),
+                datemonthrev: clock.monthtext() + " " + clock.date(),
                 smonth: clock.smonthtext(),
                 snextmonth: clock.snextmonth(),
                 sprevmonth: clock.sprevmonth(),
                 monthdot : clock.monthtext() + "." + clock.date(),
                 monthline : clock.monthtext() + "|" + clock.date() + "|" + clock.year(),
+                monthlinespace : clock.monthtext() + " | " + clock.date() + " | " + clock.year(),
                 mdy : (clock.month() + 1) + "/" + clock.date() + "/" + clock.year(),
                 datestring : clock.daytext() + ", " + clock.monthtext() + " " + clock.date(),
+                datespace : clock.daytext() + " " + clock.monthtext() + " " + clock.date(),
                 datedash : clock.daytext() + "-" + clock.monthtext() + "-" + clock.date(),
-                year: clock.year()
+                year: clock.year(),
+                daydotdate: clock.daytext() + "." + clock.date(),
+                daydatemonth: clock.daytext() + " | " + clock.date() + " " + clock.monthtext()
             };
             Object.keys(clockElements).forEach(function (key) {
                 var value = clockElements[key],
@@ -303,7 +319,11 @@ var weatherdivs = function () {
             sunrise: '5:00',
             sunset: '7:00',
             update: '7/11/15 8:05',
-            icon: 'weather/simply.png'
+            icon: 'weather/simply.png',
+            tempcon: '76 Cloudy',
+            tempcon1: '76°f Cloudy',
+            tempcon2: '76° Cloudy',
+            windstr: '25mph N'
     };
     Object.keys(weatherElements).forEach(function (key) {
         var value = weatherElements[key],
