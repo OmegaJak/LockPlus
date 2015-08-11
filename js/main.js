@@ -9,6 +9,7 @@ var constants = {
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     backgroundArray: ['cgBackground~Change Background~fa fa-photo~cgBackgroundDiv'
                      ,'openBackground~Open Background~fa fa-external-link-square~openBackgroundDiv'
+                     ,'backgroundBlur~Change Background Blur~fa fa-bullseye~backgroundBlurDiv'
                      ,'backToTools~Back~fa fa-arrow-left~backToToolsDiv'
                      ,'clearBackground~Clear Background~fa fa-trash~clearBackgroundDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
@@ -104,6 +105,7 @@ var action = {
         if (id === 'overlay' || id === 'cgBackground') { $('#bgInput').click(); }
         if (id === 'background') { this.showIconMenu(constants.backgroundArray, -1); }
         if (id === 'openBackground') { this.openBackground(); }
+        if (id === 'backgroundBlur') { this.cgSize('backgroundBlur', constants.backgroundArray[2], '', 0, 100, 'backBlur', 'backBlur', action.backgroundBlur, false, false, 'Background Blur'); }
         if (id === 'clearBackground') { this.setBG(''); }
         if (id === 'backToTools') { this.showIconMenu(constants.toolArray, -1); }
         if (id === 'clear') { action.clearTheme(-1) }
@@ -730,6 +732,31 @@ var action = {
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
     },
+    blurTimeout: null,
+    backgroundBlur: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        if (purpose === 'set') {
+            var max = JSON.parse($(idSelector).attr('max'));
+            var min = JSON.parse($(idSelector).attr('min'));
+            if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+            if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
+
+            $('#miniBlurCanvas').show();
+            stackBlurImage('miniWallpaper','miniBlurCanvas',$(idSelector).val(),false);
+            if (action.blurTimeout != null) clearTimeout(action.blurTimeout);
+            action.blurTimeout = setTimeout(function() {
+                $('#miniBlurCanvas').hide();
+                stackBlurImage('wallpaper','blurcanvas',$(idSelector).val(),false);
+                localStorage.setItem('wallpaperBlur',$(idSelector).val());
+            }, 400);
+        } else if (purpose === 'get') {
+            var blur = localStorage.getItem('wallpaperBlur');
+            if(blur != null && blur != '0') {
+                return blur;
+            } else {
+                return '0';
+            }
+        }
+    },
     updateSize: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'set') {
             var max = JSON.parse($(idSelector).attr('max'));
@@ -916,15 +943,17 @@ var action = {
         });
     },
     openBackground: function() {
-        if ($('.screen').css('background-image') != 'none') {
+        if ($('#wallpaper').attr('src') != 'none') {
             var newWindow = window.open('');
 
-            var backgroundImage = $('.screen').css('background-image');
+            /*var backgroundImage = $('#wallpaper');.attr('src');
             var imgSrc = backgroundImage.substring(4,backgroundImage.length);
             imgSrc = imgSrc.substring(0,imgSrc.length - 1);
 
-            $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));
+            $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));*/
+            $('body', newWindow.document).append($('#wallpaper').clone());
             $('head', newWindow.document).append($('<title>Wallpaper</title>'));
+
         } else {
             action.setHelpText('No wallpaper set. Click "Change Background" above to set one.');
         }
@@ -990,7 +1019,8 @@ var action = {
             action.hideClearLabel(); // Avoid showing the help text for not clearing the label, just hiding it
             action.hideElementPanelElements();
             $('#bgInput').after($('#bgInput').clone(true)).remove();
-            $('.screen').css('background-image', '');
+            action.setBG('');
+            $('#blurcanvas').replaceWith($('<canvas width="320px" height="568px" id="blurcanvas"></canvas>'));
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
             action.setHelpText('Cleared. Click "Show Elements Panel" to place elements.');
@@ -1176,6 +1206,15 @@ var action = {
         }
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
+        //----Wallpaper stuff----//
+        $('#wallpaper').hide();
+        var canvas = document.getElementById('blurcanvas');
+        canvas.style.display = 'none';
+        canvas.className = '';
+        action.savedElements.wallpaper = canvas.toDataURL();
+        action.saveStorage();
+        //----End Wallpaper ----//
+
         $('.toolPanel').css('display','none');
         $('.elementPanel').css('display','none');
         $('#tips').css('display','none');
@@ -1263,10 +1302,25 @@ rasterizeHTML.drawHTML(html, canvas);*/
     },
     setBG: function (img) { //apply background to screen
         if (img != '') {
-            $('.screen').css('background-image', 'url(' + img + ')')
+            $('#wallpaper').attr('src',img);
+            $('#wallpaper').css('display','initial');
             action.savedElements.wallpaper = img;
+
+            var blur = localStorage.getItem('wallpaperBlur');
+            if (blur != null && blur != '' && JSON.parse(blur) > 0)
+                stackBlurImage('wallpaper','blurcanvas',blur,false);
+            //action.isBlurred = true;
+
+            var wallpaper = document.getElementById('wallpaper');
+            var canvas = document.createElement('canvas');
+            canvas.style.display = 'none';
+            canvas.width = wallpaper.width / 2;
+            canvas.height = wallpaper.height / 2;
+            canvas.getContext('2d').drawImage(wallpaper, 0, 0, wallpaper.width / 2, wallpaper.height / 2);
+
+            $('#miniWallpaper').attr('src', canvas.toDataURL());
         } else {
-            $('.screen').css('background-image', '');
+            $('#wallpaper').attr('src', '');
             action.savedElements.wallpaper = null;
         }
         action.saveStorage();
