@@ -8,7 +8,7 @@ if($_GET["name"]){
 $entered = $_GET["name"];
 error_reporting(0);
 echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<link rel="stylesheet" href="../php/preview.css" type="text/css">';
+echo '<link rel="stylesheet" href="../css/preview.css" type="text/css">';
 echo '<script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>';
 echo '<center><div style="font-size:30px;position:relative;top:10px;">'.$entered.'</div></center>';
 $dir    = '../php/themes';

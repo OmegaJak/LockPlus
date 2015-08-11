@@ -17,7 +17,7 @@
   </div>
   <div class="creator">
      <span style="font-size:10px;"><span style="position:relative;font-size:20px;top:4px;">&#9888;</span> Gradients do not render on text</span></br></br>
-    <?php echo '<div id="name">Creator: '. $array['DevName'] . '</div>'?>
+    <?php echo '<div id="name">Creator: <a style="text-decoration:underline;" href="http://lockplus.us/themer/themer.php?name='.$array["DevName"].'">'. $array['DevName'] . '</a></div>'?>
     <?php echo '<div id="theme">Theme: '. str_replace("%20"," ",$name) . '</div>'?>
     <?php echo '<div id="size">Filesize: '. formatSizeUnits(filesize(str_replace("%20"," ",$path))) . '</div>'?>
   </div>

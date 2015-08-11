@@ -1232,7 +1232,8 @@ rasterizeHTML.drawHTML(html, canvas);*/
                    var devname = $('#fdevname').val();
                    var themename = $('#fthemename').val();
                    if(themename !== '' && devname !== '' && /^[a-zA-Z0-9- ]*$/.test(themename) == true){
-                       $('#fileName').val(themename);
+                    if(!/\d/.test(themename)){
+                        $('#fileName').val(themename);
                         $('#devname').val(devname);
                         $('#Tpreview').val(dataURL);
                         $('#Ticon').val(action.savedElements.iconName || '');
@@ -1242,6 +1243,12 @@ rasterizeHTML.drawHTML(html, canvas);*/
                         $('#myform').submit();
                         $('#saveForm').css('display','none');
                         $('.loader').toggle('display');
+                    }else{
+                        $('.errorlabel').css('display','block');
+                        document.querySelector('.errorlabel').innerHTML = "* Numbers (of any kind) are not allowed due to people spamming v1, v2, v3, etc. Name your theme with test somewhere in the title. Example myTest or TestJune (these get purged from the server automatically). When you get it as you want, name it the name intented. If a theme needs deleted/changed let us know on <a target='_blank' style='color:black;' href='http://lockplus.info/forum/index/topic/deleting-themes/'>LockPlus Forum</a> Themes with v1, TWO, II, etc will be deleted. Thanks";
+                        //alert('Numbers are not allowed due to people spamming v1, v2, v3, etc. Name your theme with test somewhere in the title. Example myTest or TestJune (these get purged from the server automatically). Then when you get it as you want, name it the name intented. If a theme needs deleted/changed let us know on http://LockPlus.info/forum');
+                    }
+
 
                    }else{
                     if(/^[a-zA-Z0-9- ]*$/.test(themename) == false){
