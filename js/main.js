@@ -22,6 +22,7 @@ var constants = {
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'affixes~Change Prefix/Suffix~fa fa-edit~affixesDiv'
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
@@ -35,9 +36,14 @@ var constants = {
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'affixes~Change Prefix/Suffix~fa fa-edit~affixesDiv'
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    affixArray: ['customPrefix~Change Prefix~fa fa-long-arrow-left~prefixDiv'
+                    ,'customSuffix~Change Suffix~fa fa-long-arrow-right~suffixDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
+                    ,'clearAffixes~Clear Prefix and Suffix~fa fa-trash~clearAffixesDiv'],
     shadowArray: ['hShadow~Horizontal~fa fa-arrows-h~hShadowDiv'
                     ,'vShadow~Vertical~fa fa-arrows-v~vShadowDiv'
                     ,'blur~Blur Radius~fa fa-dot-circle-o~blurDiv'
@@ -91,7 +97,7 @@ var constants = {
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
-    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
+    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
@@ -147,6 +153,10 @@ var action = {
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
         if (id === 'changeicon') { this.populateIcons(); }
+        if (id === 'affixes') { this.showIconMenu(constants.affixArray, -1); }
+        if (id === 'customPrefix') { this.cgAffix('prefix'); }
+        if (id === 'customSuffix') { this.cgAffix('suffix'); }
+        if (id === 'clearAffixes') {  }
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
@@ -526,18 +536,65 @@ var action = {
              });
     },
     cgCustomText: function() {
-        action.cgText(constants.customTextArray[0], 'Custom Text', function(idSelector) {
+        action.cgText(constants.customTextArray[0], 'Custom Text', 'Text', function(idSelector) {
             $('#' + action.selectedItem).html($(idSelector).val()); // Sets the innerHTML of the element
             var newLength = $(idSelector).val().length * 16; // Calculates new length of the input
             $(idSelector).css("width", newLength > 150 ? newLength : 150); //Actually changes the length, which is then animated by -webkit-transition-property in css
             action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val(); //Saves to localStorage
             action.saveStorage();
+        }, function() {
+            return $('#' + action.selectedItem).html();
         });
     },
-    cgText: function(nameString, inputTitle, updateCallback) {
+    cgAffix: function(type) {// either 'prefix' or 'suffix'
+        if (type === 'prefix') {
+            action.cgText(constants.affixArray[0], 'Custom Prefix', 'Prefix', function(idSelector) {
+                action.affixCallbacks(idSelector, 'prefix', 'set');
+            }, function(idSelector) {
+                return action.affixCallbacks(idSelector,'prefix','get');
+            });
+        } else if (type === 'suffix') {
+            action.cgText(constants.affixArray[1], 'Custom Suffix', 'Suffix', function(idSelector) {
+                action.affixCallbacks(idSelector, 'suffix', 'set');
+            }, function(idSelector) {
+                return action.affixCallbacks(idSelector,'suffix','get');
+            });
+        }
+    },
+    affixCallbacks: function(idSelector, type, purpose) { //type is 'prefix' or 'suffix'
+        var dataString = 'data-' + type;
+        if (purpose === 'set') {
+            var otherType = type === 'prefix' ? 'suffix' : 'prefix';
+            if (type === 'prefix') {
+                $('#' + action.selectedItem).html($('#' + action.selectedItem).html().replace($(idSelector).attr('data-last-value'),'')); //Remove the old affix first to get the raw element
+                $('#' + action.selectedItem).html($('#' + action.selectedItem).html().replace($('#' + action.selectedItem).attr('data-' + otherType),'')); // Remove the other affix second to prevent issues
+                $('#' + action.selectedItem).html($(idSelector).val() + $('#' + action.selectedItem).html()); //Add the new prefix to the element
+            } else if (type === 'suffix') {
+                $('#' + action.selectedItem).html($('#' + action.selectedItem).html().replace($('#' + action.selectedItem).attr('data-' + otherType),'')); // Remove the other affix first to prevent issues
+                $('#' + action.selectedItem).html($('#' + action.selectedItem).html().replace($(idSelector).attr('data-last-value'),'')); //Remove the old affix second to get the raw element
+                $('#' + action.selectedItem).html($('#' + action.selectedItem).html() + $(idSelector).val()); //Add the new suffix to the element
+            }
+            if (typeof $('#' + action.selectedItem).attr('data-' + otherType) != 'undefined') {
+                if (otherType === 'prefix') {
+                    $('#' + action.selectedItem).html($('#' + action.selectedItem).attr('data-' + otherType) + $('#' + action.selectedItem).html()); //Add the other prefix to the element
+                } else if (otherType === 'suffix') {
+                    $('#' + action.selectedItem).html($('#' + action.selectedItem).html() + $('#' + action.selectedItem).attr('data-' + otherType)); //Add the other suffix to the element
+                }
+            }
+            $('#' + action.selectedItem).attr(dataString, $(idSelector).val()); //Save to the element, so when it updates the affix isn't overwritten
+            $(idSelector).attr('data-last-value', $(idSelector).val()); // Need for above
+            action.savedElements.placedElements[action.selectedItem][dataString] = $(idSelector).val(); //Save to localStorage
+            action.saveStorage();
+        } else if (purpose === 'get') {
+            var initial = $('#' + action.selectedItem).attr(dataString);
+            $(idSelector).attr('data-last-value',initial);
+            return initial;
+        }
+    },
+    cgText: function(nameString, inputTitle, textID, updateCallback, getInitial) {
         var splitArr = nameString.split("~");
         var inputTopPos = $('#' + splitArr[3]).position().top + 11;
-        var textID = action.selectedItem.substring(0, 1).toUpperCase() + action.selectedItem.substring(1); //capitalizes the selected item's id, for nice camel casing later
+        //var textID = action.selectedItem.substring(0, 1).toUpperCase() + action.selectedItem.substring(1); //capitalizes the selected item's id, for nice camel casing later
         var divSelector = '#custom' + textID + 'DivWrapper';
         var idSelector = '#custom' + textID + 'Input';
         var buttonSelector = '#' + splitArr[0];
@@ -547,10 +604,12 @@ var action = {
             divWrapper.prependTo('#' + splitArr[3]);
 
             function updateStuff() {
+                var newLength = $(idSelector).val().length * 16; // Calculates new length of the input
+                $(idSelector).css("width", newLength > 150 ? newLength : 150); //Actually changes the length, which is then animated by -webkit-transition-property in css
                 updateCallback(idSelector)
             }
 
-            $(idSelector).val($('#' + this.selectedItem).html());
+            $(idSelector).val(getInitial(idSelector));
             var width = $(idSelector).val().length * 16; //Sets initial width of the input
             $(idSelector).css('width', width > 150 ? width : 150); //Doesn't let the width go over 150 initially
 
@@ -1409,11 +1468,19 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 } else if (skey === 'textAlign') {
                     skey = 'text-align';
                 }
-                $('#' + key).css(skey, styleVal);
+
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
                     $('#icon').css(skey,styleVal);
                 } else if (key.substring(0, 4) === 'text' && skey === 'innerHTML') {
                     $('#' + key).html(styleVal);
+                } else if (skey === 'data-prefix') {
+                    $('#' + key).attr('data-prefix',styleVal);
+                    $('#' + key).html(styleVal + $('#' + key).html());
+                } else if (skey === 'data-suffix') {
+                    $('#' + key).attr('data-suffix',styleVal);
+                    $('#' + key).html($('#' + key).html() + styleVal);
+                } else {
+                    $('#' + key).css(skey, styleVal);
                 }
             });
         });

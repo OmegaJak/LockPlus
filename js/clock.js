@@ -11,6 +11,12 @@ function checkDiv(div) {
     return;
 }
 
+function getAffix(div, type) {
+    var affix = div.getAttribute('data-' + type);
+    affix = affix === null ? '' : affix;
+    return affix;
+}
+
 var translate = {
     en: {
         weekday: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -279,7 +285,7 @@ function loadClock() {
                 var value = clockElements[key],
                     div = checkDiv(key);
                 if (div) {
-                        div.innerHTML = value;
+                    div.innerHTML = getAffix(div, 'prefix') + value + getAffix(div, 'suffix');
                 }
             });
         }
@@ -337,7 +343,7 @@ var weatherdivs = function () {
                     div.appendChild(img);
                 }
             } else {
-                div.innerHTML = value;
+                div.innerHTML = getAffix(div, 'prefix') + value + getAffix(div, 'suffix');
             }
         }
     });
@@ -358,7 +364,7 @@ var systemdivs = function () {
         var value = systemEl[key],
             div = checkDiv(key);
         if (div) {
-            div.innerHTML = value;
+            div.innerHTML = getAffix(div, 'prefix') + value + getAffix(div, 'suffix');
         }
     });
 };
@@ -404,7 +410,7 @@ var miscDivs = function() {
             div.setAttribute('data-target',value.split('-')[1]);
         }else{
             if (div && div.innerHTML === '') {
-                div.innerHTML = value;
+                div.innerHTML = getAffix(div, 'prefix') + value + getAffix(div, 'suffix');
             }
         }
     });
