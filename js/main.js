@@ -1020,7 +1020,6 @@ var action = {
             action.hideElementPanelElements();
             $('#bgInput').after($('#bgInput').clone(true)).remove();
             action.setBG('');
-            $('#blurcanvas').replaceWith($('<canvas width="320px" height="568px" id="blurcanvas"></canvas>'));
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
             action.setHelpText('Cleared. Click "Show Elements Panel" to place elements.');
