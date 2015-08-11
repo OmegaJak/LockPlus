@@ -59,8 +59,8 @@
 	width: 320px!important;
 	height: 568px!important;
 	pointer-events: none;
-	position: relative;
-	top: -568px;
+	position: absolute;
+	top: 0px;
 }
 #miniBlurCanvas {
 	width: 150px!important;
