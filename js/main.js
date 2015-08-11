@@ -1228,19 +1228,21 @@ var action = {
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
         //----Wallpaper stuff----//
-        $('#wallpaper').hide();
-        var canvas = document.getElementById('blurcanvas');
-        canvas.style.display = 'none';
-        canvas.className = '';
-        var imageData = canvas.toDataURL();
-        $('.screen').css('background-image','url(' + imageData + ')');
-        action.savedElements.wallpaper = imageData;
-        action.saveStorage();
+        if (localStorage.getItem('wallpaper') != 'null') {
+            $('#wallpaper').hide();
+            var canvas = document.getElementById('blurcanvas');
+            canvas.style.display = 'none';
+            canvas.className = '';
+            var imageData = canvas.toDataURL();
+            $('.screen').css('background-image','url(' + imageData + ')');
+            action.savedElements.wallpaper = imageData;
+            action.saveStorage();
 
-        $('#blurcanvas').remove();
-        $('#wallpaper').remove();
-        $('miniWallpaper').remove();
-        $('miniBlurCanvas').remove();
+            $('#blurcanvas').remove();
+            $('#wallpaper').remove();
+            $('miniWallpaper').remove();
+            $('miniBlurCanvas').remove();
+        }
         //----End Wallpaper ----//
 
         $('.toolPanel').css('display','none');
