@@ -746,7 +746,17 @@ var action = {
             stackBlurImage('miniWallpaper','miniBlurCanvas',$(idSelector).val(),false);
             if (action.blurTimeout != null) clearTimeout(action.blurTimeout);
             action.blurTimeout = setTimeout(function() {
-                $('#miniBlurCanvas').hide();
+                //$('#miniBlurCanvas').hide();
+                $('#miniBlurCanvas').removeClass('miniBlur');
+                $('#miniBlurCanvas').animate({
+                    opacity: 0.25,
+                    width: 320,
+                    height: 568
+                }, 1000, function() {
+                    $('#miniBlurCanvas').hide();
+                    $('#miniBlurCanvas').addClass('miniBlur');
+                    $('#miniBlurCanvas').css('opacity','1');
+                });
                 stackBlurImage('wallpaper','blurcanvas',$(idSelector).val(),false);
                 localStorage.setItem('wallpaperBlur',$(idSelector).val());
             }, 400);

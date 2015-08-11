@@ -55,20 +55,18 @@
 	background-color: transparent;
 	outline: 1px solid #323232;
 }
-.blurcanvas {
-	width: 320px!important;
-	height: 568px!important;
+.canvas {
 	pointer-events: none;
 	position: absolute;
 	top: 0px;
 }
-#miniBlurCanvas {
+.blur {
+	width: 320px!important;
+	height: 568px!important;
+}
+.miniBlurCanvas {
 	width: 150px!important;
 	height:266.25px!important;
-	pointer-events: none;
-	position: relative;
-	top: 0px;
-	position: absolute;
 }
 .svg{
 	width: 320px;
