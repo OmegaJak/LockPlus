@@ -947,8 +947,7 @@ var action = {
             var newWindow = window.open('');
 
             var clone = $('#wallpaper').clone();
-            clone.css('width','');
-            clone.css('height','');
+            clone.attr('style','');
             clone.attr('width','');
             clone.attr('height','');
             $('body', newWindow.document).append(clone);
