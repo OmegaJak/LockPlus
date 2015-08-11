@@ -1,6 +1,9 @@
 <?php
 $dir    = 'themes';
+$dir2    = 'themepreview';
 $list = glob("$dir/*.plist");
+$list2 = glob("$dir2/*.jpg");
+
 foreach ($list as $fileinfo) {
     if (stripos($fileinfo,'test') !== false){
       echo $fileinfo . '<br>';
@@ -8,31 +11,14 @@ foreach ($list as $fileinfo) {
     }
 }
 
-$numbers = $list;
-/*foreach ($list as $fileinfo) {
-	$hasNumber = preg_match("/\\d/", $fileinfo);
-	if($hasNumber){
-		array_push($numbers, $fileinfo);
-	}
-}*/
-
-$numbers = array_reverse($list);
-
-$delete = array();
-$stripped = array();
-foreach ($numbers as $file) {
-	$name = preg_replace("/[0-9]/", "", $file);
-	if(in_array($name, $stripped)){
-		array_push($delete, $file);
-	}
-	array_push($stripped, $name);
+foreach ($list2 as $fileinfo2) {
+    if (stripos($fileinfo2,'test') !== false){
+      echo $fileinfo2 . '<br>';
+      unlink($fileinfo2);
+    }
 }
 
 
-echo 'Move These<br>';
-foreach ($delete as $file) {
-	echo $file.'<br>';
-}
 
 
 ?>
