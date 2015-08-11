@@ -1211,8 +1211,15 @@ var action = {
         var canvas = document.getElementById('blurcanvas');
         canvas.style.display = 'none';
         canvas.className = '';
-        action.savedElements.wallpaper = canvas.toDataURL();
+        var imageData = canvas.toDataURL();
+        $('.screen').css('background-image','url(' + imageData + ')');
+        action.savedElements.wallpaper = imageData;
         action.saveStorage();
+
+        $('#blurcanvas').remove();
+        $('#wallpaper').remove();
+        $('miniWallpaper').remove();
+        $('miniBlurCanvas').remove();
         //----End Wallpaper ----//
 
         $('.toolPanel').css('display','none');
