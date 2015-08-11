@@ -143,7 +143,7 @@ var action = {
         if (id === 'boxclearShadow') { this.updateShadow('','','','','clear'); }
         if (id === 'color') {this.cgcolor(false, 'color', 'colorDiv');}
         if (id === 'boxColor') { this.cgcolor(false, 'background-color', 'boxColorDiv'); }
-        if (id === 'customText') { this.cgText(); }
+        if (id === 'customText') { this.cgCustomText(); }
         if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
         if (id === 'changeicon') { this.populateIcons(); }
@@ -525,38 +525,42 @@ var action = {
                 action.updateShadow(isForBox ? 'box' : '', tinycolor.toRgbString(), 'px', 'color', 'set');
              });
     },
-    cgText: function() {
-        var splitArr = constants.customTextArray[0].split("~");
+    cgCustomText: function() {
+        action.cgText(constants.customTextArray[0], 'Custom Text', function(idSelector) {
+            $('#' + action.selectedItem).html($(idSelector).val()); // Sets the innerHTML of the element
+            var newLength = $(idSelector).val().length * 16; // Calculates new length of the input
+            $(idSelector).css("width", newLength > 150 ? newLength : 150); //Actually changes the length, which is then animated by -webkit-transition-property in css
+            action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val(); //Saves to localStorage
+            action.saveStorage();
+        });
+    },
+    cgText: function(nameString, inputTitle, updateCallback) {
+        var splitArr = nameString.split("~");
         var inputTopPos = $('#' + splitArr[3]).position().top + 11;
-        var unCappedID = action.selectedItem;
-        var textID = unCappedID.substring(0, 1).toUpperCase() + unCappedID.substring(1);
+        var textID = action.selectedItem.substring(0, 1).toUpperCase() + action.selectedItem.substring(1); //capitalizes the selected item's id, for nice camel casing later
         var divSelector = '#custom' + textID + 'DivWrapper';
         var idSelector = '#custom' + textID + 'Input';
-        var buttonSelector = '#customText';
-
-        function updateStuff() {
-            $('#' + action.selectedItem).html($(idSelector).val());
-            var newLength = $(idSelector).val().length * 16;
-            $(idSelector).css("width", newLength > 150 ? newLength : 150);
-            action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val();
-            action.saveStorage();
-        }
+        var buttonSelector = '#' + splitArr[0];
 
         if (!$(divSelector).length) {
-            var divWrapper = action.getInputWrapper('custom' + textID, 78, inputTopPos, 0, 0, 'Custom Text', true);
-            divWrapper.prependTo('#textDiv');
+            var divWrapper = action.getInputWrapper('custom' + textID, 78, inputTopPos, 0, 0, inputTitle, true); //Gets the actual input
+            divWrapper.prependTo('#' + splitArr[3]);
+
+            function updateStuff() {
+                updateCallback(idSelector)
+            }
 
             $(idSelector).val($('#' + this.selectedItem).html());
-            var width = $(idSelector).val().length * 16;
-            $(idSelector).css('width', width > 150 ? width : 150);
+            var width = $(idSelector).val().length * 16; //Sets initial width of the input
+            $(idSelector).css('width', width > 150 ? width : 150); //Doesn't let the width go over 150 initially
 
             $(idSelector).on("change", function() { updateStuff(); });
             $(idSelector).keydown(function() { updateStuff(); });
             $(idSelector).keyup(function() { updateStuff(); });
 
-            $(buttonSelector).parent().toggleClass('leftTooltip');
-            divWrapper.toggle('display');
-            $(idSelector).focus();
+            $(buttonSelector).parent().toggleClass('leftTooltip'); //Remove the tooltip
+            divWrapper.toggle('display'); //Show the input
+            $(idSelector).focus(); //Auto focus on the input
         } else {
             $(buttonSelector).parent().toggleClass('leftTooltip'); //enable the toolTip Class again.
             $(divSelector).toggle('display');
@@ -1228,19 +1232,21 @@ var action = {
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
         //----Wallpaper stuff----//
-        $('#wallpaper').hide();
-        var canvas = document.getElementById('blurcanvas');
-        canvas.style.display = 'none';
-        canvas.className = '';
-        var imageData = canvas.toDataURL();
-        $('.screen').css('background-image','url(' + imageData + ')');
-        action.savedElements.wallpaper = imageData;
-        action.saveStorage();
+        if (localStorage.getItem('wallpaper') != 'null') {
+            $('#wallpaper').hide();
+            var canvas = document.getElementById('blurcanvas');
+            canvas.style.display = 'none';
+            canvas.className = '';
+            var imageData = canvas.toDataURL();
+            $('.screen').css('background-image','url(' + imageData + ')');
+            action.savedElements.wallpaper = imageData;
+            action.saveStorage();
 
-        $('#blurcanvas').remove();
-        $('#wallpaper').remove();
-        $('miniWallpaper').remove();
-        $('miniBlurCanvas').remove();
+            $('#blurcanvas').remove();
+            $('#wallpaper').remove();
+            $('miniWallpaper').remove();
+            $('miniBlurCanvas').remove();
+        }
         //----End Wallpaper ----//
 
         $('.toolPanel').css('display','none');
