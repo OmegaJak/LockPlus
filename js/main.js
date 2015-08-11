@@ -946,12 +946,12 @@ var action = {
         if ($('#wallpaper').attr('src') != 'none') {
             var newWindow = window.open('');
 
-            /*var backgroundImage = $('#wallpaper');.attr('src');
-            var imgSrc = backgroundImage.substring(4,backgroundImage.length);
-            imgSrc = imgSrc.substring(0,imgSrc.length - 1);
-
-            $('body', newWindow.document).append($('<img src=' + imgSrc + '></img>'));*/
-            $('body', newWindow.document).append($('#wallpaper').clone());
+            var clone = $('#wallpaper').clone();
+            clone.css('width','');
+            clone.css('height','');
+            clone.attr('width','');
+            clone.attr('height','');
+            $('body', newWindow.document).append(clone);
             $('head', newWindow.document).append($('<title>Wallpaper</title>'));
 
         } else {
@@ -1327,8 +1327,13 @@ rasterizeHTML.drawHTML(html, canvas);*/
 
             $('#miniWallpaper').attr('src', canvas.toDataURL());
         } else {
-            $('#wallpaper').attr('src', '');
+            $('#wallpaper').attr('src','');
+            $('#wallpaper').hide();
+            var canvas = document.getElementById('blurcanvas');
+            canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
             action.savedElements.wallpaper = null;
+            localStorage.setItem('wallpaperBlur','0');
+            action.showIconMenu(constants.toolArray, -1);
         }
         action.saveStorage();
     },
