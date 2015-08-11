@@ -54,6 +54,7 @@
 	pointer-events:none;
 	background-color: transparent;
 	outline: 1px solid #323232;
+	z-index: 1;
 }
 .canvas {
 	pointer-events: none;
