@@ -1335,7 +1335,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
             action.savedElements.wallpaper = img;
 
             var blur = localStorage.getItem('wallpaperBlur');
-            if (blur != null && blur != '' && JSON.parse(blur) > 0)
+            if (blur === null || blur === '')
                 blur = 0;
             stackBlurImage('wallpaper','blurcanvas',blur,false);
             //action.isBlurred = true;
