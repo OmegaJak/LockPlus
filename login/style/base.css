@@ -76,7 +76,10 @@ input[type="submit"] {
     font-size: 1.4em;
     outline: none;
     z-index: 2;
+    transition: all 50ms ease-in-out;
+    -webkit-transition: all 50ms ease-in-out;
 }
 input[type="submit"]:hover {
     background-color: #252a30;
+    font-size: 1.6em;
 }
