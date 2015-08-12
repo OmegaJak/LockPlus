@@ -115,7 +115,7 @@ function mtimecmp($a, $b) {
 		-webkit-box-shadow: 0 8px 6px -6px black;
 	}
 	html{
-		background-color: teal;
+		background-color: #21b9b0;
 	}
 	#outer{
 		width: 100%;
