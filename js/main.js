@@ -1299,7 +1299,7 @@ var action = {
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
         //----Wallpaper stuff----//
-        if (localStorage.getItem('wallpaper') !== null && localStorage.getItem('wallpaper') !== 'null') {
+        if (action.savedElements.wallpaper !== null && action.savedElements.wallpaper !== 'null') {
             $('#wallpaper').hide();
             var canvas = document.getElementById('blurcanvas');
             canvas.style.display = 'none';
