@@ -65,17 +65,17 @@ select {
 
 input[type="submit"] {
     text-align: center;
-    width: 310px;
     display: block;
     margin: 10px auto;
     border-radius: 20px;
-    padding: 5px;
+    padding: 5px 25px 5px 25px;
     border: 1px solid transparent;
     background-color: #54606e;
     color: white;
     cursor: pointer;
     font-size: 1.4em;
     outline: none;
+    z-index: 2;
 }
 input[type="submit"]:hover {
     background-color: #252a30;
