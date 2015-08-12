@@ -156,18 +156,18 @@ foreach ($arr as $key => $value) {
 
 
 $graph->addData($array);
-$graph->setTitle('Widgets Produced');
-$graph->setTitleColor('yellow');
-$graph->setupYAxis(0, 'yellow');
-$graph->setupXAxis(0, 'yellow');
+$graph->setTitle('Themes Uploaded');
+$graph->setTitleColor('Black');
+$graph->setupYAxis(0, 'black');
+$graph->setupXAxis(0, 'black');
 $graph->setBarOutlineColor('blue');
 $graph->setDataPoints(true);
-$graph->setDataPointColor('teal');
+$graph->setDataPointColor('black');
 $graph->setLine(true);
-$graph->setLineColor('yellow');
+$graph->setLineColor('teal');
 $graph->setLegend(true);
-$graph->setLegendOutlineColor('white');
-$graph->setLegendTitle('Week-37', 'Week-38');
+$graph->setLegendOutlineColor('black');
+$graph->setLegendTitle('August');
 
 //$graph->setDataFormat('degrees');
 //$graph->setTitleLocation('left');
@@ -176,18 +176,20 @@ $graph->setLegendTitle('Week-37', 'Week-38');
 //$graph->setGradient('blue', 'black');
 //$graph->setGrid(false);
 
-$graph->setLegendTextColor('red');
+$graph->setLegendTextColor('black');
 
 
 $graph->setBars(false);
-$graph->setGridColor('153,204,255');
+//$graph->setGrid(false);
+//$graph->setGridColor('153,204,255');
 $graph->setDataValues(true);
 $graph->setDataValueColor('navy');
-$graph->setGoalLine('4');
-$graph->setGoalLineColor('red');
-$graph->setTextColor('red');
+//$graph->setGoalLine('4');
+//$graph->setGoalLineColor('red');
+
+$graph->setTextColor('black');
 $graph->setBarColor('0,0,0');
-$graph->setXAxisTextColor ('purple');
+//$graph->setXAxisTextColor ('purple');
 $graph->createGraph();
 
 
