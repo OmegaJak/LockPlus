@@ -194,7 +194,7 @@ if($_GET['page']){
 }else{
 	$page = 1;
 }
-$pagedResults = new Paginated($images, 24, $page);
+$pagedResults = new Paginated($images, 48, $page);
 echo '<div id="contain">';
     while($row = $pagedResults->fetchPagedRow()) {
         $image = $row;

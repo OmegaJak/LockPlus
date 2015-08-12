@@ -207,7 +207,7 @@ foreach ($images as $filename) {
 
 
 
-$pagedResults = new Paginated($image, 24, $page);
+$pagedResults = new Paginated($image, 48, $page);
 echo '<div id="contain">';
 
 
