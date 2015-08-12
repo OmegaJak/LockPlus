@@ -1,70 +1,16 @@
-<html>
-<head>
-  <title></title>
-  <?php include("parse.php");?>
-  <style type="text/css">
-html{
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
-}
-.theme{
-  position: relative;
- width: 100px;
- float: left;
- margin-top: 10px;
- margin-left: 15px;
-}
-.theme:after{
-  position: absolute;
-  top:196px;
-  margin-left: -60px;
-  content: '';
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  border: 1px solid gray;
-  display: none;
-}
-.themeImage{
-  position: relative;
-  width: 100px;
-}
-.themeImage:hover{
-  cursor: pointer;
-}
-.themeName{
-  position: relative;
-  display: inline-block;
-  width: 100px;
-  text-align: center;
-  font-size: 8px;
-  white-space: nowrap;
-}
-.loader{
-
-}
-.loader:after{
-  content: 'Uploading theme.'
-}
-  </style>
-</head>
-<body>
+<?php include("parse.php");?>
 <?php
 function base64_to_jpeg($base64_string, $output_file) {
     $ifp = fopen($output_file, "wb");
-
     $data = explode(',', $base64_string);
-
     fwrite($ifp, base64_decode($data[1]));
     fclose($ifp);
-
     return $output_file;
 }
 
 $dir    = '../php/themes';
-echo "<div id='themelist'>";
-echo '<script type="text/javascript" src="func.js"></script>';
 foreach (glob("$dir/*.plist") as $filename) {
- //echo $filename;
+
  $path = $filename;
  $name = basename($filename,'.plist');
  $plistDocument = new DOMDocument();
@@ -84,13 +30,22 @@ foreach (glob("$dir/*.plist") as $filename) {
     file_put_contents("files/".$filename_path,$decoded);
   }
  }
-
- //echo '<div class="themelist" title="'.$name.'">'.$name.'</div>';
-  //echo '<div class="theme"><img title="'.$name.'" download="'.$name.'.png" onclick="opentheme(this.src)" class="themeImage" src="' . $wall . '" /><span class="themeName">'.$name.'</span></div>';
 }
-echo "</div>";
 
-
+$dir = "files";
+$checksums = array();
+if ($h = opendir($dir)) {
+    while (($file = readdir($h)) !== false) {
+        if(is_dir($_="{$dir}/{$file}")) continue;
+        $hash = hash_file('md5', $_);
+        if (in_array($hash, $checksums)) {
+          echo $_.'<br>';
+            unlink($_);
+        }
+        else {
+            $checksums[] = $hash;
+        }
+    }
+    closedir($h);
+}
 ?>
-</body>
-</html>
