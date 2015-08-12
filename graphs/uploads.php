@@ -1,7 +1,6 @@
 <?php
-  include 'jpgraph.php';
-require_once ('jpgraph_line.php');
-
+include('phpgraphlib.php');
+$graph = new PHPGraphLib(500, 350);
   $dir    = '../php/themes';
 $list = glob("$dir/*.plist");
 
@@ -156,26 +155,43 @@ foreach ($arr as $key => $value) {
 
 
 
+$graph->addData($array);
+$graph->setTitle('Widgets Produced');
+$graph->setTitleColor('yellow');
+$graph->setupYAxis(0, 'yellow');
+$graph->setupXAxis(0, 'yellow');
+$graph->setBarOutlineColor('blue');
+$graph->setDataPoints(true);
+$graph->setDataPointColor('teal');
+$graph->setLine(true);
+$graph->setLineColor('yellow');
+$graph->setLegend(true);
+$graph->setLegendOutlineColor('white');
+$graph->setLegendTitle('Week-37', 'Week-38');
 
-$ydata = $array;
+//$graph->setDataFormat('degrees');
+//$graph->setTitleLocation('left');
+//$graph->setXValuesHorizontal(true);
+//$graph->setBackgroundColor("green");
+//$graph->setGradient('blue', 'black');
+//$graph->setGrid(false);
 
-// Create the graph. These two calls are always required
-$graph = new Graph(1400,600);
-$graph->SetScale("intlin");
-$graph->img->SetMargin(50,90,40,50);
-$graph->xaxis->SetFont(FF_FONT1,FS_BOLD);
-$graph->title->Set("Uploads for " .$month);
-
-// Create the linear plot
-$lineplot=new LinePlot($ydata);
-$lineplot->SetLegend("Themes");
-$lineplot->SetColor("blue");
+$graph->setLegendTextColor('red');
 
 
-// Add the plot to the graph
-$graph->Add($lineplot);
+$graph->setBars(false);
+$graph->setGridColor('153,204,255');
+$graph->setDataValues(true);
+$graph->setDataValueColor('navy');
+$graph->setGoalLine('4');
+$graph->setGoalLineColor('red');
+$graph->setTextColor('red');
+$graph->setBarColor('0,0,0');
+$graph->setXAxisTextColor ('purple');
+$graph->createGraph();
 
-// Display the graph
-$graph->Stroke();
 
-?>
+
+
+
+
