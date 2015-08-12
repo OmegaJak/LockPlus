@@ -1,4 +1,3 @@
-'use strict';
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
     toolArray: ['background~Background~fa fa-photo~backgroundDiv'
