@@ -1386,7 +1386,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
                         $('.loader').toggle('display');
                     }else{
                         $('.errorlabel').css('display','block');
-                        document.querySelector('.errorlabel').innerHTML = "* Numbers (of any kind) are not allowed due to people spamming v1, v2, v3, etc. Name your theme with test somewhere in the title. Example myTest or TestJune (these get purged from the server automatically). When you get it as you want, name it the name intented. If a theme needs deleted/changed let us know on <a target='_blank' style='color:black;' href='http://lockplus.info/forum/index/topic/deleting-themes/'>LockPlus Forum</a> Themes with v1, TWO, II, etc will be deleted. Thanks";
+                        document.querySelector('.errorlabel').innerHTML = "* Numbers are not allowed.If you want to EDIT or DELETE your theme name create an account here. <a href='http://www.lockplus.us/login/' target='_blank' style='color:black;'>LockPlus Members</a> or let us know here <a target='_blank' style='color:black;' href='http://lockplus.info/forum/index/topic/deleting-themes/'>LockPlus Forum</a>";
                         //alert('Numbers are not allowed due to people spamming v1, v2, v3, etc. Name your theme with test somewhere in the title. Example myTest or TestJune (these get purged from the server automatically). Then when you get it as you want, name it the name intented. If a theme needs deleted/changed let us know on http://LockPlus.info/forum');
                     }
 
