@@ -997,8 +997,17 @@ var action = {
                 decrementButton.css({'border-width':0});
 
                 var inputSelector = '#boldnessInput';
-                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', function() {}, event); });
-                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', function() {}, event); });
+                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
+                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
+
+                $(input).on('mousewheel', function(event) {
+                    if (event.deltaY > 0)  {
+                        $(input).val(Math.round(JSON.parse($(input).val()) + ($(input).val() === $(input).attr('max') ? 0 : 100)));
+                    } else {
+                        $(input).val(Math.round(JSON.parse($(input).val()) - ($(input).val() === $(input).attr('min') ? 0 : 100)));
+                    }
+                    event.preventDefault();
+                });
 
                 wrapper.attr('id', 'boldnessOption');
                 wrapper.appendTo($("#boldnessOptionDiv"));
