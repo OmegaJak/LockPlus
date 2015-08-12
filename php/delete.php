@@ -16,6 +16,13 @@ foreach ($list2 as $fileinfo2) {
       echo $fileinfo2 . '<br>';
       unlink($fileinfo2);
     }
+    //delete theme images that plist do not exist
+    $filename = preg_replace('"\.jpg$"', '.plist', $fileinfo2);
+    $filename = preg_replace('"themepreview"', 'themes', $filename);
+    if(!in_array($filename, $list)){
+    	 unlink($fileinfo2);
+    	 echo $fileinfo2 . '<br>';
+    }
 }
 
 
