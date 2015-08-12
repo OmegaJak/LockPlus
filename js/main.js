@@ -36,7 +36,6 @@ var constants = {
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
-                    ,'affixes~Change Prefix/Suffix~fa fa-edit~affixesDiv'
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
