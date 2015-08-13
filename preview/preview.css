@@ -55,7 +55,8 @@ a{
 
 }
 .imgpreview{
-  margin-top: 180px;
+  position: relative;
+  margin-top: 210px;
     -webkit-transform:scale(0.8);
     transform:scale(0.8);
 }
