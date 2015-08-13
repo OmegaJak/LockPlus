@@ -855,7 +855,6 @@ var action = {
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
-                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
             }
             if (jsCssKey === 'width') {
                  /* Check to see if setting width overflows screen */
@@ -967,6 +966,14 @@ var action = {
     },
     cgweight: function () {
         var lastSelector;
+        var selectedFontWeight = $('#' + action.selectedItem).css('font-weight');
+        if (selectedFontWeight != '') {
+            if (isNaN(selectedFontWeight)) {
+                lastSelector = '#' + selectedFontWeight + 'Option';
+            } else {
+                lastSelector = '#boldnessOption'
+            }
+        }
         this.cgOption('weight', constants.editArray[8], ['boldness','bold','normal'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
@@ -997,16 +1004,37 @@ var action = {
                 decrementButton.css({'border-width':0});
 
                 var inputSelector = '#boldnessInput';
-                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', function() {}, event); });
-                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', function() {}, event); });
+                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
+                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
+
+                $(input).on('mousewheel', function(event) {
+                    if (event.deltaY > 0)  {
+                        $(input).val(Math.round(JSON.parse($(input).val()) + ($(input).val() === $(input).attr('max') ? 0 : 100)));
+                    } else {
+                        $(input).val(Math.round(JSON.parse($(input).val()) - ($(input).val() === $(input).attr('min') ? 0 : 100)));
+                    }
+                    event.preventDefault();
+                });
 
                 wrapper.attr('id', 'boldnessOption');
                 wrapper.appendTo($("#boldnessOptionDiv"));
                 wrapper.attr('class', 'noHoverChange');
 
+                if ($('#' + action.selectedItem).css('font-weight') === $(input).val()) {
+                    wrapper.parent().attr('data-selected','true');
+                    wrapper.parent().css("background-color","#21b9b0");
+                    wrapper.parent().css("border-color","#21b9b0");
+                }
+
                 return wrapper;
             } else {
-                return $('<label id="' + optionName + 'Option" style="text-align: center; font-weight: ' + optionName + ';">' + optionName + '</label>');
+                var optionElement = $('<label id="' + optionName + 'Option" style="text-align: center; font-weight: ' + optionName + ';">' + optionName + '</label>');
+                if ($('#' + action.selectedItem).css('font-weight') === optionName) {
+                    optionElement.parent().attr('data-selected','true');
+                    optionElement.parent().css("background-color","#21b9b0");
+                    optionElement.parent().css("border-color","#21b9b0");
+                }
+                return optionElement;
             }
         });
         $('#boldnessOptionDiv').css({'height': 29
@@ -1478,11 +1506,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 }
 
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
-                    console.log(skey);
                     $('#icon').css(skey,styleVal);
-                    if(skey === 'width' || skey === 'height'){
-                        $('.icon').css(skey,styleVal);
-                    }
                 } else if (key.substring(0, 4) === 'text' && skey === 'innerHTML') {
                     $('#' + key).html(styleVal);
                 } else if (skey === 'data-prefix') {
