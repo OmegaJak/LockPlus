@@ -86,7 +86,7 @@ foreach(glob("$dir/*.plist") as $filename) {
         }
     }
 }
-header("Location:theme.php");
+//header("Location:theme.php");
 
 
 ?>

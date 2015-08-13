@@ -5,19 +5,19 @@
     <h3>Search Themes</h3>
     <input type="text" name="name"><br>
     <input type="submit">
-</form><a id="themers" href="http://LockPlus.us/themer">Top Themers</a>
+</form>
+<a id="themers" href="http://LockPlus.us/themer">Top Themers</a>
+<a style="margin-top:10px;"id="themers" href="popular.php">Top Downloaded</a>
 
 
 <?php
 error_reporting(0);
 
-include("../load/parse.php");
+
 require_once "pages/Paginated.php";
 require_once "pages/DoubleBarLayout.php";
 
 $array = unserialize(file_get_contents('http://LockPlus.us/php/count/dl.bin'));
-
-
 
 $dir    = 'themepreview';
 $list = glob("$dir/*.jpg");
@@ -60,6 +60,4 @@ while($row = $pagedResults->fetchPagedRow()) {
   }
 $pagedResults->setLayout(new DoubleBarLayout());
 echo $pagedResults->fetchPagedNavigation();
-$plistDocument = new DOMDocument();
-$plistDocument->load($path);
 ?>

@@ -75,6 +75,38 @@ foreach ($themeArray as $key => $value) {
 }
 file_put_contents('count/dl.bin', serialize($final)); //write to bin so all other files can read these stats
 
+
+
+$array = unserialize(file_get_contents('http://LockPlus.us/php/count/dl.bin'));
+
+$dir    = 'themepreview';
+$list = glob("$dir/*.jpg"); //full theme list
+
+$listNum = array(); //array to store downloads
+
+foreach ($list as $key) {
+    $themeName = basename($key,'.jpg');
+    foreach ($array as $keys) {
+        $pieces = explode("~", $keys);
+        if($pieces[0] === '/php/themes/'.$themeName.'.plist'){
+            $count = $pieces[1];
+            if($count > 20){
+                $listNum[$key] = $count;
+            }
+        }
+    }
+}
+
+$new = array(); //array to sort by value
+foreach($listNum as $key => $value) {
+     $new[$key] = $value;
+ }
+array_multisort($new, SORT_ASC, $listNum);
+$new = array_reverse($new); //reverse to get biggest to lowest
+file_put_contents('count/dlcount.bin', serialize($new));
+
+
+
 class awstatsDataParser {
   function __construct($filename) {
     $this->filename = $filename;
