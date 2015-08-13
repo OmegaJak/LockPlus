@@ -25,8 +25,8 @@
   <a href="http://lockplus.info"><div class='btn'>Download LockPlus</div></a>
   <?php
 
-if(file_exists('../php/themepreview/'.urlencode($name).'.jpg')){
-    echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.%20http://LockPlus.us/php/themepreview/'.urlencode($name).'.jpg&hashtags=LockPlus"><div class="btn">Share Theme</div></a>';
+if(file_exists('../phone/'.urlencode($name).'.png')){
+    echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.%20http://LockPlus.us/phone/'.urlencode($name).'.png&hashtags=LockPlus"><div class="btn">Share Theme</div></a>';
 }else{
   echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.&hashtags=LockPlus"><div class="btn">Share Theme</div></a>';
 }

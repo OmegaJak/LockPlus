@@ -61,4 +61,5 @@ foreach(glob("$dir/*.plist") as $filename) {
         }
     }
 }
+
 ?>
