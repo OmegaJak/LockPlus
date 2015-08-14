@@ -1629,13 +1629,24 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 this.savedElements.placedElements[id]['border-radius'] = '999px';
             }
         } else {
-            this.savedElements.placedElements[id]['z-index'] = 2;
-            this.savedElements.placedElements[id]['color'] = 'white';
-            this.savedElements.placedElements[id]['font-family'] = 'helvetica';
-            this.savedElements.placedElements[id]['position'] = 'absolute';
-            this.savedElements.placedElements[id]['font-size'] = '30px';
-            this.savedElements.placedElements[id]['top'] = '248px';
-            this.savedElements.placedElements[id]['left'] = '130px';
+              if(id === 'icon'){
+                this.savedElements.placedElements[id]['position'] = 'absolute';
+                this.savedElements.placedElements[id]['top'] = '248px';
+                this.savedElements.placedElements[id]['left'] = '130px';
+                this.savedElements.placedElements[id]['width'] = '40px';
+                this.savedElements.placedElements[id]['height'] = '40px';
+                 $('#'+id).css('height','40px');
+                 $('#'+id).css('width','40px');
+
+              }else{
+                this.savedElements.placedElements[id]['z-index'] = 2;
+                this.savedElements.placedElements[id]['color'] = 'white';
+                this.savedElements.placedElements[id]['font-family'] = 'helvetica';
+                this.savedElements.placedElements[id]['position'] = 'absolute';
+                this.savedElements.placedElements[id]['font-size'] = '30px';
+                this.savedElements.placedElements[id]['top'] = '248px';
+                this.savedElements.placedElements[id]['left'] = '130px';
+            }
         }
         this.saveStorage();
         loadClock(); //in clock.js

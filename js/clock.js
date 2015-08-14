@@ -340,6 +340,8 @@ var weatherdivs = function () {
                     var img = document.createElement('img');
                     img.src = value;
                     img.className = 'icon';
+                    img.style.width = action.savedElements.placedElements['icon']['width'];
+                    img.style.height = action.savedElements.placedElements['icon']['height'];
                     div.appendChild(img);
                 }
             } else {
