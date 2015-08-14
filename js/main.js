@@ -225,7 +225,7 @@ var action = {
     },
     cgfont: function () {
         $('#fList').empty();
-        $('#fList').append('<li>helvetica</li>');
+        $('#fList').append('<li>Helvetica</li>');
         for (var i = 0; i < fontArray.length; i++) {
             var li = document.createElement('li');
             li.innerHTML = $('#'+action.selectedItem).text() + '-' + fontArray[i];
