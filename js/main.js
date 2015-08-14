@@ -849,8 +849,12 @@ var action = {
             action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
             //if(action.selectedItem)
             if(action.selectedItem.substring(3,9) === 'Circle'){
-                $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
-                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
+                if(jsCssKey === 'width'){
+                    $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
+                    action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
+                    $('#' + action.selectedItem).css('width', $(idSelector).val() + unit);
+                    action.savedElements.placedElements[action.selectedItem]['width'] = $(idSelector).val() + unit;
+                }
             }
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
