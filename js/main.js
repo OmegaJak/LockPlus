@@ -855,6 +855,7 @@ var action = {
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
                 $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
+                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
             }
             if (jsCssKey === 'width') {
                  /* Check to see if setting width overflows screen */
@@ -1507,6 +1508,9 @@ rasterizeHTML.drawHTML(html, canvas);*/
 
                 if(key === 'icon'){ //#icon has an inner img element, it also needs height/width changed.
                     $('#icon').css(skey,styleVal);
+                    if(skey === 'width' || skey === 'height'){
+                        $('.icon').css(skey,styleVal);
+                    }
                 } else if (key.substring(0, 4) === 'text' && skey === 'innerHTML') {
                     $('#' + key).html(styleVal);
                 } else if (skey === 'data-prefix') {
