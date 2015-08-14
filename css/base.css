@@ -496,3 +496,6 @@ footer a {
   content: attr(title);
   pointer-events:none;
 }
+#fList:hover{
+  cursor: pointer;
+}
