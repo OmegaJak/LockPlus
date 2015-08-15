@@ -27,6 +27,18 @@
     }else{
       $previewImage = $array['ThemePreview'];
     }
+
+
+    /*    $dest = imagecreatefrompng('../php/cvt/phone.png');
+        $src = imagecreatefromjpeg('../php/themepreview/'.$query.'.jpg');
+        imagealphablending($dest, false);
+        imagesavealpha($dest, true);
+        imagecopymerge($dest, $src, 220, 392, 0, 0, 200, 355, 100);
+        header('Content-Type: image/png');
+        imagepng($dest,'../phone/'.$query.'.png');
+        imagedestroy($dest);
+        imagedestroy($src); */
+
   ?>
 </head>
 <body>
@@ -52,10 +64,10 @@
   }else{
     echo '<a href="http://cydia.saurik.com/package/com.macciti.lockplus/"><div class="btn">Download LockPlus</div></a>';
   }
-  if(file_exists('../phone/'.urlencode($name).'.png')){
-      echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.%20http://LockPlus.us/phone/'.urlencode($name).'.png&hashtags=LockPlus"><div class="btn">Share Theme</div></a>';
+  if(file_exists('../phone/'.$name.'.png')){
+      echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.%20http://LockPlus.us/phone/'.urlencode($name).'.png&hashtags=LockPlus,Jailbreak"><div class="btn">Share Theme</div></a>';
   }else{
-    echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.&hashtags=LockPlus"><div class="btn">Share Theme</div></a>';
+    echo '<a href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($name).'&text=Check%20out%20this%20theme%20'.str_replace("%20"," ",$name).'%20for%20LockPlus.&hashtags=LockPlus,Jailbreak"><div class="btn">Share Theme</div></a>';
   }
 ?>
 <footer></footer>
