@@ -22,7 +22,7 @@ foreach ($array as $key => $value) {
     $name = basename($key,'.jpg');
     $count = $value;
     $img = '/php/themepreview/'.$key.'.jpg';
-    if($count > 10){
+    if($count > 20){
         echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $key . '"/>
         <span class="themeName">'.$name.'</span>
         <span class="themeName">Est Downloads: '.$count.'</span>

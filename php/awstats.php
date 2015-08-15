@@ -90,9 +90,9 @@ foreach ($list as $key) {
         $pieces = explode("~", $keys);
         if($pieces[0] === '/php/themes/'.$themeName.'.plist'){
             $count = $pieces[1];
-            if($count > 20){
+            //if($count > 20){
                 $listNum[$key] = $count;
-            }
+           // }
         }
     }
 }

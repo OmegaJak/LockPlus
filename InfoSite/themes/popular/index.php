@@ -22,10 +22,12 @@ foreach ($array as $key => $value) {
     $count = $value;
     $exist = $key;
     if(file_exists('../'.$exist)){
-        echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="../' . $key . '"/>
-        <span class="themeName">'.$name.'</span>
-        <span class="themeName">Est Downloads: '.$count.'</span>
-        </div>';
+        if($count > 20){
+            echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="../' . $key . '"/>
+            <span class="themeName">'.$name.'</span>
+            <span class="themeName">Est Downloads: '.$count.'</span>
+            </div>';
+        }
     }
 }
 

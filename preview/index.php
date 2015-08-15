@@ -17,7 +17,7 @@
     $plistDocument->load($path);
     $array = parsePlist($plistDocument);
     $dlCount = unserialize(file_get_contents('../php/count/dlcount.bin'));
-    $themN = 'themepreview/'.urlencode($name).'.jpg';
+    $themN = 'themepreview/'.$name.'.jpg';
     $downloads = 'NA';
     if(array_key_exists($themN, $dlCount)){
       $downloads = $dlCount[$themN];
