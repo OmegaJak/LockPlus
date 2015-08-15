@@ -1,5 +1,5 @@
-<?php include("parse.php");?>
 <?php
+include("parse.php");
 function base64_to_jpeg($base64_string, $output_file) {
     $ifp = fopen($output_file, "wb");
     $data = explode(',', $base64_string);
@@ -11,15 +11,16 @@ function base64_to_jpeg($base64_string, $output_file) {
 $dir    = '../php/themes';
 foreach (glob("$dir/*.plist") as $filename) {
 
+$addedArray = array();
+$deletedArray = array();
+
  $path = $filename;
  $name = basename($filename,'.plist');
  $plistDocument = new DOMDocument();
  $plistDocument->load($path);
  $array = parsePlist($plistDocument);
  $wall = $array['Wallpaper'];
- if(strlen($wall) < 10){
- 	$wall = 'none.png';
- }else{
+ if(!strlen($wall) < 10){
   $name = preg_replace('/[^\p{L}\p{N}\s]/u', '', $name);
   $name = preg_replace('/\s*/', '', $name);
   $filename_path = $name.".jpg";
@@ -28,9 +29,12 @@ foreach (glob("$dir/*.plist") as $filename) {
   if(!file_exists('files/'.$filename_path)){
     $decoded=base64_decode($data[1]);
     file_put_contents("files/".$filename_path,$decoded);
+    array_push($addedArray, $filename_path);
   }
  }
 }
+
+echo 'Added ' . count($addedArray) . '<br>';
 
 $dir = "files";
 $checksums = array();
@@ -39,7 +43,7 @@ if ($h = opendir($dir)) {
         if(is_dir($_="{$dir}/{$file}")) continue;
         $hash = hash_file('md5', $_);
         if (in_array($hash, $checksums)) {
-          echo $_.'<br>';
+          array_push($deletedArray, $_);
             unlink($_);
         }
         else {
@@ -48,4 +52,7 @@ if ($h = opendir($dir)) {
     }
     closedir($h);
 }
+echo 'Deleted ' . count($deletedArray);
 ?>
+
+
