@@ -119,12 +119,5 @@ function parsePlist( $document ) {
 
         return $bytes;
 }
-/*actual stuff*/
-$dir    = '../php/themes';
-$query = $_SERVER['QUERY_STRING'];
-$path = "$dir/$query.plist";
-$name = basename($path,'.plist');
-$plistDocument = new DOMDocument();
-$plistDocument->load($path);
-$array = parsePlist($plistDocument);
+
 ?>
