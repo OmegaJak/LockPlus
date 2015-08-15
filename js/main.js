@@ -1025,7 +1025,16 @@ var action = {
                 wrapper.appendTo($("#boldnessOptionDiv"));
                 wrapper.attr('class', 'noHoverChange');
 
-                if ($('#' + action.selectedItem).css('font-weight') === $(input).val()) {
+                var fontWeight = $('#' + action.selectedItem).css('font-weight');
+                if (fontWeight === '400') {
+                    $('#normalOptionDiv').attr('data-selected','true');
+                    $('#normalOptionDiv').css("background-color","#21b9b0");
+                    $('#normalOptionDiv').css("border-color","#21b9b0");
+                } else if (fontWeight === '700') {
+                    $('#boldOptionDiv').attr('data-selected','true');
+                    $('#boldOptionDiv').css("background-color","#21b9b0");
+                    $('#boldOptionDiv').css("border-color","#21b9b0");
+                } else if (fontWeight === $(input).val()) {
                     wrapper.parent().attr('data-selected','true');
                     wrapper.parent().css("background-color","#21b9b0");
                     wrapper.parent().css("border-color","#21b9b0");
@@ -1035,9 +1044,9 @@ var action = {
             } else {
                 var optionElement = $('<label id="' + optionName + 'Option" style="text-align: center; font-weight: ' + optionName + ';">' + optionName + '</label>');
                 if ($('#' + action.selectedItem).css('font-weight') === optionName) {
-                    optionElement.parent().attr('data-selected','true');
-                    optionElement.parent().css("background-color","#21b9b0");
-                    optionElement.parent().css("border-color","#21b9b0");
+                    $('#' + $(optionElement).attr('id') + 'Div').attr('data-selected','true');
+                    $('#' + $(optionElement).attr('id') + 'Div').css("background-color","#21b9b0");
+                    $('#' + $(optionElement).attr('id') + 'Div').css("border-color","#21b9b0");
                 }
                 return optionElement;
             }
