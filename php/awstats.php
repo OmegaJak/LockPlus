@@ -79,13 +79,13 @@ file_put_contents('count/dl.bin', serialize($final)); //write to bin so all othe
 
 $array = unserialize(file_get_contents('http://LockPlus.us/php/count/dl.bin'));
 
-$dir    = 'themepreview';
-$list = glob("$dir/*.jpg"); //full theme list
+$dir    = 'themes';
+$list = glob("$dir/*.plist"); //full theme list
 
 $listNum = array(); //array to store downloads
 
 foreach ($list as $key) {
-    $themeName = basename($key,'.jpg');
+    $themeName = basename($key,'.plist');
     foreach ($array as $keys) {
         $pieces = explode("~", $keys);
         if($pieces[0] === '/php/themes/'.$themeName.'.plist'){

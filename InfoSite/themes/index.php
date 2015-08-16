@@ -38,7 +38,7 @@ while($row = $pagedResults->fetchPagedRow()) {  //when $row is false loop termin
     $name = basename($row,'.jpg');
     foreach ($array as $keys) {
         $pieces = explode("~", $keys);
-        if($pieces[0] === '/php/themes/'.$name.'.plist'){
+        if($pieces[0] === '/php/themes/'.rawurlencode($name).'.plist'){
             $count = $pieces[1];
         }
     }
