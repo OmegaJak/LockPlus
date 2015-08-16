@@ -982,12 +982,29 @@ var action = {
         this.cgOption('weight', constants.editArray[8], ['boldness','bold','normal'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
+            if (optionSelector === '#boldOption') {
+                $('#boldnessInput').val(700);
+            } else if (optionSelector === '#normalOption') {
+                $('#boldnessInput').val(400);
+            }
         }, function(optionName) {
             if (optionName === 'boldness') {
                 var wrapper = action.getInputWrapper('boldness', 0, 0, 100, 900, '', false);
                 wrapper.css('display', 'block');
 
-                var elSize = !isNaN($('#' + action.selectedItem).css('font-weight')) ? JSON.parse($('#' + action.selectedItem).css('font-weight')) : 100;
+                var elSize;
+                var fontWeight = $('#' + action.selectedItem).css('font-weight');
+                try {
+                    elSize = JSON.parse(fontWeight);
+                } catch (e) {
+                    if (fontWeight === 'bold') {
+                        elSize = 700;
+                    } else if (fontWeight === 'normal') {
+                        elSize = 400;
+                    } else {
+                        elSize = 100;
+                    }
+                }
 
                 var children = $(wrapper).children()
                 var incrementButton = $(children[0]);
@@ -1009,8 +1026,8 @@ var action = {
                 decrementButton.css({'border-width':0});
 
                 var inputSelector = '#boldnessInput';
-                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
-                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
+                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'font-weight', '', action.updateSize, event); });
+                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'font-weight', '', action.updateSize, event); });
 
                 $(input).on('mousewheel', function(event) {
                     if (event.deltaY > 0)  {
@@ -1025,7 +1042,6 @@ var action = {
                 wrapper.appendTo($("#boldnessOptionDiv"));
                 wrapper.attr('class', 'noHoverChange');
 
-                var fontWeight = $('#' + action.selectedItem).css('font-weight');
                 if (fontWeight === '400') {
                     $('#normalOptionDiv').attr('data-selected','true');
                     $('#normalOptionDiv').css("background-color","#21b9b0");
