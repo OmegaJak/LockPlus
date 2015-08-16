@@ -19,11 +19,12 @@ error_reporting(0);
 $array = unserialize(file_get_contents('count/dlcount.bin'));
 
 foreach ($array as $key => $value) {
-    $name = basename($key,'.jpg');
+    $name = basename($key,'.plist');
     $count = $value;
     $img = '/php/themepreview/'.$key.'.jpg';
     if($count > 20){
-        echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $key . '"/>
+        $imgSrc = basename($key,'.plist');
+        echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="themepreview/' . $imgSrc . '.jpg"/>
         <span class="themeName">'.$name.'</span>
         <span class="themeName">Est Downloads: '.$count.'</span>
         </div>';
