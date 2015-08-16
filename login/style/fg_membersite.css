@@ -7,7 +7,7 @@ You can customize all the aspects of the form in this style sheet
 {
    width: 230px;
    padding:20px;
-   border:1px solid #ccc;
+   border:1px solid #54606e;
 -moz-border-radius: 10px;
 -webkit-border-radius: 10px;
 -khtml-border-radius: 10px;
@@ -37,11 +37,13 @@ border-radius: 10px;
   line-height:140%;
   color : #000;
   padding : 3px;
-  border : 1px solid #999;
+  border : 1px solid #54606e;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     -khtml-border-radius: 5px;
     border-radius: 5px;
+    outline: none;
+  -webkit-box-shadow: none;
 
 }
 
@@ -69,14 +71,18 @@ border-radius: 10px;
 {
   height:120px;
   width:310px;
+  outline: none;
+  -webkit-box-shadow: none;
 }
 
 #fg_membersite input[type="text"]:focus,
 #fg_membersite textarea:focus
 {
-  color : #009;
-  border : 1px solid #990000;
-  background-color : #ffff99;
+  color : #000;
+  border : 1px solid #54606e;
+  /*background-color : #d2d2d2;*/
+  outline: none;
+  -webkit-box-shadow: none;
   font-weight:bold;
 }
 
@@ -90,7 +96,7 @@ border-radius: 10px;
 {
    font-family: Verdana, Arial, sans-serif;
    font-size: 0.7em;
-   color: #900;
+   color: #fff;
    background-color : #ffff00;
 }
 
