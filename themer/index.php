@@ -78,6 +78,11 @@
       <li>JasonM</li>
       <li>Max_Pa1n</li>
       <li>OtisHuff</li>
+      <li>Andorri</li>
+      <li>Greg Wolff</li>
+      <li>id3viant</li>
+      <li>Kamilli0n</li>
+      <li>justin</li>
     </ul>
   </div>
       <center>
@@ -89,7 +94,8 @@
   </center>
   <script type="text/javascript">
   document.getElementById('list').addEventListener('click',function(el){
-    location.href = 'http://LockPlus.us/themer/themer.php?name=' + el.target.innerHTML;
+    var inside = el.target.innerHTML.replace(/ /g,"%20");
+    location.href = 'http://LockPlus.us/themer/themer.php?name=' + inside;
   });
   </script>
 </body>
