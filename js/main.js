@@ -1913,8 +1913,12 @@ $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
     var target = event.target.id;
 });
-$('#fList').on('click', function (event) { //grab clicks from toolpanel
-    action.setFont(event.target.title);
+$('#font').on('click', function (event) {
+    if ($(event.target).is('li')) {
+        action.setFont(event.target.title);
+    } else {
+        action.cgfont();
+    }
 });
 $('.iconList').on('click', function (event) { //grab clicks from toolpanel
     if (event.target.id != "") {
