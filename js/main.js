@@ -982,12 +982,29 @@ var action = {
         this.cgOption('weight', constants.editArray[8], ['boldness','bold','normal'], 0, true, function(optionSelector) {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-weight',
                 optionSelector != '#boldnessOption' ? $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6) : $('#boldnessInput').val());
+            if (optionSelector === '#boldOption') {
+                $('#boldnessInput').val(700);
+            } else if (optionSelector === '#normalOption') {
+                $('#boldnessInput').val(400);
+            }
         }, function(optionName) {
             if (optionName === 'boldness') {
                 var wrapper = action.getInputWrapper('boldness', 0, 0, 100, 900, '', false);
                 wrapper.css('display', 'block');
 
-                var elSize = !isNaN($('#' + action.selectedItem).css('font-weight')) ? JSON.parse($('#' + action.selectedItem).css('font-weight')) : 100;
+                var elSize;
+                var fontWeight = $('#' + action.selectedItem).css('font-weight');
+                try {
+                    elSize = JSON.parse(fontWeight);
+                } catch (e) {
+                    if (fontWeight === 'bold') {
+                        elSize = 700;
+                    } else if (fontWeight === 'normal') {
+                        elSize = 400;
+                    } else {
+                        elSize = 100;
+                    }
+                }
 
                 var children = $(wrapper).children()
                 var incrementButton = $(children[0]);
@@ -1009,8 +1026,8 @@ var action = {
                 decrementButton.css({'border-width':0});
 
                 var inputSelector = '#boldnessInput';
-                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
-                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'fontWeight', '', action.updateSize, event); });
+                incrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, 100, 'font-weight', 'font-weight', '', action.updateSize, event); });
+                decrementButton.on('click', function(event) { action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'font-weight', '', action.updateSize, event); });
 
                 $(input).on('mousewheel', function(event) {
                     if (event.deltaY > 0)  {
@@ -1025,7 +1042,15 @@ var action = {
                 wrapper.appendTo($("#boldnessOptionDiv"));
                 wrapper.attr('class', 'noHoverChange');
 
-                if ($('#' + action.selectedItem).css('font-weight') === $(input).val()) {
+                if (fontWeight === '400') {
+                    $('#normalOptionDiv').attr('data-selected','true');
+                    $('#normalOptionDiv').css("background-color","#21b9b0");
+                    $('#normalOptionDiv').css("border-color","#21b9b0");
+                } else if (fontWeight === '700') {
+                    $('#boldOptionDiv').attr('data-selected','true');
+                    $('#boldOptionDiv').css("background-color","#21b9b0");
+                    $('#boldOptionDiv').css("border-color","#21b9b0");
+                } else if (fontWeight === $(input).val()) {
                     wrapper.parent().attr('data-selected','true');
                     wrapper.parent().css("background-color","#21b9b0");
                     wrapper.parent().css("border-color","#21b9b0");
@@ -1035,9 +1060,9 @@ var action = {
             } else {
                 var optionElement = $('<label id="' + optionName + 'Option" style="text-align: center; font-weight: ' + optionName + ';">' + optionName + '</label>');
                 if ($('#' + action.selectedItem).css('font-weight') === optionName) {
-                    optionElement.parent().attr('data-selected','true');
-                    optionElement.parent().css("background-color","#21b9b0");
-                    optionElement.parent().css("border-color","#21b9b0");
+                    $('#' + $(optionElement).attr('id') + 'Div').attr('data-selected','true');
+                    $('#' + $(optionElement).attr('id') + 'Div').css("background-color","#21b9b0");
+                    $('#' + $(optionElement).attr('id') + 'Div').css("border-color","#21b9b0");
                 }
                 return optionElement;
             }
@@ -1888,8 +1913,12 @@ $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
     var target = event.target.id;
 });
-$('#fList').on('click', function (event) { //grab clicks from toolpanel
-    action.setFont(event.target.title);
+$('#font').on('click', function (event) {
+    if ($(event.target).is('li')) {
+        action.setFont(event.target.title);
+    } else {
+        action.cgfont();
+    }
 });
 $('.iconList').on('click', function (event) { //grab clicks from toolpanel
     if (event.target.id != "") {
