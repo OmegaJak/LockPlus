@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- If you delete this tag, the sky will fall on your head -->
+<meta name="viewport" content="width=device-width" />
+<script>
+
+var EPPZScrollTo =
+{
+    /**
+     * Helpers.
+     */
+    documentVerticalScrollPosition: function()
+    {
+        if (self.pageYOffset) return self.pageYOffset; // Firefox, Chrome, Opera, Safari.
+        if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop; // Internet Explorer 6 (standards mode).
+        if (document.body.scrollTop) return document.body.scrollTop; // Internet Explorer 6, 7 and 8.
+        return 0; // None of the above.
+    },
+
+    viewportHeight: function()
+    { return (document.compatMode === "CSS1Compat") ? document.documentElement.clientHeight : document.body.clientHeight; },
+
+    documentHeight: function()
+    { return (document.height !== undefined) ? document.height : document.body.offsetHeight; },
+
+    documentMaximumScrollPosition: function()
+    { return this.documentHeight() - this.viewportHeight(); },
+
+    elementVerticalClientPositionById: function(id)
+    {
+        var element = document.getElementById(id);
+        var rectangle = element.getBoundingClientRect();
+        return rectangle.top;
+    },
+
+    /**
+     * Animation tick.
+     */
+    scrollVerticalTickToPosition: function(currentPosition, targetPosition)
+    {
+        var filter = 0.2;
+        var fps = 60;
+        var difference = parseFloat(targetPosition) - parseFloat(currentPosition);
+
+        // Snap, then stop if arrived.
+        var arrived = (Math.abs(difference) <= 0.5);
+        if (arrived)
+        {
+            // Apply target.
+            scrollTo(0.0, targetPosition);
+            return;
+        }
+
+        // Filtered position.
+        currentPosition = (parseFloat(currentPosition) * (1.0 - filter)) + (parseFloat(targetPosition) * filter);
+
+        // Apply target.
+        scrollTo(0.0, Math.round(currentPosition));
+
+        // Schedule next tick.
+        setTimeout("EPPZScrollTo.scrollVerticalTickToPosition("+currentPosition+", "+targetPosition+")", (1000 / fps));
+    },
+
+    /**
+     * For public use.
+     *
+     * @param id The id of the element to scroll to.
+     * @param padding Top padding to apply above element.
+     */
+    scrollVerticalToElementById: function(id, padding)
+    {
+        var element = document.getElementById(id);
+        if (element == null)
+        {
+            console.warn('Cannot find element with id \''+id+'\'.');
+            return;
+        }
+
+        var targetPosition = this.documentVerticalScrollPosition() + this.elementVerticalClientPositionById(id) - padding;
+        var currentPosition = this.documentVerticalScrollPosition();
+
+        // Clamp.
+        var maximumScrollPosition = this.documentMaximumScrollPosition();
+        if (targetPosition > maximumScrollPosition) targetPosition = maximumScrollPosition;
+
+        // Start animation.
+        this.scrollVerticalTickToPosition(currentPosition, targetPosition);
+    }
+};
+
+function scrollto(el){
+	EPPZScrollTo.scrollVerticalToElementById(el, 20);
+}
+
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>LockBuilder Evo</title>
+
+<link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/11957180/Email/email.css" />
+
+</head>
+
+<body bgcolor="#FFFFFF">
+
+	<style>
+.tabbed{
+margin-left:20px;
+color:#0b9cef;
+}
+	</style>
+
+<!-- HEADER -->
+<table class="head-wrap" bgcolor="#999999">
+	<tr>
+		<td></td>
+		<td class="header container">
+
+				<div class="content">
+					<table bgcolor="#999999">
+					<tr>
+						<td><img src="https://dl.dropboxusercontent.com/u/11957180/Email/logo.png" style="position:relative;left:-60px;"/></td>
+						<td align="right"><h6 class="collapse">LBEvo</h6></td>
+					</tr>
+				</table>
+				</div>
+
+		</td>
+		<td></td>
+	</tr>
+</table><!-- /HEADER -->
+
+
+<!-- BODY -->
+<table class="body-wrap">
+	<tr>
+		<td></td>
+		<td class="container" bgcolor="#FFFFFF">
+
+			<div class="content">
+			<table>
+				<tr>
+					<td>
+
+						<!-- Callout Panel -->
+						<p class="callout">
+							 <a href="index.html">Back</a>
+						</p><!-- /Callout Panel -->
+
+						<h3>Menu Setup</h3>
+						<p><h4>Place</h4></p>
+							<p class="tabbed" onclick="scrollto('elements')">Elements</p>
+							<p class="tabbed" onclick="scrollto('widgets')">Widgets</p>
+							<p class="tabbed" onclick="scrollto('icons')">Icons</p>
+							<p class="tabbed" onclick="scrollto('lock')">Lock Elements</p>
+						<p><h4>Wall</h4></p>
+							<p class="tabbed"onclick="scrollto('wallpaper')">Wallpaper</p>
+							<p class="tabbed"onclick="scrollto('weatherwall')">Weather Wall</p>
+						<p><h4>Theme</h4></p>
+							<p class="tabbed"onclick="scrollto('loadtheme')">Load Theme</p>
+							<p class="tabbed"onclick="scrollto('savetheme')">Save Theme</p>
+							<p class="tabbed"onclick="scrollto('savesb')">Save SB</p>
+							<p class="tabbed"onclick="scrollto('freetheme')">Free Theme</p>
+						<p><h4>Reset</h4></p>
+							<p class="tabbed"onclick="scrollto('resetls')">Reset LS</p>
+							<p class="tabbed"onclick="scrollto('resetsb')">Reset SB</p>
+							<p class="tabbed"onclick="scrollto('masterreset')">Master</p>
+						<p><h4>Overlay</h4></p>
+							<p class="tabbed"onclick="scrollto('soverlay')">Select Overlay</p>
+							<p class="tabbed"onclick="scrollto('roverlay')">Remove Overlay</p>
+							<p class="tabbed"onclick="scrollto('sgl')">Select GroovyLock</p>
+							<p class="tabbed"onclick="scrollto('rgl')">Remove GroovyLock</p>
+						<p><h4>System</h4></p>
+							<p class="tabbed"onclick="scrollto('refreshw')">Refresh Weather</p>
+							<p class="tabbed"onclick="scrollto('creategl')">Create GL</p>
+							<p class="tabbed"onclick="scrollto('alertm')">Alert memory</p>
+
+						</h4><p style="color:#0b9cef;" onclick="scrollto('inst')">Instructions</h4></p>
+						</h4><p style="color:#0b9cef;" onclick="scrollto('up')">Upload Theme</h4></p>
+
+						</br>
+						</br>
+						</br>
+
+					<a id="elements"><h3>Elements</h3></a>
+					<p class="callout">
+						<span>Elements contains all the placable weather items. Select an element to add it to the lockscreen.</span>
+					</p>
+					<a id="widgets"><h3>Widgets</h3></a>
+					<p class="callout">
+						Within the widgets panel you will have an option to set an animation or an iWidget.
+						</br>
+					</br>
+						Animations are located in var/mobile/Library/LBEvoAnimations
+					</br>
+					</br>
+						iWidgets allows you to place iWidgets from var/mobile/Library/iWidgets on the lockscreen.
+					</p>
+					<a id="icons"><h3>Icons</h3></a>
+					<p class="callout">
+						Icons allows you to pick between system or appstore icons. Select one an be presented a menu containing icons. Tap an icon to place it, tap and hold an icon to close the icons.
+
+					</p>
+					<a id="lock"><h3>LockElements</h3></a>
+					<p class="callout">
+						Select this icon to lock/unlock all elements. This is use after you finish a theme to keep elements from being moved on accident.
+
+					</p>
+					<a id="wallpaper"><h3>Wallpaper</h3></a>
+					<p class="callout">
+						Select this icon to choose a wallpaper from your camera roll. Note if you have Reduce motion off the wallpaper may be bigger than you want. To fix this open settings/wallpaper and resize or settings/general/accessibility/reducemotion to on.
+
+					</p>
+					<a id="weatherwall"><h3>Weather Wallpaper</h3></a>
+					<p class="callout">
+						Select this icon to use a wallpaper that will display depending on current weather conditions. You can also pick a custom set of weather wallpapers from var/mobile/Library/LBEvoWeatherWalls
+
+					</p>
+					<a id="loadtheme"><h3>Load Theme</h3></a>
+					<p class="callout">
+						Load Icon allows you to load any saved, or downloaded themes. Press load and it will load a visual menu of the lockscreens you have. It loads from var/mobile/Libary/LBEvoThemes
+					</p>
+					<a id="savetheme"><h3>Save Theme</h3></a>
+					<p class="callout">
+						Save Icon will allow you to save your theme for later use, or to share with anyone. When you press it, enter a name for your Lockscreen then press ok. Themes are stored in var/mobile/Libary/LBEvoThemes
+					</p>
+					<a id="savesb"><h3>Save SB</h3></a>
+					<p class="callout">
+						Saves changes to LockBuilder Evo iOS8 SBHTML. The SBHTML must be selected in SBHTML for any changes to show.
+					</p>
+					<a id="freetheme"><h3>Free Theme</h3></a>
+					<p class="callout">
+						Free theme icon opens the listing of free themes you can download and use in lockbuilder. If you find a theme you want click it and you will be taken directly to download it.
+					</p>
+					<a id="resetls"><h3>Reset LS</h3></a>
+					<p class="callout">
+						Removes current theme loaded to LockBuilder
+					</p>
+					<a id="resetsb"><h3>Reset SB</h3></a>
+					<p class="callout">
+						Removes current theme loaded to SBHTML
+					</p>
+					<a id="masterreset"><h3>Master Reset</h3></a>
+					<p class="callout">
+						Removes everything saved inside LockBuilder. LS and SB.
+					</p>
+					<a id="soverlay"><h3>Select Overlay</h3></a>
+					<p class="callout">
+						Allows you to place an overlay on top of the wallpaper. They are located in var/mobile/Library/LBEvoOverlays
+					</p>
+					<a id="roverlay"><h3>Remove Overlay</h3></a>
+					<p class="callout">
+						Removes current overlay.
+					</p>
+					<a id="sgl"><h3>Select GroovyLock</h3></a>
+					<p class="callout">
+						Allows you to place a groovylock lockscreen on top of the wallpaper.
+					</p>
+					<a id="rgl"><h3>Remove GroovyLock</h3></a>
+					<p class="callout">
+						Removes current GroovyLock
+					</p>
+					<a id="refreshw"><h3>Refresh Weather</h3></a>
+					<p class="callout">
+						Pulls new weather information.
+					</p>
+					<a id="creategl"><h3>Create GL</h3></a>
+					<p class="callout">
+						Takes the current theme and creates a standalone groovylock from it. This addon is available in cydia.
+					</p>
+					<a id="alertm"><h3>Alert Memory</h3></a>
+					<p class="callout">
+						Alerts current Javascript memory.
+					</p>
+					<a id="inst"><h3>Instructions</h3></a>
+					<p class="callout">
+						Where you are now:)
+					</p>
+					<a id="up"><h3>Upload Theme</h3></a>
+					<p class="callout">
+						Allows you to send in a lockbuilder theme. First make sure you have saved your theme, then load it. After it is loaded press this button. After it is finished it will ask you to open ifile. There you zip the folder and send to lockbuilder@gmail.com
+					</p>
+
+						<br/>
+						<br/>
+
+
+						</br>
+						</br>
+
+						<!-- social & contact -->
+						<table class="social" width="100%">
+							<tr>
+								<td>
+
+									<!--- column 1 -->
+									<table align="left" class="column">
+										<tr>
+											<td>
+
+												<h5 class="">Connect with Us:</h5>
+												<p class=""><a href="http://Facebook.com/JunesiPhone" class="soc-btn fb">Facebook</a> <a href="http://Twitter.com/JunesiPhone" class="soc-btn tw">Twitter</a> <a href="https://plus.google.com/107601000975926769542/posts" class="soc-btn gp">Google+</a></p>
+
+
+											</td>
+										</tr>
+									</table><!-- /column 1 -->
+
+									<!--- column 2 -->
+									<table align="left" class="column">
+										<tr>
+											<td>
+
+												<h5 class="">Contact Info:</h5>
+
+                Email: <strong><a href="emailto:junesgraphics@gmail.com">LockBuilder@gmail.com</a></strong></p>
+
+											</td>
+										</tr>
+									</table><!-- /column 2 -->
+
+									<span class="clear"></span>
+
+								</td>
+							</tr>
+						</table><!-- /social & contact -->
+
+
+					</td>
+				</tr>
+			</table>
+			</div>
+
+		</td>
+		<td></td>
+	</tr>
+</table><!-- /BODY -->
+
+
+<!-- FOOTER -->
+<table class="footer-wrap">
+	<tr>
+		<td></td>
+		<td class="container">
+
+				<!-- content -->
+				<div class="content">
+				<table>
+				<tr>
+					<td align="center">
+						<p>
+							<a href="http://JunesGraphics.blogspot.com">Blog</a> |
+							<a href="http://JunesiPhone.com">Website</a> |
+							<a href="http://Twitter.com/JunesiPhone">Twitter</a>
+						</p>
+					</td>
+				</tr>
+			</table>
+				</div><!-- /content -->
+
+		</td>
+		<td></td>
+	</tr>
+</table><!-- /FOOTER -->
+<script type="text/javascript">
+( function() {
+    CHITIKA = window.CHITIKA ? window.CHITIKA : { 'units' : [] };
+    CHITIKA.publisher = 'junesiphone';
+    var s = document.createElement('script');
+    s.src = '//cdn.chitika.net/getads.js';
+    try { document.getElementsByTagName('head')[0].appendChild(s); } catch(e) { document.write(s.outerHTML); }
+}());
+</script>
+</body>
+</html>
