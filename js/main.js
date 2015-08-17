@@ -1564,7 +1564,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
             this.savedElements = JSON.parse(localStorage.placedElements);
             this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
             this.wallpaper = localStorage.getItem('wallpaper');
-            if (action.wallpaper) { //set wallpaper
+            if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
                 this.setBG(action.wallpaper);
             }
             if (this.savedElements.overlay) { //set overlay
