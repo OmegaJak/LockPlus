@@ -42,7 +42,7 @@ while($row = $pagedResults->fetchPagedRow()) {  //when $row is false loop termin
             $count = $pieces[1];
         }
     }
-    echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $row . '"/>
+    echo '<div class="theme"><img title="'.$name.'" alt="LockPlus Theme" onclick="viewtheme(this.title)" class="themeImage" src="' . $row . '"/>
     <span class="themeName">'.$name.'</span>
     <span class="themeName">Est. Downloads: '.$count.'</span>
     </div>';
