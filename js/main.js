@@ -101,6 +101,7 @@ var constants = {
 var action = {
     savedElements : {}, //object to save elements placed
     movedElements : {}, //elements that are placed and moved
+    wallpaper : '',
     uploadSelection : '', //save type of upload selection (overlay or background)
     selectedItem : '',
     doubleClicked: false,
@@ -1357,14 +1358,14 @@ var action = {
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
         //----Wallpaper stuff----//
-        if (action.savedElements.wallpaper !== null && action.savedElements.wallpaper !== 'null') {
+        if (action.wallpaper !== null && action.wallpaper !== 'null') {
             $('#wallpaper').hide();
             var canvas = document.getElementById('blurcanvas');
             canvas.style.display = 'none';
             canvas.className = '';
             var imageData = canvas.toDataURL();
             $('.screen').css('background-image','url(' + imageData + ')');
-            action.savedElements.wallpaper = imageData;
+            action.wallpaper = imageData;
             action.saveStorage();
 
             $('#blurcanvas').remove();
@@ -1435,7 +1436,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
                         $('#devname').val(devname);
                         $('#Tpreview').val(dataURL);
                         $('#Ticon').val(action.savedElements.iconName || '');
-                        $('#Twallpaper').val((action.savedElements.wallpaper) ? action.savedElements.wallpaper : '');
+                        $('#Twallpaper').val((action.wallpaper) ? action.wallpaper : '');
                         $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
                         $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
                         $('#myform').submit();
@@ -1463,7 +1464,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
         if (img != '') {
             $('#wallpaper').attr('src',img);
             $('#wallpaper').css('display','initial');
-            action.savedElements.wallpaper = img;
+            action.wallpaper = img;
 
             var blur = localStorage.getItem('wallpaperBlur');
             if (blur === null || blur === '')
@@ -1484,11 +1485,11 @@ rasterizeHTML.drawHTML(html, canvas);*/
             $('#wallpaper').hide();
             var canvas = document.getElementById('blurcanvas');
             canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
-            action.savedElements.wallpaper = null;
+            action.wallpaper = null;
             localStorage.setItem('wallpaperBlur','0');
             action.showIconMenu(constants.toolArray, -1);
         }
-        action.saveStorage();
+        action.saveStorage('wallpaper');
     },
     setOverlay: function (img) { //apply overlay to screenoverlay
         document.querySelector('.svg').src = img;
@@ -1509,7 +1510,10 @@ rasterizeHTML.drawHTML(html, canvas);*/
         }
         action.saveStorage();
     },
-    saveStorage: function () { //save savedElements object to localStorage
+    saveStorage: function (specialPurpose) { //save savedElements object to localStorage
+        if (specialPurpose === 'wallpaper') {
+            localStorage.setItem('wallpaper', action.wallpaper);
+        }
         localStorage.setItem('placedElements', JSON.stringify(action.savedElements));
     },
     remakeDIV: function(id) {
@@ -1559,8 +1563,9 @@ rasterizeHTML.drawHTML(html, canvas);*/
              action.setHelpText('Click elements to adjust styles.');
             this.savedElements = JSON.parse(localStorage.placedElements);
             this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
-            if (this.savedElements.wallpaper) { //set wallpaper
-                this.setBG(this.savedElements.wallpaper);
+            this.wallpaper = localStorage.getItem('wallpaper');
+            if (action.wallpaper) { //set wallpaper
+                this.setBG(action.wallpaper);
             }
             if (this.savedElements.overlay) { //set overlay
                 this.setOverlay(this.savedElements.overlay);
