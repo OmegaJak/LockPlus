@@ -1136,7 +1136,6 @@ var action = {
         action.elementPanel('ml', 0);
     },
     clearTheme: function(code) { // -1 is to check, 0 doesn't clear theme, 1 clears theme
-        console.log(code);
         if (code === -1) { // check what to do
             if ($('.yesClear').length || $('.noClear').length || $('.clearLabel').length) { // Check to make confirmation isn't alreay showing
                 action.clearTheme(0);
@@ -1171,7 +1170,7 @@ var action = {
             action.hideClearLabel(); // Avoid showing the help text for not clearing the label, just hiding it
             action.hideElementPanelElements();
             $('#bgInput').after($('#bgInput').clone(true)).remove();
-            action.setBG('');
+            action.setBG(''); //culprit to object is undefined when placed
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
             action.setHelpText('Cleared. Click "Show Elements Panel" to place elements.');
@@ -1489,7 +1488,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
             localStorage.setItem('wallpaperBlur','0');
             action.showIconMenu(constants.toolArray, -1);
         }
-        action.saveStorage('wallpaper');
+        action.saveStorage('wallpaper'); //we only need to set the wallpaper action.saveStorage would save everything.
     },
     setOverlay: function (img) { //apply overlay to screenoverlay
         document.querySelector('.svg').src = img;
@@ -1513,8 +1512,9 @@ rasterizeHTML.drawHTML(html, canvas);*/
     saveStorage: function (specialPurpose) { //save savedElements object to localStorage
         if (specialPurpose === 'wallpaper') {
             localStorage.setItem('wallpaper', action.wallpaper);
+        }else{
+            localStorage.setItem('placedElements', JSON.stringify(action.savedElements));
         }
-        localStorage.setItem('placedElements', JSON.stringify(action.savedElements));
     },
     remakeDIV: function(id) {
         var div = document.createElement('div');
@@ -1559,25 +1559,27 @@ rasterizeHTML.drawHTML(html, canvas);*/
         });
     },
     loadFromStorage: function () { //reload elements onload
-        if (localStorage.placedElements) {
-             action.setHelpText('Click elements to adjust styles.');
-            this.savedElements = JSON.parse(localStorage.placedElements);
-            this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
-            this.wallpaper = localStorage.getItem('wallpaper');
-            if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
-                this.setBG(action.wallpaper);
+        if(localStorage.placedElements){
+            if (localStorage.placedElements.length > 2) { //maybe it was set to a string of {} and it breaks everything
+                 action.setHelpText('Click elements to adjust styles.');
+                this.savedElements = JSON.parse(localStorage.placedElements);
+                this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
+                this.wallpaper = localStorage.getItem('wallpaper');
+                if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
+                    this.setBG(action.wallpaper);
+                }
+                if (this.savedElements.overlay) { //set overlay
+                    this.setOverlay(this.savedElements.overlay);
+                }
+                if (this.savedElements.placedElements){
+                    this.replaceElements(); //put items back on screen
+                }
+                if(this.savedElements.iconName){
+                    this.setNewIcon(this.savedElements.iconName,1); //if second paramenter dont show list
+                }
+            }else{
+                action.setHelpText('Select Add elements to place elements.');
             }
-            if (this.savedElements.overlay) { //set overlay
-                this.setOverlay(this.savedElements.overlay);
-            }
-            if (this.savedElements.placedElements){
-                this.replaceElements(); //put items back on screen
-            }
-            if(this.savedElements.iconName){
-                this.setNewIcon(this.savedElements.iconName,1); //if second paramenter dont show list
-            }
-        }else{
-            action.setHelpText('Select Add elements to place elements.');
         }
     },
     addDraggable: function(id){
