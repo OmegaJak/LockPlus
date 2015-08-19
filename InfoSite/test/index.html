@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<style>
+#frame{
+  width: 320px;
+  height: 568px;
+  overflow: scroll;
+  position: absolute;
+  z-index: 999;
+  display: none;
+}
+</style>
+	  <div id="frame"></div>
+
+<script type="text/javascript">
+
+function installTheme(theme){
+  alert("installing " + theme);
+}
+
+function createFrame(){
+  document.getElementById('frame').style.display = 'block';
+var link = "http://lockplus.info/mobile"
+var iframe = document.createElement('iframe');
+iframe.frameBorder=0;
+iframe.width="320px";
+iframe.height="1000px";
+iframe.id="newThemes";
+iframe.scrolling = 'yes';
+iframe.setAttribute("src", link);
+document.getElementById("frame").appendChild(iframe);
+}
+
+window.onload = function(){
+	createFrame();
+}
+
+</script>
+</body>
+</html>

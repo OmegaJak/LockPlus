@@ -35,6 +35,7 @@ if ($_GET["name"]) {
       $dev = $xml->dict->string[1];
       $artist = preg_replace("/[^A-Za-z0-9 ]/", '', $dev);
       $entered = preg_replace("/[^A-Za-z0-9 ]/", '', $entered);
+      //echo $artist.$entered.'<br>';
       if (strtolower($entered) === strtolower($artist)) {
         $name = basename($row,'.plist');
         //$name = preg_replace("/[^A-Za-z0-9 ]/", '', $name);
