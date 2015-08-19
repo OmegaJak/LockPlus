@@ -95,20 +95,15 @@ function scrollto(el){
 
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>LockBuilder Evo</title>
+<title>LockPlus Info</title>
 
+<link rel="icon" type="image/png" href="../favicon.ico">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/u/11957180/Email/email.css" />
 
 </head>
 
 <body bgcolor="#FFFFFF">
-
-	<style>
-.tabbed{
-margin-left:20px;
-color:#0b9cef;
-}
-	</style>
 
 <!-- HEADER -->
 <table class="head-wrap" bgcolor="#999999">
@@ -119,8 +114,8 @@ color:#0b9cef;
 				<div class="content">
 					<table bgcolor="#999999">
 					<tr>
-						<td><img src="https://dl.dropboxusercontent.com/u/11957180/Email/logo.png" style="position:relative;left:-60px;"/></td>
-						<td align="right"><h6 class="collapse">LBEvo</h6></td>
+						<td><img src="images/logo.png" style="position:relative;width:65px;"/></td>
+						<td align="right"><h6 class="collapse">LockPlus</h6></td>
 					</tr>
 				</table>
 				</div>
@@ -147,12 +142,14 @@ color:#0b9cef;
 							 <a href="index.html">Back</a>
 						</p><!-- /Callout Panel -->
 
-						<h3>Menu Setup</h3>
-						<p><h4>Place</h4></p>
-							<p class="tabbed" onclick="scrollto('elements')">Elements</p>
-							<p class="tabbed" onclick="scrollto('widgets')">Widgets</p>
-							<p class="tabbed" onclick="scrollto('icons')">Icons</p>
-							<p class="tabbed" onclick="scrollto('lock')">Lock Elements</p>
+						<h3>Editor Interface</h3>
+						<p><h4>Main Menu</h4></p>
+							<p class="tabbed" onclick="scrollto('background')"><i class="fa fa-photo"></i> Background</p>
+							<p class="tabbed" onclick="scrollto('overlay')"><i class="fa fa-clipboard"></i> Change Overlay</p>
+							<p class="tabbed" onclick="scrollto('elementsPanel')"><i class="fa fa-flask"></i> Show Elements Panel</p>
+							<p class="tabbed" onclick="scrollto('save')"><i class="fa fa-upload"></i> Save Theme</p>
+                            <p class="tabbed" onclick="scrollto('load')"><i class="fa fa-download"></i> Load Theme</p>
+                            <p class="tabbed" onclick="scrollto('clearTheme')"><i class="fa fa-trash"></i> Clear Theme</p>
 						<p><h4>Wall</h4></p>
 							<p class="tabbed"onclick="scrollto('wallpaper')">Wallpaper</p>
 							<p class="tabbed"onclick="scrollto('weatherwall')">Weather Wall</p>
@@ -182,39 +179,29 @@ color:#0b9cef;
 						</br>
 						</br>
 
-					<a id="elements"><h3>Elements</h3></a>
+					<a id="background"><h3><i class="fa fa-photo"></i> Changing the Background</h3></a>
 					<p class="callout">
-						<span>Elements contains all the placable weather items. Select an element to add it to the lockscreen.</span>
+						This brings up the menu to change the background of the theme, to blur the background, to download the background, and to clear the background.
 					</p>
-					<a id="widgets"><h3>Widgets</h3></a>
+					<a id="overlay"><h3><i class="fa fa-clipboard"></i> Change the Overlay</h3></a>
 					<p class="callout">
-						Within the widgets panel you will have an option to set an animation or an iWidget.
-						</br>
-					</br>
-						Animations are located in var/mobile/Library/LBEvoAnimations
-					</br>
-					</br>
-						iWidgets allows you to place iWidgets from var/mobile/Library/iWidgets on the lockscreen.
+						An overlay appears above the wallpaper, but behind the other screen elements. It is often used to add special shapes, images, or widgets to a theme, without needing to manually edit the wallpaper image. Through overlays, custom code can be injected at runtime, allowing for widgets. <mark style='color:red;'>For more info on creating widgets by using svg overlays, see this</mark>
 					</p>
-					<a id="icons"><h3>Icons</h3></a>
+					<a id="elementsPanel"><h3><i class="fa fa-flask"></i> Show Elements Panel</h3></a>
 					<p class="callout">
-						Icons allows you to pick between system or appstore icons. Select one an be presented a menu containing icons. Tap an icon to place it, tap and hold an icon to close the icons.
-
+						Click this button to bring up the selection panel for screen elements. It presents you with the choice between clock elements, weather elements, system elements, and miscellaneous elements.
 					</p>
-					<a id="lock"><h3>LockElements</h3></a>
+					<a id="save"><h3><i class="fa fa-upload"></i> Save Theme</h3></a>
 					<p class="callout">
-						Select this icon to lock/unlock all elements. This is use after you finish a theme to keep elements from being moved on accident.
-
+						Saves and uploads the current theme to the server, so it can be downloaded to the cydget. Allows you to choose the name of the theme.
 					</p>
-					<a id="wallpaper"><h3>Wallpaper</h3></a>
+					<a id="load"><h3><i class="fa fa-download"></i> Load Theme</h3></a>
 					<p class="callout">
-						Select this icon to choose a wallpaper from your camera roll. Note if you have Reduce motion off the wallpaper may be bigger than you want. To fix this open settings/wallpaper and resize or settings/general/accessibility/reducemotion to on.
-
+						This opens up a page that shows all themes that have been made. You can either click on a theme, or enter the name of a theme, to edit that theme. This loads that theme into the editor, overwriting the previous theme in the editor.
 					</p>
-					<a id="weatherwall"><h3>Weather Wallpaper</h3></a>
+					<a id="clearTheme"><h3><i class="fa fa-trash"></i> Clear Theme</h3></a>
 					<p class="callout">
-						Select this icon to use a wallpaper that will display depending on current weather conditions. You can also pick a custom set of weather wallpapers from var/mobile/Library/LBEvoWeatherWalls
-
+                        Clears the current theme in the editor, deleting everything that was previously there.
 					</p>
 					<a id="loadtheme"><h3>Load Theme</h3></a>
 					<p class="callout">
