@@ -2001,6 +2001,12 @@ $(document).on('keydown', function(event) {
             case 46: //Delete key
                 action.removeFromScreen(action.selectedItem, true);
                 break;
+            case 8: //Backspace key
+                if (action.selectedItem.substring(0, 4) != 'text') {
+                    action.removeFromScreen(action.selectedItem, true);
+                    event.preventDefault();
+                }
+                break;
         }
     }
 
