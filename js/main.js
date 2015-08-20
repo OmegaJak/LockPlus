@@ -1930,7 +1930,8 @@ $(document).on('keydown', function(event) {
     var key = event.keyCode || event.charCode;
 
     if (key === 46) { //Delete
-        action.removeFromScreen(action.selectedItem, true);
+        if (action.selectedItem != '')
+            action.removeFromScreen(action.selectedItem, true);
     }
 });
 
