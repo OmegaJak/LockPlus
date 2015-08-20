@@ -2029,17 +2029,18 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function(event){
+    function deselectElement() {
+        $('#' + action.selectedItem).css('outline', '0px solid transparent'); // Remove the highlight
+        action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
+        action.selectedItem = ""; // Clear the selected item
+    }
+    
     if (event.target.id === '' && action.selectedItem != '') {
-        $('#' + action.selectedItem).css('outline', '0px solid transparent');
-        action.selectedItem = '';
-        action.showIconMenu(constants.toolArray, -1);
+        deselectElement();
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     } else if (event.target.id != 'screen' && event.target.id != '') {
         if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
-            action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
-            action.selectedItem = ""; // Clear the selected item
-            $('#'+event.target.id).css('outline', '0px solid transparent');
-            //action.revertElementPanel(); // Put the elementPanel back to its previous state
+            deselectElement();
         } else { // User either clicked on another element, or on a new element to highlight
             $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
             if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
