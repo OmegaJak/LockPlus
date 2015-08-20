@@ -1689,6 +1689,16 @@ rasterizeHTML.drawHTML(html, canvas);*/
         weatherdivs();
         systemdivs();
         miscDivs();
+
+        //For elements that are too long
+        var divSelected = $(div)
+        var leftPos = divSelected.position().left
+        var rightPos = leftPos + divSelected.width();
+        if (rightPos > 320) {
+            var newLeftPos = leftPos - (rightPos - 320);
+            divSelected.css('left', newLeftPos > 0 ? newLeftPos : 0);
+        }
+
         document.getElementById(id + 'Picker').style.backgroundColor = "#21b9b0"; //Add colored background to list element
         document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
     },
