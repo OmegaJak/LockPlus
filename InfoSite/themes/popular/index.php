@@ -17,6 +17,7 @@ function viewtheme(d){
 error_reporting(0);
 $array = unserialize(file_get_contents('http://LockPlus.us/php/count/dlcount.bin'));
 
+
 foreach ($array as $key => $value) {
     $name = basename($key,'.jpg');
     $count = $value;

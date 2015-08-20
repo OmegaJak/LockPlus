@@ -24,7 +24,7 @@ foreach ($array as $key => $value) {
     $img = '/php/themepreview/'.$key.'.jpg';
     if($count > 20){
         $imgSrc = basename($key,'.plist');
-        echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="themepreview/' . $imgSrc . '.jpg"/>
+        echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="themepreview/' . $imgSrc . '"/>
         <span class="themeName">'.$name.'</span>
         <span class="themeName">Est Downloads: '.$count.'</span>
         </div>';

@@ -1412,6 +1412,20 @@ rasterizeHTML.drawHTML(html, canvas);*/
            }
 
 
+try{ //if svg has transform change alignment
+    var svg = document.querySelector('.newSVG');
+        var transform = $(svg.children[0]).css('transform');
+        if(transform != "none"){
+            $(svg.children[0]).css({
+                'position' :'absolute',
+                'top' : '-350px',
+                'left' : '-170px'
+            });
+            console.log('LockPlus changed svg position for save.');
+        }
+}catch(err){console.log(err);}
+
+
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
             setTimeout(function(){
