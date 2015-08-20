@@ -675,8 +675,12 @@ var action = {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
             $(idSelector).on("mousewheel", function(event) {
-                if (event.deltaY > 0) $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) + 1))
-                    else $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) - 1));
+                var increment = 0;
+                if (event.deltaY > 0 && !event.shiftKey) increment = event.altKey ? 10 : 1
+                    else if (event.deltaY < 0 && !event.shiftKey) increment = event.altKey ? -10 : -1
+                    else if (event.deltaX > 0 && event.shiftKey) increment = JSON.parse($(idSelector).attr('min')) - $(idSelector).val()
+                    else if (event.deltaX < 0 && event.shiftKey) increment = JSON.parse($(idSelector).attr('max')) - $(idSelector).val();
+                $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) + increment));
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
                 event.preventDefault();
             });
