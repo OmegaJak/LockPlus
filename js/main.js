@@ -454,7 +454,7 @@ var action = {
         }
     },
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        var isForBox = idSelector.indexOf("box") > -1;
+        var isForBox = action.selectedItem.indexOf("box") > -1;
         var currentShadow = !isForBox ? $('#' + action.selectedItem).css('text-shadow') : $('#' + action.selectedItem).css('box-shadow');
         if (currentShadow != 'none') var splitShadow = currentShadow.split(' ')
             else var splitShadow = ['#ffffff','0px', '0px', '0px'];
