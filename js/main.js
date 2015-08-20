@@ -1715,6 +1715,7 @@ rasterizeHTML.drawHTML(html, canvas);*/
             document.getElementById(id + 'Picker').style.backgroundColor = "#54606e"; //Remove colored background from list element
             document.getElementById(id + 'Picker').style.borderColor = "#54606e";
         }
+        action.selectedItem = '';
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
