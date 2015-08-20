@@ -2037,53 +2037,27 @@ $('.screen').click(function(event){
         action.showIconMenu(constants.toolArray, -1);
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     } else if (event.target.id != 'screen' && event.target.id != '') {
-        if(this.doubleClicked){ // Somehwhere on the screen was clicked
-            if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
-                this.doubleClicked = false; //Not sure if this is necessary
-                action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
-                action.selectedItem = ""; // Clear the selected item
-                $('#'+event.target.id).css('outline', '0px solid transparent');
-                //action.revertElementPanel(); // Put the elementPanel back to its previous state
-            } else { // User either clicked on another element, or on a new element to highlight
-                $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
-                if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
-                    action.setHelpText('Pick a style adjustment from the left menu.');
-                 }else{
-                    action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
-                }
-                if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-                action.selectedItem = event.target.id; // Set the selected item to the new element
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
-                action.showProperMenuForId(event.target.id);
-                if (event.target.id.substring(0,9) === 'boxCircle') {
-                    action.setEditMenuInputsState(-2, false, event.target.id);
-                } else {
-                    action.setEditMenuInputsState(-2, false, event.target.id);
-                }
-            }
-        } else { // An element was clicked on directly
-            action.showProperMenuForId(event.target.id);
-            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){
-                action.setHelpText('Pick a style adjustment from the left menu.'); //show different text for box and icon
+        if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
+            action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
+            action.selectedItem = ""; // Clear the selected item
+            $('#'+event.target.id).css('outline', '0px solid transparent');
+            //action.revertElementPanel(); // Put the elementPanel back to its previous state
+        } else { // User either clicked on another element, or on a new element to highlight
+            $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
+            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
+                action.setHelpText('Pick a style adjustment from the left menu.');
             }else{
                 action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
             }
-            this.doubleClicked = true;
-            action.selectedItem = event.target.id; // Specify selected item
-            if (event.target.id.substring(0,3) != 'box'){
-                $('#'+event.target.id).css('outline-offset', '-1px');
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0');
-            } // Highlight specified item
-            else{
-                $('#'+event.target.id).css('outline-offset', '1px');
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0');
-            }
+            if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+            action.selectedItem = event.target.id; // Set the selected item to the new element
+            $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+            action.showProperMenuForId(event.target.id);
             if (event.target.id.substring(0,9) === 'boxCircle') {
                 action.setEditMenuInputsState(-2, false, event.target.id);
             } else {
                 action.setEditMenuInputsState(-2, false, event.target.id);
             }
-            $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
         }
     }
 });
