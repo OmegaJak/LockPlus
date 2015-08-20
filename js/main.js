@@ -104,7 +104,6 @@ var action = {
     wallpaper : '',
     uploadSelection : '', //save type of upload selection (overlay or background)
     selectedItem : '',
-    doubleClicked: false,
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
@@ -1163,7 +1162,6 @@ var action = {
             action.savedElements = {};
             action.movedElements = {};
             action.selectedItem = '';
-            action.doubleClicked = false;
             $('#screenElements').empty();
             $('.newSVG').remove();
             $(".svg").remove();
