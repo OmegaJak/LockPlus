@@ -1852,6 +1852,37 @@ rasterizeHTML.drawHTML(html, canvas);*/
         } else {
             console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
         }
+    },
+    arrowKey: function(key, capitalizedCssKey, event) {
+        var selectedItem = $('#' + action.selectedItem); //The currently selected item
+        var increment = event.altKey ? 10 : 1; // Move by 10 if the alt key is pressed
+        if (key === 'left') {
+            var newPos = selectedItem.position().left - increment;
+            if (event.shiftKey) newPos = 0; // Forcibly trigger the else statement in the ternary below
+            newPos = newPos > 0 ? newPos : 0; // Check to ensure it's still within the screen
+        } else if (key === 'right') {
+            var newPos = selectedItem.position().left + increment;
+            if (event.shiftKey) newPos = 320;
+            newPos = newPos + selectedItem.width() < 320 ? newPos : 320 - selectedItem.width();
+        } else if (key === 'up') {
+            var newPos = selectedItem.position().top - increment;
+            if (event.shiftKey) newPos = 0;
+            newPos = newPos > 0 ? newPos : 0;
+        } else if (key === 'down') {
+            var newPos = selectedItem.position().top + increment;
+            if (event.shiftKey) newPos = 568;
+            newPos = newPos + selectedItem.height() < 568 ? newPos : 568 - selectedItem.height();
+        }
+
+        var lowercaseCssKey = capitalizedCssKey.toLowerCase()
+        selectedItem.css(lowercaseCssKey, newPos); // Actually move the item
+        action.savedElements.placedElements[action.selectedItem][lowercaseCssKey] = newPos;
+        action.saveStorage();
+
+        var input = $('#pos' + capitalizedCssKey + 'Input');
+        if (input.length > 0) { // Verify the relevant input exists
+            input.val(newPos); // If it does, update it to reflect the new position
+        }
     }
 };
 function resizeWall(img, width, height) {
@@ -1931,10 +1962,26 @@ window.onload = function () {
 $(document).on('keydown', function(event) {
     var key = event.keyCode || event.charCode;
 
-    if (key === 46) { //Delete
-        if (action.selectedItem != '')
-            action.removeFromScreen(action.selectedItem, true);
+    if (action.selectedItem != '') {
+        switch (event.keyCode) {
+            case 37: //Left arrow
+                action.arrowKey('left','Left', event);
+                break;
+            case 38: //Up arrow
+                action.arrowKey('up','Top', event);
+                break;
+            case 39: //Right arrow
+                action.arrowKey('right','Left', event);
+                break;
+            case 40: //Down arrow
+                action.arrowKey('down','Top', event);
+                break;
+            case 46: //Delete key
+                action.removeFromScreen(action.selectedItem, true);
+                break;
+        }
     }
+
 });
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
