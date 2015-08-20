@@ -1770,6 +1770,8 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 return "Box Shadow Menu";
             case constants.boxEditArray:
                 return "Box Styles Menu";
+            case constants.circleEditArray:
+                return "Circle Styles Menu";
             case constants.iconArray:
                 return "Icon Styles Menu";
             case constants.linearGradientArray:
