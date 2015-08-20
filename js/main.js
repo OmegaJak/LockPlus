@@ -1684,7 +1684,6 @@ rasterizeHTML.drawHTML(html, canvas);*/
                 this.savedElements.placedElements[id]['left'] = '130px';
             }
         }
-        this.saveStorage();
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
@@ -1697,7 +1696,9 @@ rasterizeHTML.drawHTML(html, canvas);*/
         if (rightPos > 320) {
             var newLeftPos = leftPos - (rightPos - 320);
             divSelected.css('left', newLeftPos > 0 ? newLeftPos : 0);
+            this.savedElements.placedElements[id]['left'] = newLeftPos > 0 ? newLeftPos : 0;
         }
+        this.saveStorage();
 
         document.getElementById(id + 'Picker').style.backgroundColor = "#21b9b0"; //Add colored background to list element
         document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
