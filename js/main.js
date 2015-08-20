@@ -2029,35 +2029,91 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function(event){
-    function deselectElement() {
+    function deselectElement(fullClear) {
         $('#' + action.selectedItem).css('outline', '0px solid transparent'); // Remove the highlight
-        action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
-        action.selectedItem = ""; // Clear the selected item
+        if (fullClear) {
+            action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
+            action.selectedItem = ""; // Clear the selected item
+        }
     }
-    
+
     if (event.target.id === '' && action.selectedItem != '') {
-        deselectElement();
+        deselectElement(true);
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     } else if (event.target.id != 'screen' && event.target.id != '') {
         if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
-            deselectElement();
+            deselectElement(true);
         } else { // User either clicked on another element, or on a new element to highlight
-            $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
-            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
-                action.setHelpText('Pick a style adjustment from the left menu.');
-            }else{
+            deselectElement(false); // Unhighlight the old element
+            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
+                action.setHelpText('Pick a style adjustment from the left menu.')
+            else
                 action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
-            }
-            if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+
             action.selectedItem = event.target.id; // Set the selected item to the new element
             $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+
+            if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
             action.showProperMenuForId(event.target.id);
-            if (event.target.id.substring(0,9) === 'boxCircle') {
-                action.setEditMenuInputsState(-2, false, event.target.id);
-            } else {
-                action.setEditMenuInputsState(-2, false, event.target.id);
+            action.setEditMenuInputsState(-2, false, event.target.id); // Open all inputs
+        }
+    }
+});
+
+$('.screen').on('mousewheel', function(event) {
+    var selected = $('#' + action.selectedItem);
+    if (selected.length > 0 && $('#' + action.selectedItem + ':hover').length > 0) { // Tried using .is(':hover'), but it always returned false. This works
+        if (event.deltaY > 0) var increment = event.altKey ? 10 : 1;
+            else var increment = event.altKey ? -10 : -1;
+
+        if (action.selectedItem.substring(0, 3) === 'box' || action.selectedItem === 'icon') { // Special case for boxes and circles (also icons), change both height and width
+            var newHeight = selected.height() + increment;
+            newHeight = newHeight > 0 ? newHeight : 1; // Floor at 1
+            //newHeight = newHeight < 568 ? newHeight : 568; // Ceiling at 568 (height of screen) TODO: Fix the interesting quirks introduced by using this (circles → ovals)
+            var newWidth = selected.width() + increment;
+            newWidth = newWidth > 0 ? newWidth : 1; // Floor at 1
+            //newWidth = newWidth < 320 ? newWidth : 320; // Ceiling at 320 (width of screen)
+            selected.css('height', newHeight).css('width', newWidth);
+            action.savedElements.placedElements[action.selectedItem]['height'] = newHeight + 'px';
+            action.savedElements.placedElements[action.selectedItem]['width'] = newWidth + 'px';
+
+            if (action.selectedItem === 'icon') {
+                //Special case for icons. It's child img's height and width must also be updated
+                var iconChild = $(selected.children()[0]);
+                iconChild.css('height', newHeight).css('width', newHeight); // Icons should always be squares
+
+                var input = $('#iconSizeInput');
+                if (input.length > 0) { // Verify the relevant input exists
+                    input.val(newHeight); // If it does, update it to reflect the new position
+                }
+            } else { // It's either a box or a circle
+                var input = $('#widthSizeInput'); // Both boxes and circles need their width updated
+                if (input.length > 0) {
+                    input.val(newWidth);
+                }
+                if (action.selectedItem.substring(3, 9) != 'Circle') { // Only boxes, not circles, have height to be updated
+                    var inputTwo = $('#heightSizeInput');
+                    if (inputTwo.length > 0) {
+                        inputTwo.val(newHeight);
+                    }
+                }
+            }
+        } else { // Otherwise, it's normal text, change font size
+            var oldSize = selected.css('font-size');
+            oldSize = JSON.parse(oldSize.substring(0,oldSize.length - 2)); // Remove the 'px' from the end, turn it into a number
+            var newSize = oldSize + increment;
+            newSize = newSize > 5 ? newSize : 5; // Set a floor at 5
+            selected.css('font-size', newSize + 'px');
+            action.savedElements.placedElements[action.selectedItem]['font-size'] = newSize;
+
+            // Update the font size input
+            var input = $('#fontSizeInput');
+            if (input.length > 0) {
+                input.val(newSize);
             }
         }
+        action.saveStorage();
+        event.preventDefault();
     }
 });
 
