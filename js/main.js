@@ -669,7 +669,7 @@ var action = {
             $('#' + key + 'Increment').on('click', function(event) { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback, event) });
 
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
-            $(idSelector).val(Math.round(JSON.parse(elSize.substring(0,elSize.length - unit.length))));
+            try { $(idSelector).val(Math.round(JSON.parse(elSize.substring(0,elSize.length - unit.length)))); } catch (e) { console.log("There was an issue with setting the value of the input with idSelector:" + idSelector);}
             $(idSelector).on("focus", function() { action.setHelpText('Try scrolling while hovering over the input text!'); })
             $(idSelector).on("change", function() {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
