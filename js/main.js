@@ -104,7 +104,6 @@ var action = {
     wallpaper : '',
     uploadSelection : '', //save type of upload selection (overlay or background)
     selectedItem : '',
-    doubleClicked: false,
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
@@ -455,7 +454,7 @@ var action = {
         }
     },
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        var isForBox = idSelector.indexOf("box") > -1;
+        var isForBox = action.selectedItem.indexOf("box") > -1;
         var currentShadow = !isForBox ? $('#' + action.selectedItem).css('text-shadow') : $('#' + action.selectedItem).css('box-shadow');
         if (currentShadow != 'none') var splitShadow = currentShadow.split(' ')
             else var splitShadow = ['#ffffff','0px', '0px', '0px'];
@@ -670,14 +669,18 @@ var action = {
             $('#' + key + 'Increment').on('click', function(event) { action.handleInputButtonEvent(idSelector, 1, cssKey, jsCssKey, unit, updateCallback, event) });
 
             var elSize = updateCallback(idSelector, cssKey, unit, jsCssKey, 'get');
-            $(idSelector).val(Math.round(JSON.parse(elSize.substring(0,elSize.length - unit.length))));
+            try { $(idSelector).val(Math.round(JSON.parse(elSize.substring(0,elSize.length - unit.length)))); } catch (e) { console.log("There was an issue with setting the value of the input with idSelector:" + idSelector);}
             $(idSelector).on("focus", function() { action.setHelpText('Try scrolling while hovering over the input text!'); })
             $(idSelector).on("change", function() {
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
             });
             $(idSelector).on("mousewheel", function(event) {
-                if (event.deltaY > 0) $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) + 1))
-                    else $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) - 1));
+                var increment = 0;
+                if (event.deltaY > 0 && !event.shiftKey) increment = event.altKey ? 10 : 1
+                    else if (event.deltaY < 0 && !event.shiftKey) increment = event.altKey ? -10 : -1
+                    else if (event.deltaX > 0 && event.shiftKey) increment = JSON.parse($(idSelector).attr('min')) - $(idSelector).val()
+                    else if (event.deltaX < 0 && event.shiftKey) increment = JSON.parse($(idSelector).attr('max')) - $(idSelector).val();
+                $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) + increment));
                 updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
                 event.preventDefault();
             });
@@ -1163,7 +1166,6 @@ var action = {
             action.savedElements = {};
             action.movedElements = {};
             action.selectedItem = '';
-            action.doubleClicked = false;
             $('#screenElements').empty();
             $('.newSVG').remove();
             $(".svg").remove();
@@ -1698,11 +1700,22 @@ try{ //if svg has transform change alignment
                 this.savedElements.placedElements[id]['left'] = '130px';
             }
         }
-        this.saveStorage();
         loadClock(); //in clock.js
         weatherdivs();
         systemdivs();
         miscDivs();
+
+        //For elements that are too long
+        var divSelected = $(div)
+        var leftPos = divSelected.position().left
+        var rightPos = leftPos + divSelected.width();
+        if (rightPos > 320) {
+            var newLeftPos = leftPos - (rightPos - 320);
+            divSelected.css('left', newLeftPos > 0 ? newLeftPos : 0);
+            this.savedElements.placedElements[id]['left'] = newLeftPos > 0 ? newLeftPos : 0;
+        }
+        this.saveStorage();
+
         document.getElementById(id + 'Picker').style.backgroundColor = "#21b9b0"; //Add colored background to list element
         document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
     },
@@ -1719,6 +1732,7 @@ try{ //if svg has transform change alignment
             document.getElementById(id + 'Picker').style.backgroundColor = "#54606e"; //Remove colored background from list element
             document.getElementById(id + 'Picker').style.borderColor = "#54606e";
         }
+        action.selectedItem = '';
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
@@ -1770,6 +1784,8 @@ try{ //if svg has transform change alignment
                 return "Box Shadow Menu";
             case constants.boxEditArray:
                 return "Box Styles Menu";
+            case constants.circleEditArray:
+                return "Circle Styles Menu";
             case constants.iconArray:
                 return "Icon Styles Menu";
             case constants.linearGradientArray:
@@ -1778,6 +1794,10 @@ try{ //if svg has transform change alignment
                 return "Linear Box Gradient Menu";
             case constants.backgroundArray:
                 return "Background Menu";
+            case constants.transformArray:
+                return "Transform Menu";
+            case constants.affixArray:
+                return "Suffix/Prefix Menu";
         }
     },
     showProperMenuForId: function(id) {
@@ -1853,6 +1873,37 @@ try{ //if svg has transform change alignment
             $('#' + constants.editArray[0].split("~")[state]).trigger('click');
         } else {
             console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
+        }
+    },
+    arrowKey: function(key, capitalizedCssKey, event) {
+        var selectedItem = $('#' + action.selectedItem); //The currently selected item
+        var increment = event.altKey ? 10 : 1; // Move by 10 if the alt key is pressed
+        if (key === 'left') {
+            var newPos = selectedItem.position().left - increment;
+            if (event.shiftKey) newPos = 0; // Forcibly trigger the else statement in the ternary below
+            newPos = newPos > 0 ? newPos : 0; // Check to ensure it's still within the screen
+        } else if (key === 'right') {
+            var newPos = selectedItem.position().left + increment;
+            if (event.shiftKey) newPos = 320;
+            newPos = newPos + selectedItem.width() < 320 ? newPos : 320 - selectedItem.width();
+        } else if (key === 'up') {
+            var newPos = selectedItem.position().top - increment;
+            if (event.shiftKey) newPos = 0;
+            newPos = newPos > 0 ? newPos : 0;
+        } else if (key === 'down') {
+            var newPos = selectedItem.position().top + increment;
+            if (event.shiftKey) newPos = 568;
+            newPos = newPos + selectedItem.height() < 568 ? newPos : 568 - selectedItem.height();
+        }
+
+        var lowercaseCssKey = capitalizedCssKey.toLowerCase()
+        selectedItem.css(lowercaseCssKey, newPos); // Actually move the item
+        action.savedElements.placedElements[action.selectedItem][lowercaseCssKey] = newPos;
+        action.saveStorage();
+
+        var input = $('#pos' + capitalizedCssKey + 'Input');
+        if (input.length > 0) { // Verify the relevant input exists
+            input.val(newPos); // If it does, update it to reflect the new position
         }
     }
 };
@@ -1930,6 +1981,31 @@ window.onload = function () {
     },0); //if going to load immediately wait for everything visible to show first.
 }
 
+$(document).on('keydown', function(event) {
+    var key = event.keyCode || event.charCode;
+
+    if (action.selectedItem != '') {
+        switch (event.keyCode) {
+            case 37: //Left arrow
+                action.arrowKey('left','Left', event);
+                break;
+            case 38: //Up arrow
+                action.arrowKey('up','Top', event);
+                break;
+            case 39: //Right arrow
+                action.arrowKey('right','Left', event);
+                break;
+            case 40: //Down arrow
+                action.arrowKey('down','Top', event);
+                break;
+            case 46: //Delete key
+                action.removeFromScreen(action.selectedItem, true);
+                break;
+        }
+    }
+
+});
+
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
     var target = event.target.id;
@@ -1977,64 +2053,91 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function(event){
+    function deselectElement(fullClear) {
+        $('#' + action.selectedItem).css('outline', '0px solid transparent'); // Remove the highlight
+        if (fullClear) {
+            action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
+            action.selectedItem = ""; // Clear the selected item
+        }
+    }
+
     if (event.target.id === '' && action.selectedItem != '') {
-        $('#' + action.selectedItem).css('outline', '0px solid transparent');
-        action.selectedItem = '';
-        action.showIconMenu(constants.toolArray, -1);
+        deselectElement(true);
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
+    } else if (event.target.id != 'screen' && event.target.id != '') {
+        if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
+            deselectElement(true);
+        } else { // User either clicked on another element, or on a new element to highlight
+            deselectElement(false); // Unhighlight the old element
+            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
+                action.setHelpText('Pick a style adjustment from the left menu.')
+            else
+                action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+
+            action.selectedItem = event.target.id; // Set the selected item to the new element
+            $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+
+            if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+            action.showProperMenuForId(event.target.id);
+            action.setEditMenuInputsState(-2, false, event.target.id); // Open all inputs
+        }
     }
 });
 
-$('.screen').on('click',function(event){
-    if(event.target.id != 'screen' && event.target.id != ''){
-        if(this.doubleClicked){ // Somehwhere on the screen was clicked
-            if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
-                this.doubleClicked = false; //Not sure if this is necessary
-                action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
-                action.selectedItem = ""; // Clear the selected item
-                $('#'+event.target.id).css('outline', '0px solid transparent');
-                //action.revertElementPanel(); // Put the elementPanel back to its previous state
-            } else { // User either clicked on another element, or on a new element to highlight
-                $('#'+action.selectedItem).css('outline', '0px solid transparent'); // Unhighlight the old element
-                if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){ //show different text for box and icon
-                    action.setHelpText('Pick a style adjustment from the left menu.');
-                 }else{
-                    action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+$('.screen').on('mousewheel', function(event) {
+    var selected = $('#' + action.selectedItem);
+    if (selected.length > 0 && $('#' + action.selectedItem + ':hover').length > 0) { // Tried using .is(':hover'), but it always returned false. This works
+        if (event.deltaY > 0) var increment = event.altKey ? 10 : 1;
+            else var increment = event.altKey ? -10 : -1;
+
+        if (action.selectedItem.substring(0, 3) === 'box' || action.selectedItem === 'icon') { // Special case for boxes and circles (also icons), change both height and width
+            var newHeight = selected.height() + increment;
+            newHeight = newHeight > 0 ? newHeight : 1; // Floor at 1
+            //newHeight = newHeight < 568 ? newHeight : 568; // Ceiling at 568 (height of screen) TODO: Fix the interesting quirks introduced by using this (circles → ovals)
+            var newWidth = selected.width() + increment;
+            newWidth = newWidth > 0 ? newWidth : 1; // Floor at 1
+            //newWidth = newWidth < 320 ? newWidth : 320; // Ceiling at 320 (width of screen)
+            selected.css('height', newHeight).css('width', newWidth);
+            action.savedElements.placedElements[action.selectedItem]['height'] = newHeight + 'px';
+            action.savedElements.placedElements[action.selectedItem]['width'] = newWidth + 'px';
+
+            if (action.selectedItem === 'icon') {
+                //Special case for icons. It's child img's height and width must also be updated
+                var iconChild = $(selected.children()[0]);
+                iconChild.css('height', newHeight).css('width', newHeight); // Icons should always be squares
+
+                var input = $('#iconSizeInput');
+                if (input.length > 0) { // Verify the relevant input exists
+                    input.val(newHeight); // If it does, update it to reflect the new position
                 }
-                if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-                action.selectedItem = event.target.id; // Set the selected item to the new element
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
-                action.showProperMenuForId(event.target.id);
-                if (event.target.id.substring(0,9) === 'boxCircle') {
-                    action.setEditMenuInputsState(-2, false, event.target.id);
-                } else {
-                    action.setEditMenuInputsState(-2, false, event.target.id);
+            } else { // It's either a box or a circle
+                var input = $('#widthSizeInput'); // Both boxes and circles need their width updated
+                if (input.length > 0) {
+                    input.val(newWidth);
+                }
+                if (action.selectedItem.substring(3, 9) != 'Circle') { // Only boxes, not circles, have height to be updated
+                    var inputTwo = $('#heightSizeInput');
+                    if (inputTwo.length > 0) {
+                        inputTwo.val(newHeight);
+                    }
                 }
             }
-        } else { // An element was clicked on directly
-            action.showProperMenuForId(event.target.id);
-            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon'){
-                action.setHelpText('Pick a style adjustment from the left menu.'); //show different text for box and icon
-            }else{
-                action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+        } else { // Otherwise, it's normal text, change font size
+            var oldSize = selected.css('font-size');
+            oldSize = JSON.parse(oldSize.substring(0,oldSize.length - 2)); // Remove the 'px' from the end, turn it into a number
+            var newSize = oldSize + increment;
+            newSize = newSize > 5 ? newSize : 5; // Set a floor at 5
+            selected.css('font-size', newSize + 'px');
+            action.savedElements.placedElements[action.selectedItem]['font-size'] = newSize;
+
+            // Update the font size input
+            var input = $('#fontSizeInput');
+            if (input.length > 0) {
+                input.val(newSize);
             }
-            this.doubleClicked = true;
-            action.selectedItem = event.target.id; // Specify selected item
-            if (event.target.id.substring(0,3) != 'box'){
-                $('#'+event.target.id).css('outline-offset', '-1px');
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0');
-            } // Highlight specified item
-            else{
-                $('#'+event.target.id).css('outline-offset', '1px');
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0');
-            }
-            if (event.target.id.substring(0,9) === 'boxCircle') {
-                action.setEditMenuInputsState(-2, false, event.target.id);
-            } else {
-                action.setEditMenuInputsState(-2, false, event.target.id);
-            }
-            $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the element panel's visibility state
         }
+        action.saveStorage();
+        event.preventDefault();
     }
 });
 
