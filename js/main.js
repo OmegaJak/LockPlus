@@ -2036,11 +2036,7 @@ $('.screen').click(function(event){
         action.selectedItem = '';
         action.showIconMenu(constants.toolArray, -1);
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
-    }
-});
-
-$('.screen').on('click',function(event){
-    if(event.target.id != 'screen' && event.target.id != ''){
+    } else if (event.target.id != 'screen' && event.target.id != '') {
         if(this.doubleClicked){ // Somehwhere on the screen was clicked
             if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
                 this.doubleClicked = false; //Not sure if this is necessary
