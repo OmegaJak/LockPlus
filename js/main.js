@@ -1926,6 +1926,14 @@ window.onload = function () {
     },0); //if going to load immediately wait for everything visible to show first.
 }
 
+$(document).on('keydown', function(event) {
+    var key = event.keyCode || event.charCode;
+
+    if (key === 46) { //Delete
+        action.removeFromScreen(action.selectedItem, true);
+    }
+});
+
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
     var target = event.target.id;
