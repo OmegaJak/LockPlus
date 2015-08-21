@@ -1379,54 +1379,37 @@ var action = {
         $('.toolPanel').css('display','none');
         $('.elementPanel').css('display','none');
         $('#tips').css('display','none');
-       $('#screenElements').children().each(function(  ) {
-            //console.log(this);
-            //$('#'+this.id).removeClass();
-            //$('#'+this.id).addClass('test');
-        });
 
-/*var canvas = document.getElementById("canvas"),
-    html_container = document.querySelector(".screen"),
-    html = html_container.innerHTML;
-rasterizeHTML.drawHTML(html, canvas);*/
-/* Could be alt to html2canvas */
 
 //fix for rotated elements
 
         var children = document.getElementById('screenElements').children;
         for (var i = 0; i < children.length; i++) {
            var transform =  $(children[i]).css('transform');
-        if(transform !== 'none'){
-            var id = children[i].id;
-            var Tp = $(children[i]).css('top').replace(/[^-\d\.]/g, '');
-            var Lf = $(children[i]).css('left').replace(/[^-\d\.]/g, '');
-            $(children[i]).css({
-                'top' : Tp - 350 + 'px',
-                'left' : Lf - 175 + 'px'
-            });
-            //$("#"+id).css('top',(Tp - 350) + 'px');
-            //$('#'+id).css('left',(Lf - 170) + 'px');
+            if(transform !== 'none'){
+                var id = children[i].id;
+                var Tp = $(children[i]).css('top').replace(/[^-\d\.]/g, '');
+                var Lf = $(children[i]).css('left').replace(/[^-\d\.]/g, '');
+                $(children[i]).css({
+                    'top' : Tp - 350 + 'px',
+                    'left' : Lf - 175 + 'px'
+                });
+            }
         }
-            /*$(children[i]).css({
-                'top' : Tp - 350 + 'px',
-                'left' : Lf - 170 + 'px'
-            });*/
+
+           if($('.newSVG')[0]){
+            var svg = document.querySelector('.newSVG');
+            var transform = $(svg.children[0]).css('transform');
+            if(transform != "none"){
+                $(svg.children[0]).css({
+                    'position' :'absolute',
+                    'top' : '-350px',
+                    'left' : '-170px'
+                });
+                console.log('LockPlus changed svg position for save.');
+            }
            }
-
-
-try{ //if svg has transform change alignment
-    var svg = document.querySelector('.newSVG');
-        var transform = $(svg.children[0]).css('transform');
-        if(transform != "none"){
-            $(svg.children[0]).css({
-                'position' :'absolute',
-                'top' : '-350px',
-                'left' : '-170px'
-            });
-            console.log('LockPlus changed svg position for save.');
-        }
-}catch(err){console.log(err);}
-
+//end fix rotated elements
 
         html2canvas(document.querySelector('.screen')).then(function(canvas) {
             document.getElementById('previewCanvas').appendChild(canvas);
