@@ -80,7 +80,9 @@ var elementPanel = {
             title: "Strings3",
             daydatemonth: cF.daytext() + " | " + cF.date() + " " + cF.monthtext(),
             hrmin: cF.hourtext() + '.' + cF.minute(),
-            hrmintx: (cF.minutetwotext() !== "") ? cF.hourtext() + '.' + cF.minuteonetextdot() +  '.' + cF.minutetwotext() : cF.hourtext() + '.' + cF.minuteonetextdot() + cF.minutetwotext()
+            hrmintx: (cF.minutetwotext() !== "") ? cF.hourtext() + '.' + cF.minuteonetextdot() +  '.' + cF.minutetwotext() : cF.hourtext() + '.' + cF.minuteonetextdot() + cF.minutetwotext(),
+            daydatesmonth: cF.daytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
+            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext()
         },
         clocks: {
             title: "Clock",
@@ -261,11 +263,28 @@ var elementPanel = {
             title: "Battery",
             battery: "100",
             batterypercent: "100%",
-            chargingtxt: "Charging"
+            chargingtxt: "Not Charging",
+            chargingstate: "Charging"
         },
         unlock: {
             title: "Unlock",
             unlock: "Unlock"
+        },
+        signal: {
+            title: "Signal",
+            signal: "3",
+            signalpercent: "40%"
+        },
+        alarm: {
+            title: "Alarm",
+            alarm24: "15:20",
+            alarm: "8:00",
+            alarmpm: "8:00am"
+        },
+        wifi: {
+            title: "Wifi",
+            wifi: "20",
+            wifipercent: "20%"
         }
     },
     miscElements: {
@@ -313,7 +332,28 @@ var elementPanel = {
         },
         apps3:{
             title: "Apps 3",
-            app13: "WhatsApp"
+            app13: "WhatsApp",
+            app14: "Safari",
+            app15: "Weather",
+            app16: "Clock",
+            app17: "Music",
+            app18: "Camera"
+        },
+        apps4:{
+            title: "Apps 4",
+            app19: "Reminders",
+            app20: "Notes",
+            app21: "Maps",
+            app22: "Calendar",
+            app23: "Calculator",
+            app24: "Cydia"
+        },
+        apps5:{
+            title: "Apps 5",
+            app25: "YouTube",
+            app26: "Settings",
+            app27: "AppStore",
+            app28: "Health"
         }
     }
 };

@@ -279,7 +279,9 @@ function loadClock() {
                 datedash : clock.daytext() + "-" + clock.monthtext() + "-" + clock.date(),
                 year: clock.year(),
                 daydotdate: clock.daytext() + "." + clock.date(),
-                daydatemonth: clock.daytext() + " | " + clock.date() + " " + clock.monthtext()
+                daydatemonth: clock.daytext() + " | " + clock.date() + " " + clock.monthtext(),
+                daydatesmonth: clock.daytext() + ' ' + clock.date() + ' ' + clock.smonthtext(),
+                daydatescommamonth: clock.daytext() + ', ' + clock.date() + ' ' + clock.smonthtext()
             };
             Object.keys(clockElements).forEach(function (key) {
                 var value = clockElements[key],
@@ -359,8 +361,16 @@ var systemdivs = function () {
         firmware: 'Version 8.3 (Build 12F70)', //[NSProcessInfo processInfo].operatingSystemVersionString;
         battery: '100', //Math.round([[UIDevice currentDevice]batteryLevel] * 100);
         batterypercent: '100%',
-        chargingtxt: 'Charging',
-        unlock: 'Unlock'
+        chargingtxt: 'Not Charging',
+        chargingstate: 'Charging',
+        unlock: 'Unlock',
+        signal: "3",
+        signalpercent: "40%",
+        alarm24: "15:20",
+        alarm: "8:00",
+        alarmpm: "8:00am",
+        wifi: "20",
+        wifipercent: "20%"
     };
     Object.keys(systemEl).forEach(function (key) {
         var value = systemEl[key],
@@ -402,7 +412,22 @@ var miscDivs = function() {
         app10: 'Facebook-com.facebook.Facebook',
         app11: 'Kik-com.kik.chat',
         app12: 'YouTube-com.google.ios.youtube',
-        app13: 'WhatsApp-net.whatsapp.WhatsApp'
+        app13: 'WhatsApp-net.whatsapp.WhatsApp',
+        app14: 'Safari-com.apple.mobilesafari',
+        app15: 'Weather-com.apple.weather',
+        app16: 'Clock-com.apple.mobiletimer',
+        app17: 'Music-com.apple.Music',
+        app18: 'Camera-com.apple.camera',
+        app19: 'Reminders-com.apple.reminders',
+        app20: 'Notes-com.apple.mobilenotes',
+        app21: 'Maps-com.apple.Maps',
+        app22: 'Calendar-com.apple.mobilecal',
+        app23: 'Calculator-com.apple.calculator',
+        app24: 'Cydia-com.saurik.Cydia',
+        app25: 'YouTube-com.google.ios.youtube',
+        app26: 'Settings-com.apple.Preferences',
+        app27: 'AppStore-com.apple.AppStore',
+        app28: 'Health-com.apple.Health'
     };
     Object.keys(miscEl).forEach(function (key) {
         var value = miscEl[key],
