@@ -1924,7 +1924,11 @@ switch(iPhone) {
     function resize() {
         var newWall = resizeWall(this, newWidth, newHeight);
         localStorage.setItem('wallpaperBlur',null);
-        action.setBG(newWall);
+    try{
+            action.setBG(newWall);
+    }catch(err){
+        alert("Wallpaper too big! This file will not save to the theme! Please compress this wallpaper. Browser " + err);
+    }
         $('#wallSelector').css('display','none');
     }
 }
