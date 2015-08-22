@@ -1171,7 +1171,6 @@ var action = {
             $(".svg").remove();
             action.hideClearLabel(); // Avoid showing the help text for not clearing the label, just hiding it
             action.hideElementPanelElements();
-            $('#bgInput').after($('#bgInput').clone(true)).remove();
             action.setBG(''); //culprit to object is undefined when placed
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
@@ -1486,6 +1485,7 @@ var action = {
             action.wallpaper = null;
             localStorage.setItem('wallpaperBlur','0');
             action.showIconMenu(constants.toolArray, -1);
+            $('#bgInput').after($('#bgInput').clone(true)).remove();
         }
         action.saveStorage('wallpaper'); //we only need to set the wallpaper action.saveStorage would save everything.
     },
