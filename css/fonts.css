@@ -1,4 +1,28 @@
 @font-face{
+	font-family:'aileronbold';
+	src:url(fonts/user/aileronbold.otf);
+}
+@font-face{
+	font-family:'aileronlight';
+	src:url(fonts/user/aileronlight.otf);
+}
+@font-face{
+	font-family:'aileronthin';
+	src:url(fonts/user/aileronthin.otf);
+}
+@font-face{
+	font-family:'aileronthick';
+	src:url(fonts/user/aileronthick.otf);
+}
+@font-face{
+	font-family:'aileronultra';
+	src:url(fonts/user/aileronultra.otf);
+}
+@font-face{
+	font-family:'aileronheavy';
+	src:url(fonts/user/aileronheavy.otf);
+}
+@font-face{
 	font-family:'ailerons';
 	src:url(fonts/user/ailerons.otf);
 }
@@ -123,6 +147,10 @@
 	src:url(fonts/user/kanji.otf);
 }
 @font-face{
+	font-family:'kaneda';
+	src:url(fonts/user/kaneda.otf);
+}
+@font-face{
 	font-family:'lg';
 	src:url(fonts/user/lg.otf);
 }
@@ -137,6 +165,14 @@
 @font-face{
 	font-family:'manifesto';
 	src:url(fonts/user/manifesto.otf);
+}
+@font-face{
+	font-family:'moonlight';
+	src:url(fonts/user/moonlight.otf);
+}
+@font-face{
+	font-family:'moonbold';
+	src:url(fonts/user/moonbold.otf);
 }
 @font-face{
 	font-family:'nexabold';
@@ -207,6 +243,10 @@
 	src:url(fonts/user/sanfranheavy.otf);
 }
 @font-face{
+	font-family:'streamster';
+	src:url(fonts/user/streamster.otf);
+}
+@font-face{
 	font-family:'signer';
 	src:url(fonts/user/signer.otf);
 }
@@ -215,6 +255,14 @@
 	src:url(fonts/user/scriptina.otf);
 }
 @font-face{
+	font-family:'timber';
+	src:url(fonts/user/timber.otf);
+}
+@font-face{
 	font-family:'tiza';
 	src:url(fonts/user/tiza.otf);
+}
+@font-face{
+	font-family:'tresdias';
+	src:url(fonts/user/tresdias.otf);
 }
