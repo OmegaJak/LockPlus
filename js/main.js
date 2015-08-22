@@ -2041,6 +2041,10 @@ $('.screen').click(function(event){
         if (fullClear) {
             action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
             action.selectedItem = ""; // Clear the selected item
+
+            if ($('#fList').length > 0 && $('#fList').is(':visible')) { // If the font list has been initialized and is showing
+                action.cgfont(); // Hide the font list
+            }
         }
     }
 
