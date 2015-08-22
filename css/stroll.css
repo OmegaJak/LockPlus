@@ -9,7 +9,7 @@
 #font {
 	position: absolute;
 	width: 320px;
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,1);
 	top:50%;
 	left:50%;
 	-webkit-transform: translate(-50%, -52.8%);
@@ -19,11 +19,11 @@
 
 #font ul {
 	position: relative;
-	width: 230px;
+	width: 305px;
 	height: 568px;
 	margin: 0;
 	padding: 0;
-	margin-left: 19%;
+	margin-left: 3%;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	list-style: none;
@@ -37,15 +37,16 @@
 	.font li {
 		position: relative;
 		padding: 16px;
-		background: #21b9b0;
+		background: #54606e;
 		color: white;
-		font-size: 18px;
+		font-size: 15px;
 		margin-right: 20px;
 		z-index: 2;
-		border-radius: 999px;
+		border-radius: 2px;
 		margin-top: 5px;
 		text-align: center;
 		cursor: pointer;
+		white-space: nowrap;
 
 		-webkit-transform: translateZ(0px);
 		   -moz-transform: translateZ(0px);
@@ -54,7 +55,7 @@
 		        transform: translateZ(0px);
 	}
 	.font li:nth-child(odd) {
-		background: #20aba3;
+		background: #252a30;
 	}
 
 /**
