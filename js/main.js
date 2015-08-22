@@ -801,7 +801,7 @@ var action = {
             $('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
         });
         $('#' + action.selectedItem).resize(function() {
-            //alert("test");
+            alert("test");
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
         });
     },
@@ -1563,10 +1563,6 @@ var action = {
                  action.setHelpText('Click elements to adjust styles.');
                 this.savedElements = JSON.parse(localStorage.placedElements);
                 this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
-                this.wallpaper = localStorage.getItem('wallpaper');
-                if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
-                    this.setBG(action.wallpaper);
-                }
                 if (this.savedElements.overlay) { //set overlay
                     this.setOverlay(this.savedElements.overlay);
                 }
@@ -1579,6 +1575,11 @@ var action = {
             }else{
                 action.setHelpText('Select Add elements to place elements.');
             }
+        }
+
+        action.wallpaper = localStorage.getItem('wallpaper');
+        if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
+            this.setBG(action.wallpaper);
         }
     },
     addDraggable: function(id){
@@ -1921,12 +1922,10 @@ switch(iPhone) {
     img.onload = resize;
     img.src = tempWall;
     function resize() {
-        try{
-            var newWall = resizeWall(this, newWidth, newHeight);
-             $('#wallSelector').css('display','none');
-            localStorage.setItem('wallpaperBlur',null);
-            action.setBG(newWall);
-        }catch(err){console.log("LockPlus " + err);}
+        var newWall = resizeWall(this, newWidth, newHeight);
+        localStorage.setItem('wallpaperBlur',null);
+        action.setBG(newWall);
+        $('#wallSelector').css('display','none');
     }
 }
 //upload images should implement into action OBJ. (TODO)
