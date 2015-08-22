@@ -801,7 +801,7 @@ var action = {
             $('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
         });
         $('#' + action.selectedItem).resize(function() {
-            alert("test");
+            //alert("test");
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
         });
     },
@@ -1921,10 +1921,12 @@ switch(iPhone) {
     img.onload = resize;
     img.src = tempWall;
     function resize() {
-        var newWall = resizeWall(this, newWidth, newHeight);
-        localStorage.setItem('wallpaperBlur',null);
-        action.setBG(newWall);
-        $('#wallSelector').css('display','none');
+        try{
+            var newWall = resizeWall(this, newWidth, newHeight);
+             $('#wallSelector').css('display','none');
+            localStorage.setItem('wallpaperBlur',null);
+            action.setBG(newWall);
+        }catch(err){console.log("LockPlus " + err);}
     }
 }
 //upload images should implement into action OBJ. (TODO)
