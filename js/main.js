@@ -1155,7 +1155,7 @@ var action = {
     runOppositeAction: function(actionName, actionInfo) {
         switch (actionName) {
             case 'addElement':
-                /*try {*/ action.removeFromScreen(actionInfo[0], false) /*} catch(e) {};*/
+                action.removeFromScreen(actionInfo[0], false);
                 break;
             case 'removeElement':
                 action.runAction('addElement', actionInfo);
@@ -1165,7 +1165,6 @@ var action = {
     runAction: function(actionName, actionInfo) {
         switch (actionName) {
             case 'addElement':
-                try {
                     if ($('#' + actionInfo[0] + 'Picker').length) {
                         $('#' + actionInfo[0] + 'Picker').css('background-color','#21B9B0'); //Set the colored background of the relevant list element
                         $('#' + actionInfo[0] + 'Picker').css('border-color','#21B9B0');
@@ -1174,7 +1173,6 @@ var action = {
                     $('#screenElements').empty(); // This is VERY important. Without this, replaceElements recreates each of the other elements, but they're these crappy little non-filled things. They cause issues.
                     action.replaceElements();
                     action.saveStorage();
-                } catch(e) {};
                 break;
             case 'removeElement':
                 action.runOppositeAction('addElement', actionInfo); // Does the opposite of adding an element, removing the element
