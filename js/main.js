@@ -168,7 +168,7 @@ var action = {
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
-            $('#' + action.selectedItem).css('background','linear-gradient(rgb(255,0,0),rgb(255,255,0) 50%,rgb(0,0,255) 90%)'); action.savedElements.placedElements[action.selectedItem]['background'] = "linear-gradient(179deg,rgb(255,0,0),rgb(255,255,0) 50%,rgb(0,0,255) 90%)"; action.saveStorage(); }
+            action.setCss(action.selectedItem, 'background', 'linear-gradient(rgb(255,0,0),rgb(255,255,0) 50%,rgb(0,0,255) 90%)'); }
         if (id === 'linearBoxGradient') { this.showIconMenu(constants.linearBoxGradientArray, -1); }
         if (id === 'linearGradient') { this.showIconMenu(constants.linearGradientArray, -1); }
         if (id === 'gradientType') { this.cgGradientPurpose(); }
@@ -228,10 +228,13 @@ var action = {
         }
     },
     setFont: function (fontName) {
-        action.savedElements.placedElements[action.selectedItem]['font-family'] = fontName;
-        this.saveStorage();
-        $('#' + action.selectedItem).css('font-family', fontName);
+        action.setCss(action.selectedItem, 'font-family', fontName);
         $('#fList').toggle('display');
+    },
+    setCss: function (elementId, cssKey, cssValue) {
+        $('#' + elementId).css(cssKey, cssValue);
+        action.savedElements.placedElements[elementId][cssKey] = cssValue;
+        action.saveStorage();
     },
     cgfont: function () {
         $('#fList').empty();
@@ -292,18 +295,13 @@ var action = {
     },
     updateGradient: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'clear') {
-           $('#' + action.selectedItem).css('background', '');
-           action.savedElements.placedElements[action.selectedItem]['background'] = '';
+            action.setCss(action.selectedItem, 'background', '');
            if (action.selectedItem.indexOf("box") > -1) { // TODO: Save the box's color before setting the gradient, then restore it to the same color here.
-               $('#' + action.selectedItem).css('background-color','red'); // Without this the box ends up as not showing anything at all
-               action.savedElements.placedElements[action.selectedItem]['background-color'] = 'red';
+               action.setCss(action.selectedItem, 'background-color', 'red'); // Without this the box ends up as not showing anything at all
            } else {
-               $('#' + action.selectedItem).css('-webkit-background-clip', '');
-               action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
-               $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
-               action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = '';
+               action.setCss(action.selectedItem, '-webkit-background-clip', '');
+               action.setCss(action.selectedItem, '-webkit-text-fill-color', '');
            }
-           action.saveStorage();
            return 'nothing';
        }
 
@@ -408,8 +406,7 @@ var action = {
             }
 
             $('#' + action.selectedItem).css('background-image', 'red');
-            $('#' + action.selectedItem).css('background', compiledGradient);
-            action.savedElements.placedElements[action.selectedItem]['background'] = compiledGradient;
+            action.setCss(action.selectedItem, 'background', compiledGradient);
 
             action.saveStorage();
         } else if (purpose === 'get') {
@@ -450,17 +447,11 @@ var action = {
                 }
             }
 
-            $('#' + action.selectedItem).css('transform', compiledTransform);
-            action.savedElements.placedElements[action.selectedItem]['-webkit-transform'] = compiledTransform;
-
-            action.saveStorage();
+            action.setCss(action.selectedItem, '-webkit-transform', compiledTransform);
         } else if (purpose === 'get') {
             return splitArray[index] + unit;
         } else if (purpose === 'clear') {
-            $('#' + action.selectedItem).css('transform', '');
-            action.savedElements.placedElements[action.selectedItem]['-webkit-transform'] = '';
-
-            action.saveStorage();
+            action.setCss(action.selectedItem, '-webkit-transform', '');
         }
     },
     updateShadow: function(idSelector, cssKey, unit, jsCssKey, purpose) {
@@ -501,25 +492,18 @@ var action = {
 
             newShadow = splitShadow[0] + ' ' + splitShadow[1] + ' ' + splitShadow[2] + ' ' + splitShadow[3]; // Parse into correct format for css. Could've done a loop, but that's not necessary
             if (!isForBox) {
-                $('#' + action.selectedItem).css('text-shadow', newShadow);
-                action.savedElements.placedElements[action.selectedItem]['text-shadow'] = newShadow;
+                action.setCss(action.selectedItem, 'text-shadow', newShadow);
             } else {
-                $('#' + action.selectedItem).css('box-shadow', newShadow);
-                action.savedElements.placedElements[action.selectedItem]['box-shadow'] = newShadow;
+                action.setCss(action.selectedItem, 'box-shadow', newShadow);
             }
-
-            action.saveStorage();
         } else if (purpose === 'get') {
             return splitShadow[index];
         } else if (purpose === 'clear') {
             if (!isForBox) {
-                $('#' + action.selectedItem).css('text-shadow', 'none');
-                action.savedElements.placedElements[action.selectedItem]['text-shadow'] = 'none';
+                action.setCss(action.selectedItem, 'text-shadow', 'none');
             } else {
-                $('#' + action.selectedItem).css('box-shadow', 'none');
-                action.savedElements.placedElements[action.selectedItem]['box-shadow'] = 'none';
+                action.setCss(action.selectedItem, 'box-shadow', 'none');
             }
-            action.saveStorage();
         }
     },
     cgShadowColor: function(isForBox) {
@@ -543,7 +527,7 @@ var action = {
                 action.updateShadow(isForBox ? 'box' : '', tinycolor.toRgbString(), 'px', 'color', 'set');
              });
     },
-    cgCustomText: function() {
+    cgCustomText: function() { //TODO: Undo/Redo for this
         action.cgText(constants.customTextArray[0], 'Custom Text', 'Text', function(idSelector) {
             $('#' + action.selectedItem).html($(idSelector).val()); // Sets the innerHTML of the element
             var newLength = $(idSelector).val().length * 16; // Calculates new length of the input
@@ -860,21 +844,17 @@ var action = {
             var min = JSON.parse($(idSelector).attr('min'));
             if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
             if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
-            $('#' + action.selectedItem).css(cssKey, $(idSelector).val() + unit);
-            action.savedElements.placedElements[action.selectedItem][jsCssKey] = $(idSelector).val() + unit;
+            action.setCss(action.selectedItem, cssKey, $(idSelector).val() + unit);
             //if(action.selectedItem)
             if(action.selectedItem.substring(3,9) === 'Circle'){
                 if(jsCssKey === 'width'){
-                    $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
-                    action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
-                    $('#' + action.selectedItem).css('width', $(idSelector).val() + unit);
-                    action.savedElements.placedElements[action.selectedItem]['width'] = $(idSelector).val() + unit;
+                    action.setCss(action.selectedItem, 'height', $(idSelector).val() + unit);
+                    action.setCss(action.selectedItem, 'width', $(idSelector).val() + unit);
                 }
             }
             if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
-                $('#' + action.selectedItem).css('height', $(idSelector).val() + unit);
                 $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
-                action.savedElements.placedElements[action.selectedItem]['height'] = $(idSelector).val() + unit;
+                action.setCss(action.selectedItem, 'height', $(idSelector).val() + unit);
             }
             if (jsCssKey === 'width') {
                  /* Check to see if setting width overflows screen */
@@ -885,8 +865,7 @@ var action = {
                     elDiff = Math.round(elWidth - ($('.screen').width() - elPos)); //check difference in screen width compared to element position + set width
 
                 if(elDiff > 0){
-                    $('#' + action.selectedItem).css('left', (elPos - elDiff) +'px'); //make adjustments to the element
-                    action.savedElements.placedElements[action.selectedItem].left = elPos - elDiff + 'px'; //updated placedElements obj
+                    action.setCss(action.selectedItem, 'left', (elPos - elDiff) +'px'); //make adjustments to the element
                 }
 
                 $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
@@ -922,15 +901,11 @@ var action = {
         var lastSelector;
         this.cgOption('gradientType', constants.linearGradientArray[0], ['background', 'text'], 14, true, function(optionSelector) {
             if (optionSelector === '#backgroundOption') {
-                $('#' + action.selectedItem).css('-webkit-background-clip', '');
-                action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = '';
-                $('#' + action.selectedItem).css('-webkit-text-fill-color', '');
-                action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = '';
+                action.setCss(action.selectedItem, '-webkit-background-clip', '');
+                action.setCss(action.selectedItem, '-webkit-text-fill-color', '');
             } else if (optionSelector === '#textOption') {
-                $('#' + action.selectedItem).css('-webkit-background-clip', 'text');
-                action.savedElements.placedElements[action.selectedItem]['-webkit-background-clip'] = 'text';
-                $('#' + action.selectedItem).css('-webkit-text-fill-color', 'transparent');
-                action.savedElements.placedElements[action.selectedItem]['-webkit-text-fill-color'] = 'transparent';
+                action.setCss(action.selectedItem, '-webkit-background-clip', 'text');
+                action.setCss(action.selectedItem, '-webkit-text-fill-color', 'transparent');
             }
             action.saveStorage();
 
@@ -955,9 +930,7 @@ var action = {
         });
     },
     basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
-        $('#' + action.selectedItem).css(cssKey, setTo);
-        action.savedElements.placedElements[action.selectedItem][cssKey] = setTo;
-        action.saveStorage();
+        action.setCss(action.selectedItem, cssKey, setTo);
         $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'}).attr('data-selected','true');
         if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'}).attr('data-selected','false');
         lastSelector = optionSelector;
@@ -972,9 +945,7 @@ var action = {
     },
     cgcolor: function (color, cssKey, div) {
         if (color) {
-            $('#' + this.selectedItem).css(cssKey, color);
-            action.savedElements.placedElements[this.selectedItem][cssKey] = color;
-            action.saveStorage();
+            action.setCss(action.selectedItem, cssKey, color);
         } else {
             $("#" + div).spectrum({
                 showInitial: true,
@@ -1109,14 +1080,10 @@ var action = {
                                     ,'left':-12});
         $('#boldnessOption').hover(function() {$(this).css({'background-color': 'rgba(0,0,0,0)', 'border-color':'rgba(0,0,0,0)'})});
         $('#boldnessOption').on("change", function() {
-            $('#' + action.selectedItem).css('font-weight', $('#boldnessInput').val());
-            action.savedElements.placedElements[action.selectedItem]['font-weight'] = $('#boldnessInput').val();
-            action.saveStorage();
+            action.setCss(action.selectedItem, 'font-weight', $('#boldnessInput').val());
         });
         $('#boldnessOption').on("mousewheel", function() {
-            $('#' + action.selectedItem).css('font-weight', $('#boldnessInput').val());
-            action.savedElements.placedElements[action.selectedItem]['font-weight'] = $('#boldnessInput').val();
-            action.saveStorage();
+            action.setCss(action.selectedItem, 'font-weight', $('#boldnessInput').val());
         });
     },
     openBackground: function(purpose) { // either 'original' or 'blurry'
@@ -1987,10 +1954,8 @@ var action = {
             newPos = newPos + selectedItem.height() < 568 ? newPos : 568 - selectedItem.height();
         }
 
-        var lowercaseCssKey = capitalizedCssKey.toLowerCase()
-        selectedItem.css(lowercaseCssKey, newPos); // Actually move the item
-        action.savedElements.placedElements[action.selectedItem][lowercaseCssKey] = newPos;
-        action.saveStorage();
+        var lowercaseCssKey = capitalizedCssKey.toLowerCase();
+        action.setCss(action.selectedItem, lowercaseCssKey, newPos); // Actually move the item
 
         var input = $('#pos' + capitalizedCssKey + 'Input');
         if (input.length > 0) { // Verify the relevant input exists
@@ -2204,9 +2169,8 @@ $('.screen').on('mousewheel', function(event) {
             var newWidth = selected.width() + increment;
             newWidth = newWidth > 0 ? newWidth : 1; // Floor at 1
             //newWidth = newWidth < 320 ? newWidth : 320; // Ceiling at 320 (width of screen)
-            selected.css('height', newHeight).css('width', newWidth);
-            action.savedElements.placedElements[action.selectedItem]['height'] = newHeight + 'px';
-            action.savedElements.placedElements[action.selectedItem]['width'] = newWidth + 'px';
+            action.setCss(action.selectedItem, 'height', newHeight + 'px');
+            action.setCss(action.selectedItem, 'width', newWidth + 'px');
 
             if (action.selectedItem === 'icon') {
                 //Special case for icons. It's child img's height and width must also be updated
@@ -2234,8 +2198,7 @@ $('.screen').on('mousewheel', function(event) {
             oldSize = JSON.parse(oldSize.substring(0,oldSize.length - 2)); // Remove the 'px' from the end, turn it into a number
             var newSize = oldSize + increment;
             newSize = newSize > 5 ? newSize : 5; // Set a floor at 5
-            selected.css('font-size', newSize + 'px');
-            action.savedElements.placedElements[action.selectedItem]['font-size'] = newSize;
+            action.setCss(action.selectedItem, 'font-size', newSize + 'px');
 
             // Update the font size input
             var input = $('#fontSizeInput');
