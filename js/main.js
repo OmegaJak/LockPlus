@@ -107,6 +107,13 @@ var action = {
     actionQueue : [], //Queue of actions for undo/redo
     queuePosition : -1, //The current position within this ↑ queue, which action was most recently done
     isUndoingRedoing : false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
+    sizeQueueTimeout : {
+        timeout : null,
+        isTimeoutRunning: false,
+        previousCssKey : '',
+        previousAction : null,
+        initialValue : ''
+    },
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
@@ -848,6 +855,7 @@ var action = {
     },
     updateSize: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'set') {
+            var initialValue = $('#' + action.selectedItem).css(cssKey);
             var max = JSON.parse($(idSelector).attr('max'));
             var min = JSON.parse($(idSelector).attr('min'));
             if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
@@ -885,6 +893,27 @@ var action = {
                 $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
             }
             action.saveStorage();
+
+            clearTimeout(action.sizeQueueTimeout.timeout); // Always clear the old timeout when trying to override
+            if (action.sizeQueueTimeout.initialValue === '') { // If it's empty, that means it's been used and is no longer needed
+                action.sizeQueueTimeout.initialValue = initialValue; // So set the new one, because this is a new set
+            }
+            if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
+                action.sizeQueueTimeout.previousAction = ['setCss', [action.selectedItem, cssKey, action.sizeQueueTimeout.initialValue, $('#' + action.selectedItem).css(cssKey)]]; // The value stored in the actual undo/redo queue
+            } else { // We've moved on to a differnt css key
+                if (action.sizeQueueTimeout.isTimeoutRunning) { // Really should be wasTimeoutRunning
+                    action.addAction(action.sizeQueueTimeout.previousAction); // Add the old action to the undo/redo queue
+                    action.sizeQueueTimeout.initialValue = initialValue; // Take after-the-fact action, because the timeout never finished, this was never set to '', therefore the if statement above never ran
+                }
+                action.sizeQueueTimeout.previousAction = ['setCss', [action.selectedItem, cssKey, action.sizeQueueTimeout.initialValue, $('#' + action.selectedItem).css(cssKey)]]; // Change the editor action
+            }
+            action.sizeQueueTimeout.timeout = setTimeout(function() { // If this method is called with the same cssKey within the 1.5 seconds, then the timeout is reset
+                action.addAction(action.sizeQueueTimeout.previousAction);
+                action.sizeQueueTimeout.initialValue = '';
+                action.sizeQueueTimeout.isTimeoutRunning = false;
+            }, 1500);
+            action.sizeQueueTimeout.isTimeoutRunning = true;
+            action.sizeQueueTimeout.previousCssKey = cssKey;
         } else if (purpose === 'get') {
             return $('#' + action.selectedItem).css(cssKey);
         }
@@ -1160,22 +1189,30 @@ var action = {
             case 'removeElement':
                 action.runAction('addElement', actionInfo);
                 break;
+            case 'setCss':
+                $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[2]);
+                action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[2];
+                break;
         }
     },
-    runAction: function(actionName, actionInfo) {
+    runAction: function(actionName, actionInfo) { // [actionName, actionInfo]
         switch (actionName) {
-            case 'addElement':
+            case 'addElement': // ['addElement',[elementID,[color:'', font-family:'', etc]]]
                     if ($('#' + actionInfo[0] + 'Picker').length) {
                         $('#' + actionInfo[0] + 'Picker').css('background-color','#21B9B0'); //Set the colored background of the relevant list element
                         $('#' + actionInfo[0] + 'Picker').css('border-color','#21B9B0');
                     }
                     action.savedElements.placedElements[actionInfo[0]] = actionInfo[1];
                     $('#screenElements').empty(); // This is VERY important. Without this, replaceElements recreates each of the other elements, but they're these crappy little non-filled things. They cause issues.
-                    action.replaceElements();
+                    action.replaceElements(); // Refresh the screen elements from the savedElements array
                     action.saveStorage();
                 break;
-            case 'removeElement':
+            case 'removeElement': // ['removeElement',[elementID,[color:'', font-family:'', etc]]]
                 action.runOppositeAction('addElement', actionInfo); // Does the opposite of adding an element, removing the element
+                break;
+            case 'setCss': // ['setCss', [elementID, cssKey, oldValue, newValue]]
+                $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[3]);
+                action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[3];
                 break;
         }
     },
