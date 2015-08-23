@@ -104,6 +104,9 @@ var action = {
     wallpaper : '',
     uploadSelection : '', //save type of upload selection (overlay or background)
     selectedItem : '',
+    actionQueue : [], //Queue of actions for undo/redo
+    queuePosition : -1, //The current position within this ↑ queue, which action was most recently done
+    isUndoingRedoing : false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
@@ -1119,6 +1122,60 @@ var action = {
     showPanelHelpText: function(list) {
         if ($('#'+list).css('display') === 'none') action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
     },
+    undo: function() {
+        action.isUndoingRedoing = true;
+        if (action.queuePosition > -1) { // False when array's either empty or the queue is at the beginning, nothing left to undo
+            var editorAction = action.actionQueue[action.queuePosition];
+            action.runOppositeAction(editorAction[0], editorAction[1]);
+            action.queuePosition--;
+        } else {
+            action.setHelpText("Nothing left to undo.");
+        }
+        action.isUndoingRedoing = false;
+        console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
+    },
+    redo: function() {
+        action.isUndoingRedoing = true;
+        if (action.queuePosition < action.actionQueue.length - 1) { // False when array's either empty or at the end, nothing more to redo
+            action.queuePosition++;
+            var editorAction = action.actionQueue[action.queuePosition];
+            action.runAction(editorAction[0], editorAction[1]);
+        } else {
+            action.setHelpText("Nothing left to redo.");
+        }
+        action.isUndoingRedoing = false;
+        console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
+    },
+    addAction: function(editorAction) {
+        action.actionQueue.length = action.queuePosition + 1;
+        action.actionQueue.push(editorAction);
+        action.queuePosition = action.actionQueue.length - 1;
+        console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
+    },
+    runOppositeAction: function(actionName, actionInfo) {
+        switch (actionName) {
+            case 'addElement':
+                try { action.removeFromScreen(actionInfo[0], false) } catch(e) {};
+                break;
+            case 'removeElement':
+                action.runAction('addElement', actionInfo);
+                break;
+        }
+    },
+    runAction: function(actionName, actionInfo) {
+        switch (actionName) {
+            case 'addElement':
+                try {
+                    action.savedElements.placedElements[actionInfo[0]] = actionInfo[1];
+                    action.replaceElements();
+                    action.saveStorage();
+                } catch(e) {};
+                break;
+            case 'removeElement':
+                action.runOppositeAction('addElement', actionInfo); // Does the opposite of adding an element, removing the element
+                break;
+        }
+    },
     elementPanel: function (id, duration) { //show hide items in element Panel
         var duration = typeof duration != 'undefined' ? duration : 400;
         if (id === 'cl') { $('#clockList').toggle(duration, action.showPanelHelpText('clockList')); /*this.createLI(elementPanel.clockElements, 'clockList');*/ this.showPanel('clockList'); }
@@ -1700,10 +1757,20 @@ var action = {
         }
         this.saveStorage();
 
+        if (!action.isUndoingRedoing) {
+            action.addAction(['addElement',[id]]);
+        }
+
         document.getElementById(id + 'Picker').style.backgroundColor = "#21b9b0"; //Add colored background to list element
         document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
     },
     removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
+        if (!action.isUndoingRedoing) {
+            action.addAction(['removeElement',[id, action.savedElements.placedElements[id]]]);
+        } else {
+            action.actionQueue[action.queuePosition][1] = [id, action.savedElements.placedElements[id]];
+        }
+
         var parent = document.getElementById('screenElements'),
         div = document.getElementById(id),
         index;
@@ -1990,6 +2057,14 @@ $(document).on('keydown', function(event) {
                 action.removeFromScreen(action.selectedItem, true);
                 break;
         }
+    }
+    switch (event.keyCode) {
+        case 89: //Y
+            if (event.ctrlKey) action.redo();
+            break;
+        case 90: //Z
+            if (event.ctrlKey) action.undo();
+            break;
     }
 
 });
