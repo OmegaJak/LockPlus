@@ -1160,6 +1160,7 @@ var action = {
             case 'setCss':
                 $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[2]);
                 action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[2];
+                action.saveStorage();
                 break;
         }
     },
@@ -1181,6 +1182,7 @@ var action = {
             case 'setCss': // ['setCss', [elementID, cssKey, oldValue, newValue]]
                 $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[3]);
                 action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[3];
+                action.saveStorage();
                 break;
         }
     },
@@ -1667,9 +1669,10 @@ var action = {
                     $('#' + id).click();
             },
             stop: function(event, ui){
-                action.savedElements.placedElements[id].left = ui.position.left;
-                action.savedElements.placedElements[id].top = ui.position.top;
-                action.saveStorage();
+                action.sizeQueueTimeout.initialValue =
+                action.setCss(id, 'left', ui.position.left);
+
+                action.setCss(id, 'top', ui.position.right);
                 /* Create a div around the element which can be used for snapping */
                 if(localStorage.snap == 'true'){
                     var snapper = $('<div>',{'class' : 'dLine', 'title' : id}),
