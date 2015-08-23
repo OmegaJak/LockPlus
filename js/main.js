@@ -1155,7 +1155,7 @@ var action = {
     runOppositeAction: function(actionName, actionInfo) {
         switch (actionName) {
             case 'addElement':
-                try { action.removeFromScreen(actionInfo[0], false) } catch(e) {};
+                /*try {*/ action.removeFromScreen(actionInfo[0], false) /*} catch(e) {};*/
                 break;
             case 'removeElement':
                 action.runAction('addElement', actionInfo);
@@ -1166,7 +1166,12 @@ var action = {
         switch (actionName) {
             case 'addElement':
                 try {
+                    if ($('#' + actionInfo[0] + 'Picker').length) {
+                        $('#' + actionInfo[0] + 'Picker').css('background-color','#21B9B0'); //Set the colored background of the relevant list element
+                        $('#' + actionInfo[0] + 'Picker').css('border-color','#21B9B0');
+                    }
                     action.savedElements.placedElements[actionInfo[0]] = actionInfo[1];
+                    $('#screenElements').empty(); // This is VERY important. Without this, replaceElements recreates each of the other elements, but they're these crappy little non-filled things. They cause issues.
                     action.replaceElements();
                     action.saveStorage();
                 } catch(e) {};
@@ -1680,7 +1685,7 @@ var action = {
         });
     },
     addtoScreen: function(id){ //when item is clicked from add panel
-        action.setHelpText('Click element to ajust style. (Also delete)');
+        action.setHelpText('Click element to adjust style. (Also delete)');
         var div = document.createElement('div');
         div.id = id;
         if (id.substring(0,3) === 'box') {
