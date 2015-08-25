@@ -340,6 +340,7 @@ var weatherdivs = function () {
             if (key === 'icon') {
                 if (!document.getElementById(key).innerHTML.length > 0) {
                     var img = document.createElement('img');
+                    img.id = 'iconImg';
                     img.src = value;
                     img.className = 'icon';
                     img.style.width = action.savedElements.placedElements['icon']['width'];

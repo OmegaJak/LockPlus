@@ -232,31 +232,105 @@ var action = {
         $('#fList').toggle('display');
     },
     setCss: function (elementId, cssKey, cssValue) {
-        var initialValue = $('#' + elementId).css(cssKey);
-        $('#' + elementId).css(cssKey, cssValue);
-        action.savedElements.placedElements[elementId][cssKey] = cssValue;
-        action.saveStorage();
+        if (typeof elementId === 'string') {
+            var initialValue = $('#' + elementId).css(cssKey);
 
-        clearTimeout(action.sizeQueueTimeout.timeout); // Always clear the old timeout when trying to override
-        if (action.sizeQueueTimeout.initialValue === '') { // If it's empty, that means it's been used and is no longer needed
-            action.sizeQueueTimeout.initialValue = initialValue; // So set the new one, because this is a new set
-        }
-        if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
-            action.sizeQueueTimeout.previousAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, $('#' + elementId).css(cssKey)]]; // The value stored in the actual undo/redo queue
-        } else { // We've moved on to a differnt css key
-            if (action.sizeQueueTimeout.isTimeoutRunning) { // Really should be wasTimeoutRunning
-                action.addAction(action.sizeQueueTimeout.previousAction); // Add the old action to the undo/redo queue
-                action.sizeQueueTimeout.initialValue = initialValue; // Take after-the-fact action, because the timeout never finished, this was never set to '', therefore the if statement above never ran
+            $('#' + elementId).css(cssKey, cssValue);
+            action.savedElements.placedElements[elementId][cssKey] = cssValue;
+            action.saveStorage();
+
+            clearTimeout(action.sizeQueueTimeout.timeout); // Always clear the old timeout when trying to override
+            if (action.sizeQueueTimeout.initialValue === '') { // If it's empty, that means it's been used and is no longer needed
+                action.sizeQueueTimeout.initialValue = initialValue; // So set the new one, because this is a new set
             }
-            action.sizeQueueTimeout.previousAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, $('#' + elementId).css(cssKey)]]; // Change the editor action
+            if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
+                action.sizeQueueTimeout.previousAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, $('#' + elementId).css(cssKey)]]; // The value stored in the actual undo/redo queue
+            } else { // We've moved on to a differnt css key
+                if (action.sizeQueueTimeout.isTimeoutRunning) { // Really should be wasTimeoutRunning
+                    action.addAction(action.sizeQueueTimeout.previousAction); // Add the old action to the undo/redo queue
+                    action.sizeQueueTimeout.initialValue = initialValue; // Take after-the-fact action, because the timeout never finished, this was never set to '', therefore the if statement above never ran
+                }
+                action.sizeQueueTimeout.previousAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, $('#' + elementId).css(cssKey)]]; // Change the editor action
+            }
+            action.sizeQueueTimeout.timeout = setTimeout(function() { // If this method is called with the same cssKey within the 1.5 seconds, then the timeout is reset
+                action.addAction(action.sizeQueueTimeout.previousAction);
+                action.sizeQueueTimeout.initialValue = '';
+                action.sizeQueueTimeout.isTimeoutRunning = false;
+            }, 400);
+            action.sizeQueueTimeout.isTimeoutRunning = true;
+            action.sizeQueueTimeout.previousCssKey = cssKey;
+        } else if (typeof elementId === 'object') { // We're dealing with an array here. [[elementName, cssKey, cssValue], [elementName, [cssKey, cssKey], [cssValue, cssValue]]]
+            var initialValue = []; // [initialValue, [initialValue, initialValue], initialValue]
+            var currentAction = ['setCss', []]; // ['setCss', [elementName, cssKey, previousCssValue, newCssValue], [elementName, [cssKey, cssKey], [previousCssValue, previousCssValue], [newCssValue, newCssValue]]]
+            var allCssKeys = []; //[cssKey, [cssKey, cssKey]]
+            for (var i = 0;  i < elementId.length; i++) {
+                if (typeof elementId[i][1] === 'string') { // We're only setting one cssKey here
+                    initialValue.push($('#' + elementId[i][0]).css(elementId[i][1])); // Push the element's current value to the array of initialValues
+                    allCssKeys.push(elementId[i][1]); // Push the current cssKey to the array of all cssKeys
+
+                    // 0 = elementName, 1 = cssKey, 2 = cssValue
+                    $('#' + elementId[i][0]).css(elementId[i][1], elementId[i][2]);
+                    action.savedElements.placedElements[elementId[i][0]][elementId[i][1]] = elementId[i][2];
+
+                    currentAction[1].push([elementId[i][0], elementId[i][1], '', elementId[i][2]]);
+                } else { // We're gonna assume the cssKeys are an array. There are multiple to set for this element
+                    var innerInitial = [];
+                    var cssKeys = [];
+                    var cssValues = [];
+                    for (var k = 0; k < elementId[i][1].length; k++) {
+                        innerInitial.push($('#' + elementId[i][0]).css(elementId[i][1][k]));
+
+                        // elementId[i][0] = elementName, elementId[i][1][k] = cssKey, elementId[i][2][k] = cssValue
+                        $('#' + elementId[i][0]).css(elementId[i][1][k], elementId[i][2][k]);
+                        if (typeof action.savedElements.placedElements[elementId[i][0]] != 'undefined') // Necessary check to prevent errors, primarily for the weather icon, iconImg isn't actually in placedElements
+                            action.savedElements.placedElements[elementId[i][0]][elementId[i][1][k]] = elementId[i][2][k];
+
+                        cssKeys.push(elementId[i][1][k]);
+                        cssValues.push(elementId[i][2][k]);
+                    }
+                    initialValue.push(innerInitial);
+                    allCssKeys.push(cssKeys);
+
+                    currentAction[1].push([elementId[i][0], cssKeys, '', cssValues]);
+                }
+                action.saveStorage();
+            }
+
+            // See comments above for other part of if, it's basically the same functionality, just modified slightly
+            clearTimeout(action.sizeQueueTimeout.timeout);
+            if (action.sizeQueueTimeout.initialValue === '') {
+                action.sizeQueueTimeout.initialValue = initialValue;
+            }
+
+            // Fill in the currentAction with the initialValue(s)
+            for (var i = 0; i < currentAction[1].length; i++) {
+                for (var k = 1; k < currentAction[1][i].length; k++) {
+                    if (currentAction[1][i][k] === '') {
+                        currentAction[1][i][k] = action.sizeQueueTimeout.initialValue[i];
+                    }
+                }
+            }
+
+            if (allCssKeys.toString() === action.sizeQueueTimeout.previousCssKey.toString() || action.sizeQueueTimeout.previousCssKey === '') {
+                action.sizeQueueTimeout.previousAction = currentAction;
+            } else {
+                if (action.sizeQueueTimeout.isTimeoutRunning) {
+                    action.addAction(action.sizeQueueTimeout.previousAction);
+                    action.sizeQueueTimeout.initialValue = initialValue;
+                }
+                action.sizeQueueTimeout.previousAction = currentAction;
+            }
+
+            action.sizeQueueTimeout.timeout = setTimeout(function() {
+                action.addAction(action.sizeQueueTimeout.previousAction);
+                action.sizeQueueTimeout.initialValue = '';
+                action.sizeQueueTimeout.isTimeoutRunning = false;
+            }, 400);
+            action.sizeQueueTimeout.isTimeoutRunning = true;
+            action.sizeQueueTimeout.previousCssKey = allCssKeys;
+        } else {
+            console.log("Ya done goofed (setCss)");
         }
-        action.sizeQueueTimeout.timeout = setTimeout(function() { // If this method is called with the same cssKey within the 1.5 seconds, then the timeout is reset
-            action.addAction(action.sizeQueueTimeout.previousAction);
-            action.sizeQueueTimeout.initialValue = '';
-            action.sizeQueueTimeout.isTimeoutRunning = false;
-        }, 400);
-        action.sizeQueueTimeout.isTimeoutRunning = true;
-        action.sizeQueueTimeout.previousCssKey = cssKey;
     },
     cgfont: function () {
         $('#fList').empty();
@@ -866,18 +940,17 @@ var action = {
             var min = JSON.parse($(idSelector).attr('min'));
             if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
             if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
-            action.setCss(action.selectedItem, cssKey, $(idSelector).val() + unit);
-            //if(action.selectedItem)
-            if(action.selectedItem.substring(3,9) === 'Circle'){
-                if(jsCssKey === 'width'){
-                    action.setCss(action.selectedItem, 'height', $(idSelector).val() + unit);
-                    action.setCss(action.selectedItem, 'width', $(idSelector).val() + unit);
-                }
+            if(action.selectedItem.substring(3,9) === 'Circle' && jsCssKey === 'width') {
+                action.setCss([[action.selectedItem, ['height', 'width'], [$(idSelector).val() + unit, $(idSelector).val() + unit]]]);
+            } else if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
+                //$('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
+                //action.setCss(action.selectedItem, 'height', $(idSelector).val() + unit);
+                var valuesArr = [$(idSelector).val() + unit, $(idSelector).val() + unit];
+                action.setCss([['icon', ['height', 'width'], valuesArr], ['iconImg', ['height', 'width'], valuesArr]]);
+            } else {
+                action.setCss(action.selectedItem, cssKey, $(idSelector).val() + unit);
             }
-            if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
-                $('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
-                action.setCss(action.selectedItem, 'height', $(idSelector).val() + unit);
-            }
+
             if (jsCssKey === 'width') {
                  /* Check to see if setting width overflows screen */
                 /* While changing the width, and the element bounds goes out of screen, move item left to stop overflow */
@@ -1158,8 +1231,23 @@ var action = {
                 action.runAction('addElement', actionInfo);
                 break;
             case 'setCss':
-                $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[2]);
-                action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[2];
+                if (typeof actionInfo[0] === 'string') {
+                    $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[2]);
+                    action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[2];
+                } else {
+                    for (var i = 0; i < actionInfo.length; i++) {
+                        if (typeof actionInfo[i][1] === 'string') {
+                            $('#' + actionInfo[i][0]).css(actionInfo[i][1], actionInfo[i][2]);
+                            action.savedElements.placedElements[actionInfo[i][0]][actionInfo[i][1]] = actionInfo[i][2];
+                        } else {
+                            for (var k = 0; k < actionInfo[i][1].length; k++) {
+                                $('#' + actionInfo[i][0]).css(actionInfo[i][1][k], actionInfo[i][2][k]);
+                                if (typeof action.savedElements.placedElements[actionInfo[i][0]] != 'undefined')
+                                    action.savedElements.placedElements[actionInfo[i][0]][actionInfo[i][1][k]] = actionInfo[i][2][k];
+                            }
+                        }
+                    }
+                }
                 action.saveStorage();
                 break;
         }
@@ -1180,8 +1268,23 @@ var action = {
                 action.runOppositeAction('addElement', actionInfo); // Does the opposite of adding an element, removing the element
                 break;
             case 'setCss': // ['setCss', [elementID, cssKey, oldValue, newValue]]
-                $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[3]);
-                action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[3];
+                if (typeof actionInfo[0] === 'string') {
+                    $('#' + actionInfo[0]).css(actionInfo[1], actionInfo[3]);
+                    action.savedElements.placedElements[actionInfo[0]][actionInfo[1]] = actionInfo[3];
+                } else {
+                    for (var i = 0; i < actionInfo.length; i++) {
+                        if (typeof actionInfo[i][1] === 'string') {
+                            $('#' + actionInfo[i][0]).css(actionInfo[i][1], actionInfo[i][3]);
+                            action.savedElements.placedElements[actionInfo[i][0]][actionInfo[i][1]] = actionInfo[i][3];
+                        } else {
+                            for (var k = 0; k < actionInfo[i][1].length; k++) {
+                                $('#' + actionInfo[i][0]).css(actionInfo[i][1][k], actionInfo[i][3][k]);
+                                if (typeof action.savedElements.placedElements[actionInfo[i][0]] != 'undefined')
+                                    action.savedElements.placedElements[actionInfo[i][0]][actionInfo[i][1][k]] = actionInfo[i][3][k];
+                            }
+                        }
+                    }
+                }
                 action.saveStorage();
                 break;
         }
@@ -1667,12 +1770,19 @@ var action = {
                 $(".dLine[title='"+id+"']").remove();
                 if (action.selectedItem != id)
                     $('#' + id).click();
+
+                action.sizeQueueTimeout.initialValue = [$('#'+id).position().top, $('#'+id).position().left]; //Just borrowing it, nothing else will need this while you're moving an element
             },
             stop: function(event, ui){
-                action.sizeQueueTimeout.initialValue =
-                action.setCss(id, 'left', ui.position.left);
+                var position = $('#'+id).position();
+                action.addAction(['setCss',[[id, ['top', 'left'], action.sizeQueueTimeout.initialValue ,[position.top, position.left]]]]);
+                action.sizeQueueTimeout.initialValue = '';
 
-                action.setCss(id, 'top', ui.position.right);
+                // Since we're not going through setCss, it's never saved to localStorage. Gotta do it manually
+                action.savedElements.placedElements[id].left = position.left;
+                action.savedElements.placedElements[id].top = position.top;
+                action.saveStorage();
+
                 /* Create a div around the element which can be used for snapping */
                 if(localStorage.snap == 'true'){
                     var snapper = $('<div>',{'class' : 'dLine', 'title' : id}),
@@ -2173,8 +2283,7 @@ $('.screen').on('mousewheel', function(event) {
             var newWidth = selected.width() + increment;
             newWidth = newWidth > 0 ? newWidth : 1; // Floor at 1
             //newWidth = newWidth < 320 ? newWidth : 320; // Ceiling at 320 (width of screen)
-            action.setCss(action.selectedItem, 'height', newHeight + 'px');
-            action.setCss(action.selectedItem, 'width', newWidth + 'px');
+            action.setCss([[action.selectedItem, ['height', 'width'], [newHeight + 'px', newWidth + 'px']]]);
 
             if (action.selectedItem === 'icon') {
                 //Special case for icons. It's child img's height and width must also be updated
