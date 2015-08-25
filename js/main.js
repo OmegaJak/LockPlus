@@ -1754,7 +1754,11 @@ var action = {
                 action.setHelpText('Select Add elements to place elements.');
             }
         }
-
+        //fix for if a theme is loaded
+        if(this.savedElements.wallpaper){ //if theme is loaded
+            localStorage.setItem('wallpaper',this.savedElements.wallpaper); //transfer to storage
+            this.savedElements.wallpaper = ''; //clear here for performance
+        }
         action.wallpaper = localStorage.getItem('wallpaper');
         if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
             this.setBG(action.wallpaper);
