@@ -233,7 +233,11 @@ var action = {
     },
     setCss: function (elementId, cssKey, cssValue) {
         if (typeof elementId === 'string') {
-            var initialValue = $('#' + elementId).css(cssKey);
+            if (cssKey != 'transform') {
+                var initialValue = $('#' + elementId).css(cssKey);
+            } else {
+                var initialValue = document.getElementById(elementId).style.transform;
+            }
 
             $('#' + elementId).css(cssKey, cssValue);
             action.savedElements.placedElements[elementId][cssKey] = cssValue;
@@ -243,14 +247,21 @@ var action = {
             if (action.sizeQueueTimeout.initialValue === '') { // If it's empty, that means it's been used and is no longer needed
                 action.sizeQueueTimeout.initialValue = initialValue; // So set the new one, because this is a new set
             }
+
+            if (cssKey != 'transform') {
+                var newValue = $('#' + elementId).css(cssKey)
+            } else {
+                var newValue = document.getElementById(elementId).style.transform;
+            }
+            var currentAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, newValue]]; // The value stored in the actual undo/redo queue
             if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
-                action.sizeQueueTimeout.previousAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, $('#' + elementId).css(cssKey)]]; // The value stored in the actual undo/redo queue
+                action.sizeQueueTimeout.previousAction = currentAction;
             } else { // We've moved on to a differnt css key
                 if (action.sizeQueueTimeout.isTimeoutRunning) { // Really should be wasTimeoutRunning
                     action.addAction(action.sizeQueueTimeout.previousAction); // Add the old action to the undo/redo queue
                     action.sizeQueueTimeout.initialValue = initialValue; // Take after-the-fact action, because the timeout never finished, this was never set to '', therefore the if statement above never ran
                 }
-                action.sizeQueueTimeout.previousAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, $('#' + elementId).css(cssKey)]]; // Change the editor action
+                action.sizeQueueTimeout.previousAction = currentAction;
             }
             action.sizeQueueTimeout.timeout = setTimeout(function() { // If this method is called with the same cssKey within the 1.5 seconds, then the timeout is reset
                 action.addAction(action.sizeQueueTimeout.previousAction);
