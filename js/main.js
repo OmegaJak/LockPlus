@@ -945,32 +945,35 @@ var action = {
             var min = JSON.parse($(idSelector).attr('min'));
             if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
             if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
-            if(action.selectedItem.substring(3,9) === 'Circle' && jsCssKey === 'width') {
-                action.setCss([[action.selectedItem, ['height', 'width'], [$(idSelector).val() + unit, $(idSelector).val() + unit]]]);
-            } else if (idSelector === '#iconSizeInput' && jsCssKey === 'width') { // Special cases
-                //$('.icon').css({'height':$(idSelector).val()+unit, 'width':$(idSelector).val()+unit});
-                //action.setCss(action.selectedItem, 'height', $(idSelector).val() + unit);
-                var valuesArr = [$(idSelector).val() + unit, $(idSelector).val() + unit];
-                action.setCss([['icon', ['height', 'width'], valuesArr], ['iconImg', ['height', 'width'], valuesArr]]);
-            } else {
-                action.setCss(action.selectedItem, cssKey, $(idSelector).val() + unit);
-            }
 
             if (jsCssKey === 'width') {
                  /* Check to see if setting width overflows screen */
                 /* While changing the width, and the element bounds goes out of screen, move item left to stop overflow */
 
-                var elWidth = Math.round($('#' + action.selectedItem).width()), //current set width
+                var elWidth = Math.round($(idSelector).val()), //current set width
                     elPos = Math.round($('#' + action.selectedItem).position().left), //element position from the left
                     elDiff = Math.round(elWidth - ($('.screen').width() - elPos)); //check difference in screen width compared to element position + set width
 
                 if(elDiff > 0){
-                    action.setCss(action.selectedItem, 'left', (elPos - elDiff) +'px'); //make adjustments to the element
+                    //action.setCss(action.selectedItem, 'left', (elPos - elDiff) +'px'); //make adjustments to the element
+                    elPos = (elPos - elDiff) +'px';
                 }
 
                 $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
                 $('#posTopInput').attr('max', $('.screen').height() - $('#' + action.selectedItem).height());
+
+                if(action.selectedItem.substring(3,9) === 'Circle') { // Special for circles
+                    action.setCss([[action.selectedItem, ['height', 'width', 'left'], [$(idSelector).val() + unit, $(idSelector).val() + unit, elPos]]]);
+                } else if (idSelector === '#iconSizeInput') { // Special for icon
+                    var valuesArr = [$(idSelector).val() + unit, $(idSelector).val() + unit, elPos];
+                    action.setCss([['icon', ['height', 'width', 'left'], valuesArr], ['iconImg', ['height', 'width', 'left'], valuesArr]]);
+                } else {
+                    action.setCss([[action.selectedItem, [cssKey, 'left'], [$(idSelector).val() + unit, elPos]]]);
+                }
+            } else {
+                action.setCss(action.selectedItem, cssKey, $(idSelector).val() + unit);
             }
+
             action.saveStorage();
         } else if (purpose === 'get') {
             return $('#' + action.selectedItem).css(cssKey);
