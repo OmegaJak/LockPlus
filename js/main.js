@@ -233,10 +233,12 @@ var action = {
     },
     setCss: function (elementId, cssKey, cssValue) {
         if (typeof elementId === 'string') {
-            if (cssKey != '-webkit-transform') {
-                var initialValue = $('#' + elementId).css(cssKey);
-            } else {
+            if (cssKey === '-webkit-transform') {
                 try { var initialValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
+            } else if (cssKey === 'background') {
+                var initialValue = document.getElementById(elementId).style.background;
+            } else { // What it'll usually do
+                var initialValue = $('#' + elementId).css(cssKey);
             }
 
             $('#' + elementId).css(cssKey, cssValue);
@@ -248,10 +250,12 @@ var action = {
                 action.sizeQueueTimeout.initialValue = initialValue; // So set the new one, because this is a new set
             }
 
-            if (cssKey != '-webkit-transform') {
-                var newValue = $('#' + elementId).css(cssKey)
-            } else {
+            if (cssKey === '-webkit-transform') {
                 try { var newValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
+            } else if (cssKey === 'background') {
+                var newValue = document.getElementById(elementId).style.background;
+            } else {
+                var newValue = $('#' + elementId).css(cssKey)
             }
             var currentAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, newValue]]; // The value stored in the actual undo/redo queue
             if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
@@ -399,12 +403,13 @@ var action = {
     },
     updateGradient: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'clear') {
-            action.setCss(action.selectedItem, 'background', '');
+            //action.setCss(action.selectedItem, 'background', '');
            if (action.selectedItem.indexOf("box") > -1) { // TODO: Save the box's color before setting the gradient, then restore it to the same color here.
-               action.setCss(action.selectedItem, 'background-color', 'red'); // Without this the box ends up as not showing anything at all
+               //action.setCss(action.selectedItem, 'background-color', 'red'); // Without this the box ends up as not showing anything at all
+               action.setCss([[action.selectedItem, ['background', 'background-color'], ['', 'red']]]);
            } else {
-               action.setCss(action.selectedItem, '-webkit-background-clip', '');
-               action.setCss(action.selectedItem, '-webkit-text-fill-color', '');
+               //action.setCss([[action.selectedItem, ['-webkit-background-clip', '-webkit-text-fill-color'], ['', '']]]);
+               action.setCss([[action.selectedItem, ['background', '-webkit-background-clip', '-webkit-text-fill-color'], ['', '', '']]]);
            }
            return 'nothing';
        }
@@ -983,11 +988,9 @@ var action = {
         var lastSelector;
         this.cgOption('gradientType', constants.linearGradientArray[0], ['background', 'text'], 14, true, function(optionSelector) {
             if (optionSelector === '#backgroundOption') {
-                action.setCss(action.selectedItem, '-webkit-background-clip', '');
-                action.setCss(action.selectedItem, '-webkit-text-fill-color', '');
+                action.setCss([[action.selectedItem, ['-webkit-background-clip', '-webkit-text-fill-color'], ['', '']]]);
             } else if (optionSelector === '#textOption') {
-                action.setCss(action.selectedItem, '-webkit-background-clip', 'text');
-                action.setCss(action.selectedItem, '-webkit-text-fill-color', 'transparent');
+                action.setCss([[action.selectedItem, ['-webkit-background-clip', '-webkit-text-fill-color'], ['text', 'transparent']]]);
             }
             action.saveStorage();
 
