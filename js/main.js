@@ -235,10 +235,8 @@ var action = {
         if (typeof elementId === 'string') {
             if (cssKey === '-webkit-transform') {
                 try { var initialValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
-            } else if (cssKey === 'background') {
-                var initialValue = document.getElementById(elementId).style.background;
             } else { // What it'll usually do
-                var initialValue = $('#' + elementId).css(cssKey);
+                var initialValue = document.getElementById(elementId).style[cssKey]; // Woud've used .css, but Jquery's a bitch about some things, returning things it shouldn't and breaking everything
             }
 
             $('#' + elementId).css(cssKey, cssValue);
@@ -252,10 +250,8 @@ var action = {
 
             if (cssKey === '-webkit-transform') {
                 try { var newValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
-            } else if (cssKey === 'background') {
-                var newValue = document.getElementById(elementId).style.background;
             } else {
-                var newValue = $('#' + elementId).css(cssKey)
+                var newValue = document.getElementById(elementId).style[cssKey];
             }
             var currentAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, newValue]]; // The value stored in the actual undo/redo queue
             if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
@@ -280,7 +276,7 @@ var action = {
             var allCssKeys = []; //[cssKey, [cssKey, cssKey]]
             for (var i = 0;  i < elementId.length; i++) {
                 if (typeof elementId[i][1] === 'string') { // We're only setting one cssKey here
-                    initialValue.push($('#' + elementId[i][0]).css(elementId[i][1])); // Push the element's current value to the array of initialValues
+                    initialValue.push(document.getElementById(elementId[i][0]).style[elementId[i][1]]); // Push the element's current value to the array of initialValues
                     allCssKeys.push(elementId[i][1]); // Push the current cssKey to the array of all cssKeys
 
                     // 0 = elementName, 1 = cssKey, 2 = cssValue
@@ -293,7 +289,7 @@ var action = {
                     var cssKeys = [];
                     var cssValues = [];
                     for (var k = 0; k < elementId[i][1].length; k++) {
-                        innerInitial.push($('#' + elementId[i][0]).css(elementId[i][1][k]));
+                        innerInitial.push(document.getElementById(elementId[i][0]).style[elementId[i][1][k]]);
 
                         // elementId[i][0] = elementName, elementId[i][1][k] = cssKey, elementId[i][2][k] = cssValue
                         $('#' + elementId[i][0]).css(elementId[i][1][k], elementId[i][2][k]);
