@@ -233,10 +233,10 @@ var action = {
     },
     setCss: function (elementId, cssKey, cssValue) {
         if (typeof elementId === 'string') {
-            if (cssKey != 'transform') {
+            if (cssKey != '-webkit-transform') {
                 var initialValue = $('#' + elementId).css(cssKey);
             } else {
-                var initialValue = document.getElementById(elementId).style.transform;
+                try { var initialValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
             }
 
             $('#' + elementId).css(cssKey, cssValue);
@@ -248,10 +248,10 @@ var action = {
                 action.sizeQueueTimeout.initialValue = initialValue; // So set the new one, because this is a new set
             }
 
-            if (cssKey != 'transform') {
+            if (cssKey != '-webkit-transform') {
                 var newValue = $('#' + elementId).css(cssKey)
             } else {
-                var newValue = document.getElementById(elementId).style.transform;
+                try { var newValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
             }
             var currentAction = ['setCss', [elementId, cssKey, action.sizeQueueTimeout.initialValue, newValue]]; // The value stored in the actual undo/redo queue
             if (cssKey === action.sizeQueueTimeout.previousCssKey || action.sizeQueueTimeout.previousCssKey === '') { // If we're continuing the setting of the same css key
@@ -518,7 +518,7 @@ var action = {
         }
     },
     updateTransform: function(idSelector, cssKey, unit, jsCssKey, purpose) {
-        var currentTransform = document.getElementById(action.selectedItem).style.transform; /*$('#' + action.selectedItem).css('transform')*/
+        try { var currentTransform = document.getElementById(action.selectedItem).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
         if (currentTransform != '') var splitArray = currentTransform.replace(/deg/g, '').split(/[()]/);
             else var splitArray = ['rotate', '0', ' skewX', '0', ' skewY', '0'];
         // "rotate(0) skewX(0) skewY(0)"
