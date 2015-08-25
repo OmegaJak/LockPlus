@@ -356,7 +356,7 @@ var action = {
             li.style.fontFamily = fontArray[i];
             li.title = fontArray[i];
             $('#fList').append(li);
-        };
+        }
         $('#fList').toggle('display');
         setTimeout(function(){
              stroll.bind( '#font ul' );
@@ -638,7 +638,7 @@ var action = {
             $('#' + action.selectedItem).html($(idSelector).val()); // Sets the innerHTML of the element
             var newLength = $(idSelector).val().length * 16; // Calculates new length of the input
             $(idSelector).css("width", newLength > 150 ? newLength : 150); //Actually changes the length, which is then animated by -webkit-transition-property in css
-            action.savedElements.placedElements[action.selectedItem]['innerHTML'] = $(idSelector).val(); //Saves to localStorage
+            action.savedElements.placedElements[action.selectedItem].innerHTML = $(idSelector).val(); //Saves to localStorage
             action.saveStorage();
         }, function() {
             return $('#' + action.selectedItem).html();
@@ -713,7 +713,7 @@ var action = {
             function updateStuff() {
                 var newLength = $(idSelector).val().length * 16; // Calculates new length of the input
                 $(idSelector).css("width", newLength > 150 ? newLength : 150); //Actually changes the length, which is then animated by -webkit-transition-property in css
-                updateCallback(idSelector)
+                updateCallback(idSelector);
             }
 
             $(idSelector).val(getInitial(idSelector));
@@ -835,7 +835,6 @@ var action = {
     cgOption: function(key, nameString, options, optionsTop, adjustWidth, optionSelectedCallback, getOptionElement) {
         var splitArr = nameString.split("~");
         var divSelector = '#' + key + 'DivWrapper';
-        var idSelector = '#' + key + 'Input';
         var buttonSelector = '#' + splitArr[0]; //The icon button
         if (optionsTop === 0 || !optionsTop)
             optionsTop = $('#' + splitArr[3]).position().top + 11;
@@ -889,7 +888,6 @@ var action = {
             $(divSelector).toggle('display');
         } else { //If the options already exists
             $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //If it's currently visible it will be hidden
-            var children = $(divSelector).toggle('display');
         }
     },
     cgPosition: function() {
@@ -945,7 +943,6 @@ var action = {
     },
     updateSize: function(idSelector, cssKey, unit, jsCssKey, purpose) {
         if (purpose === 'set') {
-            var initialValue = $('#' + action.selectedItem).css(cssKey);
             var max = JSON.parse($(idSelector).attr('max'));
             var min = JSON.parse($(idSelector).attr('min'));
             if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
@@ -1461,7 +1458,7 @@ var action = {
             }, function() {
                 $(document).unbind("keyup");
             });
-            if (!!+$('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
+            if ($('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
     },
     parseElementsArray: function(array, divSelector) {
         Object.keys(array).forEach(function (key) {
@@ -1470,7 +1467,6 @@ var action = {
             } else if (key === 'title') { // Create the parent category li item
                 var baseName = array[key].toLowerCase().replace(/\s/g, ''); //Lowercase and remove spaces
                 var parentId =  baseName + 'Category';
-                var parentLinkId = baseName + 'CategoryLink';
                 var subCategoryId = baseName + 'SubCategory';
                 $('<li id="' + parentId + '" class="categoryTitle">' + array[key] + '</li>').appendTo($(divSelector));
                 $('<ul style="display: none" id="' + subCategoryId + '" class="subCategory"></ul>').appendTo('#' + parentId);
@@ -1504,7 +1500,6 @@ var action = {
         lastEl.find('ul').first().hide(); // Make sure the other ones are hidden
 
         var centerUl = $(centerEl).find('ul').first();
-        var numLis = centerUl.children().length;
         //centerUl.css('top', '-' + (((numLis * 32 + (5*(numLis - 1))) / 2) - 13) + 'px');
         centerUl.show(); // Show the subcategory for the center ul
 
@@ -1567,7 +1562,7 @@ var action = {
         for (var i = 0; i < children.length; i++) {
            var transform =  $(children[i]).css('transform');
             if(transform !== 'none'){
-                var id = children[i].id;
+                //var id = children[i].id;
                 var Tp = $(children[i]).css('top').replace(/[^-\d\.]/g, '');
                 var Lf = $(children[i]).css('left').replace(/[^-\d\.]/g, '');
                 $(children[i]).css({
@@ -1598,7 +1593,7 @@ var action = {
                     ca.setAttribute('title',"Theme saved, refresh the page");
                     ca.className = 'pCanvas';
                     ca = ca.children[0];
-                var context = ca.getContext('2d');
+                //var context = ca.getContext('2d');
                 var dataURL = ca.toDataURL();
             $('.phone').css('display','none'); //dont hide until html2canvas has rendered it.
             $('.newSVG').empty(); //remove svg
@@ -1770,8 +1765,8 @@ var action = {
         }else{
             contain = $('.screen');
         }
-        var startX;
-        var startY;
+        /*var startX;
+        var startY;*/
         $('#'+id).draggable({
             containment: contain,
             start: function(event, ui) {
@@ -1904,8 +1899,7 @@ var action = {
         }
 
         var parent = document.getElementById('screenElements'),
-        div = document.getElementById(id),
-        index;
+        div = document.getElementById(id);
         parent.removeChild(div); //remove element from dom
         delete this.movedElements[id];
         this.savedElements.placedElements = this.movedElements; //since the element was removed from movedElements, this also removes from placedElements
@@ -1951,7 +1945,7 @@ var action = {
            } else {
               $('#icons').append(a);
            }
-        };
+        }
     },
     getTitleForArray: function(menuArray) { // Any icon menu that's shown needs to be added here to update its title
         switch (menuArray) {
@@ -2115,7 +2109,7 @@ switch(iPhone) {
         newHeight = 1920;
         break;
 }
- var img = new Image;
+ var img = new Image();
     img.onload = resize;
     img.src = tempWall;
     function resize() {
@@ -2137,7 +2131,7 @@ function uploadedImage(e) {
         rd,
         us;
     for (ncount = 0, us; us = tw[ncount]; ncount++) {
-        rd = new FileReader;
+        rd = new FileReader();
         rd.onload = function (e) {
             return function (e) {
                 if(action.uploadSelection === 'cgBackground') {
@@ -2167,8 +2161,6 @@ window.onload = function () {
 }
 
 $(document).on('keydown', function(event) {
-    var key = event.keyCode || event.charCode;
-
     if (action.selectedItem != '') {
         switch (event.keyCode) {
             case 37: //Left arrow
@@ -2201,7 +2193,6 @@ $(document).on('keydown', function(event) {
 
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
-    var target = event.target.id;
 });
 $('#font').on('click', function (event) {
     if ($(event.target).is('li')) {
