@@ -62,6 +62,7 @@ var fontArray = ['android'
                 ,'streamster'
                 ,'signer'
                 ,'scriptina'
+                ,'talldark'
                 ,'timber'
                 ,'tiza'
                 ,'tresdias'];

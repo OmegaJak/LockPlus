@@ -255,6 +255,10 @@
 	src:url(fonts/user/scriptina.otf);
 }
 @font-face{
+	font-family:'talldark';
+	src:url(fonts/user/talldark.otf);
+}
+@font-face{
 	font-family:'timber';
 	src:url(fonts/user/timber.otf);
 }
