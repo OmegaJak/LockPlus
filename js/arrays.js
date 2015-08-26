@@ -1,4 +1,5 @@
-var fontArray = ['android'
+var fontArray = ['abeatbykai'
+                ,'android'
                 ,'aileronlight'
                 ,'aileronthin'
                 ,'aileronbold'

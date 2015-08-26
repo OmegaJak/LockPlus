@@ -1,4 +1,8 @@
 @font-face{
+	font-family:'abeatbykai';
+	src:url(fonts/user/abeatbykai.otf);
+}
+@font-face{
 	font-family:'aileronbold';
 	src:url(fonts/user/aileronbold.otf);
 }
