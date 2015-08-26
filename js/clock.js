@@ -371,7 +371,12 @@ var systemdivs = function () {
         alarm: "8:00",
         alarmpm: "8:00am",
         wifi: "20",
-        wifipercent: "20%"
+        wifipercent: "20%",
+        notifymail: "0",
+        notifysms: "0",
+        notifyphone: "0",
+        notifywhats: "0",
+        notifytelegram: "0"
     };
     Object.keys(systemEl).forEach(function (key) {
         var value = systemEl[key],

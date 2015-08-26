@@ -297,6 +297,14 @@ var elementPanel = {
             title: "Wifi",
             wifi: "20",
             wifipercent: "20%"
+        },
+        notifications:{
+            title:"Notifications",
+            notifymail: "Mail",
+            notifysms: "SMS",
+            notifyphone: "Phone",
+            notifywhats: "WhatsApp",
+            notifytelegram: "Telegram"
         }
     },
     miscElements: {
