@@ -21,6 +21,7 @@ var constants = {
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'style~Change Font Style~fa fa-italic~styleDiv'
                     ,'affixes~Change Prefix/Suffix~fa fa-edit~affixesDiv'
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
@@ -35,6 +36,7 @@ var constants = {
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
+                    ,'style~Change Font Style~fa fa-italic~styleDiv'
                     ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
@@ -135,6 +137,7 @@ var action = {
         if (id === 'align') { this.cgalign(); /*action.setHelpText('Select left, right or center. Requires width to be set.');*/}
         if (id === 'fonts') { this.cgfont(); /*action.setHelpText('View live preview, tap font to select.');*/}
         if (id === 'uppercase') {this.cguppercase();/* action.setHelpText('Choose uppercase, capitalize, or lowercase.');*/}
+        if (id === 'style') { this.cgStyle(); }
         if (id === 'weight') {this.cgweight(); /*action.setHelpText('Press + and - buttons, or choose bold or normal.');*/}
         if (id === 'shadow') { action.showIconMenu(constants.shadowArray, -1); /*action.setHelpText('New menu opened (shadow menu)');*/}
         if (id === 'boxShadow') { action.showIconMenu(constants.boxShadowArray, -1);  /*action.setHelpText('New menu opened (box-shadow menu)');*/}
@@ -1044,6 +1047,14 @@ var action = {
                 action.cgcolor(tinycolor.toRgbString(), cssKey, div);
              });
         }
+    },
+    cgStyle: function() {
+        var lastSelector = '#' + $('#' + action.selectedItem).css('font-style') + 'Option';
+        this.cgOption('style', constants.editArray[9], ['italic','oblique','initial'], 0, true, function(optionSelector) {
+            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-style', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
+        }, function(optionName) {
+            return action.getBasicOptionElement(optionName, 'text-align: center; font-style: ' + optionName, 'font-style');
+        });
     },
     cguppercase: function () {
         var lastSelector = '#' + $('#' + action.selectedItem).css('text-transform') + 'Option';
