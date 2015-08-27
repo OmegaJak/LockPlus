@@ -129,6 +129,9 @@ function clock(options) {
                     year: function () {
                         return d.getFullYear();
                     },
+                    smyear: function () {
+                        return d.getFullYear() % 1000;
+                    },
                     hourtext: function () {
                         var hourtxt = (options.twentyfour === true) ? ["Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty", "Twenty One", "Twenty Two", "Twenty Three", "Twenty Four"] : ["Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
                         return hourtxt[this.rawhour()];
@@ -221,7 +224,28 @@ function clock(options) {
     getTimes();
 }
 
-
+function convertTOWord(num){
+    var onesText = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'],
+        tensText = ['', '', 'twenty', 'thirty', 'fourty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'],
+        aboveText = ['', ' thousand ', ' million ', ' billion ', ' trillion ', ' quadrillion ', ' quintillion ', ' sextillion '],
+        generatedArray = [],
+        converted = '',
+        i = 0;
+        while(num){
+            generatedArray.push( num % 1000 );
+            num = parseInt( num / 1000, 10 );
+        }
+        while (generatedArray.length) {
+            converted = (function( a ) {
+                var x = Math.floor( a / 100 ),
+                    y = Math.floor( a / 10 ) % 10,
+                    z = a % 10;
+                return ( x > 0 ? onesText[x] + ' hundred ' : '' ) +
+                       ( y >= 2 ? tensText[y] + ' ' + onesText[z] : onesText[10*y + z] );
+            })( generatedArray.shift() ) + aboveText[i++] + converted;
+        }
+        return converted;
+}
 //clock
 function loadClock() {
     clock({
@@ -281,7 +305,16 @@ function loadClock() {
                 daydotdate: clock.daytext() + "." + clock.date(),
                 daydatemonth: clock.daytext() + " | " + clock.date() + " " + clock.monthtext(),
                 daydatesmonth: clock.daytext() + ' ' + clock.date() + ' ' + clock.smonthtext(),
-                daydatescommamonth: clock.daytext() + ', ' + clock.date() + ' ' + clock.smonthtext()
+                daydatescommamonth: clock.daytext() + ', ' + clock.date() + ' ' + clock.smonthtext(),
+                yeartext: convertTOWord(clock.year()),
+                clocksmush: clock.hour() + "" + clock.minute(),
+                hrnsmin: clock.hourtext() + ' ' + clock.minute(),
+                datebar: clock.month() + '|' + clock.date() + '|' + clock.smyear(),
+                datesnslash: clock.month() + '/' + clock.date() + '/' + clock.smyear(),
+                datesingled: clock.month() + '-' + clock.date() + '-' + clock.smyear(),
+                hrsmush: clock.hourtext() + '' + clock.minute(),
+                dayabdatemonth: clock.sdaytext() + ' ' + clock.date() + ' ' + clock.smonthtext(),
+                daycommadatemonth: clock.sdaytext() + ', ' + clock.date() + ' ' + clock.smonthtext(),
             };
             Object.keys(clockElements).forEach(function (key) {
                 var value = clockElements[key],

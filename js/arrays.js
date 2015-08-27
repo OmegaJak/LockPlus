@@ -93,18 +93,32 @@ var elementPanel = {
         strings3: {
             title: "Strings3",
             daydatemonth: cF.daytext() + " | " + cF.date() + " " + cF.monthtext(),
-            hrmin: cF.hourtext() + '.' + cF.minute(),
-            hrmintx: (cF.minutetwotext() !== "") ? cF.hourtext() + '.' + cF.minuteonetextdot() +  '.' + cF.minutetwotext() : cF.hourtext() + '.' + cF.minuteonetextdot() + cF.minutetwotext(),
             daydatesmonth: cF.daytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
-            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext()
+            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),
+            dayabdatemonth: cF.sdaytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
+            daycommadatemonth: cF.sdaytext() + ', ' + cF.date() + ' ' + cF.smonthtext()
+        },
+        strings4:{
+            title: "Strings4",
+            hrmin: cF.hourtext() + '.' + cF.minute(),
+            hrnsmin: cF.hourtext() + ' ' + cF.minute(),
+            hrsmush: cF.hourtext() + '' + cF.minute(),
+            hrmintx: (cF.minutetwotext() !== "") ? cF.hourtext() + '.' + cF.minuteonetextdot() +  '.' + cF.minutetwotext() : cF.hourtext() + '.' + cF.minuteonetextdot() + cF.minutetwotext(),
+            ttext: cF.hourtext() + " " + cF.minuteonetext() + ' ' + cF.minutetwotext()
+        },
+        strings5: {
+            title: "Strings5",
+            datebar: cF.month() + '|' + cF.date() + '|' + cF.smyear(),
+            datesnslash: cF.month() + '/' + cF.date() + '/' + cF.smyear(),
+            datesingled: cF.month() + '-' + cF.date() + '-' + cF.smyear()
         },
         clocks: {
             title: "Clock",
             clock: cF.hour() + ":" + cF.minute(),
+            clocksmush: cF.hour() + "" + cF.minute(),
             clockline: cF.hour() + "|" + cF.minute(),
             zclock: cF.zhour() + ":" + cF.minute(),
-            clockpm: cF.hour() + ":" + cF.minute() + cF.am(),
-            ttext: cF.hourtext() + " " + cF.minuteonetext() + ' ' + cF.minutetwotext()
+            clockpm: cF.hour() + ":" + cF.minute() + cF.am()
         },
         hours: {
             title: "Hour",
@@ -175,7 +189,8 @@ var elementPanel = {
         },
         years: {
             title: "Year",
-            year: cF.year()
+            year: cF.year(),
+            yeartext: convertTOWord(cF.year())
         }
     },
     weatherElements: {
