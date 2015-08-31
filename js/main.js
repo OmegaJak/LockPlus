@@ -116,6 +116,7 @@ var action = {
         previousAction : null,
         initialValue : ''
     },
+    isEditingText : false, // Whether a custom text input is currently focused. Used for delete key stuff
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
@@ -722,6 +723,8 @@ var action = {
             $(idSelector).on("change", function() { updateStuff(); });
             $(idSelector).keydown(function() { updateStuff(); });
             $(idSelector).keyup(function() { updateStuff(); });
+            $(idSelector).focusin(function() { action.isEditingText = true; });
+            $(idSelector).focusout(function() { action.isEditingText = false; });
 
             $(buttonSelector).parent().toggleClass('leftTooltip'); //Remove the tooltip
             divWrapper.toggle('display'); //Show the input
@@ -2175,19 +2178,24 @@ $(document).on('keydown', function(event) {
     if (action.selectedItem != '') {
         switch (event.keyCode) {
             case 37: //Left arrow
-                action.arrowKey('left','Left', event);
+                if (!action.isEditingText)
+                    action.arrowKey('left','Left', event);
                 break;
             case 38: //Up arrow
-                action.arrowKey('up','Top', event);
+                if (!action.isEditingText)
+                    action.arrowKey('up','Top', event);
                 break;
             case 39: //Right arrow
-                action.arrowKey('right','Left', event);
+                if (!action.isEditingText)
+                    action.arrowKey('right','Left', event);
                 break;
             case 40: //Down arrow
-                action.arrowKey('down','Top', event);
+                if (!action.isEditingText)
+                    action.arrowKey('down','Top', event);
                 break;
             case 46: //Delete key
-                action.removeFromScreen(action.selectedItem, true);
+                if (!action.isEditingText)
+                    action.removeFromScreen(action.selectedItem, true);
                 break;
         }
     }
