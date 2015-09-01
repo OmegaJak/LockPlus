@@ -1667,7 +1667,7 @@ var action = {
             $('#wallpaper').attr('src','');
             $('#wallpaper').hide();
             var canvas = document.getElementById('blurcanvas');
-            canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+            if (canvas) canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
             action.wallpaper = null;
             localStorage.setItem('wallpaperBlur','0');
             action.showIconMenu(constants.toolArray, -1);
