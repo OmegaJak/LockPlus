@@ -97,7 +97,9 @@ var constants = {
                 , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
-    preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
+    //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
+    preloadWhitelist: {'size':'','width':'', 'position':'','align':'','uppercase':'','weight':'','style':'','customPrefix':'','customSuffix':'','hShadow':'','vShadow':'','blur':'','boxhShadow':'','boxvShadow':''
+                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':''},
     iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
 };
 var action = {
@@ -116,6 +118,7 @@ var action = {
         previousAction : null,
         initialValue : ''
     },
+    isEditingText : false, // Whether a custom text input is currently focused. Used for delete key stuff
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
@@ -179,8 +182,6 @@ var action = {
         if (id === 'linearGradientStartColor') { this.cgLinearGradientColor(constants.linearGradientArray[2], 'color~0.5'); }
         if (id === 'linearGradientStopColorOne') { this.cgLinearGradientColor(constants.linearGradientArray[3], 'color~1'); this.cgSize('linGradientStopOnePercent', constants.linearGradientArray[3], '%', 0, 100, 'pos~1', 'pos~1', action.updateGradient, false, false, 'Stop 1 Distance'); }
         if (id === 'linearGradientStopColorTwo') { this.cgLinearGradientColor(constants.linearGradientArray[4], 'color~2'); this.cgSize('linGradientStopTwoPercent', constants.linearGradientArray[4], '%', 0, 100, 'pos~2', 'pos~2', action.updateGradient, false, false, 'Stop 2 Distance'); }
-        if (id === 'linearGradientStopColorThree') { this.cgLinearGradientColor(constants.linearGradientArray[5], 'color~3'); this.cgSize('linGradientStopThreePercent', constants.linearGradientArray[5], '%', 0, 100, 'pos~3', 'pos~3', action.updateGradient, false, false, 'Stop 3 Distance'); }
-        if (id === 'linearGradientStopColorFour') { this.cgLinearGradientColor(constants.linearGradientArray[6], 'color~4'); this.cgSize('linGradientStopFourPercent', constants.linearGradientArray[6], '%', 0, 100, 'pos~4', 'pos~4', action.updateGradient, false, false, 'Stop 4 Distance'); }
         if (id === 'clearGradient') { this.updateGradient('','','','','clear'); }
     },
     elementIconClick: function() {
@@ -722,6 +723,8 @@ var action = {
             $(idSelector).on("change", function() { updateStuff(); });
             $(idSelector).keydown(function() { updateStuff(); });
             $(idSelector).keyup(function() { updateStuff(); });
+            $(idSelector).focusin(function() { action.isEditingText = true; });
+            $(idSelector).focusout(function() { action.isEditingText = false; });
 
             $(buttonSelector).parent().toggleClass('leftTooltip'); //Remove the tooltip
             divWrapper.toggle('display'); //Show the input
@@ -1493,14 +1496,14 @@ var action = {
         var lastEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 1) + ']');
         var centerEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex)) + ']');
         var nextEl = $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 1) + ']');
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto','border':'1px solid transparent'});
         $(lastEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto','border':'1px solid transparent'});
         $(lastEl).removeClass("elementPanelPreview");
         $(centerEl).css({'opacity': 1, 'pointer-events':'auto', 'font-size':'30px','border':'2px solid #21b9b0'});
         $(centerEl).addClass("elementPanelPreview");
         $(nextEl).css({'opacity': 0.5, 'font-size':'16px', 'height': 'auto','border':'1px solid transparent'});
         $(nextEl).removeClass("elementPanelPreview");
-        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto'});
+        $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) + 2) + ']').css({'opacity': 0.07, 'font-size':'16px', 'height': 'auto','border':'1px solid transparent'});
 
         // Subcategory showing/hiding //
         $('#' + div).find('[data-slick-index=' + (JSON.parse(centerIndex) - 2) + ']').find('ul').first().hide();
@@ -1664,7 +1667,7 @@ var action = {
             $('#wallpaper').attr('src','');
             $('#wallpaper').hide();
             var canvas = document.getElementById('blurcanvas');
-            canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+            if (canvas) canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
             action.wallpaper = null;
             localStorage.setItem('wallpaperBlur','0');
             action.showIconMenu(constants.toolArray, -1);
@@ -1957,6 +1960,7 @@ var action = {
               $('#icons').append(a);
            }
         }
+        action.setEditMenuInputsState(-2, false, menuArray);
     },
     getTitleForArray: function(menuArray) { // Any icon menu that's shown needs to be added here to update its title
         switch (menuArray) {
@@ -2044,14 +2048,17 @@ var action = {
     },
     setEditMenuInputsState: function(state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
         if(!id) var id = '';
-        var menuArray = action.getProperMenuForId(id);
+        if (typeof id === 'string')
+            var menuArray = action.getProperMenuForId(id)
+        else
+            var menuArray = id;
         if (!maxIndex) var maxIndex = constants.editArray.length;
         if (state <= -1) {
             for (var i = 0; i < maxIndex && i < menuArray.length; i++) {
                 var splitArray = menuArray[i].split("~");
 
-                //Doesn't click anything that's blaclist, has 'delete' in it, has 'clear' in it, or has 'color' in it
-                var shouldPreload = constants.preloadBlacklist[splitArray[0]] != '' && splitArray[0].indexOf('delete') === -1 && splitArray[0].indexOf('clear') === -1 && splitArray[0].indexOf('color') === -1;
+                //Only preloads things that are specified in the whitelist array
+                var shouldPreload = (constants.preloadWhitelist[splitArray[0]] === '');
 
                 if (shouldPreload && ((state === -2 && $('#' + splitArray[3]).children().length < 2) || (state === -1 && $('#' + splitArray[3]).children().length > 1))) {
                     $('#' + splitArray[0]).trigger('click');
@@ -2175,19 +2182,24 @@ $(document).on('keydown', function(event) {
     if (action.selectedItem != '') {
         switch (event.keyCode) {
             case 37: //Left arrow
-                action.arrowKey('left','Left', event);
+                if (!action.isEditingText)
+                    action.arrowKey('left','Left', event);
                 break;
             case 38: //Up arrow
-                action.arrowKey('up','Top', event);
+                if (!action.isEditingText)
+                    action.arrowKey('up','Top', event);
                 break;
             case 39: //Right arrow
-                action.arrowKey('right','Left', event);
+                if (!action.isEditingText)
+                    action.arrowKey('right','Left', event);
                 break;
             case 40: //Down arrow
-                action.arrowKey('down','Top', event);
+                if (!action.isEditingText)
+                    action.arrowKey('down','Top', event);
                 break;
             case 46: //Delete key
-                action.removeFromScreen(action.selectedItem, true);
+                if (!action.isEditingText)
+                    action.removeFromScreen(action.selectedItem, true);
                 break;
         }
     }
@@ -2278,7 +2290,6 @@ $('.screen').click(function(event){
 
             if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
             action.showProperMenuForId(event.target.id);
-            action.setEditMenuInputsState(-2, false, event.target.id); // Open all inputs
         }
     }
 });
