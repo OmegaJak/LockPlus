@@ -1,0 +1,139 @@
+<html>
+<head>
+<style>
+	html{background-color: black;}
+	#canvasRain{
+		position: absolute;
+		top:0;
+		left:0;
+		background-color: rgba(255,255,255,0.2);
+	}
+</style>
+</head>
+<body>
+<canvas id="canvasRain" width="320" height="600"></canvas>
+<script type="text/javascript">
+//var SVGweathericon = weather.icon();
+var SVGweathericon = 5; // this is for testing
+
+var SVGsnow = [5,6,7,13,14,15,16,41,42,43,46]; //snow days
+var SVGRain = [1,2,3,4,8,9,10,11,12,35,37,38,39,40,42,45,47]; //rain days
+var SVGsnow;
+var SVGAnimate;
+
+if(SVGsnow.indexOf(SVGweathericon) > -1){
+   SVGsnow = true;
+   SVGAnimate = true;
+}else if(SVGRain.indexOf(SVGweathericon) > -1){
+   SVGsnow = false;
+   SVGAnimate = true;
+}
+
+var canvas = null;
+var context = null;
+var bufferCanvas = null;
+var bufferCanvasCtx = null;
+var flakeArray = [];
+var flakeTimer = null;
+var minRainSpeed = 8;
+var maxRainSpeed = 13;
+var minRainSize = 1;
+var maxRainSize = 3;
+var maxFlakes = (SVGsnow) ? 100 : 20;
+
+function randomInt(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+window.requestAnimFrame = (function() {
+  return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+      };
+})();
+
+function Flake() {
+    this.x = Math.round(Math.random() * context.canvas.width);
+    this.y = -10;
+    this.drift = (SVGsnow) ? Math.random() : 1;
+    this.speed = (SVGsnow) ? Math.round(Math.random() * 5) + 1 : randomInt(minRainSpeed,maxRainSpeed);
+    this.width = (SVGsnow) ? (Math.random() * 3) + 2 : randomInt(minRainSize,maxRainSize);
+    this.height = this.width;
+}
+
+function SVGinit() {
+    canvas = document.getElementById('canvasRain');
+    context = canvas.getContext("2d");
+    bufferCanvas = document.createElement("canvas");
+    bufferCanvasCtx = bufferCanvas.getContext("2d");
+    bufferCanvasCtx.canvas.width = context.canvas.width;
+    bufferCanvasCtx.canvas.height = context.canvas.height;
+    flakeTimer = setInterval(addFlake, 200);
+    Draw();
+    (function animloop(){
+            requestAnimFrame(animloop);
+            animate();
+        })();
+}
+
+function addFlake() {
+    flakeArray[flakeArray.length] = new Flake();
+    if (flakeArray.length == maxFlakes)
+        clearInterval(flakeTimer);
+}
+
+function blank() {
+        context.save();
+        bufferCanvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function animate() {
+    Update();
+    Draw();
+}
+
+function Update() {
+    for (var i = 0; i < flakeArray.length; i++) {
+        if (flakeArray[i].y < context.canvas.height) {
+            flakeArray[i].y += flakeArray[i].speed;
+            if (flakeArray[i].y > context.canvas.height)
+                flakeArray[i].y = -5;
+            flakeArray[i].x += flakeArray[i].drift;
+            if (flakeArray[i].x > context.canvas.width)
+                flakeArray[i].x = 0;
+        }
+    }
+}
+
+function Draw(){
+    context.save();
+    blank();
+    for (var i = 0; i < flakeArray.length; i++) {
+        bufferCanvasCtx.beginPath();
+        if(SVGsnow){
+            bufferCanvasCtx.fillStyle = "rgba(255,255,255,0.8);";
+            bufferCanvasCtx.arc(flakeArray[i].x, flakeArray[i].y, 2, 10, 0, true);
+        }else{
+            bufferCanvasCtx.fillStyle = "rgba(255,255,255,0.6)";
+            bufferCanvasCtx.moveTo(flakeArray[i].x-flakeArray[i].width/2,flakeArray[i].y);
+            bufferCanvasCtx.lineTo(flakeArray[i].x,flakeArray[i].y-7);
+            bufferCanvasCtx.lineTo(flakeArray[i].x+flakeArray[i].width/2,flakeArray[i].y);
+            bufferCanvasCtx.arc(flakeArray[i].x,flakeArray[i].y,flakeArray[i].width/2,0,Math.PI);
+        }
+        bufferCanvasCtx.fill();
+    }
+    context.drawImage(bufferCanvas, 0,0,bufferCanvas.width, bufferCanvas.height);
+    context.restore();
+}
+
+if(SVGAnimate){
+    SVGinit();
+}
+
+</script>
+
+</body>
+</html>
