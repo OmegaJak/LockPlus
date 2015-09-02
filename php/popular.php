@@ -21,9 +21,12 @@ $array = unserialize(file_get_contents('count/dlcount.bin'));
 foreach ($array as $key => $value) {
     $name = basename($key,'.plist');
     $count = $value;
-    $img = '/php/themepreview/'.$key.'.jpg';
     if($count > 20){
         $imgSrc = basename($key,'.plist');
+         if(file_exists('themepreview/'.$imgSrc)){
+        }else{
+            $imgSrc = $name.'.jpg';
+        }
         echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="themepreview/' . $imgSrc . '"/>
         <span class="themeName">'.$name.'</span>
         <span class="themeName">Est Downloads: '.$count.'</span>
