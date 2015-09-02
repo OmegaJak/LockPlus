@@ -1613,7 +1613,7 @@ var action = {
             $('.fsubmit').on('click',function(){
                    var devname = $('#fdevname').val();
                    var themename = $('#fthemename').val();
-                   if(themename !== '' && devname !== '' && /^[a-zA-Z0-9- ]*$/.test(themename) == true){
+                   if(themename !== '' && devname !== '' && /^[a-zA-Z0-9- ]*$/.test(themename) == true && /^[a-zA-Z0-9- ]*$/.test(devname)){
                     if(!/\d/.test(themename)){
                         $('#fileName').val(themename);
                         $('#devname').val(devname);
@@ -1635,6 +1635,9 @@ var action = {
                    }else{
                     if(/^[a-zA-Z0-9- ]*$/.test(themename) == false){
                         document.querySelector('.errorlabel').innerHTML = "* Please remove symbols from theme name.";
+                    }
+                    if(/^[a-zA-Z0-9- ]*$/.test(devname) == false){
+                        document.querySelector('.errorlabel').innerHTML = "* Please remove symbols from dev name.";
                     }
                     $('.errorlabel').css('display','block');
                    }
