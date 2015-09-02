@@ -62,7 +62,7 @@
 				'maxSize': 5
 			},
 			'clouds': {
-				'max': 3,
+				'max': 6,
 				'spawnDelay': false
 			}
 		};
@@ -111,9 +111,10 @@
 					break;
 				case 'clouds':
 					this.sizeModifier = 1 + randomNum(-0.05, 0.05);
-					var speedMultiplier = randomInt(1, 5);
+					var speedMultiplier = 1 + randomNum(-0.01, 0.01);
 					this.speed = {
-						'x': randomNum(0.01 * speedMultiplier, 0.1 * speedMultiplier) * (1 / (this.sizeModifier) * 2), // Shouldn't be too much speed diff beween clouds, should be slow overall
+						//'x': randomNum(0.01 * speedMultiplier, 0.1 * speedMultiplier) * (1 / (this.sizeModifier) * 2), // Shouldn't be too much speed diff beween clouds, should be slow overall
+						'x': (1 / (((this.sizeModifier - 0.95) * 10) + 1)) * 2.5 * speedMultiplier,
 						'y': 0
 					};
 					this.y = randomInt(30 * this.sizeModifier, 70 * this.sizeModifier);
