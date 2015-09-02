@@ -78,7 +78,7 @@ Showing themes for: <?= $fgmembersite->UserFullName() ?>
 
 <?php
 set_time_limit(0);
-echo "Site is currently under maintenance.<br>";
+//echo "Site is currently under maintenance.<br>";
 $dir    = '../php/themes';
 $list = glob("$dir/*.plist");
 $name = $fgmembersite->UserFullName(); //username
