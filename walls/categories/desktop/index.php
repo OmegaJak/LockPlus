@@ -1,6 +1,6 @@
 <?php
-require_once "pages/Paginated.php";
-require_once "pages/DoubleBarLayout.php";
+require_once "../../files/pages/Paginated.php";
+require_once "../../files/pages/DoubleBarLayout.php";
 ?>
 <?php
 
@@ -16,8 +16,8 @@ if (isset($_GET['img'])){
 			die('This is not an image boss');
 		}
 
-		$thumb_height = 250;
-		$thumb_width = 180;
+		$thumb_height = 169;
+		$thumb_width = 300;
 
 		if ($src_size['mime'] === 'image/jpeg'){
 			$src = imagecreatefromjpeg($_GET['img']);

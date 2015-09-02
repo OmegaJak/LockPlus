@@ -1,6 +1,6 @@
 <?php
-require_once "pages/Paginated.php";
-require_once "pages/DoubleBarLayout.php";
+require_once "../../files/pages/Paginated.php";
+require_once "../../files/pages/DoubleBarLayout.php";
 ?>
 <?php
 

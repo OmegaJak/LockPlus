@@ -165,6 +165,7 @@ html, body {
 		<a id="filter" href="i6.php">i6</a>
 		<a id="filter" href="6plus.php">6+</a>
 		<a id="filter" href="http://LockPlus.us/walls">All</a>
+		<a id="filter" href="http://LockPlus.us/walls/categories">Categories</a>
 	</div></center>
 </head>
 <body>
