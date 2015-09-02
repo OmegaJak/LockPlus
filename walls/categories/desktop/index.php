@@ -98,88 +98,12 @@ function mtimecmp($a, $b) {
 <head>
 	<title>Wallpapers</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-	body {
-
-   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 200; -webkit-font-smoothing: antialiased;
-   -webkit-tap-highlight-color: rgba(0,0,0,0);
- }
-	img{
-		 width: 145px;
-	}
-	a{
-		display: inline-block;
-		text-decoration: none;
-	}
-	img{
-		-webkit-box-shadow: 0 8px 6px -6px black;
-	}
-	html{
-		background-color: #21b9b0;
-	}
-	#outer{
-		width: 100%;
-		text-align:center;}
-	#imgcontainer{
-			margin-top:40px;
-			display: inline-block;
-	}
-	#menu a{
-		display: block;
-		text-align: center;
-		font-size: 25px;
-		display: inline-block;
-		margin: 5px;
-		margin-top: 40px;
-		padding: 3px;
-		background-color: rgba(255,255,255,0.2);
-		border-radius: 5px;
-		color:white;
-		font-weight: 100;
-	}
-
-	.image{text-align:center;display:inline-block;color:white;}
-
-#contain{
-  position: relative;
-  width: 100%;
-  height: auto;
-  display: inline-block;
-}
-.nav{
-  position: relative;
-  text-align: center;
-  bottom: 10px;
-  margin: 0 auto;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  color:white;
-  overflow: hidden;
-}
-.nav a{
-	color:white!important;
-	background-color: rgba(255,255,255,0.1);
-	padding:2px;
-	border-radius: 2px;
-	font-size: 15px;
-
-}
-.nav i{
-	background-color: rgba(0,0,0,0.2);
-	padding: 2px;
-	border-radius: 2px;
-}
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-	</style>
+	<link rel="stylesheet" type="text/css" href="../../main.css">
 	<center><div id="menu">
 		<a id="home" href="http://LockPlus.info">-LockPlus-</a>
-		<a id="filter" href="i5.php">i5</a>
-		<a id="filter" href="i6.php">i6</a>
-		<a id="filter" href="6plus.php">6+</a>
+		<a id="filter" href="http://LockPlus.us/walls/files/i5.php">i5</a>
+		<a id="filter" href="http://LockPlus.us/walls/files/i6.php">i6</a>
+		<a id="filter" href="http://LockPlus.us/walls/files/6plus.php">6+</a>
 		<a id="filter" href="http://LockPlus.us/walls">All</a>
 		<a id="filter" href="http://LockPlus.us/walls/categories">Categories</a>
 	</div></center>

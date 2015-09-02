@@ -1613,7 +1613,7 @@ var action = {
             $('.fsubmit').on('click',function(){
                    var devname = $('#fdevname').val();
                    var themename = $('#fthemename').val();
-                   if(themename !== '' && devname !== '' && /^[a-zA-Z0-9- ]*$/.test(themename) == true && /^[a-zA-Z0-9- ]*$/.test(devname)){
+                   if(themename !== '' && devname !== '' && /^[a-zA-Z0-9- ]*$/.test(themename) == true && /^[a-zA-Z0-9- ]*$/.test(devname) && devname !== 'Frank'){
                     if(!/\d/.test(themename)){
                         $('#fileName').val(themename);
                         $('#devname').val(devname);
@@ -1638,6 +1638,9 @@ var action = {
                     }
                     if(/^[a-zA-Z0-9- ]*$/.test(devname) == false){
                         document.querySelector('.errorlabel').innerHTML = "* Please remove symbols from dev name.";
+                    }
+                    if(devname === 'Frank'){
+                        document.querySelector('.errorlabel').innerHTML = "* PORN is not allowed Frank!!";
                     }
                     $('.errorlabel').css('display','block');
                    }

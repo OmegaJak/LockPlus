@@ -101,9 +101,9 @@ function mtimecmp($a, $b) {
 	<link rel="stylesheet" type="text/css" href="../../main.css">
 	<center><div id="menu">
 		<a id="home" href="http://LockPlus.info">-LockPlus-</a>
-		<a id="filter" href="i5.php">i5</a>
-		<a id="filter" href="i6.php">i6</a>
-		<a id="filter" href="6plus.php">6+</a>
+		<a id="filter" href="http://LockPlus.us/walls/files/i5.php">i5</a>
+		<a id="filter" href="http://LockPlus.us/walls/files/i6.php">i6</a>
+		<a id="filter" href="http://LockPlus.us/walls/files/6plus.php">6+</a>
 		<a id="filter" href="http://LockPlus.us/walls">All</a>
 		<a id="filter" href="http://LockPlus.us/walls/categories">Categories</a>
 	</div></center>
