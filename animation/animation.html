@@ -50,7 +50,7 @@
 		//var maxFlakes = (snowCodes) ? 100 : 20;
 		var flakeProperties = {
 			'snow': {
-				'max': 100,
+				'max': 40,
 				'spawnDelay': 200
 			},
 			'rain': {
@@ -62,13 +62,17 @@
 				'maxSize': 5
 			},
 			'clouds': {
-				'max': 5,
+				'max': 3,
 				'spawnDelay': false
 			}
 		};
 
 		function randomInt(min, max) {
 			return Math.floor(Math.random() * (max - min + 1) + min);
+		}
+
+		function randomNum(min, max) {
+			return Math.random() * (max - min + 1) + min;
 		}
 
 		window.requestAnimFrame = (function() {
@@ -89,6 +93,13 @@
 						'y': randomInt(flakeProperties['rain']['minSpeed'], flakeProperties['rain']['maxSpeed'])
 					};
 					this.width = randomInt(flakeProperties['rain']['minSize'], flakeProperties['rain']['maxSize']);
+					this.y = -10;
+					this.position = {
+						'xLeft': this.width / 2,
+						'xRight': this.width / 2,
+						'yUp': 7,
+						'yDown': this.width / 2
+					}
 					break;
 				case 'snow':
 					this.speed = {
@@ -96,16 +107,27 @@
 						'y': Math.round(Math.random() * 5) + 1
 					};
 					this.width = (Math.random() * 3) + 2;
+					this.y = -10;
 					break;
 				case 'clouds':
+					this.sizeModifier = 1 + randomNum(-0.05, 0.05);
+					var speedMultiplier = randomInt(1, 5);
 					this.speed = {
-						'x': randomInt(1, 3),
+						'x': randomNum(0.01 * speedMultiplier, 0.1 * speedMultiplier) * (1 / (this.sizeModifier) * 2), // Shouldn't be too much speed diff beween clouds, should be slow overall
 						'y': 0
+					};
+					this.y = randomInt(30 * this.sizeModifier, 70 * this.sizeModifier);
+					//this.width = this.x + 14 + (80 * this.sizeModifier) + ((28 * this.sizeModifier) / 2);
+					this.position = {
+						'xLeft': 28 * this.sizeModifier,
+						'xRight': (80 * this.sizeModifier) + (28 * this.sizeModifier),
+						'yUp': 23 * this.sizeModifier + (23 * this.sizeModifier),
+						'yDown': 28 * this.sizeModifier
 					};
 					break;
 			}
 			this.x = Math.round(Math.random() * context.canvas.width);
-			this.y = -10;
+			//this.y = -10;
 			this.height = this.width;
 			this.drawToCanvas = function(ctx) {
 				switch (type) {
@@ -118,19 +140,25 @@
 						ctx.arc(this.x, this.y, this.width / 2, 0, Math.PI);
 						break;
 					case 'snow':
-						ctx.fillStyle = "rgba(255,255,255,0.8);";
+						ctx.fillStyle = "rgba(255,255,255,0.8)";
 						ctx.beginPath();
 						ctx.arc(this.x, this.y, 2, 10, 0, true);
 						break;
 					case 'clouds':
 						ctx.fillStyle = "rgba(69, 69, 69, 0.8)";
 						ctx.beginPath();
-						ctx.arc(50, 62, 28, 0, 2 * Math.PI, false);
-						ctx.arc(74, 39, 23, 0, 2 * Math.PI, false);
-						ctx.arc(115, 45, 26, 0, 2 * Math.PI, false);
-						ctx.arc(130, 62, 28, 0, 2 * Math.PI, false);
-						ctx.lineTo(130, 90);
-						ctx.lineTo(50, 90);
+						ctx.arc(this.x, this.y, 28 * this.sizeModifier, 0, 2 * Math.PI, false);
+						ctx.arc(this.x + 24 * this.sizeModifier, this.y - 23 * this.sizeModifier, 23 * this.sizeModifier, 0, 2 * Math.PI, false);
+						ctx.arc(this.x + 65 * this.sizeModifier, this.y - 17 * this.sizeModifier, 26 * this.sizeModifier, 0, 2 * Math.PI, false);
+						ctx.arc(this.x + 80 * this.sizeModifier, this.y, 28 * this.sizeModifier, 0, 2 * Math.PI, false);
+						ctx.lineTo(this.x + 80 * this.sizeModifier, this.y + 28 * this.sizeModifier);
+						ctx.lineTo(this.x, this.y + 28 * this.sizeModifier);
+						ctx.closePath();
+						ctx.fill();
+
+						ctx.fillStyle = "red";
+						ctx.beginPath();
+
 						break;
 				}
 				ctx.closePath();
@@ -193,13 +221,13 @@
 		function Update() {
 			Object.keys(flakeArray).forEach(function(key) {
 				for (var i = 0; i < flakeArray[key].length; i++) {
-					if (flakeArray[key][i].y <= context.canvas.height) {
+					if (flakeArray[key][i].y - flakeArray[key][i].position['yUp'] <= context.canvas.height) {
 						flakeArray[key][i].y += flakeArray[key][i].speed.y;
-						if (flakeArray[key][i].y > context.canvas.height)
-							flakeArray[key][i].y = -5;
+						if (flakeArray[key][i].y - flakeArray[key][i].position['yUp'] > context.canvas.height) // If it's gone beyond the bottom of the screen
+							flakeArray[key][i].y = flakeArray[key][i].position['yDown'] * -1;
 						flakeArray[key][i].x += flakeArray[key][i].speed.x;
-						if (flakeArray[key][i].x > context.canvas.width)
-							flakeArray[key][i].x = 0;
+						if (flakeArray[key][i].x - flakeArray[key][i].position['xLeft'] > context.canvas.width)
+							flakeArray[key][i].x = flakeArray[key][i].position['xRight'] * -1;
 					}
 				}
 			});
