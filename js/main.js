@@ -1367,6 +1367,19 @@ var action = {
             action.setBG(''); //culprit to object is undefined when placed
             $('.screenoverlay').css('background-image','');
             $('.screen').prepend('<img class="svg"/>');
+
+            //Clear undo/redo stuff
+            action.actionQueue = [];
+            action.queuePosition = -1;
+            action.isUndoingRedoing = false;
+            action.sizeQueueTimeout = {
+                timeout : null,
+                isTimeoutRunning: false,
+                previousCssKey : '',
+                previousAction : null,
+                initialValue : ''
+            };
+
             action.setHelpText('Cleared. Click "Show Elements Panel" to place elements.');
         }
     },
