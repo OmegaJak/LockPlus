@@ -7,9 +7,9 @@ var constants = {
                     ,'load~Load Theme~fa fa-download~loadDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
     backgroundArray: ['cgBackground~Change Background~fa fa-photo~cgBackgroundDiv'
-                     ,'openBackground~Open Background~fa fa-external-link-square~openBackgroundDiv'
+                     ,'openBackground~View Background in New Tab~fa fa-external-link-square~openBackgroundDiv'
                      ,'backgroundBlur~Change Background Blur~fa fa-bullseye~backgroundBlurDiv'
-                     ,'openBlurryBackground~Open Blurred Background~fa fa-external-link~openBlurryBackgroundDiv'
+                     ,'openBlurryBackground~View Blurred Background in New Tab~fa fa-external-link~openBlurryBackgroundDiv'
                      ,'backToTools~Back~fa fa-arrow-left~backToToolsDiv'
                      ,'clearBackground~Clear Background~fa fa-trash~clearBackgroundDiv'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
