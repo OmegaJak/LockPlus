@@ -1656,7 +1656,7 @@ var action = {
             action.wallpaper = img;
 
             var blur = localStorage.getItem('wallpaperBlur');
-            if (blur === null || blur === '')
+            if (blur === null || blur === '' || blur === 'null')
                 blur = 0;
             stackBlurImage('wallpaper','blurcanvas',blur,false);
             //action.isBlurred = true;

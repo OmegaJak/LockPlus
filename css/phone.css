@@ -60,6 +60,7 @@
 	pointer-events: none;
 	position: absolute;
 	top: 0px;
+	left: 0px;
 }
 .blur {
 	width: 320px!important;
