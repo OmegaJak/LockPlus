@@ -561,7 +561,11 @@ var action = {
                 }
             }
 
-            action.setCss(action.selectedItem, '-webkit-transform', compiledTransform);
+            if (compiledTransform === 'rotate(0deg) skewX(0deg) skewY(0deg)') { // Everything's back to the start
+                action.updateTransform(idSelector, cssKey, unit, jsCssKey, 'clear'); // So remove transform altogether
+            } else {
+                action.setCss(action.selectedItem, '-webkit-transform', compiledTransform);
+            }
         } else if (purpose === 'get') {
             return splitArray[index] + unit;
         } else if (purpose === 'clear') {
