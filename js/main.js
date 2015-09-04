@@ -1,7 +1,7 @@
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
     toolArray: ['background~Background~fa fa-photo~backgroundDiv'
-                    ,'overlay~Change Overlay~fa fa-clipboard~overlayDiv'
+                    ,'overlay~Overlay~fa fa-clipboard~overlayDiv'
                     ,'element~Show Elements Panel~fa fa-flask~elementDiv'
                     ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'load~Load Theme~fa fa-download~loadDiv'
@@ -12,6 +12,9 @@ var constants = {
                      ,'openBlurryBackground~View Blurred Background in New Tab~fa fa-external-link~openBlurryBackgroundDiv'
                      ,'backToTools~Back~fa fa-arrow-left~backToToolsDiv'
                      ,'clearBackground~Clear Background~fa fa-trash~clearBackgroundDiv'],
+    overlayArray: ['cgOverlay~Change Overlay~fa fa-clipboard'
+                    ,'backToTools~Back~fa fa-arrow-left'
+                    ,'clearOverlay~Clear Overlay~fa fa-trash'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
@@ -122,7 +125,9 @@ var action = {
     toolPanel: function (evt) { //handle clicks from toolpanel
         var id = evt.target.id;
             action.uploadSelection = id;
-        if (id === 'overlay' || id === 'cgBackground') { $('#bgInput').click(); }
+        if (id === 'cgOverlay' || id === 'cgBackground') { $('#bgInput').click(); }
+        if (id === 'overlay') { this.showIconMenu(constants.overlayArray, -1); }
+        if (id === 'clearOverlay') { $('.screenoverlay').css('background-image',''); action.savedElements.overlay = ''; action.saveStorage(); }
         if (id === 'background') { this.showIconMenu(constants.backgroundArray, -1); }
         if (id === 'openBackground') { this.openBackground('original'); }
         if (id === 'backgroundBlur') { this.cgSize('backgroundBlur', constants.backgroundArray[2], '', 0, 100, 'backBlur', 'backBlur', action.backgroundBlur, false, false, 'Background Blur'); }
@@ -2169,7 +2174,7 @@ function uploadedImage(e) {
                     $('#wallSelector').css('display','block');
                     tempWall = e.target.result;
                     //action.setBG(e.target.result);
-                } else if (action.uploadSelection === 'overlay') {
+                } else if (action.uploadSelection === 'cgOverlay') {
                     action.setOverlay(e.target.result);
                 }
             };
