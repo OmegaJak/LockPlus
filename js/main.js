@@ -100,7 +100,7 @@ var constants = {
     //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     preloadWhitelist: {'size':'','width':'', 'position':'','align':'','uppercase':'','weight':'','style':'','customPrefix':'','customSuffix':'','hShadow':'','vShadow':'','blur':'','boxhShadow':'','boxvShadow':''
                         ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':''},
-    iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo']
+    iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky']
 };
 var action = {
     savedElements : {}, //object to save elements placed
@@ -376,7 +376,7 @@ var action = {
         if(!val){
             $('.iconList').toggle('display');
         }
-        $('.icon').attr('src', 'weather/'+name+'.png');
+        $('.icon').attr('src', 'http://junesiphone.com/weather/IconSets/'+name+'/39.png');
         action.savedElements.iconName = name;
         this.saveStorage();
     },
@@ -969,8 +969,8 @@ var action = {
                 if(action.selectedItem.substring(3,9) === 'Circle') { // Special for circles
                     action.setCss([[action.selectedItem, ['height', 'width', 'left'], [$(idSelector).val() + unit, $(idSelector).val() + unit, elPos]]]);
                 } else if (idSelector === '#iconSizeInput') { // Special for icon
-                    var valuesArr = [$(idSelector).val() + unit, $(idSelector).val() + unit, elPos];
-                    action.setCss([['icon', ['height', 'width', 'left'], valuesArr], ['iconImg', ['height', 'width', 'left'], valuesArr]]);
+                    var valuesArr = [ $(idSelector).val() + unit, elPos];
+                    action.setCss([['icon', [ 'width', 'left'], valuesArr], ['iconImg', ['width', 'left'], valuesArr]]);
                 } else {
                     action.setCss([[action.selectedItem, [cssKey, 'left'], [$(idSelector).val() + unit, elPos]]]);
                 }
@@ -1874,8 +1874,8 @@ var action = {
                 this.savedElements.placedElements[id]['top'] = '248px';
                 this.savedElements.placedElements[id]['left'] = '130px';
                 this.savedElements.placedElements[id]['width'] = '40px';
-                this.savedElements.placedElements[id]['height'] = '40px';
-                 $('#'+id).css('height','40px');
+                //this.savedElements.placedElements[id]['height'] = '40px';
+                 //$('#'+id).css('height','40px');
                  $('#'+id).css('width','40px');
 
               }else{
