@@ -84,6 +84,7 @@ var constants = {
                     ,'boxShadow~Edit Box Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
+                    ,'border~Edit Box Border~fa fa-square-o~borderDiv'
                     ,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     circleEditArray: ['width~Change Width~fa fa-arrows-h~widthDiv'
@@ -91,8 +92,14 @@ var constants = {
                     ,'boxShadow~Edit Circle Shadow~fa fa-cube~boxShadowDiv'
                     ,'transform~Change Transformations~fa fa-level-up~transformDiv'
                     ,'boxColor~Change Color~fa fa-eyedropper~boxColorDiv'
+                    ,'border~Edit Box Border~fa fa-square-o~borderDiv'
                     ,'linearBoxGradient~Edit Linear Box Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    borderArray: ['borderStyle~Border Style~fa fa-ellipsis-v~borderStyleDiv'
+                    ,'borderWidth~Border Width~fa fa-arrows-h~borderWidthDiv'
+                    ,'borderColor~Border Color~fa fa-eyedropper~borderColorDiv'
+                    ,'backToEdit~Back~fa fa-arrow-left'
+                    ,'clearBorder~Clear Border~fa fa-trash'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
                 ,'position~Change Position~fa fa-arrows~positionDiv'
                 , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
@@ -102,7 +109,7 @@ var constants = {
                 gridSizeLeft: 284,
     //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     preloadWhitelist: {'size':'','width':'', 'position':'','align':'','uppercase':'','weight':'','style':'','customPrefix':'','customSuffix':'','hShadow':'','vShadow':'','blur':'','boxhShadow':'','boxvShadow':''
-                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':''},
+                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':''},
     iconList: ['blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky']
 };
 var action = {
@@ -176,6 +183,11 @@ var action = {
         if (id === 'customPrefix') { this.cgAffix('prefix'); }
         if (id === 'customSuffix') { this.cgAffix('suffix'); }
         if (id === 'clearAffixes') { this.cgAffix('clear'); }
+        if (id === 'border') { this.showIconMenu(constants.borderArray, -1); }
+        if (id === 'borderStyle') { this.cgBorderStyle(); }
+        if (id === 'borderWidth') { this.cgSize('borderWidth', constants.borderArray[1], 'px', 0, 200, 'border-width', 'borderWidth', action.updateSize); }
+        if (id === 'borderColor') { this.cgcolor(false, 'borderColor', 'borderColorDiv'); }
+        if (id === 'clearBorder') { this.setCss(action.selectedItem, 'border',''); }
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
@@ -1066,6 +1078,14 @@ var action = {
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'font-style', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             return action.getBasicOptionElement(optionName, 'text-align: center; font-style: ' + optionName, 'font-style');
+        });
+    },
+    cgBorderStyle: function() {
+        var lastSelector = '#' + $('#' + action.selectedItem).css('border-style') + 'Option';
+        this.cgOption('borderStyle', constants.borderArray[0], ['dotted','dashed','solid','double','groove','ridge','inset','outset'], 20, true, function(optionSelector) {
+            lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'border-style', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
+        }, function(optionName) {
+            return action.getBasicOptionElement(optionName, 'text-align:center; font-size:15px;', 'border-style');
         });
     },
     cguppercase: function () {
