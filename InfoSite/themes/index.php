@@ -7,7 +7,7 @@
     <input type="submit">
 </form>
 <a id="themers" href="http://LockPlus.us/themer">Top Themers</a>
-<a style="margin-top:10px;"id="themers" href="popular">Top Downloaded</a>
+<a style="margin-top:10px;" id="topdownloads" style="width:200px!important;" href="popular">Top Downloaded for September</a>
 
 <?php
 require_once "pages/Paginated.php";

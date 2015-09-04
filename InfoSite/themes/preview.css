@@ -91,6 +91,21 @@ b{
     color:white;
     text-decoration:none;
   }
+  #topdownloads{
+    position:relative;
+    display:block;
+    margin:0 auto;
+    top:-5px;
+    left:16px;
+    padding:3px;
+    background-color:#54606e;
+    width:250px;
+    height:20px;
+    text-align:center;
+    border-radius:3px;
+    color:white;
+    text-decoration:none;
+  }
 
 #contain{
   width: 100%;

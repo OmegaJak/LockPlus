@@ -25,6 +25,10 @@ foreach ($array as $key => $value) {
     if(file_exists('../'.$exist)){
         if($count > 20){
             $imgSrc = basename($key,'.plist');
+            if(file_exists('../themepreview/'.$imgSrc)){
+        }else{
+            $imgSrc = $imgSrc.'.jpg';
+        }
             echo '<div class="theme"><img title="'.$name.'" onclick="viewtheme(this.title)" class="themeImage" src="../themepreview/' . $imgSrc . '"/>
             <span class="themeName">'.$name.'</span>
             <span class="themeName">Est Downloads: '.$count.'</span>

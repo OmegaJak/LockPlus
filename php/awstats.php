@@ -22,30 +22,32 @@ function listFolderFiles($dir){
 
 listFolderFiles('../../');
 */
+$file = '../../tmp/awstats/awstats092015.lockplus.us.txt';
+copy($file, 'new.txt');
 ?>
 
 
 <?php
 
 $themeArray = array();
-$parser = new awstatsDataParser('../../tmp/awstats/awstats072015.lockplus.us.txt'); //july
-$parser2 = new awstatsDataParser('../../tmp/awstats/awstats082015.lockplus.us.txt'); //august
+//$parser = new awstatsDataParser('../../tmp/awstats/awstats072015.lockplus.us.txt'); //july
+//$parser2 = new awstatsDataParser('../../tmp/awstats/awstats082015.lockplus.us.txt'); //august
 $parser3 = new awstatsDataParser('../../tmp/awstats/awstats092015.lockplus.us.txt'); //september
 
 //$n = $parser->info['SIDER_404'];
 //$o = $parser2->info['SIDER_404'];
 
-$n = $parser->info;
+$n = $parser3->info;
 foreach ($n as $key => $value) { //list of available stats from aw
   echo $key.'<br>';
 }
 
-$july= $parser->info['SIDER'];
-$aug= $parser2->info['SIDER'];
+//$july= $parser->info['SIDER'];
+//$aug= $parser2->info['SIDER'];
 $sep= $parser3->info['SIDER'];
 //print_r($s);
 
-foreach ($july as $key => $value) { //first
+/*foreach ($july as $key => $value) { //first
   $d = split('[.]', $key);
   if($d[1] === 'plist'){ //check if has plist
    // if($key === '/php/themes/Outlook.plist'){
@@ -70,12 +72,12 @@ foreach ($aug as $key => $value) { //second
     //}
   }
 }
-
+*/
 foreach ($sep as $key => $value) { //second
   $d = split('[.]', $key);
   if($d[1] === 'plist'){ //check if has plist
     //if($key === '/php/themes/Outlook.plist'){
-        if(is_numeric($value[0]) && gettype($themeArray[$key]) == 'array'){
+        if(is_numeric($value[0])){
             if(in_array($themeArray[$key], $themeArray)){
              array_push($themeArray[$key], $value[0]);
              echo $key . $value[0].'<br>';
@@ -87,14 +89,22 @@ foreach ($sep as $key => $value) { //second
   }
 }
 
+
+
 $final = array();
 foreach ($themeArray as $key => $value) {
   if(gettype($value) === 'array'){
     $inpus = $key . '~' . array_sum($value);
     array_push($final, $inpus);
+  }else{
+    $inpus = $key . '~' . array_sum($value);
+    array_push($final, $inpus);
   }
   //array_push($final, $key.'~'.array_sum($value)); //push into a single line
 }
+
+
+
 file_put_contents('count/dl.bin', serialize($final)); //write to bin so all other files can read these stats
 
 
