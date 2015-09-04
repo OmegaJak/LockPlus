@@ -82,10 +82,10 @@
     background-color: #54606e;
     text-decoration: none;
 }
-.slick-prev {
+.slickPrev {
     top: 0px;
 }
-.slick-next {
+.slickNext {
     top: 146px;
 }
 .slick-list {

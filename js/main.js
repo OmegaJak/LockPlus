@@ -1425,15 +1425,17 @@ var action = {
                 $($('#' + div).find('[aria-live=polite]')).css('width', '500px');
                 $('.slick-slide').css('float', 'none');
 
-                var prevButton = $('#' + div).find('.slick-next')[0];
-                $(prevButton).attr('class', 'slick-next slick-arrow fa fa-arrow-down');
+                var prevButton = $('<button class="slick-arrow slickNext fa fa-arrow-down" style="display: block;"></button>'); //Create a new button that's not related to the old one at all
+                $($('#' + div).find('.slick-next')[0]).remove(); // Remove the old, slick-made button. It does things we don't want
                 $(prevButton).html('');
-                $(prevButton).click(function() {action.buttonPress('next', div);});
+                $(prevButton).click(function() {action.slickProgress('next', div);}); // Send it through our own custom handler
+                $('#' + div).append(prevButton); // Actually add the new button
 
-                var nextButton = $('#' + div).find('.slick-prev')[0];
-                $(nextButton).attr('class', 'slick-prev slick-arrow fa fa-arrow-up');
+                var nextButton = $('<button class="slick-arrow slickPrev fa fa-arrow-up" style="display: block;"></button>');
+                $($('#' + div).find('.slick-prev')[0]).remove();
                 $(nextButton).html('');
-                $(nextButton).click(function() {action.buttonPress('prev', div);});
+                $(nextButton).click(function() {action.slickProgress('prev', div);});
+                $('#' + div).append(nextButton);
 
                 if (numDivChildren <= 5)
                     $($('#' + div).find('[aria-live=polite]')).attr('style', 'height: 126px!important; padding: 28px 0px;');
@@ -1447,7 +1449,7 @@ var action = {
                     $('#' + div).slick('slickPrev');
                     action.setCarouselOpacity(div);
                 } else {
-                    if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                    if (action.shouldSlickProgress(div)) {
                         $('#' + div).slick('slickNext');
                         action.setCarouselOpacity(div);
                     }
@@ -1459,7 +1461,7 @@ var action = {
                     if (event.keyCode === 38) {
                         $('#' + div).slick('slickPrev');
                     } else if (event.keyCode === 40) {
-                        if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1 < $('#' + div).find('li').length - 2) {
+                        if (action.shouldSlickProgress(div)) {
                             $('#' + div).slick('slickNext');
                         }
                     }
@@ -1469,6 +1471,25 @@ var action = {
                 $(document).unbind("keyup");
             });
             if ($('#' + div + ":hover").length) $('#' + div).mouseenter(); // Check if the mouse is already hovering over it when it loads
+    },
+    slickProgress: function(key, div) {
+        switch (key) {
+            case 'prev':
+                $('#' + div).slick('slickPrev');
+                action.setCarouselOpacity(div);
+                break;
+            case 'next':
+                if (action.shouldSlickProgress(div)) {
+                    $('#' + div).slick('slickNext');
+                }
+                break;
+        }
+        action.setCarouselOpacity(div);
+    },
+    shouldSlickProgress: function(div) {
+        // This nastiness is to check whether or not we want to go to the next thing. So it's either if it's got less than or equal to 5 items in the list
+        //      or if the next element in the list isn't dummyOne
+        return $($('#' + div).find('.slick-track')[0]).children().length <= 5 || $($('#' + div).find("[data-slick-index=" + (JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) + 1) + "]")[0]).attr('id') != 'dummyOne';
     },
     parseElementsArray: function(array, divSelector) {
         Object.keys(array).forEach(function (key) {
@@ -1526,20 +1547,6 @@ var action = {
             } else {
                 $(centerEl).css("font-size", 20);
             }
-        }
-    },
-    buttonPress: function(key, div) {
-        switch (key) {
-            case 'prev':
-                action.setCarouselOpacity(div);
-                break;
-            case 'next':
-                if ($($('#' + div).find('.slick-track')[0]).children().length <= 5 || JSON.parse($('#' + div).find('.slick-center').attr('data-slick-index')) < $('#' + div).find('li').length - 2) {
-                    action.setCarouselOpacity(div);
-                } else {
-                    $('#' + div).slick('slickPrev');
-                }
-                break;
         }
     },
     saveTheme:function () { //saves info to divs and sends form to create plist
