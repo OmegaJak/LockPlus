@@ -2045,6 +2045,8 @@ var action = {
                 return "Transform Menu";
             case constants.affixArray:
                 return "Suffix/Prefix Menu";
+            case constants.borderArray:
+                return "Border Array";
         }
     },
     showProperMenuForId: function(id) {
