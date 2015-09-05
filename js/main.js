@@ -97,7 +97,7 @@ var constants = {
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     borderArray: ['borderStyle~Border Style~fa fa-ellipsis-v~borderStyleDiv'
                     ,'borderWidth~Border Width~fa fa-arrows-h~borderWidthDiv'
-                    ,'borderColor~Border Color~fa fa-eyedropper~borderColorDiv'
+                    ,'border-color~Border Color~fa fa-eyedropper~border-colorDiv'
                     ,'backToEdit~Back~fa fa-arrow-left'
                     ,'clearBorder~Clear Border~fa fa-trash'],
     iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
@@ -186,7 +186,7 @@ var action = {
         if (id === 'border') { this.showIconMenu(constants.borderArray, -1); }
         if (id === 'borderStyle') { this.cgBorderStyle(); }
         if (id === 'borderWidth') { this.cgSize('borderWidth', constants.borderArray[1], 'px', 0, 200, 'border-width', 'borderWidth', action.updateSize); }
-        if (id === 'borderColor') { this.cgcolor(false, 'borderColor', 'borderColorDiv'); }
+        if (id === 'border-color') { this.cgcolor(false, 'border-color', 'border-colorDiv'); }
         if (id === 'clearBorder') { this.setCss(action.selectedItem, 'border',''); }
 
         //Gradients
