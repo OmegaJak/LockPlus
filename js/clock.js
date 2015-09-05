@@ -360,7 +360,7 @@ var weatherdivs = function () {
             sunrise: '5:00',
             sunset: '7:00',
             update: '7/11/15 8:05',
-            icon: 'http://junesiphone.com/weather/IconSets/simply/39.png',
+            icon: 'weather/real/simply.png',
             tempcon: '76 Cloudy',
             tempcon1: '76°f Cloudy',
             tempcon2: '76° Cloudy',

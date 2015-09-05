@@ -393,7 +393,8 @@ var action = {
         if(!val){
             $('.iconList').toggle('display');
         }
-        $('.icon').attr('src', 'http://junesiphone.com/weather/IconSets/'+name+'/39.png');
+        //$('.icon').attr('src', 'http://junesiphone.com/weather/IconSets/'+name+'/39.png');
+        $('.icon').attr('src', 'weather/real/'+name+'.png');
         action.savedElements.iconName = name;
         this.saveStorage();
     },
