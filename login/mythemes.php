@@ -68,6 +68,21 @@ p{
       <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
       <title>Theme Editing</title>
       <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css">
+      <style>
+      .refreshList{
+      	position: relative;
+      	top:0;
+      	width: 230px;
+      	text-align: center;
+      	border-radius: 3px;
+      	background-color: #54606e;
+      	color: white;
+      }
+      .link{
+      	text-decoration: none;
+      	color:white;
+      }
+      </style>
 </head>
 <body>
 <div id='fg_membersite_content'>
@@ -77,50 +92,41 @@ Showing themes for: <?= $fgmembersite->UserFullName() ?>
 <!--<a href='login-home.php'>Home</a>-->
 
 <?php
-set_time_limit(0);
-//echo "Site is currently under maintenance.<br>";
-$dir    = '../php/themes';
-$list = glob("$dir/*.plist");
-$name = $fgmembersite->UserFullName(); //username
-$dlCount = unserialize(file_get_contents('../php/count/dlcount.bin'));
-
-
-
-$themerThemes = array();
-
-foreach ($list as $key) {
-	$xml = simplexml_load_file($key);
-
-		$dev = $xml->dict->string[1];
-		$count = "NA";
-		if (stripos($dev,$name) !== false){ //if logged in name matches theme
-			$baseName = basename($key,'.plist');
-			$themN = 'themes/'.$baseName.'.plist';
-			array_push($themerThemes, $themN);
-			if(file_exists('../php/themepreview/'.$baseName.'.jpg')){ //if preview exists use it
-		      $preview = '../php/themepreview/'.$baseName.'.jpg';
-		    }else{
-		      $preview = $xml->dict->string[2];
-		    }
-
-		    $cnt = 'themepreview/' . $baseName . '.jpg';
-		    if(array_key_exists($cnt, $dlCount)){ //if count exists for theme
-		      $count = $dlCount[$cnt];
-		    }
-
-			$pname = basename($key);
-			$namewithoutex = basename($pname,'.plist');
-		    	echo '<div class="theme">
-		    	<img title="'.$baseName.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
-		    	<span class="themeName">'.$pname.'<br> Downloads:' . $count . '</span>
-		    	<center><a href="delete.php?name='.$pname.'" class="delete">DELETE</a>
-		    	<a title="'.$key.'" onclick="rename(this.title)" class="rename">RENAME</a>
-		    	<a title="'.$namewithoutex.'" onclick="load(this.title)" class="edit">EDIT</a></center>
-		    	</div>';
+/*
+    Themes now load from user/userList.bin. Updates by http://LockPlus.us/php/user.php
+*/
+	set_time_limit(0);
+	//echo "Site is currently under maintenance.<br>";
+	echo "<div class='refreshList'><a class='link' href='http://lockplus.us/php/user.php' target='_blank'>Refresh Theme List (takes awhile)</a></div>";
+	$dir    = '../php/themes';
+	$list = glob("$dir/*.plist");
+	$name = $fgmembersite->UserFullName(); //username
+	$dlCount = unserialize(file_get_contents('../php/count/dlcount.bin'));
+	$themeDev = unserialize(file_get_contents('../php/user/userList.bin'));
+	foreach ($themeDev as $key) {
+		$split = explode("~", $key);
+		$dev = $split[0];
+		$count = 0;
+		if(stripos($dev, $name)){
+			$baseName = basename($split[1],'.plist');
+			$pname = basename($split[1]);
+				if(file_exists('../php/themepreview/'.$baseName.'.jpg')){ //if preview exists use it
+			      $preview = '../php/themepreview/'.$baseName.'.jpg';
+			    }else{
+			      $preview = 'none';
+			    }
+			    if(array_key_exists($split[1], $dlCount)){ //if count exists for theme
+			      $count = $dlCount[$split[1]];
+			    }
+			echo '<div class="theme">
+			    	<img title="'.$baseName.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
+			    	<span class="themeName">'.$pname.'<br> Downloads:' . $count . '</span>
+			    	<center><a href="delete.php?name='.$pname.'" class="delete">DELETE</a>
+			    	<a title="'.$key.'" onclick="rename(this.title)" class="rename">RENAME</a>
+			    	<a title="'.$baseName.'" onclick="load(this.title)" class="edit">EDIT</a></center>
+			    	</div>';
 		}
-
-}
-
+	}
 ?>
 </p>
 <br>
