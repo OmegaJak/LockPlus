@@ -97,19 +97,17 @@ foreach ($themeArray as $key => $value) {
     $inpus = $key . '~' . array_sum($value);
     array_push($final, $inpus);
   }else{
-    $inpus = $key . '~' . array_sum($value);
+    $inpus = $key . '~' . $value;
     array_push($final, $inpus);
   }
   //array_push($final, $key.'~'.array_sum($value)); //push into a single line
 }
 
-
-
 file_put_contents('count/dl.bin', serialize($final)); //write to bin so all other files can read these stats
 
 
-
 $array = unserialize(file_get_contents('http://LockPlus.us/php/count/dl.bin'));
+print_r($array);
 
 $dir    = 'themes';
 $list = glob("$dir/*.plist"); //full theme list
@@ -128,6 +126,8 @@ foreach ($list as $key) {
     }
 }
 
+
+
 $new = array(); //array to sort by value
 foreach($listNum as $key => $value) {
      $new[$key] = $value;
@@ -135,7 +135,6 @@ foreach($listNum as $key => $value) {
 array_multisort($new, SORT_ASC, $listNum);
 $new = array_reverse($new); //reverse to get biggest to lowest
 file_put_contents('count/dlcount.bin', serialize($new));
-
 
 
 class awstatsDataParser {
