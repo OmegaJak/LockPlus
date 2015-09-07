@@ -25,7 +25,7 @@ Welcome back <?= $fgmembersite->UserFullName(); ?>!
 
 <p><a href='mythemes.php'>View/Edit themes</a></p>
 
-<p><a href='sbhtml.php'>Create SBHTML</a></p>
+<p><a href='sbhtml.php'>Create SBHTML/GroovyLock</a></p>
 <br><br><br>
 <p><a href='logout.php'>Logout</a></p>
 </div>
