@@ -25,42 +25,50 @@ echo 'Export is not available yet<br>';
 if(strlen($elements) > 0){
 	$elVar = 'var elements = '.$elements.';';
 }else{
-	$elVar = '';
+	$elVar = 'var elements = null;';
 }
 
 if(strlen($icon) > 0){
 	$iconVar = 'var wIcon = '.$icon.';';
 }else{
-	$iconVar = '';
+	$iconVar = 'var wIcon = null;';
 }
 
 if(strlen($devname) > 0){
-	$devVar = 'var dev = '.$devname.';';
+	$devVar = 'var dev = "'.$devname.'";';
 }else{
 	$devVar = '';
 }
 
 if(strlen($wallpaper) > 0){
-	$wallpaperVar = 'var wallpaper = '.$wallpaper.';';
+	$wallpaperVar = 'var wallpaper = "'.$wallpaper.'";';
 }else{
-	$wallpaperVar = '';
+	$wallpaperVar = 'var wallpaper = null';
 }
 
 if(strlen($overlay) > 0){
-	$overlayVar = 'var overlay = '.$overlay.';';
+	$overlayVar = 'var overlay = "'.$overlay.'";';
 }else{
-	$overlayVar = '';
+	$overlayVar = 'var overlay = null';
 }
 
 
 
-//$txt = 'var elements = '.$elements.';' .PHP_EOL. 'var wIcon = ' .$icon. ';' .PHP_EOL. ' var wallpaper = "' .$wallpaper. '";' .PHP_EOL . 'var overlay =' .$overlay. ';';
+/* Grab fonts */
+$manage = (array) json_decode($elements);
+$fontArray = array();
+foreach ($manage as $key => $value) {
+    foreach ($value as $key => $value) {
+        if($key === 'font-family'){
+            if($value !== 'helvetica'){
+                array_push($fontArray, $value);
+            }
+        }
+    }
+}
+$result = array_unique($fontArray);
 
-$txt = $devVar .PHP_EOL. $elVar .PHP_EOL. $iconVar .PHP_EOL. $wallpaperVar .PHP_EOL. $overlayVar;
 
-echo $txt;
-
-/*
 function recurse_copy($src,$dst) {
     $dir = opendir($src);
     @mkdir($dst);
@@ -78,12 +86,18 @@ function recurse_copy($src,$dst) {
 }
 
 recurse_copy('./sbhtml/basesbhtml/','./sbhtml/'.$name.'/');
-$myfile = fopen("./sbhtml/".$name."/lockplus.js", "w") or die("Unable to open file!");
-$txt = 'var elements = '.$elements.';' .PHP_EOL. 'var wIcon = ' .$icon. ';' .PHP_EOL. ' var wallpaper = "' .$wallpaper. '";' .PHP_EOL . 'var overlay =' .$overlay. ';';
+$myfile = fopen("./sbhtml/".$name."/js/lockplus.js", "w") or die("Unable to open file!");
+$txt = $devVar .PHP_EOL. $elVar .PHP_EOL. $iconVar .PHP_EOL. $wallpaperVar .PHP_EOL. $overlayVar;
 fwrite($myfile, $txt);
 fclose($myfile);
 
+foreach ($result as $key) {
+    $file = '../css/fonts/user/'. $key. '.otf';
+    $newfile = 'sbhtml/'.$name.'/user/'.$key.'.otf';
+    copy($file, $newfile);
+}
+
 
 echo '<script>location.href = "http://LockPlus.us/php/sbhtml/download.php?name='.$name.'"</script>'
-*/
+
 ?>
