@@ -1,65 +1,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/preview.css" type="text/css">
-<a class="themerBack" href="http://LockPlus.us/themer">Back to list</a>
+<div><a class="themerBack" href="http://LockPlus.us/themer">Back to list</a></div></br>
 <script>
 function viewtheme(d){
   window.location.href = "http://lockplus.us/preview?" + d;
 }
 </script>
 <?php
-require_once "pages/Paginated.php";
-require_once "pages/DoubleBarLayout.php";
+
+set_time_limit(0);
+$dir    = '../php/themes';
+$list = glob("$dir/*.plist");
+
+$dlCount = unserialize(file_get_contents('../php/count/dlcount.bin'));
+$themeDev = unserialize(file_get_contents('../php/user/userList.bin'));
 
 if ($_GET["name"]) {
   $entered = $_GET["name"];
-  error_reporting(0);
-  echo '<a class="themerName">' . $entered . '</a><br />';
-  $dir = '../php/themes';
-  $list = glob("$dir/*.plist");
-  function mtimecmp($a, $b){
-    $mt_a = filemtime($a);
-    $mt_b = filemtime($b);
-    if ($mt_a == $mt_b) return 0;
-    else
-    if ($mt_a < $mt_b) return -1;
-    else return 1;
-  }
-  usort($list, "mtimecmp");
-  $reversed = array_reverse($list);
-
-  $page = $_GET['page'];
-  $pagedResults = new Paginated($reversed, 10000, $page);
-  while ($row = $pagedResults->fetchPagedRow()) { //when $row is false loop terminates
-    if (file_exists($row)) {
-      $xml = simplexml_load_file($row);
-      $dev = $xml->dict->string[1];
-      $artist = preg_replace("/[^A-Za-z0-9 ]/", '', $dev);
-      $entered = preg_replace("/[^A-Za-z0-9 ]/", '', $entered);
-      //echo $artist.$entered.'<br>';
-      if (strtolower($entered) === strtolower($artist)) {
-        $name = basename($row,'.plist');
-        //$name = preg_replace("/[^A-Za-z0-9 ]/", '', $name);
-        $url = '../php/themepreview/' . $name . '.jpg';
-        if (file_exists($url)) {
-          $preview = '../php/themepreview/' . $name . '.jpg';
-        }
-        else {
-          $preview = $xml->dict->string[2];
-        }
-
-        echo '<div class="theme"><img title="' . $name . '" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/><span class="themeName">' . $name . '</span></div>';
-      }
-    }
-    else {
-      exit('Failed to open');
+   echo '<a class="themerName">' . $entered . '</a><br />';
+  foreach ($themeDev as $key) {
+    $split = explode("~", $key);
+    $dev = $split[0];
+    if(stripos($dev, $entered)){
+      $baseName = basename($split[1],'.plist');
+      $pname = basename($split[1]);
+        if(file_exists('../php/themepreview/'.$baseName.'.jpg')){ //if preview exists use it
+            $preview = '../php/themepreview/'.$baseName.'.jpg';
+          }else{
+            $preview = 'none';
+          }
+      echo '<div class="theme">
+            <img title="'.$baseName.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
+            <span class="themeName">'.$pname.'</span>
+            </div>';
     }
   }
-
-  $pagedResults->setLayout(new DoubleBarLayout());
 }else{
   exit('Themer does not exist');
 }
 
 ?>
-
-
