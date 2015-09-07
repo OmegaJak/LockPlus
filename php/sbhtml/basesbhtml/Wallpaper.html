@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Created by LockBuilder</title>
+       <meta name="viewport" content="width=320, height=583, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="weather/css/weather.css">
+<link rel="stylesheet" type="text/css" href="weather/user.css">
+<script src="weather/js/jQuery.js"></script>
+<script src='Config.js'></script>
+</head>
+<body>
+       <img id='background' width='320'/>
+       <img id='overlay' style='position:absolute;left:0px;top:0px;' width='320'/>
+      <div id="weatherelements">
+	<div id="Weather"></div>
+      <div id="icon" ontouchend="openweather()"><img id="iconimg"src=""></div>
+      <div id="temp"></div>
+      <div id="tempFC"></div>
+      <div id="windsp"></div>
+      <div id="windir"></div>
+      <div id="elevation"></div>
+      <div id="feeltemp"></div>
+      <div id="condition"></div>
+      <div id="rude"></div>
+      <div id="later"></div>
+      <div id="hi"></div>
+      <div id="low"></div>
+      <div id="uv"></div>
+      <div id="raininfo"></div>
+      <div id="dew"></div>
+      <div id="humidity"></div>
+      <div id="rainfall"></div>
+      <div id="tdesc"></div>
+      <div id="visible"></div>
+      <div id="warning"></div>
+      <div id="lspace"></div>
+
+      <div id="Forecast"></div>
+      <div id="desc1"></div>
+      <div id="desc2"></div>
+      <div id="desc3"></div>
+      <div id="desc4"></div>
+      <div id="desc5"></div>
+      <div id="fcast1"></div>
+      <div id="fcast2"></div>
+      <div id="fcast3"></div>
+      <div id="fcast4"></div>
+      <div id="day1icon"><img id="day1iconi"src="" width="80"></div>
+      <div id="day1des"></div>
+      <div id="day1hi"></div>
+      <div id="day1lo"></div>
+      <div id="day2icon"><img id="day2iconi"src="" width="80"></div>
+      <div id="day2des"></div>
+      <div id="day2hi"></div>
+      <div id="day2lo"></div>
+      <div id="day3icon"><img id="day3iconi"src="" width="80"></div>
+      <div id="day3des"></div>
+      <div id="day3hi"></div>
+      <div id="day3lo"></div>
+      <div id="day4icon"><img id="day4iconi"src="" width="80"></div>
+      <div id="day4des"></div>
+      <div id="day4hi"></div>
+      <div id="day4lo"></div>
+      <div id="day1day"></div>
+      <div id="day2day"></div>
+      <div id="day3day"></div>
+      <div id="day4day"></div>
+
+        <div id="forecast">
+        <div id="Day1"></div>
+        <div id="Day2"></div>
+        <div id="Day3"></div>
+        <div id="Day4"></div>
+          <div class="days">
+            <div id="ForecastDay1"></div>
+            <div id="ForecastDay2"></div>
+            <div id="ForecastDay3"></div>
+            <div id="ForecastDay4"></div>
+          </div>
+        <div id="Day1High"></div>
+        <div id="Day2High"></div>
+        <div id="Day3High"></div>
+        <div id="Day4High"></div>
+      </div>
+      <div id="lspace"></div>
+
+      <div id="Clocks"></div>
+      <div id="ztime"></div>
+      <div id="time"></div>
+      <div id="zhour"></div>
+      <div id="hour"></div>
+      <div id="minute"></div>
+      <div id="pm"></div>
+      <div id="ttext"></div>
+      <div id="htext"></div>
+      <div id="mtext"></div>
+      <div id="DMD"></div>
+      <div id="MD"></div>
+      <div id="DM"></div>
+      <div id="DSM"></div>
+      <div id="day"></div>
+      <div id="date"></div>
+      <div id="tdate"></div>
+      <div id="month"></div>
+      <div id="sday"></div>
+      <div id="smonth"></div>
+      <div id="year"></div>
+      <div id="sunrise"></div>
+      <div id="sunset"></div>
+      <div id="events">No Events</div>
+      <div id="lspace2"></div>
+
+      <div id="Texts"></div>
+      <div id="slash">/</div>
+      <div id="slash2">/</div>
+      <div id="Dlocked">Device Locked</div>
+      <div id="comma">,</div>
+      <div id="colon">:</div>
+      <div id="min">Min:</div>
+      <div id="max">Max:</div>
+      <div id="L2">Low:</div>
+      <div id="H2">High:</div>
+      <div id="L">L:</div>
+      <div id="H">H:</div>
+      <div id="lspace3"></div>
+
+      <div id="Local"></div>
+      <div id="city"></div>
+      <div id="nhood"></div>
+      <div id="street"></div>
+      <div id="addr"></div>
+      <div id="county"></div>
+      <div id="lat"></div>
+      <div id="long"></div>
+      <div id="latext">Refresh to get full latitude</div>
+      <div id="longext">Refresh to get full longitude</div>
+      <div id="state"></div>
+      <div id="statenm"></div>
+      <div id="country"></div>
+      <div id="lspace4"></div>
+
+      <div id="Notify"></div>
+      <div id="sms">no</div>
+      <div id="mail">no</div>
+      <div id="phone">no</div>
+      <div id="twitter">no</div>
+      <div id="tweetbot">no</div>
+      <div id="whatapp">no</div>
+      <div id="lspace5"></div>
+
+      <div id="System"></div>
+      <div id="dsize"></div>
+      <div id="dfree"></div>
+      <div id="msize"></div>
+      <div id="CPU"></div>
+      <div id="firm"></div>
+      <div id="uptime"></div>
+      <div id="battery">noBattery</div>
+      <p id="unlock" ontouchend="unlock()">Unlock</p>
+      <div id="name"></div>
+      <div id="speak" onclick="speaknow()">&#x1f50a;</div>
+      <div id="lspace6"></div>
+</div>
+<div id='iwidgetcontainer'></div>
+<div id='anisc'></div>
+<script src="weather/js/loaders.js"></script>
+<script src='weather/user.js'></script>
+
+
+<script>
+
+var refreshrate=WeatherRefresh*60000;
+var language = Curlanguage;
+if(language.length <=1){
+   var language = window.navigator.language;
+     if(language.length>2){
+        if(language[2]=="-"){
+        var lsplit = language.split('-');
+        language = lsplit[0];
+         }
+         else{
+          language = language;
+         }
+     }
+}
+
+ if(language=="en"){
+  var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var month=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var smonth=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var sday=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var windtxt = "Wind: ";
+  var feeltxt = "Feels Like: ";
+  var sunrisetxt = "Sunrise: ";
+  var sunsettxt = "Sunset: ";
+  var textstringlater="Later Today: ";
+  var humidtxt="Humidity: ";
+  var warningtxt = "Warning: ";
+  var preciptxt = "Precip ";
+  var Fcondition = [ "Tornado", "Tropical Storm", "Hurricane", "Thunderstorm", "Thunderstorm", "Snow", "Sleet", "Sleet", "Freezing Drizzle", "Drizzle", "Freezing Rain", "Showers", "Showers", "Flurries", "Snow", "Snow", "Snow", "Hail", "Sleet", "Dust", "Fog", "Haze", "Smoky", "Blustery", "Windy", "Cold", "Cloudy", "Cloudy", "Cloudy", "Cloudy", "Cloudy", "Clear", "Sunny", "Fair", "Fair", "Sleet", "Hot", "Thunderstorms", "Thunderstorms", "Thunderstorms", "Showers", "Heavy Snow", "Light Snow", "Heavy Snow", "Partly Cloudy", "Thunderstorm", "Snow", "Thunderstorm", "blank" ];
+  var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+   var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+  }
+  else if(language=="it"){
+  var weekday = ['Domenica','Luned&#236','Marted&#236','Mercoled&#236','Gioved&#236','Venerd&#236','Sabato'];
+  var month=["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+  var smonth=["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"];
+  var sday=["Sun", "Mon", "Mar", "Mer", "Gio", "Ven", "Sat"];
+  var windtxt = "Vento: ";
+  var feeltxt = "Sembra: ";
+  var sunrisetxt = "Alba: ";
+  var sunsettxt = "Tramonto: ";
+  var textstringlater="Più tardi oggi: ";
+  var humidtxt="Umidità: ";
+  var warningtxt = "Avvertimento: ";
+  var preciptxt = "Pioggia ";
+  var Fcondition = [ "Tornado", "Tempesta Tropicale", "Uragano", "Temporali Forti", "Temporali", "Pioggia mista a Neve", "Nevischio", "Nevischio", "Pioggia Gelata", "Pioggerella", "Pioggia Ghiacciata", "Pioggia", "Pioggia", "Neve a Raffiche", "Neve Leggera", "Tempesta di Neve", "Neve", "Grandine", "Nevischio", "Irregolare", "Nebbia", "Foschia", "Fumoso", "Raffiche di Vento", "Ventoso", "Freddo", "Nuvoloso", "Molto Nuvoloso", "Molto Nuvoloso", "Nuvoloso", "Nuvoloso", "Sereno", "Sereno", "Bel Tempo", "Bel Tempo", "Pioggia e Grandine", "Caldo", "Temporali Isolati", "Temporali Sparsi", "Temporali Sparsi", "Rovesci Sparsi", "Neve Forte", "Nevicate Sparse", "Neve Forte", "Nuvoloso", "Rovesci Temporaleschi", "Rovesci di Neve", "Temporali isolati", "Non Disponibile" ];
+   var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+  }
+  else if(language=="sp"){
+  var weekday = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  var month=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  var smonth=["Ene","Feb","Mar","Abr","Mayo","Jun","Jul","Aug","Sep","Oct","Nov","Dic"];
+  var sday=["Sol","Mon","Mar","Mie","Jue","Vie","Sat"];
+  var windtxt = "Viento: ";
+  var feeltxt = "Sensación térmica: ";
+  var sunrisetxt = "Salida del sol: ";
+  var sunsettxt = "Puesta del sol: ";
+  var textstringlater="Para hoy más tarde: ";
+  var humidtxt="Humedad: ";
+  var warningtxt = "Advertencia: ";
+  var preciptxt = "Precip ";
+  var Fcondition = [ "Tornado", "Tormenta Tropical", "Huracan", "Tormentas Electricas Severas", "Tormentas Electricas", "Mezcla de Lluvia y Nieve", "Mezcla de lluvia y aguanieve", "Mezcla de nieve y aguaniev", "Llovizna helada", "Llovizna", "Lluvia bajo cero", "Chubascos", "Chubascos", "Rafagas de nieve", "Ligeras precipitaciones de nieve", "Viento y nieve", "Nieve", "Granizo", "Aguanieve", "Polvareda", "Neblina", "Bruma", "Humeado", "Tempestuoso", "Vientoso", "Frio", "Nublado ", "Mayormente nublado", "Mayormente nublado", "despejado", "despejado", "Despejado", "Soleado", "Lindo", "Lindo", "Mezcla de lluvia y granizo", "Caluroso", "Tormentas electricas aisladas", "Tormentas electricas dispersas", "Tormentas electricas dispersas", "Chubascos dispersos", "Nieve fuerte", "Precipitaciones de nieve dispersas", "Nieve fuerte", "despejado", "Lluvia con truenos y relampagos", "Precipitaciones de nieve", "Tormentas aisladas", "No disponible" ];
+  var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+  }
+  else if(language=="de"){
+  var weekday = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+  var month=["Januari","Februari","Maart","April","Kunnen","Juni","Juli","Augustus","September","Oktober","November","Dezember"];
+  var smonth=["Jan", "Feb", "Maa", "Apr", "Kun", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez "];
+  var sday=["Son","Mon","Die","Mit","Don","Fre","Sam"];
+  var windtxt = "Wind: ";
+  var feeltxt = "Voelt aan als: ";
+  var sunrisetxt = "Zonsopgang: ";
+  var sunsettxt = "Zonsondergang: ";
+  var textstringlater="Later Vandaag: ";
+  var humidtxt="Vochtigheid: ";
+  var warningtxt = "Waarschuwing: ";
+  var preciptxt = "Neerslag ";
+  var Fcondition = [ "Tornado", "Tropischer Sturm", "Wirbelsturm", "Schwere Gewitter", "Gewitter", "Regen und Schnee", "Graupelschauer", "Schneeregen", "Gefrierender Nieselregen", "Nieselregen", "Gefrierender Regen", "Schauer", "Schauer", "Schneegest&ouml;ber", "Leichte Schneeschauer", "Schneetreiben", "Schnee", "Hagel", "Schneeregen", "Staubig", "Nebelig", "Dunstschleier", "Dunstig", "St&uuml;rmisch", "Windig", "Kalt", "Bew&ouml;lkt ", "Meist Bew&ouml;lkt", "Meist Bew&ouml;lkt", "Bew&ouml;lkt", "Bew&ouml;lkt", "Klar", "Sonnig", "Heiter", "Heiter", "Regen und Hagel", "Heiss", "&Ouml;rtliche Gewitter", "Vereinzelte Gewitte", "Vereinzelte Gewitte", "Vereinzelte Schauer", "Starker Schneefall", "Vereinzelte Schneeschauer", "Starker Schneefall", "Bew&ouml;lkt", "Gewitter", "Scheeschauer", "Ouml;rtliche Gewitterschauer", "Nicht Verfuegbar" ];
+   var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+  }
+  else if(language=="fr"){
+  var weekday = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+  var month=["Janvie","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+  var smonth=["Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jui", "Aoû", "Sep", "Oct", "Nov", "Déc"];
+  var sday=["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+  var windtxt = "Vent: ";
+  var feeltxt = "Ressenti: ";
+  var sunrisetxt = "Lever du soleil: ";
+  var sunsettxt = "Coucher du soleil: ";
+  var textstringlater="Plus tard aujourd'hui: ";
+  var humidtxt="Humidité: ";
+  var warningtxt = "Avertissement: ";
+  var preciptxt = "Précipitations: ";
+  var Fcondition = [ "Tornade", "Tropical", "Ouragan", "Orages Violents", "Orages", "Pluie", "Pluie", "Neige", "Bruine", "Bruine", "Pluie", "Averses", "Averses", "Quelques Flocons", "Faibles Chutes de Neige", "Rafales de Neige", "Neige", "GrÃªle", "Neige Fondue", "PoussiÃ©reux", "Brouillard", "Brume", "Brumeux", "TempÃªte", "Vent", "Temps Froid", "Temps Nuageux ", "TrÃ¨s Nuageux", "TrÃ¨s Nuageux", "Nuageux", "Nuageux", "Temps Clair", "Ensoleille", "Beau Temps", "Beau Temps", "Pluie et GrÃªles", "Temps Chaud", "Orages IsolÃ©s", "Orages Eparses", "Orages Eparses", "Averses Eparses", "Fortes Chutes de Neige", "Chutes de Neige Eparses", "Fortes Chutes de Neige", "Nuageux", "Orages", "Chute de Neige", "Orages IsolÃ©s", "Non Disponible" ];
+   var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+  }
+  else if(language=="zh"){
+    var weekday = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+    var month=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+    var smonth=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+    var sday=['周日','周一','周二','周三','周四','周五','周六'];
+    var windtxt = "风: ";
+    var feeltxt = "感觉好像: ";
+    var sunrisetxt = "日出: ";
+    var sunsettxt = "日落: ";
+    var textstringlater="今天晚些时候: ";
+    var humidtxt="湿度: ";
+    var warningtxt = "警告: ";
+    var preciptxt = "雨 ";
+    var Fcondition = [ "Tornado", "Tropical Storm", "Hurricane", "Thunderstorm", "Thunderstorm", "Snow", "Sleet", "Sleet", "Freezing Drizzle", "Drizzle", "Freezing Rain", "Showers", "Showers", "Flurries", "Snow", "Snow", "Snow", "Hail", "Sleet", "Dust", "Fog", "Haze", "Smoky", "Blustery", "Windy", "Cold", "Cloudy", "Cloudy", "Cloudy", "Cloudy", "Cloudy", "Clear", "Sunny", "Fair", "Fair", "Sleet", "Hot", "Thunderstorms", "Thunderstorms", "Thunderstorms", "Showers", "Heavy Snow", "Light Snow", "Heavy Snow", "Partly Cloudy", "Thunderstorm", "Snow", "Thunderstorm", "blank" ];
+  var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+
+  }
+  else{
+  var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var month=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var smonth=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var sday=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var windtxt = "Wind: ";
+  var feeltxt = "Feels Like: ";
+  var sunrisetxt = "Sunrise: ";
+  var sunsettxt = "Sunset: ";
+  var textstringlater="Later Today:";
+  var humidtxt="Humidity: ";
+  var warningtxt = "Warning: ";
+  var preciptxt = "Precip ";
+  var Fcondition = [ "Tornado", "Tropical Storm", "Hurricane", "Thunderstorm", "Thunderstorm", "Snow", "Sleet", "Sleet", "Freezing Drizzle", "Drizzle", "Freezing Rain", "Showers", "Showers", "Flurries", "Snow", "Snow", "Snow", "Hail", "Sleet", "Dust", "Fog", "Haze", "Smoky", "Blustery", "Windy", "Cold", "Cloudy", "Cloudy", "Cloudy", "Cloudy", "Cloudy", "Clear", "Sunny", "Fair", "Fair", "Sleet", "Hot", "Thunderstorms", "Thunderstorms", "Thunderstorms", "Showers", "Heavy Snow", "Light Snow", "Heavy Snow", "Partly Cloudy", "Thunderstorm", "Snow", "Thunderstorm", "blank" ];
+  var Rcondition = [ "Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank" ];
+
+  }
+
+
+////
+
+function getdates(){
+  var date = new Date();
+  var day = date.getDay();
+  var datetoday=date.getDate();
+  var year=date.getFullYear();
+  var monthnum=date.getMonth();
+  var textdate=["First","Second","Third","Fourth","Fifth","Sixth","Seventh","Eighth","Ninth","Tenth","Eleventh","Twelfth","Thirteenth","Fourteenth","Fifteenth","Sixteenth","Seventeenth","Eightheenth","Nineteenth","Twentyith","TwentyFirst","TwentySecond","TwentyThird",'TwentyFourth',"TwentyFifth","TwentySixth","TwentySeventh","TwentyEight","TwentyNinth","Thirtyith","ThirtyFirst"][datetoday-1];
+
+  document.getElementById("DMD").innerHTML = '<span>' + weekday[day] + ", "+month[monthnum]+" "+datetoday+'</span>';
+  document.getElementById("MD").innerHTML = '<span>'+month[monthnum]+" "+datetoday+'</span>';
+  document.getElementById("DM").innerHTML = '<span>'+datetoday+" "+month[monthnum]+'</span>';
+  document.getElementById("DSM").innerHTML = '<span>'+datetoday+" "+smonth[monthnum]+'</span>';
+  document.getElementById("day").innerHTML = '<span>' + weekday[day] +'</span>';
+  document.getElementById("sday").innerHTML = '<span>' + sday[day] +'</span>';
+  document.getElementById("date").innerHTML = '<span>' + datetoday +'</span>';
+  document.getElementById("tdate").innerHTML = '<span>' + textdate +'</span>';
+  document.getElementById("month").innerHTML = '<span>' + month[monthnum] +'</span>';
+  document.getElementById("smonth").innerHTML = '<span>' + smonth[monthnum] +'</span>';
+  document.getElementById("year").innerHTML = '<span>' + year +'</span>';
+
+}
+setInterval(function(){updateClock()},20000);
+setInterval(function(){getdates()},1800000);
+getdates();
+updateClock();
+
+
+
+function updateClock(){
+    // var TwentyFourHourClock = localStorage.getItem('time');
+if (TwentyFourHourClock){
+  var currentTime = new Date ( );
+   var currentHours = currentTime.getHours ( );
+   var currentMinutes = currentTime.getMinutes ( );
+  var currentSeconds = currentTime.getSeconds ( ); currentHours = ( currentHours < 10 ? "0" : "" ) + currentHours;
+  currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+  currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+  var currentTimeString = currentHours + ":" + currentMinutes;
+  document.getElementById("zhour").innerHTML = '<span>' + currentHours + '</span>';
+  document.getElementById("hour").innerHTML = '<span>' + currentHours + '</span>';
+  document.getElementById("minute").innerHTML = '<span>' + currentMinutes + '</span>';
+  document.getElementById("time").innerHTML = '<span>' + currentTimeString + '</span>';
+  document.getElementById("ztime").innerHTML = '<span>' + currentzHours +":"+ currentMinutes + '</span>';
+
+
+  var t = currentTime;
+        var n = t.getHours();
+        var r = t.getMinutes();
+        var i = t.getSeconds();
+        n = (n < 10 ? "0" : "") + n;
+        r = (r < 10 ? "0" : "") + r;
+        var o = n + ":" + r;
+        var u = new Array("Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty", "TwentyOne", "TwentyTwo", "TwentyThree", "TwetyFour");
+        var a = new Array("o' clock", "o' one", "o' two", "o' three", "o' four", "o' five", "o' six", "o' seven", "o' eight", "o' nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "Sixteen", "Seventeen", "eighteen", "Nineteen", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty");
+        var f = new Array("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "");
+        var t = new Date;
+        var n = t.getHours();
+        var r = t.getMinutes();
+        var l = t.getMinutes();
+        var i = t.getSeconds();
+        var o = u[n];
+        var c = a[r];
+        var h = f[l];
+        document.getElementById("ttext").innerHTML = o + "\n" + c + "\n" + h;
+        document.getElementById("htext").innerHTML = o;
+        document.getElementById("mtext").innerHTML = c + "\n" + h;
+
+}
+else{
+
+
+   var currentTime = new Date ( );
+   var currentHours = currentTime.getHours ( );
+   var currentMinutes = currentTime.getMinutes ( );
+   var currentSeconds = currentTime.getSeconds ( );
+   currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+   currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+   var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+   currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+   currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+   var currentzHours=( currentHours < 10 ? "0" : "" ) + currentHours;
+   var currentTimeString = currentHours + ":" + currentMinutes;
+ document.getElementById("hour").innerHTML = '<span>' + currentHours + '</span>';
+ document.getElementById("zhour").innerHTML = '<span>' + currentzHours + '</span>';
+ document.getElementById("minute").innerHTML = '<span>' + currentMinutes + '</span>';
+ document.getElementById("time").innerHTML = '<span>' + currentTimeString + '</span>';
+ document.getElementById("ztime").innerHTML = '<span>' + currentzHours +":"+ currentMinutes + '</span>';
+
+  var t = currentTime;
+        var n = t.getHours();
+        var r = t.getMinutes();
+        var i = t.getSeconds();
+        r = (r < 10 ? "0" : "") + r;
+        i = (i < 10 ? "0" : "") + i;
+        var s = n < 12 ? "AM" : "PM";
+        n = n > 12 ? n - 12 : n;
+        n = n == 0 ? 12 : n;
+        var o = n + ":" + r;
+        var u = new Array("Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve");
+        var a = new Array("o' clock", "o' one", "o' two", "o' three", "o' four", "o' five", "o' six", "o' seven", "o' eight", "o' nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "Sixteen", "Seventeen", "eighteen", "Nineteen", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Twenty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Thirty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Forty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty", "Fifty");
+        var f = new Array("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "");
+        var t = new Date;
+        var n = t.getHours();
+        var r = t.getMinutes();
+        var l = t.getMinutes();
+        var i = t.getSeconds();
+        var o = u[n];
+        var c = a[r];
+        var h = f[l];
+        document.getElementById("ttext").innerHTML = o + "\n" + c + "\n" + h;
+        document.getElementById("htext").innerHTML = o;
+        document.getElementById("mtext").innerHTML = c + "\n" + h;
+}
+
+var todayDate=new Date();
+var hours=todayDate.getHours();
+var format ="AM";
+if(hours>11){format="PM";
+}
+document.getElementById("pm").innerHTML = '<span>' + format + '</span>'
+}//end updateclock
+
+
+////
+
+if(Celsius==false){var sUnit="s";}else{var sUnit="m";}
+if(Kph==false){var kph="no";}else{var kph="yes";}
+//start GPS
+if(GPS){
+    function convertlatlong(Latitude, Longitude) {
+    var url2 = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D"' + Latitude + "%2C" + Longitude + '"%20and%20gflags%3D"R"';
+    converttowoeid(url2);
+}
+function converttowoeid(url2) {
+    $.ajax({
+        url: url2,
+        success: function(e) {
+            woeid = $(e).find("woeid").text();
+            locale = woeid;
+            var url1 = "http://weather.yahooapis.com/forecastrss?w=" + locale;
+            $.ajax({
+                url: url1,
+                success: function(e) {
+                    link = $(e).find("guid").text();
+                    link = link.split('_');
+                    locale = link[0];
+                    var sCityCodes = locale;
+                    GetXmlFeed(sCityCodes);
+                    setInterval(function() {GetXmlFeed(sCityCodes);}, refreshrate);
+                }
+            });
+        }
+    });
+}
+$.get( "file:///private/var/mobile/Documents/myLocation.txt", function( data ) {
+    var Lines=data.split('\n'); //spli lines
+    var latitude = Lines[0].split('='); //get values after equals
+    var longitude = Lines[1].split('=');
+    convertlatlong(latitude[1],longitude[1]); //start converting to weather code
+});
+}
+else{
+    var sCityCodes = Locale;
+    GetXmlFeed(sCityCodes);
+    setInterval(function() {GetXmlFeed(sCityCodes);}, refreshrate);
+}
+//End GPS
+
+function reload_js(src) {
+        $('script[src="' + src + '"]').remove();
+        $('<script>').attr('src', src).appendTo('head');
+    }
+
+function GetXmlFeed(code) {
+    //alert(code)
+    console.log("updating weather");
+    //var code = sCityCodes;
+    var sc = document.createElement("script");
+    var mainsc = 'http://wxdata.weather.com/wxdata/mobile/mobagg/' + code + '.js?key=2227ef4c-dfa4-11e0-80d5-0022198344f4&units=' + sUnit + '&locale=' + language + '&cb=XmlFeedCB';
+    sc.src = mainsc;
+    reload_js(mainsc);
+}
+
+function XmlFeedCB(js){
+    console.log("show data");
+  json = js[0];    //json is XML
+  Showdata();
+}
+
+
+function Showdata() {
+    var imagelocation = "weather/icon/";
+    var imageextention = ".png"
+    var dailyinfo = json.DailyForecasts; // daily forecast
+    var hourlyinfo = json.HourlyForecasts; // hourly forecast
+    var narrativeinfo = json.NarrativeForecasts; // Narrative forecast
+    var raininfo = json.WhenWillItRain;
+    var sunriseset = json.SunRiseSet;
+    var hirad = json.HiradObservation;
+
+    sunrise = JSON.stringify(sunriseset[0].rise);
+    sunset = JSON.stringify(sunriseset[0].set);
+    sunrise = sunrise.replace(/"/g, "");
+    sunset = sunset.replace(/"/g, "");
+    // convert sunrise from UNIX time
+    var timestamp1 = sunrise;
+    UX2 = new Date(timestamp1 * 1000),
+        hours = (UX2.getHours() < 10 ? '0' + UX2.getHours() : UX2.getHours()),
+        minutes = (UX2.getMinutes() < 10 ? '0' + UX2.getMinutes() : UX2.getMinutes()),
+        seconds = (UX2.getSeconds() < 10 ? '0' + UX2.getSeconds() : UX2.getSeconds()),
+        sunrise = hours + ':' + minutes;
+
+    if (TwentyFourHourClock == "true") {
+        hours = hours % 12;
+        if (hours == 0) {
+            hours += 12;
+        }
+        sunrise = hours + ':' + minutes;
+    }
+    // convert sunset from UNIX time
+    var timestamp = sunset;
+    UX1 = new Date(timestamp * 1000),
+        hours = (UX1.getHours() < 10 ? '0' + UX1.getHours() : UX1.getHours()),
+        minutes = (UX1.getMinutes() < 10 ? '0' + UX1.getMinutes() : UX1.getMinutes()),
+        seconds = (UX1.getSeconds() < 10 ? '0' + UX1.getSeconds() : UX1.getSeconds()),
+        sunset = hours + ':' + minutes;
+
+    if (TwentyFourHourClock == "true") {
+        hours = hours % 12;
+        if (hours == 0) {
+            hours += 12;
+        }
+        sunset = hours + ':' + minutes;
+    }
+
+
+
+    daily = JSON.stringify(dailyinfo[0]);
+    hourly = JSON.stringify(hourlyinfo[0]);
+    narrative = JSON.stringify(narrativeinfo[0]);
+
+    if (daily.day == undefined) {
+        var tod = dailyinfo[0].night;
+    } else {
+        var tod = dailyinfo[0].day;
+    }
+
+var precip = [];
+var hltemps = [];
+var dwicon = [];
+var ddates = [];
+var windv = [];
+var windd = [];
+for (i = 0; i < dailyinfo.length; i++) {
+
+if (i > 7-1) break;
+ var dn = dailyinfo[i].day ? dailyinfo[i].day : dailyinfo[i].night;
+  var d = new Date(parseInt(dailyinfo[i].validDate,10) * 1000);
+  precip.push('<div class="precip">' + dn.pop + '% '+ preciptxt + '</div>');
+  dwicon.push('<img class="weatherIcon" width="40" src="weather/icon/' + dn.icon  + '.png"  title="' + dn.phrase + '"/>');
+  hltemps.push('<div class="tempMM"><span class="temp-max">'  + (dailyinfo[i].maxTemp  ? (dailyinfo[i].maxTemp + '') : json.StandardObservation.temp) + ((sUnit == 's') ? '\&#8457' : '\&#8451')+'</span> <span class="temp-min"> / ' + (dailyinfo[i].minTemp+'' ? (dailyinfo[i].minTemp + '') : '--') + ((sUnit == 's') ? '\&#8457' : '\&#8451')+'</span></div>');
+   windv.push('<div class="wind">'  + dn.wSpeed +" "+ dn.wDirText+ ((Kph) ? ' kph' : ' mph') + '</div>');
+function getCalendarDate(){
+      var now = d;
+      var daynumberwind = now.getDay();
+      var dayname   = sday[daynumberwind];
+      var fcastdays = dayname;
+ return fcastdays;
+ }
+
+ var fcastdays = getCalendarDate();
+  windd.push('<span class="windays">' + ('' + fcastdays)+ '</span>');
+var fcastdays = getCalendarDate();
+var gMonth = smonth[d.getMonth()];
+  ddates.push('<span class="weekdays">' + ('' + fcastdays) +", " + gMonth+ " "+d.getDate()+ '</span> <span class="days">' + '</span>');
+
+}
+
+
+
+
+//rotate blades
+//document.getElementById('precip').innerHTML=precip.join("");
+//document.getElementById('hltemps').innerHTML=hltemps.join("");
+//document.getElementById('dwicon').innerHTML=dwicon.join("");
+//document.getElementById('ddates').innerHTML=ddates.join("");
+//document.getElementById('windv').innerHTML=windv.join("");
+//document.getElementById('windd').innerHTML=windd.join("");
+
+    var numofdays = 4;
+    var daysize = "30"; //set forecast image size
+    var iconlocation = "weather/icon/"; //what folder to pull from
+    var iconextention = ".png"; //image extentions
+    var degrees = "&deg;";
+
+if(newicos){
+
+var imagelocation="http://JunesiPhone.com/weather/IconSets/"+newicos+"/";
+var iconlocation="http://JunesiPhone.com/weather/IconSets/"+newicos+"/";
+var iconextention=".png" //image extentions
+
+}
+    //begin forecast
+
+    for (i=0; i<numofdays; i++){
+         var count = i+1;
+         var dn = dailyinfo[count].day ? dailyinfo[count].day : dailyinfo[count].night;
+         var da = new Date(dailyinfo[count].validDate * 1000);
+         var ht = dailyinfo[count].maxTemp;
+         var lt = dailyinfo[count].minTemp;
+         document.getElementById("Day"+count).innerHTML = '<img width=' + daysize + ' src=' +iconlocation+ dn.icon + iconextention + '>';
+        document.getElementById("ForecastDay"+count).innerHTML = '<span>' + (sday[da.getDay()]) + '</span>';
+         document.getElementById("day"+count+"day").innerHTML = '<span>' + (sday[da.getDay()]) + '</span>';
+        document.getElementById("Day"+count+"High").innerHTML = '<span>' + (ht + degrees + "/" + '<span class="lowtemp">' + lt + degrees) + '</span>'+'</span>';
+        document.getElementById("fcast"+count).innerHTML = '<span><img style="position:relative;top:10px;" width="40" src='+iconlocation+ dn.icon + iconextention +'>' + (sday[da.getDay()] + ", " + Fcondition[dn.icon]+ " - "+ht+degrees + "/"+lt+degrees) + '</span>';
+        document.getElementById("day"+count+"iconi").src= iconlocation+ dn.icon + iconextention ;
+        document.getElementById("day"+count+"hi").innerHTML = '<span>' + (ht+degrees) + '</span>';
+        document.getElementById("day"+count+"lo").innerHTML = '<span>' + (lt+degrees) + '</span>';
+        document.getElementById("day"+count+"des").innerHTML = '<span>' + (Fcondition[dn.icon]) + '</span>';
+         //document.getElementById("Precip"+count).innerHTML = '<span>' + dn.pop +"%"+'</span>';
+   }
+
+    if (json.StandardObservation.wxIcon.value == undefined) {
+        var icon = json.HiradObservation.wxIcon;
+        var currentIcon = json.HiradObservation.wxIcon;
+    } else {
+        var icon = json.StandardObservation.wxIcon;
+        var currentIcon = json.StandardObservation.wxIcon;
+    }
+
+
+    if (json.StandardObservation.wxIcon == "") {
+        json.StandardObservation.wxIcon = "na"
+    };
+    if (icon.length == 0) {
+        icon = "dunno";
+    }
+    var HourlyIcon = imagelocation + icon + imageextention;
+
+
+    document.getElementById("icon").innerHTML = '<img width="60" src=' + HourlyIcon + '>';
+
+    var hiToday = JSON.stringify(+dailyinfo[0].maxTemp + degrees); //Today hi
+    hiToday = hiToday.replace(/"/g, "");
+    if (hiToday == "NaN" + degrees) {
+        hiToday = json.StandardObservation.temp + degrees;
+    }
+    document.getElementById("hi").innerHTML = '<span>'+(hiToday) + '</span>';
+
+    var loToday = JSON.stringify("" + dailyinfo[0].minTemp + degrees); //Today lo
+    loToday = loToday.replace(/"/g, "");
+    document.getElementById("low").innerHTML = '<span>'+ (loToday) + '</span>';
+
+
+    var ds=dailyinfo[0].day ? dailyinfo[0].day : dailyinfo[0].night;
+    document.getElementById("condition").innerHTML = '<span>' + (textstringlater + ds.phrase) + '</span>';
+
+
+
+    document.getElementById("temp").innerHTML = '<span>' + ('' + json.StandardObservation.temp+degrees) + '</span>';
+
+    if(sUnit=="s"){
+  tUnits="F";
+}
+else{tUnits="C";}
+document.getElementById("tempFC").innerHTML = '<span>' + ('' + json.StandardObservation.temp+degrees+tUnits) + '</span>'
+
+
+    var realFeel = JSON.stringify(hourlyinfo[0].feelsLike + degrees); //Current Temp
+    realFeel = realFeel.replace(/"/g, "");
+    document.getElementById("feeltemp").innerHTML = '<span>' + (feeltxt + hirad.feelsLike) + '</span>';
+
+    var Humidity = JSON.stringify(humidtxt + hourlyinfo[0].humid); //Humidity
+    Humidity = Humidity.replace(/"/g, "");
+    document.getElementById("humidity").innerHTML = '<span>' + ('' + Humidity) + '</span>';
+
+    var WindSpeed = JSON.stringify("" + hourlyinfo[0].wSpeed); //Wind Speed
+    WindSpeed = WindSpeed.replace(/"/g, "");
+       var WindDirection = JSON.stringify(hourlyinfo[0].wDirText); //Wind Direction
+    WindDirection = WindDirection.replace(/"/g, "");
+    if (WindDirection.length < 1) {
+        WindDirection = "No Wind"
+    }
+
+
+    if (kph == "yes") {
+        conversion = 1.609344
+        kphv = WindSpeed * conversion;
+        kphv = Math.round(kphv * 100) / 100;
+        kphv = Math.round(kphv);
+        document.getElementById("windsp").innerHTML = '<span>' + ( kphv + "Kph" + " "+WindDirection) + '</span>';
+    }
+    else{
+         document.getElementById("windsp").innerHTML = '<span><span class="fa fa-leaf icons"></span>'+" "  + ( WindSpeed + "Mph" + " "+WindDirection) + '</span>';
+    }
+
+var WindDirection=JSON.stringify(hourlyinfo[0].wDirText); //Wind Direction
+WindDirection = WindDirection.replace(/"/g, "");
+
+document.getElementById("windir").innerHTML = '<span>' + ('' + WindDirection) + '</span>';
+
+var Elevation=JSON.stringify(json.Location.elv);
+Elevation = Elevation.replace(/"/g, "");
+Elevation = "Elevation: "+Elevation;
+document.getElementById("elevation").innerHTML = '<span>' + ('' + Elevation) + '</span>';
+
+try{
+  document.getElementById("rainfall").innerHTML = '<span>' + (preciptxt+json.HiradObservation.precipHourly+'\"') + '</span>'
+  document.getElementById("tdesc").innerHTML = '<span>' + (json.HiradObservation.blunt_phrase) + '</span>'
+  document.getElementById("visible").innerHTML = '<span>' + ('Visibility: '+json.HiradObservation.visibility) + '</span>'
+
+}
+catch(err){
+  document.getElementById("rainfall").innerHTML = '<span>' + ('Not available') + '</span>'
+  document.getElementById("tdesc").innerHTML = '<span>' + (json.StandardObservation.blunt_phrase) + '</span>'
+  document.getElementById("visible").innerHTML = '<span>'+ ('Not available') +'</span>'
+}
+
+
+var exday=JSON.stringify(narrativeinfo[0].dayPart);
+exday = exday.replace(/"/g, "");
+var exstuff=JSON.stringify(narrativeinfo[0].phrase);
+exstuff = exstuff.replace(/"/g, "");
+document.getElementById("desc1").innerHTML = '<span>' + (exday+": "+exstuff) + '</span>'
+
+var exday2=JSON.stringify(narrativeinfo[1].dayPart);
+exday2 = exday2.replace(/"/g, "");
+var exstuff2=JSON.stringify(narrativeinfo[1].phrase);
+exstuff2 = exstuff2.replace(/"/g, "");
+document.getElementById("desc2").innerHTML = '<span>' + (exday2+": "+exstuff2) + '</span>'
+
+var exday3=JSON.stringify(narrativeinfo[2].dayPart);
+exday3 = exday3.replace(/"/g, "");
+var exstuff3=JSON.stringify(narrativeinfo[2].phrase);
+exstuff3 = exstuff3.replace(/"/g, "");
+document.getElementById("desc3").innerHTML = '<span>' + (exday3+": "+exstuff3) + '</span>'
+
+var exday4=JSON.stringify(narrativeinfo[4].dayPart);
+exday4 = exday4.replace(/"/g, "");
+var exstuff4=JSON.stringify(narrativeinfo[4].phrase);
+exstuff4 = exstuff4.replace(/"/g, "");
+document.getElementById("desc4").innerHTML = '<span>' + (exday4+": "+exstuff4) + '</span>'
+
+var exday5=JSON.stringify(narrativeinfo[5].dayPart);
+exday5 = exday5.replace(/"/g, "");
+var exstuff5=JSON.stringify(narrativeinfo[5].phrase);
+exstuff5 = exstuff5.replace(/"/g, "");
+document.getElementById("desc5").innerHTML = '<span>' + (exday5+": "+exstuff5) + '</span>'
+
+
+    //document.getElementById("wind").innerHTML = '<span><span class="fa fa-compass icons"></span>'+" "  + ('' + WindDirection) + '</span>'
+
+    var UV = JSON.stringify("uv:" + hourlyinfo[0].uv); //UV
+    UV = UV.replace(/"/g, "");
+    document.getElementById("uv").innerHTML = '<span>' + ('' + UV) + '</span>'
+
+    var dew = JSON.stringify("" + hourlyinfo[0].dew + "&#176"); //dew
+
+    dew = dew.replace(/"/g, "");
+    document.getElementById("dew").innerHTML = '<span><span class="fa fa-tint icons"></span>'+" "  + dew + '</span>'
+
+    var City = JSON.stringify(json.Location.city); //City
+    City = City.replace(/"/g, "");
+    document.getElementById("city").innerHTML = '<span>' + ('' + City) + '</span>'
+
+
+try {
+    var dsc = json.HiradObservation.text;
+    if(dsc.length==0){ document.getElementById("HourlyDesc").innerHTML = "<span>" + json.StandardObservation.text + "</span>";}
+        else{
+    document.getElementById("condition").innerHTML = "<span>" + json.HiradObservation.text + "</span>";
+    }
+} catch (C) {
+    document.getElementById("condition").innerHTML = "<span>" + json.StandardObservation.text + "</span>"
+}
+
+
+    document.getElementById("raininfo").innerHTML = '<span>' + (raininfo.standardPhrase) + '</span>'
+
+    var Sunrise = sunrise;
+    document.getElementById("sunrise").innerHTML = '<span>' + (sunrisetxt + Sunrise) + "am" + '</span>'
+
+
+    var Sunset = sunset;
+    document.getElementById("sunset").innerHTML = '<span>' + (sunsettxt + Sunset) + "pm" + '</span>'
+
+  var Rude = ["Oh shit a tornado", "Damn tropical storm", "Run its a hurricane", "Fucking thunderstorm", "Fuck its a thunderstorm", "Fuck its snowing", "Fucking sleet", "Fucking sleet", "Fuck it's drizzling", "Fuck it's drizzling", "Fucking freezing rain", "Fuck it's raining", "Fuck it's raining", "Fucking flurries", "Fucking light snow", "Fuck it's snowing", "Fuck it's snowing", "Fucking hailing", "Fuck it's sleeting", "Fucking dusty out here", "Fucking foggy", "Fucking hazy", "Fucking smoky", "WTF it's blustery", "Windy as fuck", "Cold as fuck", "It's fucking cloudy", "It's fucking mostly cloudy", "It's fucking mostly cloudy", "It's fucking partly cloudy", "It's fucking partly cloudy", "It's fucking clear", "It's fucking sunny outside", "Fucking fair", "Fucking fair", "Fucking sleeting", "Fuck it's hot", "Isolated fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking thunderstorms", "Scattered fucking showers", "Heavy fucking snow", "Light fucking snow", "Heavy fucking snow", "Partly fucking cloudy", "Fucking thunderstorm", "It's fucking snowing", "It's a fucking thunderstorm", "blank"];
+
+  document.getElementById('rude').innerHTML='<span>'+Rude[icon]+'</span>'
+
+
+
+try{var q=json.WeatherAlerts[0].headline}catch(C){q="No "+warningtxt}
+document.getElementById("warning").innerHTML="<span>"+(warningtxt+q)+"</span>";
+
+
+document.getElementById("rainfall").innerHTML="<span>"+(preciptxt+Math.round(json.HiradObservation.precipHourly)+'"')+"</span>";
+
+};
+
+//GetXmlFeed(true);
+
+
+
+
+
+</script>
+
+
+
+<script>
+
+if(removeBG){
+  document.getElementById('background').style.display="none";
+}
+else{
+  document.getElementById('background').style.display="block";
+}
+
+var width = window.innerWidth;
+if(width == 375){
+viewport = document.querySelector("meta[name=viewport]");
+viewport.setAttribute('content', 'width=device-width, initial-scale=1.18, maximum-scale=1.18, user-scalable=0');
+}
+else if(width == 414 ){
+viewport = document.querySelector("meta[name=viewport]");
+viewport.setAttribute('content', 'width=device-width, initial-scale=1.3, maximum-scale=1.3, user-scalable=0');
+}
+else{}
+
+
+function unlock(){
+  groovyAPI.unlockPhone();
+}
+
+getbattery = function(){
+    if(window.groovyAPI) {
+          var glbatt = Math.round(groovyAPI.getBatteryLevel()*100);
+    }
+    else {
+     var glbatt = 100;
+    }
+    document.getElementById('battery').innerHTML=glbatt+"%";
+    return glbatt;
+}
+getbattery();
+</script>
+
+</body>
+</html>
