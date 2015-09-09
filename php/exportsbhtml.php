@@ -19,7 +19,7 @@ $name = $_POST['fileName'];
 $devname = $_POST['devname'];
 
 
-echo 'Export is not available yet<br>';
+echo 'BETA!<br>';
 
 
 if(strlen($elements) > 0){
@@ -29,7 +29,7 @@ if(strlen($elements) > 0){
 }
 
 if(strlen($icon) > 0){
-	$iconVar = 'var wIcon = '.$icon.';';
+	$iconVar = 'var wIcon = "'.$icon.'";';
 }else{
 	$iconVar = 'var wIcon = null;';
 }
@@ -43,13 +43,13 @@ if(strlen($devname) > 0){
 if(strlen($wallpaper) > 0){
 	$wallpaperVar = 'var wallpaper = "'.$wallpaper.'";';
 }else{
-	$wallpaperVar = 'var wallpaper = null';
+	$wallpaperVar = 'var wallpaper = null;';
 }
 
 if(strlen($overlay) > 0){
 	$overlayVar = 'var overlay = "'.$overlay.'";';
 }else{
-	$overlayVar = 'var overlay = null';
+	$overlayVar = 'var overlay = null;';
 }
 
 

@@ -1674,7 +1674,7 @@ var action = {
                         $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
                         $('#myform').submit();
                         $('#saveForm').css('display','none');
-                        $('.loader').toggle('display');
+                       // $('.loader').toggle('display');
                     }else{
                         $('.errorlabel').css('display','block');
                         document.querySelector('.errorlabel').innerHTML = "* Numbers are not allowed.If you want to EDIT or DELETE your theme name create an account here. <a href='http://www.lockplus.us/login/' target='_blank' style='color:black;'>LockPlus Members</a> or let us know here <a target='_blank' style='color:black;' href='http://lockplus.info/forum/index/topic/deleting-themes/'>LockPlus Forum</a>";

@@ -8,7 +8,7 @@ if(!$fgmembersite->CheckLogin())
 }
 
 $name = $fgmembersite->UserFullName();
-echo 'SBHTML is not available yet ' . $name . ' check back later.';
+echo 'BETA';
 ?>
 
 <html>

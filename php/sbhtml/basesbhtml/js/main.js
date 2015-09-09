@@ -45,7 +45,7 @@ var LockPlus = {
             LockPlus.remakeDIV(key); //loop object and place items
             var value = elements[key];
             if (key === 'icon') {
-                img = document.createElement('img');
+                var img = document.createElement('img');
                 img.className = 'icon';
                 img.id = 'iconDiv';
                 document.getElementById('icon').appendChild(img);
