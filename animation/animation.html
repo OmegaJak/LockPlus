@@ -6,25 +6,33 @@
 			background-color: black;
 		}
 
-		#canvasRain {
+		#canvasRain{
 			position: absolute;
 			top: 0;
 			left: 0;
 			background-color: rgba(255, 255, 255, 0.2);
+		}
+		#canvasCloud{
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.3;
 		}
 	</style>
 </head>
 
 <body>
 	<canvas id="canvasRain" width="320" height="600"></canvas>
+	<canvas id="canvasCloud" width="320" height="600"></canvas>
 	<script type="text/javascript">
 		//var weatherCode = weather.icon();
-		var weatherCode = 1; // this is for testing
+		var weatherCode =5; // this is for testing
 
 		var snowCodes = [5, 6, 7, 13, 14, 15, 16, 41, 42, 43, 46]; // Weather codes that include snow in some way
 		var rainCodes = [1, 2, 3, 4, 8, 9, 10, 11, 12, 35, 37, 38, 39, 40, 42, 45, 47];
 		var cloudCodes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 26, 27, 28, 29, 30, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 		var SVGAnimate;
+		var CloudAni;
 
 		var weatherParts = [];
 
@@ -37,10 +45,9 @@
 			SVGAnimate = true;
 		}
 		if (cloudCodes.indexOf(weatherCode) > -1) {
-			weatherParts.push('clouds');
-			SVGAnimate = true;
+			CloudAni = true;
 		}
-
+//RAIN/SNOW
 		var canvas = null;
 		var context = null;
 		var bufferCanvas = null;
@@ -60,10 +67,6 @@
 				'maxSpeed': 13,
 				'minSize': 3,
 				'maxSize': 5
-			},
-			'clouds': {
-				'max': 6,
-				'spawnDelay': false
 			}
 		};
 
@@ -106,25 +109,14 @@
 						'x': Math.random(),
 						'y': Math.round(Math.random() * 5) + 1
 					};
+					this.position = {
+						'xLeft': this.width / 2,
+						'xRight': this.width / 2,
+						'yUp': 7,
+						'yDown': this.width / 2
+					}
 					this.width = (Math.random() * 3) + 2;
 					this.y = -10;
-					break;
-				case 'clouds':
-					this.sizeModifier = 1 + randomNum(-0.05, 0.05);
-					var speedMultiplier = 1 + randomNum(-0.01, 0.01);
-					this.speed = {
-						//'x': randomNum(0.01 * speedMultiplier, 0.1 * speedMultiplier) * (1 / (this.sizeModifier) * 2), // Shouldn't be too much speed diff beween clouds, should be slow overall
-						'x': (1 / (((this.sizeModifier - 0.95) * 10) + 1)) * 2.5 * speedMultiplier,
-						'y': 0
-					};
-					this.y = randomInt(30 * this.sizeModifier, 70 * this.sizeModifier);
-					//this.width = this.x + 14 + (80 * this.sizeModifier) + ((28 * this.sizeModifier) / 2);
-					this.position = {
-						'xLeft': 28 * this.sizeModifier,
-						'xRight': (80 * this.sizeModifier) + (28 * this.sizeModifier),
-						'yUp': 23 * this.sizeModifier + (23 * this.sizeModifier),
-						'yDown': 28 * this.sizeModifier
-					};
 					break;
 			}
 			this.x = Math.round(Math.random() * context.canvas.width);
@@ -145,28 +137,11 @@
 						ctx.beginPath();
 						ctx.arc(this.x, this.y, 2, 10, 0, true);
 						break;
-					case 'clouds':
-						ctx.fillStyle = "rgba(69, 69, 69, 0.8)";
-						ctx.beginPath();
-						ctx.arc(this.x, this.y, 28 * this.sizeModifier, 0, 2 * Math.PI, false);
-						ctx.arc(this.x + 24 * this.sizeModifier, this.y - 23 * this.sizeModifier, 23 * this.sizeModifier, 0, 2 * Math.PI, false);
-						ctx.arc(this.x + 65 * this.sizeModifier, this.y - 17 * this.sizeModifier, 26 * this.sizeModifier, 0, 2 * Math.PI, false);
-						ctx.arc(this.x + 80 * this.sizeModifier, this.y, 28 * this.sizeModifier, 0, 2 * Math.PI, false);
-						ctx.lineTo(this.x + 80 * this.sizeModifier, this.y + 28 * this.sizeModifier);
-						ctx.lineTo(this.x, this.y + 28 * this.sizeModifier);
-						ctx.closePath();
-						ctx.fill();
-
-						ctx.fillStyle = "red";
-						ctx.beginPath();
-
-						break;
 				}
 				ctx.closePath();
 				ctx.fill();
 			}
 		}
-
 		function SVGinit() {
 			canvas = document.getElementById('canvasRain');
 			context = canvas.getContext("2d");
@@ -203,7 +178,12 @@
 			flakeArray[weatherType].push(new Flake(weatherType));
 			console.log('WeatherType: ' + weatherType + ',' + flakeArray[weatherType].length + ',' + flakeProperties[weatherType]['max']);
 			if (flakeArray[weatherType].length === flakeProperties[weatherType]['max'] && flakeTimer[weatherType]) { // If we've hit the max, and just verify it exists to prevent errors
-				clearInterval(flakeTimer[weatherType]);
+			clearInterval(flakeTimer[weatherType]);
+			if(weatherType === 'snow'){
+				setTimeout(function(){ //after clearInterval is called on snow, snow would stop entirely. This creates new flakes after a time out.
+					addFlakes(); //this is ok, but still don't get a constant downfall.
+				},8000);
+			}
 				console.log('Cleared');
 			}
 		}
@@ -233,17 +213,14 @@
 				}
 			});
 		}
-
 		function Draw() {
 			context.save();
 			blank();
-
 			Object.keys(flakeArray).forEach(function(key) { // Go through each of the arrays for each type of flake
 				for (var i = 0; i < flakeArray[key].length; i++) { // Go through each flake in this type
 					flakeArray[key][i].drawToCanvas(bufferCanvasCtx); // Call its draw function
 				}
 			});
-
 			context.drawImage(bufferCanvas, 0, 0, bufferCanvas.width, bufferCanvas.height);
 			context.restore();
 		}
@@ -251,8 +228,86 @@
 		if (SVGAnimate) {
 			SVGinit();
 		}
-	</script>
+//END RAIN/SNOW
 
+//CLOUDS
+var leftMax = -200; // start point.
+var topNum = randomNum(0,100); //random top position
+var speed = 0.5; // cloud speed
+var variationCount = 6; // how many variations in switch statement
+var imgWidth = 400;
+var imgHeight = 200;
+var step = Math.round(randomNum(1,variationCount)); //randomize start
+function clear() {
+	cont.save();
+	buffercvCtx.clearRect(0, 0, canvas.width, canvas.height);
+	cont.clearRect(0, 0, canvas.width, canvas.height);
+}
+function AniCloud(ctx,image1,image2,image3){
+	leftMax = leftMax + speed;
+	if(leftMax === 520){
+		leftMax = -520;
+		topNum = randomNum(0,100);
+		step = (step + 1 < variationCount) ? step + 1 : Math.round(randomNum(1,variationCount));
+	}
+	ctx.save();
+	clear();
+	switch(step){
+		case 1:
+			ctx.drawImage(image1, leftMax, topNum, imgWidth, imgHeight);
+		    ctx.drawImage(image2, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+		break;
+		case 2:
+			ctx.drawImage(image2, leftMax, topNum, imgWidth, imgHeight);
+		    ctx.drawImage(image1, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+		break;
+		case 3:
+			ctx.drawImage(image3, leftMax, topNum, imgWidth, imgHeight);
+		break;
+		case 4:
+		    ctx.drawImage(image2, leftMax, topNum - 10, imgWidth, imgHeight);
+		break;
+		case 5:
+			ctx.drawImage(image1, leftMax, topNum, imgWidth, imgHeight);
+		    ctx.drawImage(image2, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+		break;
+		case 6:
+			ctx.drawImage(image3, leftMax, topNum, imgWidth, imgHeight);
+		    ctx.drawImage(image2, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+		break;
+	}
+}
+function Cloudinit(){
+	cloudCanvas = document.getElementById('canvasCloud');
+	ccontext = cloudCanvas.getContext("2d");
+	buffercv = document.createElement("canvas");
+	buffercvCtx = buffercv.getContext("2d");
+	buffercvCtx.canvas.width = ccontext.canvas.width;
+	buffercvCtx.canvas.height = ccontext.canvas.height;
+	DrawClouds();
+}
+function DrawClouds(){
+	cloudCanvas = document.getElementById('canvasCloud');
+	cont = cloudCanvas.getContext("2d");
+	var imageObj = new Image();
+	var imageObj2 = new Image();
+	var imageObj3 = new Image();
+	imageObj.onload = function() {
+		(function animloop() {
+			requestAnimFrame(animloop);
+			AniCloud(cont,imageObj,imageObj2,imageObj3);
+		})();
+	};
+		imageObj.src = 'cloud1.png';
+		imageObj2.src = 'cloud2.png';
+		imageObj3.src = 'cloud3.png';
+}
+if(CloudAni){
+	//if(SVGAnimate !== true){
+		Cloudinit();
+	//}
+}
+//END CLOUDS
+</script>
 </body>
-
 </html>
