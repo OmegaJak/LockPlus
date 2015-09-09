@@ -18,31 +18,43 @@
 			left: 0;
 			opacity: 0.3;
 		}
+		#canvasStar{
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.3;
+			overflow: hidden;
+		}
 	</style>
 </head>
 
 <body>
 	<canvas id="canvasRain" width="320" height="600"></canvas>
 	<canvas id="canvasCloud" width="320" height="600"></canvas>
+	<canvas id="canvasStar" width="320" height="600"></canvas>
 	<script type="text/javascript">
 		//var weatherCode = weather.icon();
-		var weatherCode =5; // this is for testing
+		var weatherCode = 0; // this is for testing
 
 		var snowCodes = [5, 6, 7, 13, 14, 15, 16, 41, 42, 43, 46]; // Weather codes that include snow in some way
 		var rainCodes = [1, 2, 3, 4, 8, 9, 10, 11, 12, 35, 37, 38, 39, 40, 42, 45, 47];
 		var cloudCodes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 26, 27, 28, 29, 30, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
 		var SVGAnimate;
 		var CloudAni;
+		var starsOut = true;
 
 		var weatherParts = [];
 
 		if (snowCodes.indexOf(weatherCode) > -1) {
 			weatherParts.push('snow');
 			SVGAnimate = true;
+			starsOut = false;
+
 		}
 		if (rainCodes.indexOf(weatherCode) > -1) {
 			weatherParts.push('rain');
 			SVGAnimate = true;
+			starsOut = false;
 		}
 		if (cloudCodes.indexOf(weatherCode) > -1) {
 			CloudAni = true;
@@ -308,6 +320,94 @@ if(CloudAni){
 	//}
 }
 //END CLOUDS
+
+//Start Stars
+var WIDTH;
+var HEIGHT;
+var canvas;
+var con;
+var g;
+var pxs = [];
+var rint = 10;
+var starAmount = 90;
+
+function createStar(){
+	WIDTH = 320;
+	HEIGHT = 200;
+
+	canvas = document.getElementById('canvasStar');
+	con = canvas.getContext('2d');
+	for(var i = 0; i < starAmount; i++) {
+		pxs[i] = new Circle();
+		pxs[i].reset();
+	}
+	setInterval(draw,rint);
+}
+function draw() {
+	con.clearRect(0,0,WIDTH,HEIGHT);
+	for(var i = 0; i < pxs.length; i++) {
+		pxs[i].fade();
+		if(i == 18){
+			pxs[i].move();
+		}
+		pxs[i].draw();
+	}
+}
+
+function Circle() {
+	this.s = {timetolive:4000, xspeed:20, yspeed:4, radius:3, rt:1, xorigin:320, yorigin:10, xdrift:4, ydrift: 3, random:true, blink:true};
+
+	this.reset = function() {
+		this.x = (this.s.random ? WIDTH*Math.random() : this.s.xorigin);
+		this.y = (this.s.random ? HEIGHT*Math.random() -50 : this.s.yorigin - 50);
+		this.r = ((this.s.radius-1)*Math.random()) + 1;
+		this.dx = (Math.random()*this.s.xspeed) * (Math.random() < .5 ? -1 : 1);
+		this.dy = (Math.random()*this.s.yspeed) * (Math.random() < .5 ? -1 : 1);
+		this.hl = (this.s.timetolive/rint)*(this.r/this.s.radius);
+		this.rt = Math.random()*this.hl;
+		this.s.rt = Math.random()+1;
+		this.stop = Math.random()*.2+.4;
+		this.s.xdrift *= Math.random() * (Math.random() < .5 ? -1 : 1);
+		this.s.ydrift *= Math.random() * (Math.random() < .5 ? -1 : 1);
+	}
+
+	this.fade = function() {
+		this.rt += this.s.rt;
+	}
+
+	this.draw = function() {
+		if(this.s.blink && (this.rt <= 0 || this.rt >= this.hl)) this.s.rt = this.s.rt*-1;
+		else if(this.rt >= this.hl) this.reset();
+		var newo = 1-(this.rt/this.hl);
+		con.beginPath();
+		con.arc(this.x,this.y,this.r,0,Math.PI*2,true);
+		con.closePath();
+		var cr = this.r*newo;
+		g = con.createRadialGradient(this.x,this.y,0,this.x,this.y,(cr <= 0 ? 1 : cr));
+		g.addColorStop(0.0, 'rgba(255,255,255,'+newo+')');
+		g.addColorStop(this.stop, 'rgba(255,255,255,'+(newo*.6)+')');
+		g.addColorStop(1.0, 'rgba(77,101,181,0)');
+		con.fillStyle = g;
+		con.fill();
+	}
+
+	this.move = function() {
+		this.x += (this.rt/this.hl)*this.dx;
+		this.y += (this.rt/this.hl)*this.dy;
+		//if(this.x > WIDTH || this.x < 0) this.dx *= -1;
+		if(this.y > HEIGHT - 50 || this.y < 0) this.dy *= -1;
+	}
+
+	//this.getX = function() { return this.x; }
+	//this.getY = function() { return this.y; }
+}
+
+var hr = (new Date()).getHours();
+if(hr >= 17 && starsOut === true){
+	createStar();
+}
+
+
 </script>
 </body>
 </html>
