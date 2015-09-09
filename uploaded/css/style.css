@@ -17,6 +17,7 @@ body{
     -webkit-transform: translate(0% -50%);
     transform: translate(0% -50%);
 }
+
 .img{
   position: absolute;
   top:13%;
