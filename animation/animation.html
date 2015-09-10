@@ -35,12 +35,12 @@
 	<script type="text/javascript">
 		//var weatherCode = weather.icon();
 		var weatherCode = 0; // this is for testing
+        var dropColor = 'rgba(68, 144, 233, 0.5)'; //set from plist
 
-		//var weatherCode = weather.icon();
 var snowCodes = [5, 6, 7, 13, 14, 15, 16, 41, 42, 43, 46]; // Weather codes that include snow in some way
 var rainCodes = [1, 2, 3, 4, 8, 9, 10, 11, 12, 17, 18, 35, 37, 38, 39, 40, 42, 45, 47];
 //var cloudCodes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 26, 27, 28, 29, 30, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
-var cloudCodes = [0, 19, 20, 21, 22, 27, 28, 29, 30, 44]; //try not to run two animations at a time. iOS is finicky
+var cloudCodes = [0, 19, 20, 21, 22, 26, 27, 28, 29, 30, 44];
 var SVGAnimate;
 var CloudAni;
 var starsOut = true;
@@ -140,7 +140,7 @@ function Flake(type) {
     this.drawToCanvas = function (ctx) {
         switch (type) {
         case 'rain':
-            ctx.fillStyle = "rgba(68, 144, 233, 0.5)";
+            ctx.fillStyle = dropColor;
             ctx.beginPath();
             ctx.moveTo(this.x - this.width / 2, this.y);
             ctx.lineTo(this.x, this.y - 7);
@@ -338,7 +338,7 @@ var con;
 var g;
 var pxs = [];
 var rint = 10;
-var starAmount = 90;
+var starAmount = 50;
 
 function createStar() {
     cstarWidth = 320;
@@ -433,8 +433,6 @@ var hr = (new Date()).getHours();
 if (hr >= 17 && starsOut === true) {
     createStar();
 }
-
-
 </script>
 </body>
 </html>
