@@ -6,3 +6,4 @@ var gps = false; // must have Widget Weather
 var weathercode = "38671"; //zip code or weather.com code
 var weatherrefresh = 10; //minutes
 var batteryrefresh = 1; //minutes (requires infoStats)
+var showWallpaper = true;

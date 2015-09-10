@@ -3,12 +3,16 @@
 var LockPlus = {
     loadedFonts: [],
     setWallpaper: function () {
-        document.getElementById('wallpaper').src = wallpaper;
+        if(showWallpaper){
+            document.getElementById('wallpaper').src = wallpaper;
+        }
     },
     setOverlay: function () {
         document.querySelector('.screenoverlay').style.backgroundImage = 'url(' + overlay + ')';
         document.querySelector('.svg').src = overlay;
-        showSVG('.svg', true);
+        if(overlay.split('/')[1].split(';')[0] === 'svg'){
+            //showSVG('.svg', true);
+        }
     },
     remakeDIV: function (id) {
         var div = document.createElement('div');

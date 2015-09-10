@@ -192,10 +192,10 @@ function addFlakes() {
 
 function addFlake(weatherType) {
     flakeArray[weatherType].push(new Flake(weatherType));
-    console.log('WeatherType: ' + weatherType + ',' + flakeArray[weatherType].length + ',' + flakeProperties[weatherType]['max']);
+   // console.log('WeatherType: ' + weatherType + ',' + flakeArray[weatherType].length + ',' + flakeProperties[weatherType]['max']);
     if (flakeArray[weatherType].length === flakeProperties[weatherType]['max'] && flakeTimer[weatherType]) { // If we've hit the max, and just verify it exists to prevent errors
         clearInterval(flakeTimer[weatherType]);
-        console.log('Cleared');
+       // console.log('Cleared');
     }
 }
 
@@ -243,13 +243,14 @@ if (SVGAnimate) {
 //END RAIN/SNOW
 
 //CLOUDS
-var leftMax = -200; // start point.
-var topNum = randomNum(0, 100); //random top position
+var leftMax = -250; // start point.
+var topNum = randomNum(-50, 100); //random top position
 var speed = 0.5; // cloud speed
 var variationCount = 6; // how many variations in switch statement
 var imgWidth = 400;
 var imgHeight = 200;
-var step = Math.round(randomNum(1, variationCount)); //randomize start
+var randomStep = Math.round(randomNum(1,variationCount) - 1);
+var step = randomStep > 0 ? randomStep : 2; //randomize start
 function clearCanvas() {
     cont.save();
     buffercvCtx.clearRect(0, 0, 320, 568);
@@ -258,35 +259,38 @@ function clearCanvas() {
 
 function AniCloud(ctx, image1, image2, image3) {
     leftMax = leftMax + speed;
-    if (leftMax === 520) {
-        leftMax = -520;
+    if (leftMax === 310) {
+        leftMax = -440;
         topNum = randomNum(0, 100);
-        step = (step + 1 < variationCount) ? step + 1 : Math.round(randomNum(1, variationCount));
+        step++
+        if(step > variationCount){
+            step = 1;
+        }// = ((step + 1) < variationCount) ? step + 1 : 1;
     }
     ctx.save();
     clearCanvas();
     switch (step) {
     case 1:
         ctx.drawImage(image1, leftMax, topNum, imgWidth, imgHeight);
-        ctx.drawImage(image2, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+       // ctx.drawImage(image2, leftMax, topNum - 50, imgWidth, imgHeight);
         break;
     case 2:
-        ctx.drawImage(image2, leftMax, topNum, imgWidth, imgHeight);
-        ctx.drawImage(image1, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+        ctx.drawImage(image3, leftMax, topNum, imgWidth, imgHeight);
+        //ctx.drawImage(image1, leftMax - 5, topNum + 10, imgWidth, imgHeight);
         break;
     case 3:
-        ctx.drawImage(image3, leftMax, topNum, imgWidth, imgHeight);
+        ctx.drawImage(image2, leftMax, topNum, imgWidth, imgHeight);
         break;
     case 4:
-        ctx.drawImage(image2, leftMax, topNum - 10, imgWidth, imgHeight);
+        ctx.drawImage(image2, leftMax, topNum + 20, imgWidth, imgHeight);
         break;
     case 5:
         ctx.drawImage(image1, leftMax, topNum, imgWidth, imgHeight);
-        ctx.drawImage(image2, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+        ctx.drawImage(image2, leftMax, topNum - 10, imgWidth, imgHeight);
         break;
     case 6:
         ctx.drawImage(image3, leftMax, topNum, imgWidth, imgHeight);
-        ctx.drawImage(image2, leftMax - 240, topNum - 10, imgWidth, imgHeight);
+        ctx.drawImage(image2, leftMax, topNum - 10, imgWidth, imgHeight);
         break;
     }
 
