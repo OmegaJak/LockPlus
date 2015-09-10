@@ -120,6 +120,7 @@ function Flake(type) {
         }
         break;
     case 'snow':
+		this.width = (Math.random() * 3) + 2;
         this.speed = {
             'x': Math.random(),
             'y': Math.round(Math.random() * 5) + 1
@@ -130,7 +131,6 @@ function Flake(type) {
             'yUp': 7,
             'yDown': this.width / 2
         }
-        this.width = (Math.random() * 3) + 2;
         this.y = -10;
         break;
     }
@@ -195,11 +195,6 @@ function addFlake(weatherType) {
     console.log('WeatherType: ' + weatherType + ',' + flakeArray[weatherType].length + ',' + flakeProperties[weatherType]['max']);
     if (flakeArray[weatherType].length === flakeProperties[weatherType]['max'] && flakeTimer[weatherType]) { // If we've hit the max, and just verify it exists to prevent errors
         clearInterval(flakeTimer[weatherType]);
-        if (weatherType === 'snow') {
-            setTimeout(function () { //after clearInterval is called on snow, snow would stop entirely. This creates new flakes after a time out.
-                addFlakes(); //this is ok, but still don't get a constant downfall.
-            }, 8000);
-        }
         console.log('Cleared');
     }
 }
