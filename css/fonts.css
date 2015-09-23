@@ -55,6 +55,18 @@
 	src:url(fonts/user/azedolight.otf);
 }
 @font-face{
+	font-family:'bariollight';
+	src:url(fonts/user/bariollight.otf);
+}
+@font-face{
+	font-family:'bariolthin';
+	src:url(fonts/user/bariolthin.otf);
+}
+@font-face{
+	font-family:'bariolbold';
+	src:url(fonts/user/bariolbold.otf);
+}
+@font-face{
 	font-family:'bikoblack';
 	src:url(fonts/user/bikoblack.otf);
 }
@@ -119,6 +131,10 @@
 	src:url(fonts/user/futura.otf);
 }
 @font-face{
+	font-family:'fringe';
+	src:url(fonts/user/fringe.otf);
+}
+@font-face{
 	font-family:'gasaltbold';
 	src:url(fonts/user/gasaltbold.otf);
 }
@@ -129,6 +145,18 @@
 @font-face{
 	font-family:'gasaltreg';
 	src:url(fonts/user/gasaltreg.otf);
+}
+@font-face{
+	font-family:'geoma';
+	src:url(fonts/user/geoma.otf);
+}
+@font-face{
+	font-family:'gothicregular';
+	src:url(fonts/user/gothicregular.otf);
+}
+@font-face{
+	font-family:'gothicbold';
+	src:url(fonts/user/gothicbold.otf);
 }
 @font-face{
 	font-family:'higher';
@@ -155,6 +183,14 @@
 	src:url(fonts/user/kaneda.otf);
 }
 @font-face{
+	font-family:'krinkles';
+	src:url(fonts/user/krinkles.otf);
+}
+@font-face{
+	font-family:'krinklesdecor';
+	src:url(fonts/user/krinklesdecor.otf);
+}
+@font-face{
 	font-family:'lg';
 	src:url(fonts/user/lg.otf);
 }
@@ -169,6 +205,30 @@
 @font-face{
 	font-family:'manifesto';
 	src:url(fonts/user/manifesto.otf);
+}
+@font-face{
+	font-family:'mikadolight';
+	src:url(fonts/user/mikadolight.otf);
+}
+@font-face{
+	font-family:'mikadoregular';
+	src:url(fonts/user/mikadoregular.otf);
+}
+@font-face{
+	font-family:'mikadobold';
+	src:url(fonts/user/mikadobold.otf);
+}
+@font-face{
+	font-family:'mikadomedium';
+	src:url(fonts/user/mikadomedium.otf);
+}
+@font-face{
+	font-family:'mikadoultra';
+	src:url(fonts/user/mikadoultra.otf);
+}
+@font-face{
+	font-family:'mikadoblack';
+	src:url(fonts/user/mikadoblack.otf);
 }
 @font-face{
 	font-family:'moonlight';
@@ -201,6 +261,26 @@
 @font-face{
 	font-family:'reckoner';
 	src:url(fonts/user/reckoner.otf);
+}
+@font-face{
+	font-family:'realtimethin';
+	src:url(fonts/user/realtimethin.otf);
+}
+@font-face{
+	font-family:'realtimelight';
+	src:url(fonts/user/realtimelight.otf);
+}
+@font-face{
+	font-family:'realtimeregular';
+	src:url(fonts/user/realtimeregular.otf);
+}
+@font-face{
+	font-family:'realtimesemi';
+	src:url(fonts/user/realtimesemi.otf);
+}
+@font-face{
+	font-family:'realtimebold';
+	src:url(fonts/user/realtimebold.otf);
 }
 @font-face{
 	font-family:'robotobold';
@@ -245,6 +325,14 @@
 @font-face{
 	font-family:'sanfranheavy';
 	src:url(fonts/user/sanfranheavy.otf);
+}
+@font-face{
+	font-family:'shimes';
+	src:url(fonts/user/shimes.otf);
+}
+@font-face{
+	font-family:'shimestwo';
+	src:url(fonts/user/shimestwo.otf);
 }
 @font-face{
 	font-family:'streamster';

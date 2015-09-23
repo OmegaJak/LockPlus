@@ -315,6 +315,7 @@ function loadClock() {
                 hrsmush: clock.hourtext() + '' + clock.minute(),
                 dayabdatemonth: clock.sdaytext() + ' ' + clock.date() + ' ' + clock.smonthtext(),
                 daycommadatemonth: clock.sdaytext() + ', ' + clock.date() + ' ' + clock.smonthtext(),
+                datemonthfirst: clock.date() + ' ' + clock.monthtext()
             };
             Object.keys(clockElements).forEach(function (key) {
                 var value = clockElements[key],

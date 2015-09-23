@@ -14,7 +14,7 @@ $overlay = $_POST['Toverlay'];
 $name = $_POST['fileName'];
 $devname = $_POST['devname'];
 
-if (strpos($devname,'Frank') !== false) {
+if (strpos($devname,'Dan') !== false) {
 	echo 'Please do not post porn. If you recieve this message on error, please let us know.';
     echo '<script>localStorage.clear(); </script>';
 }else{
