@@ -25,7 +25,7 @@
 	<?php
 	$query = $_SERVER['QUERY_STRING'];
 	echo '<div id="refresh">Great job! <b>'.str_replace("%20"," ",$query).'</b> lockscreen has been saved.</div>';
-	echo '<div class="buttons"><a id="twitterShare" class="twitter-share-button btn" href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.$query.'&text=I%20just%20created%20a%20lockscreen%20named%20'.$query.',%20check%20it%20out%20here.&hashtags=LockPlus">Share via Twitter</a>';
+	echo '<div class="buttons"><a id="twitterShare" class="twitter-share-button btn" href="https://twitter.com/intent/tweet?url=http%3A%2F%2FLockPlus.us/preview?'.urlencode($query).'&text=I%20just%20created%20a%20lockscreen%20named%20'.$query.',%20check%20it%20out%20here.&hashtags=LockPlus,Jailbreak">Share via Twitter</a>';
 	echo '<a id="viewTheme" class="btn" href="http://lockplus.us/preview?'.$query.'">View theme page</a>';
 	echo '<a id="makeAnother" class="btn" href="http://lockplus.us">Create another</a></br></br></br>';
     echo '<center><a class="btn" href="http://lockplus.us/login">Export to GroovyLock or SBHTML</a></center></div>';
