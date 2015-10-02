@@ -118,6 +118,7 @@ var action = {
     wallpaper : '',
     uploadSelection : '', //save type of upload selection (overlay or background)
     selectedItem : '',
+    selectedItems : [], // Only used for multi-selection
     actionQueue : [], //Queue of actions for undo/redo
     queuePosition : -1, //The current position within this ↑ queue, which action was most recently done
     isUndoingRedoing : false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
@@ -252,7 +253,28 @@ var action = {
         action.setCss(action.selectedItem, 'font-family', fontName);
         $('#fList').toggle('display');
     },
-    setCss: function (elementId, cssKey, cssValue) {
+    setCss: function (elementId, cssKey, cssValue) { //[[elementName, cssKey, cssValue], [elementName, [cssKey, cssKey], [cssValue, cssValue]]]
+        if (action.selectedItems.length > 0) {
+            function isAlreadyInArr(arr, toTest) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i][0] === toTest) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            if (typeof elementId === 'string') {
+                elementId = [[elementId, cssKey, cssValue]];
+            }
+
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                if (!isAlreadyInArr(elementId, action.selectedItems[i])) {
+                    var arr = [action.selectedItems[i], cssKey, cssValue];
+                    elementId.push(arr);
+                }
+            }
+        }
         if (typeof elementId === 'string') {
             if (cssKey === '-webkit-transform') {
                 try { var initialValue = document.getElementById(elementId).style.webkitTransform; } catch (e) {alert("Sorry, please use chrome or safari for transforms.")}
@@ -2156,6 +2178,13 @@ var action = {
         if (input.length > 0) { // Verify the relevant input exists
             input.val(newPos); // If it does, update it to reflect the new position
         }
+    },
+    isASelectedItem: function(itemName) { // Determines whether an iten with the name itemName is in action.selectedItems already
+        for (var i = 0; i < action.selectedItems.length; i++) {
+            if (action.selectedItems[i] === itemName)
+                return true;
+        }
+        return false;
     }
 };
 function resizeWall(img, width, height) {
@@ -2318,8 +2347,8 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function(event){
-    function deselectElement(fullClear) {
-        $('#' + action.selectedItem).css('outline', '0px solid transparent'); // Remove the highlight
+    function deselectElement(item, fullClear) {
+        $('#' + item).css('outline', '0px solid transparent'); // Remove the highlight
         if (fullClear) {
             action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
             action.selectedItem = ""; // Clear the selected item
@@ -2331,23 +2360,38 @@ $('.screen').click(function(event){
     }
 
     if (event.target.id === '' && action.selectedItem != '') {
-        deselectElement(true);
+        deselectElement(action.selectedItem, true);
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     } else if (event.target.id != 'screen' && event.target.id != '') {
         if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
-            deselectElement(true);
+            deselectElement(action.selectedItem, true);
+        } else if (event.shiftKey && action.isASelectedItem(event.target.id)) { // If the shift-clicked an already-highlighted item
+            if (action.selectedItems.length > 0) {
+                for (var i = 0; i < action.selectedItems.length; i++) {
+                    if (action.selectedItems[i] === event.target.id) {
+                        action.selectedItems.splice(i, 1); // Remove the item from selectedItems
+                    }
+                }
+                deselectElement(event.target.id, false);
+            }
         } else { // User either clicked on another element, or on a new element to highlight
-            deselectElement(false); // Unhighlight the old element
-            if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
-                action.setHelpText('Pick a style adjustment from the left menu.')
-            else
-                action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+            if (event.shiftKey) {
+                action.selectedItems.push(event.target.id);
 
-            action.selectedItem = event.target.id; // Set the selected item to the new element
-            $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+            } else {
+                deselectElement(action.selectedItem, false); // Unhighlight the old element
+                if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
+                    action.setHelpText('Pick a style adjustment from the left menu.')
+                else
+                    action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
 
-            if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-            action.showProperMenuForId(event.target.id);
+                action.selectedItem = event.target.id; // Set the selected item to the new element
+                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+
+                if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+                action.showProperMenuForId(event.target.id);
+            }
         }
     }
 });
