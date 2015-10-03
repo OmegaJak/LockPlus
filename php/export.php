@@ -14,6 +14,13 @@ $overlay = $_POST['Toverlay'];
 $name = $_POST['fileName'];
 $devname = $_POST['devname'];
 
+// Catch users who upload porn
+$ip = $_SERVER['REMOTE_ADDR'];
+$myfile = fopen("catch/".$name.".txt", "w") or die("Unable to open file!");
+$txt = $ip;
+fwrite($myfile, $txt);
+fclose($myfile);
+
 if (strpos($devname,'Dan') !== false) {
 	echo 'Please do not post porn. If you recieve this message on error, please let us know.';
     echo '<script>localStorage.clear(); </script>';

@@ -83,14 +83,7 @@ $images = glob("*.{jpg,JPG,PNG,jpeg,png,gif}", GLOB_BRACE);
 	<title>Wallpapers</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="../main.css">
-	<center><div id="menu">
-		<a id="home" href="http://LockPlus.info">-LockPlus-</a>
-		<a id="filter" href="i5.php">i5</a>
-		<a id="filter" href="i6.php">i6</a>
-		<a id="filter" href="6plus.php">6+</a>
-		<a id="filter" href="http://LockPlus.us/walls">All</a>
-		<a id="filter" href="http://LockPlus.us/walls/categories">Categories</a>
-	</div></center>
+	<?php include('menu.php');?>
 </head>
 <body>
 <div id="outer">

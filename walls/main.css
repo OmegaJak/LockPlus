@@ -14,7 +14,7 @@ body {
 		-webkit-box-shadow: 0 8px 6px -6px black;
 	}
 	html{
-		background-color: #21b9b0;
+		background-color: #4f4f4f;
 	}
 	#outer{
 		width: 100%;
@@ -44,6 +44,9 @@ body {
   height: auto;
   display: inline-block;
 }
+caption{
+	font-size: 10px;
+}
 .nav{
   position: relative;
   text-align: center;
@@ -57,7 +60,7 @@ body {
 }
 .nav a{
 	color:white!important;
-	background-color: #54606e;
+	background-color: #323232;
 	padding:2px;
 	border-radius: 2px;
 	font-size: 15px;
