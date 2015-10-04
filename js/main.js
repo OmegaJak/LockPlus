@@ -1866,8 +1866,8 @@ var action = {
                 /* remove it on start to not mess with it's own movement */
                 /* it will snap to itself this solves that issue */
                 $(".dLine[title='"+id+"']").remove();
-                if (action.selectedItem != id)
-                    $('#' + id).click();
+                if (action.selectedItem != id)//$('#' + id).click();
+                    $('#screen').click(event);
 
                 action.sizeQueueTimeout.initialValue = [$('#'+id).position().top, $('#'+id).position().left]; //Just borrowing it, nothing else will need this while you're moving an element
             },
@@ -2366,7 +2366,7 @@ $('.screen').click(function(event){
         }
     }
 
-    if (event.target.id === '' && action.selectedItem != '') {
+    if (event.target.id === '' && action.selectedItem != '') { // Clicked on the empty screen
         if (action.selectedItems.length > 0) {
             for (var i = 0; i < action.selectedItems.length; i++) {
                 deselectElement(action.selectedItems[i], false);
@@ -2375,20 +2375,19 @@ $('.screen').click(function(event){
         }
         deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
-    } else if (event.target.id != 'screen' && event.target.id != '') {
-        if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
+    } else if (event.target.id != 'screen' && event.target.id != '') { //If you clicked on something...
+        if (event.target.id === action.selectedItem) { // If they clicked the centrally highlighted item
             if (action.selectedItems.length > 0) { // If we should consider multi-selection
                 if (event.shiftKey) { // If someone shift-clicked the centrally selected item
                     action.selectedItems.forEach(function(item, index, arr) { // Deselect eveything else, clear multiselection array
                         if (item === action.selectedItem) {
-                            deselectElement(item, false);
-                            arr.splice(index, 1); // Remove just the selected item from the multi-selection
+                            deselectElement(item, false); // Automatically removed from multiselection arr
 
                             if (action.selectedItems.length > 0) // If there are still some left
                                 action.selectedItem = action.selectedItems[0]; // Change the centrally located one
 
                             if (action.selectedItems.length === 1) { // The one we just made central is the only one left apparently
-                                arr.splice(0, 1); // So clear out multi-selection entirely
+                                action.selectedItems.splice(0, 1); // So clear out multi-selection entirely
                             }
                         }
                     });
@@ -2410,6 +2409,7 @@ $('.screen').click(function(event){
                 for (var i = 0; i < action.selectedItems.length; i++) {
                     if (action.selectedItems[i] === event.target.id) {
                         action.selectedItems.splice(i, 1); // Remove the item from selectedItems
+                        break;
                     }
                 }
                 deselectElement(event.target.id, false);
@@ -2424,6 +2424,10 @@ $('.screen').click(function(event){
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
             } else {
                 deselectElement(action.selectedItem, false); // Unhighlight the old element
+                action.selectedItems.forEach(function(item) { // Deselect all multiselection elements
+                    deselectElement(item, false);
+                });
+
                 if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
                     action.setHelpText('Pick a style adjustment from the left menu.')
                 else
