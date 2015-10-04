@@ -2424,12 +2424,14 @@ function handleScreenClick(event) { // Had to move everything to this function s
                         }
                     });
                 } else {
-                    action.selectedItems.forEach(function(item, index, arr) { // Deselect eveything else, clear multiselection array
+                    for (var i = 0; i < action.selectedItems.length; i++) {// Deselect eveything else, clear multiselection array
+                        var item = action.selectedItems[i];
                         if (item != action.selectedItem) {
                             deselectElement(item, false); // Deselect all multi-selected items, except the centrally selected one
                         }
-                        arr.splice(index, 1); // No matter what, remove this item from multi-selection. We're clearing out
-                    });
+                        action.selectedItems.splice(i, 1); // No matter what, remove this item from multi-selection. We're clearing out
+                        i--;
+                    }
 
                     action.showMultiSelectionMenu();
                 }
@@ -2461,9 +2463,6 @@ function handleScreenClick(event) { // Had to move everything to this function s
                 action.showMultiSelectionMenu();
             } else {
                 deselectElement(action.selectedItem, false); // Unhighlight the old element
-                /*action.selectedItems.forEach(function(item) { // Deselect all multiselection elements
-                    deselectElement(item, false);
-                });*/
                 for (var i = 0; i < action.selectedItems.length; i++) {
                     deselectElement(action.selectedItems[i], false);
                     i--;
