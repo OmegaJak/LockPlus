@@ -2461,9 +2461,13 @@ function handleScreenClick(event) { // Had to move everything to this function s
                 action.showMultiSelectionMenu();
             } else {
                 deselectElement(action.selectedItem, false); // Unhighlight the old element
-                action.selectedItems.forEach(function(item) { // Deselect all multiselection elements
+                /*action.selectedItems.forEach(function(item) { // Deselect all multiselection elements
                     deselectElement(item, false);
-                });
+                });*/
+                for (var i = 0; i < action.selectedItems.length; i++) {
+                    deselectElement(action.selectedItems[i], false);
+                    i--;
+                }
 
                 action.showMultiSelectionMenu();
 
