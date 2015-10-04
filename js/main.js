@@ -2452,7 +2452,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
             action.showMultiSelectionMenu();
         } else { // User either clicked on another element, or on a new element to highlight
-            if (event.shiftKey) {
+            if (event.shiftKey && action.selectedItem != "") {
                 if (!action.isASelectedItem(action.selectedItem)) // Check if the 'centrally selected' item is a part of multi-selection
                     action.selectedItems.push(action.selectedItem); // Add it if it isn't already
 
