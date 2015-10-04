@@ -1867,7 +1867,7 @@ var action = {
                 /* it will snap to itself this solves that issue */
                 $(".dLine[title='"+id+"']").remove();
                 if (action.selectedItem != id)//$('#' + id).click();
-                    $('#screen').click(event);
+                    handleScreenClick(event);
 
                 action.sizeQueueTimeout.initialValue = [$('#'+id).position().top, $('#'+id).position().left]; //Just borrowing it, nothing else will need this while you're moving an element
             },
@@ -2353,6 +2353,9 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function(event){
+    handleScreenClick(event);
+});
+function handleScreenClick(event) { // Had to move everything to this function so it could be manually called
     function deselectElement(item, fullClear) {
         $('#' + item).css('outline', '0px solid transparent'); // Remove the highlight
         action.removeFromMultiSelection(item);
@@ -2441,7 +2444,7 @@ $('.screen').click(function(event){
             }
         }
     }
-});
+}
 
 $('.screen').on('mousewheel', function(event) {
     var selected = $('#' + action.selectedItem);
