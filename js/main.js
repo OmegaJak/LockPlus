@@ -2072,6 +2072,33 @@ var action = {
                 return "Border Array";
         }
     },
+    showMultiSelectionMenu: function() {
+        if (action.selectedItems.length > 0) { // Pretty imperative for what we're doing
+            var megaMenu = []; // ['editMenu~bla~bla','otherMenu~bla~bla','etcMenu~bla~bla']
+            var curMenu = action.getProperMenuForId(action.selectedItems[0]);
+            for (var i = 0; i < curMenu.length; i++) { // Go through each menu item for the base selection item
+                megaMenu.push(curMenu[i]); // Add it to the mega array
+            }
+
+            for (var i = 1; i < action.selectedItems.length; i++) { // Go through each of the other selection items
+                curMenu = action.getProperMenuForId(action.selectedItems[i]);
+                for (var k = 0; k < megaMenu.length; k++) { // Compare each item of the megaMenu to check if it's in this item's menu
+                    if (curMenu.indexOf(megaMenu[k]) === -1) {// If the item's in megaMenu but not in this item's menu
+                        megaMenu.splice(k, 1); // Remove the item from megaMenu
+                        k--;
+                    }
+                }
+            }
+
+            action.showIconMenu(megaMenu, -1);
+        } else {
+            if (action.selectedItem != "") {
+                action.showProperMenuForId(action.selectedItem);
+            } else {
+                action.showIconMenu(constants.toolArray, -1);
+            }
+        }
+    },
     showProperMenuForId: function(id) {
             action.showIconMenu(action.getProperMenuForId(id), -1);
     },
@@ -2382,7 +2409,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
         if (event.target.id === action.selectedItem) { // If they clicked the centrally highlighted item
             if (action.selectedItems.length > 0) { // If we should consider multi-selection
                 if (event.shiftKey) { // If someone shift-clicked the centrally selected item
-                    action.selectedItems.forEach(function(item, index, arr) { // Deselect eveything else, clear multiselection array
+                    action.selectedItems.forEach(function(item, index, arr) { // Deselect the central item, name a new one
                         if (item === action.selectedItem) {
                             deselectElement(item, false); // Automatically removed from multiselection arr
 
@@ -2392,6 +2419,8 @@ function handleScreenClick(event) { // Had to move everything to this function s
                             if (action.selectedItems.length === 1) { // The one we just made central is the only one left apparently
                                 action.selectedItems.splice(0, 1); // So clear out multi-selection entirely
                             }
+
+                            action.showMultiSelectionMenu();
                         }
                     });
                 } else {
@@ -2401,10 +2430,11 @@ function handleScreenClick(event) { // Had to move everything to this function s
                         }
                         arr.splice(index, 1); // No matter what, remove this item from multi-selection. We're clearing out
                     });
+
+                    action.showMultiSelectionMenu();
                 }
 
             } else {
-
                 deselectElement(action.selectedItem, true);
             }
         } else if (event.shiftKey && action.isASelectedItem(event.target.id)) { // If the shift-clicked item is an already-highlighted item
@@ -2417,6 +2447,8 @@ function handleScreenClick(event) { // Had to move everything to this function s
                 }
                 deselectElement(event.target.id, false);
             }
+
+            action.showMultiSelectionMenu();
         } else { // User either clicked on another element, or on a new element to highlight
             if (event.shiftKey) {
                 if (!action.isASelectedItem(action.selectedItem)) // Check if the 'centrally selected' item is a part of multi-selection
@@ -2425,11 +2457,15 @@ function handleScreenClick(event) { // Had to move everything to this function s
                 action.selectedItems.push(event.target.id);
 
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+
+                action.showMultiSelectionMenu();
             } else {
                 deselectElement(action.selectedItem, false); // Unhighlight the old element
                 action.selectedItems.forEach(function(item) { // Deselect all multiselection elements
                     deselectElement(item, false);
                 });
+
+                action.showMultiSelectionMenu();
 
                 if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
                     action.setHelpText('Pick a style adjustment from the left menu.')
