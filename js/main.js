@@ -2185,6 +2185,12 @@ var action = {
                 return true;
         }
         return false;
+    },
+    removeFromMultiSelection: function(itemName) {
+        action.selectedItems.forEach(function(item, index) {
+            if (item === itemName)
+                action.selectedItems.splice(index, 1);
+        });
     }
 };
 function resizeWall(img, width, height) {
@@ -2349,6 +2355,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 $('.screen').click(function(event){
     function deselectElement(item, fullClear) {
         $('#' + item).css('outline', '0px solid transparent'); // Remove the highlight
+        action.removeFromMultiSelection(item);
         if (fullClear) {
             action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
             action.selectedItem = ""; // Clear the selected item
@@ -2360,12 +2367,45 @@ $('.screen').click(function(event){
     }
 
     if (event.target.id === '' && action.selectedItem != '') {
-        deselectElement(action.selectedItem, true);
+        if (action.selectedItems.length > 0) {
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                deselectElement(action.selectedItems[i], false);
+                i--;
+            }
+        }
+        deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
         action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     } else if (event.target.id != 'screen' && event.target.id != '') {
         if (event.target.id === action.selectedItem) { // If they clicked the already-highlighted item
-            deselectElement(action.selectedItem, true);
-        } else if (event.shiftKey && action.isASelectedItem(event.target.id)) { // If the shift-clicked an already-highlighted item
+            if (action.selectedItems.length > 0) { // If we should consider multi-selection
+                if (event.shiftKey) { // If someone shift-clicked the centrally selected item
+                    action.selectedItems.forEach(function(item, index, arr) { // Deselect eveything else, clear multiselection array
+                        if (item === action.selectedItem) {
+                            deselectElement(item, false);
+                            arr.splice(index, 1); // Remove just the selected item from the multi-selection
+
+                            if (action.selectedItems.length > 0) // If there are still some left
+                                action.selectedItem = action.selectedItems[0]; // Change the centrally located one
+
+                            if (action.selectedItems.length === 1) { // The one we just made central is the only one left apparently
+                                arr.splice(0, 1); // So clear out multi-selection entirely
+                            }
+                        }
+                    });
+                } else {
+                    action.selectedItems.forEach(function(item, index, arr) { // Deselect eveything else, clear multiselection array
+                        if (item != action.selectedItem) {
+                            deselectElement(item, false); // Deselect all multi-selected items, except the centrally selected one
+                        }
+                        arr.splice(index, 1); // No matter what, remove this item from multi-selection. We're clearing out
+                    });
+                }
+
+            } else {
+
+                deselectElement(action.selectedItem, true);
+            }
+        } else if (event.shiftKey && action.isASelectedItem(event.target.id)) { // If the shift-clicked item is an already-highlighted item
             if (action.selectedItems.length > 0) {
                 for (var i = 0; i < action.selectedItems.length; i++) {
                     if (action.selectedItems[i] === event.target.id) {
@@ -2376,6 +2416,9 @@ $('.screen').click(function(event){
             }
         } else { // User either clicked on another element, or on a new element to highlight
             if (event.shiftKey) {
+                if (!action.isASelectedItem(action.selectedItem)) // Check if the 'centrally selected' item is a part of multi-selection
+                    action.selectedItems.push(action.selectedItem); // Add it if it isn't already
+
                 action.selectedItems.push(event.target.id);
 
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
