@@ -168,7 +168,7 @@ var action = {
         if (id === 'clearTransform') { action.updateTransform('','','','','clear'); }
         if (id === 'shadowColor') { this.cgShadowColor(); }
         if (id === 'clearShadow') { this.updateShadow('','','','','clear'); }
-        if (id === 'backToEdit') { action.showProperMenuForId(this.selectedItem); }
+        if (id === 'backToEdit') { action.showMultiSelectionMenu(); }
         if (id === 'boxhShadow') { this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', -100, 100, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal'); }
         if (id === 'boxvShadow') { this.cgSize('boxvShadow', constants.boxShadowArray[1], 'px', -100, 100, 'boxvShadow', 'boxvShadow', action.updateShadow, false, false, 'Vertical'); }
         if (id === 'boxblur') { this.cgSize('boxblur', constants.boxShadowArray[2], 'px', 0, 50, 'boxblur', 'boxblur', action.updateShadow, false, false, 'Blur Radius'); }
@@ -270,7 +270,7 @@ var action = {
 
             for (var i = 0; i < action.selectedItems.length; i++) {
                 if (!isAlreadyInArr(elementId, action.selectedItems[i])) {
-                    var arr = [action.selectedItems[i], cssKey, cssValue];
+                    var arr = [action.selectedItems[i], elementId[0][1], elementId[0][2]];
                     elementId.push(arr);
                 }
             }
@@ -2468,8 +2468,6 @@ function handleScreenClick(event) { // Had to move everything to this function s
                     i--;
                 }
 
-                action.showMultiSelectionMenu();
-
                 if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
                     action.setHelpText('Pick a style adjustment from the left menu.')
                 else
@@ -2479,7 +2477,8 @@ function handleScreenClick(event) { // Had to move everything to this function s
                 $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
 
                 if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-                action.showProperMenuForId(event.target.id);
+
+                action.showMultiSelectionMenu();
             }
         }
     }
