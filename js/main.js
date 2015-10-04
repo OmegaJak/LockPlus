@@ -1,5 +1,6 @@
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
+    notSoConstantArray: [],
     toolArray: ['background~Background~fa fa-photo~backgroundDiv'
                     ,'overlay~Overlay~fa fa-clipboard~overlayDiv'
                     ,'element~Show Elements Panel~fa fa-flask~elementDiv'
@@ -2069,8 +2070,9 @@ var action = {
             case constants.affixArray:
                 return "Suffix/Prefix Menu";
             case constants.borderArray:
-                return "Border Array";
+                return "Border Menu";
         }
+        if (menuArray.toString() === constants.notSoConstantArray.toString()) return "Custom Combination Menu";
     },
     showMultiSelectionMenu: function() {
         if (action.selectedItems.length > 0) { // Pretty imperative for what we're doing
@@ -2090,6 +2092,7 @@ var action = {
                 }
             }
 
+            constants.notSoConstantArray = megaMenu;
             action.showIconMenu(megaMenu, -1);
         } else {
             if (action.selectedItem != "") {
