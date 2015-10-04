@@ -178,7 +178,7 @@ var action = {
         if (id === 'color') {this.cgcolor(false, 'color', 'colorDiv');}
         if (id === 'boxColor') { this.cgcolor(false, 'background-color', 'boxColorDiv'); }
         if (id === 'customText') { this.cgCustomText(); }
-        if (id === 'delete') { action.removeFromScreen(action.selectedItem, true);}
+        if (id === 'delete') { action.delete(); }
         if (id === 'iconsize') { this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);}
         if (id === 'changeicon') { this.populateIcons(); }
         if (id === 'affixes') { this.showIconMenu(constants.affixArray, -1); }
@@ -385,6 +385,16 @@ var action = {
             action.sizeQueueTimeout.previousCssKey = allCssKeys;
         } else {
             console.log("Ya done goofed (setCss)");
+        }
+    },
+    delete: function() {
+        if (action.selectedItems.length > 0) {
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                action.removeFromScreen(action.selectedItems[i], true);
+            }
+            action.selectedItems = [];
+        } else {
+            action.removeFromScreen(action.selectedItem, true);
         }
     },
     cgfont: function () {
