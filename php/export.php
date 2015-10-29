@@ -21,6 +21,19 @@ $txt = $ip;
 fwrite($myfile, $txt);
 fclose($myfile);
 
+$Dname = "creators/".trim(stripcslashes((string)$devname)).".txt";
+
+        if(file_exists($Dname)){
+            file_put_contents($Dname, "themes/".$name.".plist\n",FILE_APPEND);
+        }else{
+            $themerFile = fopen($Dname, "w") or die($Dname);
+            $txt = "themes/".$name.".plist\n";
+            fwrite($themerFile, $txt);
+            fclose($themerFile);
+        }
+
+
+
 $blocked = array('50.199.86.49','141.0.8.157');
 
 if (in_array($ip, $blocked)) {

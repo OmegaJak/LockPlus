@@ -12,29 +12,26 @@ set_time_limit(0);
 $dir    = '../php/themes';
 $list = glob("$dir/*.plist");
 
-$dlCount = unserialize(file_get_contents('../php/count/dlcount.bin'));
-$themeDev = unserialize(file_get_contents('../php/user/userList.bin'));
-
 if ($_GET["name"]) {
   $entered = $_GET["name"];
    echo '<a class="themerName">' . $entered . '</a><br />';
-  foreach ($themeDev as $key) {
-    $split = explode("~", $key);
-    $dev = $split[0];
-    if(stripos($dev, $entered)){
-      $baseName = basename($split[1],'.plist');
-      $pname = basename($split[1]);
-        if(file_exists('../php/themepreview/'.$baseName.'.jpg')){ //if preview exists use it
-            $preview = '../php/themepreview/'.$baseName.'.jpg';
+
+   $lines = file("../php/creators/".$entered.".txt", FILE_IGNORE_NEW_LINES); //get themer .txt file
+
+   foreach ($lines as $key) {
+      $theme = basename($key,'.plist');
+
+      if(file_exists('../php/themepreview/'.$theme.'.jpg')){ //if preview exists use it
+            $preview = '../php/themepreview/'.$theme.'.jpg';
           }else{
             $preview = 'none';
           }
-      echo '<div class="theme">
-            <img title="'.$baseName.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
-            <span class="themeName">'.$pname.'</span>
+
+          echo '<div class="theme">
+            <img title="'.$theme.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
+            <span class="themeName">'.$theme.'</span>
             </div>';
-    }
-  }
+   }
 }else{
   exit('Themer does not exist');
 }
