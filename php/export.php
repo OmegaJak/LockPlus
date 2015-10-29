@@ -27,7 +27,7 @@ $Dname = "creators/".trim(stripcslashes((string)$devname)).".txt";
             file_put_contents($Dname, "themes/".$name.".plist\n",FILE_APPEND);
         }else{
             $themerFile = fopen($Dname, "w") or die($Dname);
-            $txt = "themes/".$name.".plist\n";
+            $txt = "\nthemes/".$name.".plist\n";
             fwrite($themerFile, $txt);
             fclose($themerFile);
         }

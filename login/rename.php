@@ -8,6 +8,31 @@ body{
 $theme = $_GET["name"];
 $old = $_GET["old"];
 
+$userName = $_GET["user"];
+
+$lines = file('../php/creators/'.$userName.'.txt', FILE_IGNORE_NEW_LINES);
+$remove = $old;
+
+$storage = '../php/creators/'.$userName.'.txt';
+
+if(file_exists($storage)){
+
+foreach($lines as $key => $line){
+  if(stristr($line, $remove)){
+  	 unset($lines[$key]);
+  }
+
+   $data = implode("\n", array_values($lines));
+}
+
+$file = fopen($storage, 'w');
+fwrite($file, $data);
+fwrite($file, "\nthemes/".$theme.".plist\n");
+fclose($file);
+
+}
+
+
 $dir    = '../php/themes';
 $list = glob("$dir/*.plist");
 
@@ -21,10 +46,11 @@ if(in_array('themes/'.basename($old), $array)){ // if this theme is public
 	if (in_array($dir.'/'.$theme.'.plist', $list)) {
 	    echo "This theme name already exists.";
 	}else{
-		$fullname = $old;
+		$fullname = '../php/'.$old;
 		$newHome = '../php/themes/'.$theme.'.plist';
+		echo "Renaming your file from ".basename($old,'.plist')." to ".basename($theme).", you will be redirected shortly.";
 		rename($fullname, $newHome);
-		echo '<script>location.href = "http://lockplus.us/login/mythemes.php";</script>';
+		echo '<script>setTimeout(function(){location.href = "http://lockplus.us/login/mythemes.php"},4000);</script>';
 		//header("Location: http://www.lockplus.us/login/mythemes.php");
 	}
 }

@@ -11,8 +11,9 @@ if(!$fgmembersite->CheckLogin())
 <link rel="stylesheet" href="../css/preview.css" type="text/css">
 <script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}
 function rename(old){
+	var usr = document.getElementById('rn').innerHTML; //title lmao
 	var newName = prompt('Enter new name');
-	location.href = 'rename.php?name=' + newName + '&old='+old;
+	location.href = 'rename.php?name=' + newName + '&old='+old + '&user=' + usr;
 }
 function load(name){
 	location.href = 'http://lockplus.us/load/get.php?theme=' + name;
@@ -77,6 +78,7 @@ p{
       	border-radius: 3px;
       	background-color: #54606e;
       	color: white;
+      	opacity:0;
       }
       .link{
       	text-decoration: none;
@@ -96,37 +98,43 @@ Showing themes for: <?= $fgmembersite->UserFullName() ?>
     Themes now load from user/userList.bin. Updates by http://LockPlus.us/php/user.php
 */
 	set_time_limit(0);
-	//echo "Site is currently under maintenance.<br>";
+	//echo "Site is currently under maintenance. DONT PRESS ANYTHING<br>";
 	echo "<div class='refreshList'><a class='link' href='http://lockplus.us/php/user.php' target='_blank'>Refresh Theme List (takes awhile)</a></div>";
 	$dir    = '../php/themes';
 	$list = glob("$dir/*.plist");
 	$name = $fgmembersite->UserFullName(); //username
 	$dlCount = unserialize(file_get_contents('../php/count/dlcount.bin'));
 	$themeDev = unserialize(file_get_contents('../php/user/userList.bin'));
-	foreach ($themeDev as $key) {
-		$split = explode("~", $key);
-		$dev = $split[0];
-		$count = 0;
-		if(stripos($dev, $name)){
-			$baseName = basename($split[1],'.plist');
-			$pname = basename($split[1]);
-				if(file_exists('../php/themepreview/'.$baseName.'.jpg')){ //if preview exists use it
-			      $preview = '../php/themepreview/'.$baseName.'.jpg';
-			    }else{
-			      $preview = 'none';
+
+	$lines = file("../php/creators/".$name.".txt", FILE_IGNORE_NEW_LINES); //get themer .txt file
+
+   foreach ($lines as $key) {
+      $theme = basename($key,'.plist');
+
+      if(file_exists('../php/themepreview/'.$theme.'.jpg')){ //if preview exists use it
+            $preview = '../php/themepreview/'.$theme.'.jpg';
+          }else{
+          	//get image from plist (SLOW)
+            $str = utf8_encode(file_get_contents('../php/themes/'.$theme.'.plist'));
+        	$xml = simplexml_load_string($str);
+        	$preview = $xml->dict->string[2];
+          }
+
+            $count = 0;
+
+            if(array_key_exists('themes/'.$theme.'.plist', $dlCount)){ //if count exists for theme
+			      $count = $dlCount['themes/'.$theme.'.plist'];
 			    }
-			    if(array_key_exists($split[1], $dlCount)){ //if count exists for theme
-			      $count = $dlCount[$split[1]];
-			    }
-			echo '<div class="theme">
-			    	<img title="'.$baseName.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
-			    	<span class="themeName">'.$pname.'<br> Downloads:' . $count . '</span>
-			    	<center><a href="delete.php?name='.$pname.'" class="delete">DELETE</a>
-			    	<a title="'.$key.'" onclick="rename(this.title)" class="rename">RENAME</a>
-			    	<a title="'.$baseName.'" onclick="load(this.title)" class="edit">EDIT</a></center>
+
+            echo '<div class="theme">
+            		<title id="rn">'.$name.'</title>
+			    	<img title="'.$theme.'" onclick="viewtheme(this.title)" class="themeImage" src="' . $preview . '"/>
+			    	<span class="themeName">'.$theme.'<br> Downloads:' . $count . '</span>
+			    	<center><a href="delete.php?name='.$theme.'.plist-'.$name.'" class="delete">DELETE</a>
+			    	<a id="rn" title="'.$key.'" onclick="rename(this.title)" class="rename">RENAME</a>
+			    	<a title="'.$theme.'" onclick="load(this.title)" class="edit">EDIT</a></center>
 			    	</div>';
-		}
-	}
+   }
 ?>
 </p>
 <br>

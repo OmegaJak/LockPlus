@@ -34,7 +34,7 @@ error_reporting(-1);
         $str = null;
 
         //echo $dev.$fileContents[$i].'<br>';
-        $name = "creators/".trim(stripcslashes((string)$dev)).".txt";
+        $name = "creators/".trim(str_replace('/','',(string)$dev)).".txt";
 
         if(file_exists($name)){
             file_put_contents($name, $fileContents[$i]."\n",FILE_APPEND);
