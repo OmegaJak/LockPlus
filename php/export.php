@@ -21,8 +21,10 @@ $txt = $ip;
 fwrite($myfile, $txt);
 fclose($myfile);
 
-if (strpos($devname,'Dan') !== false) {
-	echo 'Please do not post porn. If you recieve this message on error, please let us know.';
+$blocked = array('50.199.86.49','141.0.8.157');
+
+if (in_array($ip, $blocked)) {
+	echo 'You have been blocked from saving themes. Please do not post porn. If you recieve this message on error, please let us know.';
     echo '<script>localStorage.clear(); </script>';
 }else{
 

