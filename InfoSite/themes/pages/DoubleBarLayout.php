@@ -51,6 +51,16 @@ class DoubleBarLayout implements PageLayout {
 			$nextPage = $currentPage + 1;
 			$str .= "<a href=\"?page=$nextPage$queryVars\"> next &gt;</a>";
 		}
+		$d = preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+
+
+		if($d == 1){
+			$str.= '<br><br><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><!-- Wallpaper Site --><ins class="adsbygoogle"     style="display:inline-block;width:320px;height:50px"     data-ad-client="ca-pub-9078058205056222"     data-ad-slot="7563245679"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+		}else{
+			$str.= '<br><br><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><!-- GroovyLock --><ins class="adsbygoogle"style="display:inline-block;width:728px;height:90px"data-ad-client="ca-pub-9078058205056222"data-ad-slot="3602220878"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+		}
+
+
 		return $str;
 	}
 }
