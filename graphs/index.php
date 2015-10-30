@@ -32,6 +32,7 @@ h2,h3{
       text-align: center;
 }
 </style>
+<title>LockPlus Stats</title>
 <script>function viewtheme(d){window.location.href = "http://lockplus.us/preview?" + d;}</script>
 
 <?php
@@ -105,7 +106,7 @@ foreach($vals as $value) { $final[] = $value;}
       labels : months,
       datasets : [
         {
-          label: "My First dataset",
+          label: "LockPlus Stats",
           fillColor : "rgba(220,220,220,0.2)",
           strokeColor : "rgba(220,220,220,1)",
           pointColor : "rgba(220,220,220,1)",
