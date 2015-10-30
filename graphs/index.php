@@ -23,7 +23,7 @@
    width: 100%;
    height: auto;
 }
-h2,h3{
+h2,h3,a{
       color:black;
       font-weight: 700;
       letter-spacing: -.02em;
@@ -139,6 +139,7 @@ foreach($vals as $value) { $final[] = $value;}
     <?php
       echo '<h3>Total Themes: '.number_format($totalThemes).'</h3>';
       echo '<h3>Total Creators: '.number_format($totalUsers).'</h3>';
+      echo '<center><a href="http://lockplus.us/php/theme.php">View All Themes</a></center>';
     ?>
   </div>
 </div>
