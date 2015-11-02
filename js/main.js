@@ -111,7 +111,8 @@ var constants = {
     //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     preloadWhitelist: {'size':'','width':'', 'position':'','align':'','uppercase':'','weight':'','style':'','customPrefix':'','customSuffix':'','hShadow':'','vShadow':'','blur':'','boxhShadow':'','boxvShadow':''
                         ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':''},
-    iconList: ['MonolyphDark','MonolyphFlat','MonolyphLight','city','blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky']
+    iconList: ['MonolyphDark','MonolyphFlat','MonolyphLight','city','blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky'],
+    positioningSystemOption : 'posSystem~Change Positioning System~fa fa-arrows-alt~posSystemDiv'
 };
 var action = {
     savedElements : {}, //object to save elements placed
@@ -120,6 +121,7 @@ var action = {
     uploadSelection : '', //save type of upload selection (overlay or background)
     selectedItem : '',
     selectedItems : [], // Only used for multi-selection
+    multiPositioningSystem : 'relative',
     actionQueue : [], //Queue of actions for undo/redo
     queuePosition : -1, //The current position within this ↑ queue, which action was most recently done
     isUndoingRedoing : false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
@@ -190,6 +192,7 @@ var action = {
         if (id === 'borderWidth') { this.cgSize('borderWidth', constants.borderArray[1], 'px', 0, 200, 'border-width', 'borderWidth', action.updateSize); }
         if (id === 'border-color') { this.cgcolor(false, 'border-color', 'border-colorDiv'); }
         if (id === 'clearBorder') { this.setCss(action.selectedItem, 'border',''); }
+        if (id === 'posSystem') { this.cgPosSystem(); }
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
@@ -1068,8 +1071,27 @@ var action = {
             return action.getBasicOptionElement(optionName, 'text-align: ' + optionName, 'text-align');
         });
     },
+    cgPosSystem: function() {
+        var lastSelector = '#' + action.multiPositioningSystem + 'Option';
+        this.cgOption('posSystem', constants.positioningSystemOption, ['relative', 'absolute'], 0, true, function(optionSelector) {
+            lastSelector = action.posSystemSelected(optionSelector, lastSelector);
+        }, function(optionName) {
+            var el = $('<label id="' + optionName + 'Option">' + optionName + '</label>');
+            if (optionName == 'relative')
+                el.attr('data-selected', 'true');
+            return el;
+        })
+    },
+    posSystemSelected: function(optionSelector, lastSelector) {
+        action.multiPositioningSystem = $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6);
+        console.log(action.multiPositioningSystem);
+        return action.ultraBasicOptionSelected(optionSelector, lastSelector);
+    },
     basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
         action.setCss(action.selectedItem, cssKey, setTo);
+        return action.ultraBasicOptionSelected(optionSelector, lastSelector);
+    },
+    ultraBasicOptionSelected: function(optionSelector, lastSelector) {
         $(optionSelector).parent().css({'background-color' : '#21b9b0', 'border-color' : '#21b9b0'}).attr('data-selected','true');
         if (lastSelector != optionSelector) $(lastSelector).parent().css({'background-color' : '#54606e', 'border-color' : '#54606e'}).attr('data-selected','false');
         lastSelector = optionSelector;
@@ -2086,6 +2108,7 @@ var action = {
     },
     showMultiSelectionMenu: function() {
         if (action.selectedItems.length > 0) { // Pretty imperative for what we're doing
+
             var megaMenu = []; // ['editMenu~bla~bla','otherMenu~bla~bla','etcMenu~bla~bla']
             var curMenu = action.getProperMenuForId(action.selectedItems[0]);
             for (var i = 0; i < curMenu.length; i++) { // Go through each menu item for the base selection item
@@ -2101,6 +2124,8 @@ var action = {
                     }
                 }
             }
+
+            megaMenu.unshift(constants.positioningSystemOption);
 
             constants.notSoConstantArray = megaMenu;
             action.showIconMenu(megaMenu, -1);
