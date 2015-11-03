@@ -110,9 +110,10 @@ var constants = {
                 gridSizeLeft: 284,
     //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     preloadWhitelist: {'size':'','width':'', 'position':'','align':'','uppercase':'','weight':'','style':'','customPrefix':'','customSuffix':'','hShadow':'','vShadow':'','blur':'','boxhShadow':'','boxvShadow':''
-                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':''},
+                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':'', 'posSystem':''},
     iconList: ['MonolyphDark','MonolyphFlat','MonolyphLight','city','blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky'],
-    positioningSystemOption : 'posSystem~Change Positioning System~fa fa-arrows-alt~posSystemDiv'
+    positioningSystemOption : 'posSystem~Change Positioning System~fa fa-arrows-alt~posSystemDiv',
+    multiPosition : 'multiPos~Change Position~fa fa-arrows~multiPosDiv'
 };
 var action = {
     savedElements : {}, //object to save elements placed
@@ -193,6 +194,7 @@ var action = {
         if (id === 'border-color') { this.cgcolor(false, 'border-color', 'border-colorDiv'); }
         if (id === 'clearBorder') { this.setCss(action.selectedItem, 'border',''); }
         if (id === 'posSystem') { this.cgPosSystem(); }
+        if (id === 'multiPos') { this.cgMultiPosition(); }
 
         //Gradients
         if (action.selectedItem != null && id.toLowerCase().match(/gradient/gmi) != null && document.getElementById(action.selectedItem).style.background.substring(0,3) != 'lin' && id != 'linearGradient' && id != 'linearBoxGradient' && id != 'linearTextGradientDiv') {
@@ -258,7 +260,8 @@ var action = {
         $('#fList').toggle('display');
     },
     setCss: function (elementId, cssKey, cssValue) { //[[elementName, cssKey, cssValue], [elementName, [cssKey, cssKey], [cssValue, cssValue]]]
-        if (action.selectedItems.length > 0) {
+        // The special case here is for when we're doing relative positioning and we're setting position. In that case, each is called individually
+        if (action.selectedItems.length > 0 && !(action.multiPositioningSystem === 'relative' && (cssKey === 'left' || cssKey === 'top'))) {
             function isAlreadyInArr(arr, toTest) {
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i][0] === toTest) {
@@ -963,6 +966,59 @@ var action = {
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
         });
     },
+    cgMultiPosition: function() {
+        var maxLeft = 0, minLeft = 0;
+        var maxTop = 0, minTop = 0;
+        var elName;
+        for (var i = 0; i < action.selectedItems.length; i++) { // Go through each selected item and establish the farthest any single one could travel in a direction
+            elName = '#' + action.selectedItems[i];
+
+
+            var curMaxLeft = action.getElementExtreme(elName, 'maxleft');
+            if (curMaxLeft > maxLeft)
+                maxLeft = curMaxLeft;
+
+            var curMaxTop = action.getElementExtreme(elName, 'maxtop');
+            if (curMaxTop > maxTop)
+                maxTop = curMaxTop;
+
+            var curMinLeft = action.getElementExtreme(elName, 'minleft');
+            if (curMinLeft < minLeft)
+                minLeft = curMinLeft;
+
+            var curMinTop = action.getElementExtreme(elName, 'mintop');
+            if (curMinTop < minTop)
+                minTop = curMinTop;
+        }
+
+        this.cgSize('multiPosLeft', constants.multiPosition, 'px', minLeft, maxLeft, 'left', 'left', action.updateMultiPosition, '', '80', 'Left', 2);
+        this.cgSize('multiPosTop', constants.multiPosition, 'px', minTop, maxTop, 'top', 'top', action.updateMultiPosition, '', '208', 'Top', 2);
+
+        //cgSize automatically initializes the inputs with values, but in relative mode, we want everything to start at 0
+        $('#multiPosLeftInput').val(0);
+        $('#multiPosTopInput').val(0);
+    },
+    // extreme : maxleft, minleft, maxtop, mintop
+    getElementExtreme: function(elName, extreme) {
+        if (!elName.includes('#')) {
+            elName = '#' + elName;
+        }
+
+        var pos = $(elName).position();
+
+        switch (extreme) {
+            case 'maxleft':
+                return $('.screen').width() - $(elName).width() - pos.left;
+            case 'minleft':
+                return -1 * pos.left;
+            case 'maxtop':
+                return $('.screen').height() - $(elName).height() - pos.top;
+            case 'mintop':
+                return -1 * pos.top;
+            default:
+                return 0;
+        }
+    },
     sizeControl: function(inputSelector, valueToAdd) {
         $(inputSelector).val(JSON.parse($(inputSelector).val()) + valueToAdd);
     },
@@ -1034,6 +1090,51 @@ var action = {
                 }
             } else {
                 action.setCss(action.selectedItem, cssKey, $(idSelector).val() + unit);
+            }
+
+            action.saveStorage();
+        } else if (purpose === 'get') {
+            return $('#' + action.selectedItem).css(cssKey);
+        }
+    },
+    updateMultiPosition: function(idSelector, cssKey, unit, jsCssKey, purpose) {
+        if (purpose === 'set') {
+            var max = JSON.parse($(idSelector).attr('max'));
+            var min = JSON.parse($(idSelector).attr('min'));
+            if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
+            if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
+
+
+            for (var i = 0; i < action.selectedItems.length; i++) { // Save the initial values for each selectedItem
+                if (!$('#' + action.selectedItems[i]).attr("initial" + cssKey)) // If this is the first time the element's been moved
+                    $('#' + action.selectedItems[i]).attr("initial" + cssKey, $('#' + action.selectedItems[i]).css(cssKey));
+            }
+
+            //Now we're actually setting things
+            var initial = 0;
+            var elSelector;
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                elSelector = '#' + action.selectedItems[i];
+                initial = $(elSelector).attr('initial' + cssKey);
+
+                initial = initial.substring(0, initial.length - unit.length); // Remove 'px' from the end
+                initial = JSON.parse(initial); // Convert it to a number
+
+                var newValue = initial + JSON.parse($(idSelector).val());
+                var curMax, curMin;
+                if (cssKey === 'left') {
+                    curMax = action.getElementExtreme(elSelector, 'maxleft');
+                    curMin = action.getElementExtreme(elSelector, 'minleft');
+                } else if (cssKey === 'top') {
+                    curMax = action.getElementExtreme(elSelector, 'maxtop');
+                    curMin = action.getElementExtreme(elSelector, 'mintop');
+                } else { // Something's gone wrong
+                    curMax = 1000;
+                    curMin = -1000;
+                }
+
+                if (newValue <= curMax && newValue >= min)
+                    action.setCss(action.selectedItems[i], cssKey, newValue);
             }
 
             action.saveStorage();
@@ -2112,20 +2213,24 @@ var action = {
             var megaMenu = []; // ['editMenu~bla~bla','otherMenu~bla~bla','etcMenu~bla~bla']
             var curMenu = action.getProperMenuForId(action.selectedItems[0]);
             for (var i = 0; i < curMenu.length; i++) { // Go through each menu item for the base selection item
-                megaMenu.push(curMenu[i]); // Add it to the mega array
+                if (curMenu[i] === constants.editArray[2]) {
+                    megaMenu.push(constants.multiPosition);
+                } else {
+                    megaMenu.push(curMenu[i]); // Add it to the mega array
+                }
             }
 
             for (var i = 1; i < action.selectedItems.length; i++) { // Go through each of the other selection items
                 curMenu = action.getProperMenuForId(action.selectedItems[i]);
                 for (var k = 0; k < megaMenu.length; k++) { // Compare each item of the megaMenu to check if it's in this item's menu
-                    if (curMenu.indexOf(megaMenu[k]) === -1) {// If the item's in megaMenu but not in this item's menu
+                    if (megaMenu[k].split('~')[0].substring(0,5) != 'multi' && curMenu.indexOf(megaMenu[k]) === -1) {// If the item's in megaMenu but not in this item's menu
                         megaMenu.splice(k, 1); // Remove the item from megaMenu
                         k--;
                     }
                 }
             }
 
-            megaMenu.unshift(constants.positioningSystemOption);
+            megaMenu.unshift(constants.positioningSystemOption); // Weird function name. Just puts it at the front.
 
             constants.notSoConstantArray = megaMenu;
             action.showIconMenu(megaMenu, -1);
