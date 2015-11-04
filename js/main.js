@@ -260,7 +260,7 @@ var action = {
         $('#fList').toggle('display');
     },
     setCss: function (elementId, cssKey, cssValue) { //[[elementName, cssKey, cssValue], [elementName, [cssKey, cssKey], [cssValue, cssValue]]]
-        // The special case here is for when we're doing relative positioning and we're setting position. In that case, each is called individually
+        // The special case here after the && is for when we're doing relative positioning and we're setting position. In that case, each is called individually
         if (action.selectedItems.length > 0 && !(action.multiPositioningSystem === 'relative' && (cssKey === 'left' || cssKey === 'top'))) {
             function isAlreadyInArr(arr, toTest) {
                 for (var i = 0; i < arr.length; i++) {
@@ -1480,7 +1480,13 @@ var action = {
     runOppositeAction: function(actionName, actionInfo) {
         switch (actionName) {
             case 'addElement':
-                action.removeFromScreen(actionInfo[0], false);
+                if (typeof actionInfo[0] === 'string') {
+                    action.removeFromScreen(actionInfo[0], false);
+                } else if (typeof actionInfo[0] === 'object'){
+                    for (var i = 0; i < actionInfo.length; i++) {
+                        action.removeFromScreen(actionInfo[i][0], false);
+                    }
+                }
                 break;
             case 'removeElement':
                 action.runAction('addElement', actionInfo);
@@ -1509,17 +1515,27 @@ var action = {
     },
     runAction: function(actionName, actionInfo) { // [actionName, actionInfo]
         switch (actionName) {
-            case 'addElement': // ['addElement',[elementID,[color:'', font-family:'', etc]]]
-                    if ($('#' + actionInfo[0] + 'Picker').length) {
-                        $('#' + actionInfo[0] + 'Picker').css('background-color','#21B9B0'); //Set the colored background of the relevant list element
-                        $('#' + actionInfo[0] + 'Picker').css('border-color','#21B9B0');
+            case 'addElement': // ['addElement',[elementID,[color:'', font-family:'', etc]]] OR ['addElement',[[elementID,[color:'', font-family:'', etc]],[elementID,[color:'', font-family:'', etc]],...]]
+                function addEl(elementId, cssVals) { // Adds given element with css values to screen
+                    if ($('#' + elementId + 'Picker').length) {
+                        $('#' + elementId + 'Picker').css('background-color','#21B9B0'); //Set the colored background of the relevant list element
+                        $('#' + elementId + 'Picker').css('border-color','#21B9B0');
                     }
-                    action.savedElements.placedElements[actionInfo[0]] = actionInfo[1];
-                    $('#screenElements').empty(); // This is VERY important. Without this, replaceElements recreates each of the other elements, but they're these crappy little non-filled things. They cause issues.
-                    action.replaceElements(); // Refresh the screen elements from the savedElements array
-                    action.saveStorage();
+                    action.savedElements.placedElements[elementId] = cssVals;
+                }
+
+                if (typeof actionInfo[0] === 'string') {
+                    addEl(actionInfo[0], actionInfo[1]);
+                } else if (typeof actionInfo[0] === 'object') {
+                    for (var i = 0; i < actionInfo.length; i++) {
+                        addEl(actionInfo[i][0], actionInfo[i][1]);
+                    }
+                }
+                $('#screenElements').empty(); // This is VERY important. Without this, replaceElements recreates each of the other elements, but they're these crappy little non-filled things. They cause issues.
+                action.replaceElements(); // Refresh the screen elements from the savedElements array
+                action.saveStorage();
                 break;
-            case 'removeElement': // ['removeElement',[elementID,[color:'', font-family:'', etc]]]
+            case 'removeElement': // ['removeElement',[elementID,[color:'', font-family:'', etc]]] OR ['removeElement',[[elementID,[color:'', font-family:'', etc]],[elementID,[color:'', font-family:'', etc]],...]]
                 action.runOppositeAction('addElement', actionInfo); // Does the opposite of adding an element, removing the element
                 break;
             case 'setCss': // ['setCss', [elementID, cssKey, oldValue, newValue]]
@@ -2169,10 +2185,12 @@ var action = {
         document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
     },
     removeFromScreen: function(id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
-        if (!action.isUndoingRedoing) {
-            action.addAction(['removeElement',[id, action.savedElements.placedElements[id]]]);
-        } else {
-            action.actionQueue[action.queuePosition][1] = [id, action.savedElements.placedElements[id]];
+        if (action.selectedItems.length === 0) { // If it >0, then removeSelectedFromScreen handles the queueing
+            if (!action.isUndoingRedoing) {
+                    action.addAction(['removeElement',[id, action.savedElements.placedElements[id]]]);
+            } else {
+                action.actionQueue[action.queuePosition][1] = [id, action.savedElements.placedElements[id]];
+            }
         }
 
         var parent = document.getElementById('screenElements'),
@@ -2187,6 +2205,18 @@ var action = {
             document.getElementById(id + 'Picker').style.borderColor = "#54606e";
         }
         action.selectedItem = '';
+    },
+    removeSelectedFromScreen: function(toggleElementPanel) {
+        if (action.selectedItems.length === 0) {
+            action.removeFromScreen(action.selectedItem, toggleElementPanel);
+        } else {
+            var actionArr = ['removeElement', []];
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                actionArr[1].push([action.selectedItems[i], action.savedElements.placedElements[action.selectedItems[i]]]);
+                action.removeFromScreen(action.selectedItems[i], i === action.selectedItems.length - 1); // Only toggle elPanel if we're on the last item
+            }
+            action.addAction(actionArr);
+        }
     },
     showIconMenu: function(menuArray, indexesToSurround){ //indexesToSurround: -2 means surround none with div, -1 means surround all, otherwise number is index to surround
         $('#icons').empty();
@@ -2513,7 +2543,7 @@ $(document).on('keydown', function(event) {
                 break;
             case 46: //Delete key
                 if (!action.isEditingText)
-                    action.removeFromScreen(action.selectedItem, true);
+                    action.removeSelectedFromScreen(true);
                 break;
         }
     }
