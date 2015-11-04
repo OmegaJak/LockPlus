@@ -1131,8 +1131,8 @@ var action = {
         if (purpose === 'set') {
             var max = JSON.parse($(idSelector).attr('max'));
             var min = JSON.parse($(idSelector).attr('min'));
-            if (JSON.parse($(idSelector).val()) >= JSON.parse(max)) $(idSelector).val(max);
-            if (JSON.parse($(idSelector).val()) <= JSON.parse(min)) $(idSelector).val(min);
+            if (JSON.parse($(idSelector).val()) >= max) $(idSelector).val(max);
+            if (JSON.parse($(idSelector).val()) <= min) $(idSelector).val(min);
 
 
             for (var i = 0; i < action.selectedItems.length; i++) { // Save the initial values for each selectedItem
@@ -1170,12 +1170,16 @@ var action = {
                     action.setCss(action.selectedItems[i], cssKey, newValue);
                 } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
                     var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
-                    if (newValue >= curMax) {
+                    if (newValue >= curMax && delta > 0) {
+                        action.setCss(action.selectedItems[i], cssKey, curMax);
+
                         initial -= delta;
-                        //console.log("decrementing initial" + cssKey);
-                    } else if (newValue <= curMin) {
-                        initial += delta;
-                        //console.log("increemnting initial" + cssKey);
+                        console.log("decrementing initial" + cssKey + 'by ' + delta);
+                    } else if (newValue <= curMin && delta < 0) {
+                        action.setCss(action.selectedItems[i], cssKey, curMin);
+
+                        initial -= delta;
+                        console.log("incrementing initial" + cssKey + 'by ' + delta);
                     }
 
                     $(elSelector).attr('initial' + cssKey, initial + unit);
