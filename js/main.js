@@ -974,13 +974,13 @@ var action = {
         action.updateMultiPosInputExtrema();
 
         //cgSize automatically initializes the inputs with values, but in relative mode, we want everything to start at 0
-        if (!$('#multiPosLeftInput').attr('initialized')) {
-            $('#multiPosLeftInput').val(0);
-            $('#multiPosLeftInput').attr('initialized', 'partial');
-        }
-        if (!$('#multiPosTopInput').attr('initialized')) {
-            $('#multiPosTopInput').val(0);
-            $('#multiPosTopInput').attr('initialized', 'partial');
+        for (var i = 0; i < 2; i++) {
+            var curInputSelector = (i == 0 ? '#multiPosLeftInput' : '#multiPosTopInput');
+            if (!$(curInputSelector).attr('initialized')) {
+                $(curInputSelector).val(0);
+                $(curInputSelector).attr('initialized', 'partial');
+                $(curInputSelector).attr('lastVal', 0);
+            }
         }
     },
     // Sets the maxes and mins for the multipos inputs
@@ -1009,8 +1009,8 @@ var action = {
                 minTop = curMinTop;
         }
 
-        $('#multiPosLeftInput').attr('max', curMaxLeft).attr('min', curMinLeft);
-        $('#multiPosTopInput').attr('max', curMaxTop).attr('min', curMinLeft);
+        $('#multiPosLeftInput').attr('max', maxLeft).attr('min', minLeft);
+        $('#multiPosTopInput').attr('max', maxTop).attr('min', minTop);
     },
     /**
     * Gets a max/min that a relative movement input is allowed to go to
@@ -1169,14 +1169,20 @@ var action = {
                 if (newValue <= curMax && newValue >= curMin) {
                     action.setCss(action.selectedItems[i], cssKey, newValue);
                 } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
-                    if (newValue >= curMax)
-                        initial--;
-                    else if (newValue <= curMin)
-                        initial++;
+                    var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
+                    if (newValue >= curMax) {
+                        initial -= delta;
+                        //console.log("decrementing initial" + cssKey);
+                    } else if (newValue <= curMin) {
+                        initial += delta;
+                        //console.log("increemnting initial" + cssKey);
+                    }
 
                     $(elSelector).attr('initial' + cssKey, initial + unit);
                 }
             }
+
+            $(idSelector).attr('lastVal', $(idSelector).val());
 
             action.saveStorage();
         } else if (purpose === 'get') {
