@@ -110,7 +110,7 @@ var constants = {
                 gridSizeLeft: 284,
     //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/
     preloadWhitelist: {'size':'','width':'', 'position':'','align':'','uppercase':'','weight':'','style':'','customPrefix':'','customSuffix':'','hShadow':'','vShadow':'','blur':'','boxhShadow':'','boxvShadow':''
-                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':'', 'posSystem':''},
+                        ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':'', 'posSystem':'', 'multiPos':''},
     iconList: ['MonolyphDark','MonolyphFlat','MonolyphLight','city','blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky'],
     positioningSystemOption : 'posSystem~Change Positioning System~fa fa-arrows-alt~posSystemDiv',
     multiPosition : 'multiPos~Change Position~fa fa-arrows~multiPosDiv'
@@ -967,6 +967,24 @@ var action = {
         });
     },
     cgMultiPosition: function() {
+        this.cgSize('multiPosLeft', constants.multiPosition, 'px', 0, 0, 'left', 'left', action.updateMultiPosition, '', '80', 'Left', 2);
+        this.cgSize('multiPosTop', constants.multiPosition, 'px', 0, 0, 'top', 'top', action.updateMultiPosition, '', '208', 'Top', 2);
+
+        // Since they were initialized weith maxes/mins of 0, they need to be updated
+        action.updateMultiPosInputExtrema();
+
+        //cgSize automatically initializes the inputs with values, but in relative mode, we want everything to start at 0
+        if (!$('#multiPosLeftInput').attr('initialized')) {
+            $('#multiPosLeftInput').val(0);
+            $('#multiPosLeftInput').attr('initialized', 'partial');
+        }
+        if (!$('#multiPosTopInput').attr('initialized')) {
+            $('#multiPosTopInput').val(0);
+            $('#multiPosTopInput').attr('initialized', 'partial');
+        }
+    },
+    // Sets the maxes and mins for the multipos inputs
+    updateMultiPosInputExtrema: function() {
         var maxLeft = 0, minLeft = 0;
         var maxTop = 0, minTop = 0;
         var elName;
@@ -974,32 +992,32 @@ var action = {
             elName = '#' + action.selectedItems[i];
 
 
-            var curMaxLeft = action.getElementExtreme(elName, 'maxleft');
+            var curMaxLeft = action.getElementExtreme(elName, 'maxleft', 'rel');
             if (curMaxLeft > maxLeft)
                 maxLeft = curMaxLeft;
 
-            var curMaxTop = action.getElementExtreme(elName, 'maxtop');
+            var curMaxTop = action.getElementExtreme(elName, 'maxtop', 'rel');
             if (curMaxTop > maxTop)
                 maxTop = curMaxTop;
 
-            var curMinLeft = action.getElementExtreme(elName, 'minleft');
+            var curMinLeft = action.getElementExtreme(elName, 'minleft', 'rel');
             if (curMinLeft < minLeft)
                 minLeft = curMinLeft;
 
-            var curMinTop = action.getElementExtreme(elName, 'mintop');
+            var curMinTop = action.getElementExtreme(elName, 'mintop', 'rel');
             if (curMinTop < minTop)
                 minTop = curMinTop;
         }
 
-        this.cgSize('multiPosLeft', constants.multiPosition, 'px', minLeft, maxLeft, 'left', 'left', action.updateMultiPosition, '', '80', 'Left', 2);
-        this.cgSize('multiPosTop', constants.multiPosition, 'px', minTop, maxTop, 'top', 'top', action.updateMultiPosition, '', '208', 'Top', 2);
-
-        //cgSize automatically initializes the inputs with values, but in relative mode, we want everything to start at 0
-        $('#multiPosLeftInput').val(0);
-        $('#multiPosTopInput').val(0);
+        $('#multiPosLeftInput').attr('max', curMaxLeft).attr('min', curMinLeft);
+        $('#multiPosTopInput').attr('max', curMaxTop).attr('min', curMinLeft);
     },
-    // extreme : maxleft, minleft, maxtop, mintop
-    getElementExtreme: function(elName, extreme) {
+    /**
+    * Gets a max/min that a relative movement input is allowed to go to
+    * extreme : 'maxleft', 'minleft', 'maxtop', 'mintop'
+    * mode : 'rel' for relative or 'abs' for absolute
+    */
+    getElementExtreme: function(elName, extreme, mode) {
         if (!elName.includes('#')) {
             elName = '#' + elName;
         }
@@ -1008,13 +1026,25 @@ var action = {
 
         switch (extreme) {
             case 'maxleft':
-                return $('.screen').width() - $(elName).width() - pos.left;
+                if (mode == 'rel')
+                    return $('.screen').width() - $(elName).width() - pos.left;
+                else
+                    return $('.screen').width() - $(elName).width();
             case 'minleft':
-                return -1 * pos.left;
+                if (mode == 'rel')
+                    return -1 * pos.left;
+                else
+                    return 0;
             case 'maxtop':
-                return $('.screen').height() - $(elName).height() - pos.top;
+                if (mode === 'rel')
+                    return $('.screen').height() - $(elName).height() - pos.top;
+                else
+                    return $('.screen').height() - $(elName).height();
             case 'mintop':
-                return -1 * pos.top;
+                if (mode === 'rel')
+                    return -1 * pos.top;
+                else
+                    return 0;
             default:
                 return 0;
         }
@@ -1106,8 +1136,11 @@ var action = {
 
 
             for (var i = 0; i < action.selectedItems.length; i++) { // Save the initial values for each selectedItem
-                if (!$('#' + action.selectedItems[i]).attr("initial" + cssKey)) // If this is the first time the element's been moved
+                if ($(idSelector).attr('initialized') === 'partial') { // If this is the first time the element's been moved
                     $('#' + action.selectedItems[i]).attr("initial" + cssKey, $('#' + action.selectedItems[i]).css(cssKey));
+                    if (i === action.selectedItems.length - 1)
+                        $(idSelector).attr('initialized', 'full');
+                }
             }
 
             //Now we're actually setting things
@@ -1123,18 +1156,26 @@ var action = {
                 var newValue = initial + JSON.parse($(idSelector).val());
                 var curMax, curMin;
                 if (cssKey === 'left') {
-                    curMax = action.getElementExtreme(elSelector, 'maxleft');
-                    curMin = action.getElementExtreme(elSelector, 'minleft');
+                    curMax = action.getElementExtreme(elSelector, 'maxleft', 'abs');
+                    curMin = action.getElementExtreme(elSelector, 'minleft', 'abs');
                 } else if (cssKey === 'top') {
-                    curMax = action.getElementExtreme(elSelector, 'maxtop');
-                    curMin = action.getElementExtreme(elSelector, 'mintop');
+                    curMax = action.getElementExtreme(elSelector, 'maxtop', 'abs');
+                    curMin = action.getElementExtreme(elSelector, 'mintop', 'abs');
                 } else { // Something's gone wrong
                     curMax = 1000;
                     curMin = -1000;
                 }
 
-                if (newValue <= curMax && newValue >= min)
+                if (newValue <= curMax && newValue >= curMin) {
                     action.setCss(action.selectedItems[i], cssKey, newValue);
+                } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
+                    if (newValue >= curMax)
+                        initial--;
+                    else if (newValue <= curMin)
+                        initial++;
+
+                    $(elSelector).attr('initial' + cssKey, initial + unit);
+                }
             }
 
             action.saveStorage();
