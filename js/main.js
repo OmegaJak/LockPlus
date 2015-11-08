@@ -1027,22 +1027,22 @@ var action = {
         switch (extreme) {
             case 'maxleft':
                 if (mode == 'rel')
-                    return $('.screen').width() - $(elName).width() - pos.left;
+                    return JSON.parse($('#multiPosLeftInput').val()) + ($('.screen').width() - $(elName).width() - pos.left);
                 else
                     return $('.screen').width() - $(elName).width();
             case 'minleft':
                 if (mode == 'rel')
-                    return -1 * pos.left;
+                    return JSON.parse($('#multiPosLeftInput').val()) + (-1 * pos.left);
                 else
                     return 0;
             case 'maxtop':
                 if (mode === 'rel')
-                    return $('.screen').height() - $(elName).height() - pos.top;
+                    return JSON.parse($('#multiPosTopInput').val()) + ($('.screen').height() - $(elName).height() - pos.top);
                 else
                     return $('.screen').height() - $(elName).height();
             case 'mintop':
                 if (mode === 'rel')
-                    return -1 * pos.top;
+                    return JSON.parse($('#multiPosTopInput').val()) + (-1 * pos.top);
                 else
                     return 0;
             default:
@@ -1166,10 +1166,12 @@ var action = {
                     curMin = -1000;
                 }
 
-                if (newValue <= curMax && newValue >= curMin) {
-                    action.setCss(action.selectedItems[i], cssKey, newValue);
+                var pos = $(elSelector).position()[cssKey];
+                var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
+                if (newValue < curMax && newValue > curMin) {
+                    if (!((pos == curMax && delta > 0) || (pos == curMin && delta < 0)))
+                        action.setCss(action.selectedItems[i], cssKey, newValue);
                 } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
-                    var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
                     if (newValue >= curMax && delta > 0) {
                         action.setCss(action.selectedItems[i], cssKey, curMax);
 
@@ -1182,6 +1184,7 @@ var action = {
                         console.log("incrementing initial" + cssKey + 'by ' + delta);
                     }
 
+                    action.updateMultiPosInputExtrema();
                     $(elSelector).attr('initial' + cssKey, initial + unit);
                 }
             }
