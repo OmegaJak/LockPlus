@@ -970,9 +970,6 @@ var action = {
         this.cgSize('multiPosLeft', constants.multiPosition, 'px', 0, 0, 'left', 'left', action.updateMultiPosition, '', '80', 'Left', 2);
         this.cgSize('multiPosTop', constants.multiPosition, 'px', 0, 0, 'top', 'top', action.updateMultiPosition, '', '208', 'Top', 2);
 
-        // Since they were initialized weith maxes/mins of 0, they need to be updated
-        action.updateMultiPosInputExtrema();
-
         //cgSize automatically initializes the inputs with values, but in relative mode, we want everything to start at 0
         for (var i = 0; i < 2; i++) {
             var curInputSelector = (i == 0 ? '#multiPosLeftInput' : '#multiPosTopInput');
@@ -982,6 +979,9 @@ var action = {
                 $(curInputSelector).attr('lastVal', 0);
             }
         }
+
+        // Since they were initialized weith maxes/mins of 0, they need to be updated
+        action.updateMultiPosInputExtrema();
     },
     // Sets the maxes and mins for the multipos inputs
     updateMultiPosInputExtrema: function() {
@@ -1131,6 +1131,7 @@ var action = {
         if (purpose === 'set') {
             var max = JSON.parse($(idSelector).attr('max'));
             var min = JSON.parse($(idSelector).attr('min'));
+            var originalDelta = JSON.parse($(idSelector).val()) - JSON.parse($(idSelector).attr('lastVal'));
             if (JSON.parse($(idSelector).val()) >= max) $(idSelector).val(max);
             if (JSON.parse($(idSelector).val()) <= min) $(idSelector).val(min);
 
@@ -1169,19 +1170,22 @@ var action = {
                 var pos = $(elSelector).position()[cssKey];
                 var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
                 if (newValue < curMax && newValue > curMin) {
-                    if (!((pos == curMax && delta > 0) || (pos == curMin && delta < 0)))
+                    if ((pos === curMax - 1 || pos === curMax) && originalDelta > 0) {
+                        action.setCss(action.selectedItems[i], cssKey, curMax);
+                    } else if ((pos === curMin + 1 || pos === curMin) && originalDelta < 0) {
+                        action.setCss(action.selectedItems[i], cssKey, curMin);
+                    } else {
                         action.setCss(action.selectedItems[i], cssKey, newValue);
+                    }
                 } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
                     if (newValue >= curMax && delta > 0) {
                         action.setCss(action.selectedItems[i], cssKey, curMax);
 
                         initial -= delta;
-                        console.log("decrementing initial" + cssKey + 'by ' + delta);
                     } else if (newValue <= curMin && delta < 0) {
                         action.setCss(action.selectedItems[i], cssKey, curMin);
 
                         initial -= delta;
-                        console.log("incrementing initial" + cssKey + 'by ' + delta);
                     }
 
                     action.updateMultiPosInputExtrema();
