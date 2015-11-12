@@ -43,6 +43,10 @@
 	src:url(fonts/user/anders.otf);
 }
 @font-face{
+	font-family:'autograf';
+	src:url(fonts/user/autograf.otf);
+}
+@font-face{
 	font-family:'aventura';
 	src:url(fonts/user/aventura.otf);
 }
@@ -95,8 +99,16 @@
 	src:url(fonts/user/bebasneueregular.otf);
 }
 @font-face{
+	font-family:'breaksemi';
+	src:url(fonts/user/breaksemi.otf);
+}
+@font-face{
 	font-family:'building';
 	src:url(fonts/user/building.otf);
+}
+@font-face{
+	font-family:'canarolight';
+	src:url(fonts/user/canarolight.otf);
 }
 @font-face{
 	font-family:'canter';
@@ -113,6 +125,14 @@
 @font-face{
 	font-family:'codelight';
 	src:url(fonts/user/codelight.otf);
+}
+@font-face{
+	font-family:'damier';
+	src:url(fonts/user/damier.otf);
+}
+@font-face{
+	font-family:'dinerfat';
+	src:url(fonts/user/dinerfat.otf);
 }
 @font-face{
 	font-family:'dense';
@@ -175,6 +195,10 @@
 	src:url(fonts/user/infinity.otf);
 }
 @font-face{
+	font-family:'jaapokki';
+	src:url(fonts/user/jaapokki.otf);
+}
+@font-face{
 	font-family:'kanji';
 	src:url(fonts/user/kanji.otf);
 }
@@ -195,12 +219,28 @@
 	src:url(fonts/user/lg.otf);
 }
 @font-face{
+	font-family:'loveloblack';
+	src:url(fonts/user/loveloblack.otf);
+}
+@font-face{
+	font-family:'loveloline';
+	src:url(fonts/user/loveloline.otf);
+}
+@font-face{
+	font-family:'lovelolinel';
+	src:url(fonts/user/lovelolinel.otf);
+}
+@font-face{
 	font-family:'makhina';
 	src:url(fonts/user/makhina.otf);
 }
 @font-face{
 	font-family:'manbow';
 	src:url(fonts/user/manbow.otf);
+}
+@font-face{
+	font-family:'manteka';
+	src:url(fonts/user/manteka.otf);
 }
 @font-face{
 	font-family:'manifesto';
@@ -231,12 +271,20 @@
 	src:url(fonts/user/mikadoblack.otf);
 }
 @font-face{
+	font-family:'modernesans';
+	src:url(fonts/user/modernesans.otf);
+}
+@font-face{
 	font-family:'moonlight';
 	src:url(fonts/user/moonlight.otf);
 }
 @font-face{
 	font-family:'moonbold';
 	src:url(fonts/user/moonbold.otf);
+}
+@font-face{
+	font-family:'mostwasted';
+	src:url(fonts/user/mostwasted.otf);
 }
 @font-face{
 	font-family:'nexabold';
@@ -257,6 +305,18 @@
 @font-face{
 	font-family:'poplar';
 	src:url(fonts/user/poplar.otf);
+}
+@font-face{
+	font-family:'plstk';
+	src:url(fonts/user/plstk.otf);
+}
+@font-face{
+	font-family:'provisionary';
+	src:url(fonts/user/provisionary.otf);
+}
+@font-face{
+	font-family:'ratinfested';
+	src:url(fonts/user/ratinfested.otf);
 }
 @font-face{
 	font-family:'reckoner';
@@ -281,6 +341,10 @@
 @font-face{
 	font-family:'realtimebold';
 	src:url(fonts/user/realtimebold.otf);
+}
+@font-face{
+	font-family:'rexbold';
+	src:url(fonts/user/rexbold.otf);
 }
 @font-face{
 	font-family:'robotobold';
@@ -327,6 +391,10 @@
 	src:url(fonts/user/sanfranheavy.otf);
 }
 @font-face{
+	font-family:'sciflysans';
+	src:url(fonts/user/sciflysans.otf);
+}
+@font-face{
 	font-family:'shimes';
 	src:url(fonts/user/shimes.otf);
 }
@@ -337,6 +405,10 @@
 @font-face{
 	font-family:'streamster';
 	src:url(fonts/user/streamster.otf);
+}
+@font-face{
+	font-family:'superair';
+	src:url(fonts/user/superair.otf);
 }
 @font-face{
 	font-family:'signer';
@@ -357,6 +429,10 @@
 @font-face{
 	font-family:'tiza';
 	src:url(fonts/user/tiza.otf);
+}
+@font-face{
+	font-family:'track';
+	src:url(fonts/user/track.otf);
 }
 @font-face{
 	font-family:'tresdias';
