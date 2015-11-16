@@ -1830,9 +1830,13 @@ var action = {
             canvas.style.display = 'none';
             canvas.className = '';
             var imageData = canvas.toDataURL();
-            $('.screen').css('background-image','url(' + imageData + ')');
-            action.wallpaper = imageData;
-            action.saveStorage();
+            if(imageData.length > 7){ //if canvas contains data
+                $('.screen').css('background-image','url(' + imageData + ')');
+                action.wallpaper = imageData;
+                action.saveStorage();
+            }else{ // no data
+                $('.screen').css('background-image','url(' + action.wallpaper + ')');
+            }
 
             $('#blurcanvas').remove();
             $('#wallpaper').remove();

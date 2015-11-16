@@ -13,7 +13,7 @@ var aniPath = function(id, speed) {
 var getel = function () {
         var path, i;
         document.getElementById('image').className = "ani";
-    for (i = 1; i < 9; i++) {
+    for (i = 1; i < 7; i++) {
         path = document.getElementById('Path-' + i);
         aniPath(path, 2);
     }
@@ -29,4 +29,4 @@ var clear = function(){
 };
 
 
-document.getElementById('animate').addEventListener('click',clear);
+document.getElementById('animations').addEventListener('click',clear);
