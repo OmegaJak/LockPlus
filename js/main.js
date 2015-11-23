@@ -1254,7 +1254,7 @@ var action = {
     },
     posSystemSelected: function(optionSelector, lastSelector) {
         action.multiPositioningSystem = $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6);
-        console.log(action.multiPositioningSystem);
+        action.showMultiSelectionMenu(); // Update the menu. Changes the positioning inputs
         return action.ultraBasicOptionSelected(optionSelector, lastSelector);
     },
     basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
@@ -2316,7 +2316,7 @@ var action = {
             var megaMenu = []; // ['editMenu~bla~bla','otherMenu~bla~bla','etcMenu~bla~bla']
             var curMenu = action.getProperMenuForId(action.selectedItems[0]);
             for (var i = 0; i < curMenu.length; i++) { // Go through each menu item for the base selection item
-                if (curMenu[i] === constants.editArray[2]) {
+                if (curMenu[i] === constants.editArray[2] && action.multiPositioningSystem === 'relative') {
                     megaMenu.push(constants.multiPosition);
                 } else {
                     megaMenu.push(curMenu[i]); // Add it to the mega array
