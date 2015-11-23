@@ -984,6 +984,27 @@ var action = {
 
         // Since they were initialized weith maxes/mins of 0, they need to be updated
         action.updateMultiPosInputExtrema();
+
+        $('#' + action.selectedItem).on('drag', function(event, ui) {
+            //$('#posLeftInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().left)));
+            //$('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
+            if (!$(ui.helper).attr('lastLeft'))
+                $(ui.helper).attr('lastLeft', ui.position.left);
+            if (!$(ui.helper).attr('lastTop'))
+                $(ui.helper).attr('lastTop', ui.position.top);
+
+            var leftChange = ui.position.left - JSON.parse($(ui.helper).attr('lastLeft'));
+            var topChange = ui.position.top - JSON.parse($(ui.helper).attr('lastTop'));
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                var initialPos = $('#' + action.selectedItems[i]).position();
+                $('#' + action.selectedItems[i]).css('left', initialPos.left + leftChange);
+                $('#' + action.selectedItems[i]).css('top', initialPos.top + topChange);
+            }
+            console.log('leftChange: ' + leftChange);
+
+            $(ui.helper).attr('lastLeft', ui.position.left);
+            $(ui.helper).attr('lastTop', ui.position.top);
+        });
     },
     // Sets the maxes and mins for the multipos inputs
     updateMultiPosInputExtrema: function() {
