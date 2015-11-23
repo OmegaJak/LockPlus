@@ -1172,29 +1172,31 @@ var action = {
                 var pos = $(elSelector).position()[cssKey];
                 var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
                 if (newValue < curMax && newValue > curMin) {
-                    if ((pos === curMax - 1 || pos === curMax) && originalDelta > 0) {
-                        action.setCss(action.selectedItems[i], cssKey, curMax);
-                        console.log("SettinG To " + curMax);
-                    } else if ((pos === curMin + 1 || pos === curMin) && originalDelta < 0) {
-                        action.setCss(action.selectedItems[i], cssKey, curMin);
-                        console.log("SeTting To " + curMin);
+                    if ((pos === curMax - 1 || pos === curMax) && originalDelta > 0) { // If it's at or near the max
+                        action.setCss(action.selectedItems[i], cssKey, curMax); // Set it to the max
+                        //console.log("SettinG To " + curMax);
+                    } else if ((pos === curMin + 1 || pos === curMin) && originalDelta < 0) { // f it's at or near the min
+                        action.setCss(action.selectedItems[i], cssKey, curMin); // Set it to the min
+                        //console.log("SeTting To " + curMin);
                     } else {
                         action.setCss(action.selectedItems[i], cssKey, newValue);
-                        console.log("Setting to " + newValue);
+                        //console.log("Setting to " + newValue);
                     }
                 } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
                     if (newValue >= curMax && delta > 0) {
+                        if (curMax - pos != 0) delta -= curMax - pos; // This fixes a bug with elements getting off from each other when hitting edges then leaving it
                         action.setCss(action.selectedItems[i], cssKey, curMax);
 
                         initial -= delta;
-                        console.log("decrementing initial" + cssKey + 'by ' + delta);
+                        console.log("decrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
                         console.log("Setting To " + curMax);
                     } else if (newValue <= curMin && delta < 0) {
+                        if (curMin - pos != 0) delta -= curMin - pos;
                         action.setCss(action.selectedItems[i], cssKey, curMin);
 
                         initial -= delta;
-                        console.log("incrementing initial" + cssKey + 'by ' + delta);
-                        console.log("SEtting to " + curMin);
+                        //console.log("incrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
+                        //console.log("SEtting to " + curMin);
                     }
 
                     action.updateMultiPosInputExtrema();
