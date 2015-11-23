@@ -1188,8 +1188,8 @@ var action = {
                         action.setCss(action.selectedItems[i], cssKey, curMax);
 
                         initial -= delta;
-                        console.log("decrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
-                        console.log("Setting To " + curMax);
+                        //console.log("decrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
+                        //console.log("Setting To " + curMax);
                     } else if (newValue <= curMin && delta < 0) {
                         if (curMin - pos != 0) delta -= curMin - pos;
                         action.setCss(action.selectedItems[i], cssKey, curMin);
