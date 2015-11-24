@@ -1000,7 +1000,6 @@ var action = {
                 $('#' + action.selectedItems[i]).css('left', initialPos.left + leftChange);
                 $('#' + action.selectedItems[i]).css('top', initialPos.top + topChange);
             }
-            console.log('leftChange: ' + leftChange);
 
             $(ui.helper).attr('lastLeft', ui.position.left);
             $(ui.helper).attr('lastTop', ui.position.top);
@@ -2691,6 +2690,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
                         }
                     });
                 } else {
+                    console.log(event.type);
                     for (var i = 0; i < action.selectedItems.length; i++) {// Deselect eveything else, clear multiselection array
                         var item = action.selectedItems[i];
                         if (item != action.selectedItem) {
@@ -2729,23 +2729,25 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
                 action.showMultiSelectionMenu();
             } else {
-                deselectElement(action.selectedItem, false); // Unhighlight the old element
-                for (var i = 0; i < action.selectedItems.length; i++) {
-                    deselectElement(action.selectedItems[i], false);
-                    i--;
+                if (!(event.type === "dragstart" && action.selectedItems.length > 0)) {
+                    deselectElement(action.selectedItem, false); // Unhighlight the old element
+                    for (var i = 0; i < action.selectedItems.length; i++) {
+                        deselectElement(action.selectedItems[i], false);
+                        i--;
+                    }
+
+                    if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
+                        action.setHelpText('Pick a style adjustment from the left menu.')
+                    else
+                        action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+
+                    action.selectedItem = event.target.id; // Set the selected item to the new element
+                    $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+
+                    if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+
+                    action.showMultiSelectionMenu();
                 }
-
-                if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
-                    action.setHelpText('Pick a style adjustment from the left menu.')
-                else
-                    action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
-
-                action.selectedItem = event.target.id; // Set the selected item to the new element
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
-
-                if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-
-                action.showMultiSelectionMenu();
             }
         }
     }
