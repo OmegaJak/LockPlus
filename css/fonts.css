@@ -151,6 +151,10 @@
 	src:url(fonts/user/futura.otf);
 }
 @font-face{
+	font-family:'future';
+	src:url(fonts/user/future.otf);
+}
+@font-face{
 	font-family:'fringe';
 	src:url(fonts/user/fringe.otf);
 }
@@ -357,6 +361,10 @@
 @font-face{
 	font-family:'robotoregular';
 	src:url(fonts/user/robotoregular.otf);
+}
+@font-face{
+	font-family:'salamat';
+	src:url(fonts/user/salamat.otf);
 }
 @font-face{
 	font-family:'samster';
