@@ -984,6 +984,26 @@ var action = {
 
         // Since they were initialized weith maxes/mins of 0, they need to be updated
         action.updateMultiPosInputExtrema();
+
+        $('#' + action.selectedItem).on('drag', function(event, ui) {
+            //$('#posLeftInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().left)));
+            //$('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
+            if (!$(ui.helper).attr('lastLeft'))
+                $(ui.helper).attr('lastLeft', ui.position.left);
+            if (!$(ui.helper).attr('lastTop'))
+                $(ui.helper).attr('lastTop', ui.position.top);
+
+            var leftChange = ui.position.left - JSON.parse($(ui.helper).attr('lastLeft'));
+            var topChange = ui.position.top - JSON.parse($(ui.helper).attr('lastTop'));
+            for (var i = 0; i < action.selectedItems.length; i++) {
+                var initialPos = $('#' + action.selectedItems[i]).position();
+                $('#' + action.selectedItems[i]).css('left', initialPos.left + leftChange);
+                $('#' + action.selectedItems[i]).css('top', initialPos.top + topChange);
+            }
+
+            $(ui.helper).attr('lastLeft', ui.position.left);
+            $(ui.helper).attr('lastTop', ui.position.top);
+        });
     },
     // Sets the maxes and mins for the multipos inputs
     updateMultiPosInputExtrema: function() {
@@ -1172,29 +1192,31 @@ var action = {
                 var pos = $(elSelector).position()[cssKey];
                 var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
                 if (newValue < curMax && newValue > curMin) {
-                    if ((pos === curMax - 1 || pos === curMax) && originalDelta > 0) {
-                        action.setCss(action.selectedItems[i], cssKey, curMax);
-                        console.log("SettinG To " + curMax);
-                    } else if ((pos === curMin + 1 || pos === curMin) && originalDelta < 0) {
-                        action.setCss(action.selectedItems[i], cssKey, curMin);
-                        console.log("SeTting To " + curMin);
+                    if ((pos === curMax - 1 || pos === curMax) && originalDelta > 0) { // If it's at or near the max
+                        action.setCss(action.selectedItems[i], cssKey, curMax); // Set it to the max
+                        //console.log("SettinG To " + curMax);
+                    } else if ((pos === curMin + 1 || pos === curMin) && originalDelta < 0) { // f it's at or near the min
+                        action.setCss(action.selectedItems[i], cssKey, curMin); // Set it to the min
+                        //console.log("SeTting To " + curMin);
                     } else {
                         action.setCss(action.selectedItems[i], cssKey, newValue);
-                        console.log("Setting to " + newValue);
+                        //console.log("Setting to " + newValue);
                     }
                 } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
                     if (newValue >= curMax && delta > 0) {
+                        if (curMax - pos != 0) delta -= curMax - pos; // This fixes a bug with elements getting off from each other when hitting edges then leaving it
                         action.setCss(action.selectedItems[i], cssKey, curMax);
 
                         initial -= delta;
-                        console.log("decrementing initial" + cssKey + 'by ' + delta);
-                        console.log("Setting To " + curMax);
+                        //console.log("decrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
+                        //console.log("Setting To " + curMax);
                     } else if (newValue <= curMin && delta < 0) {
+                        if (curMin - pos != 0) delta -= curMin - pos;
                         action.setCss(action.selectedItems[i], cssKey, curMin);
 
                         initial -= delta;
-                        console.log("incrementing initial" + cssKey + 'by ' + delta);
-                        console.log("SEtting to " + curMin);
+                        //console.log("incrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
+                        //console.log("SEtting to " + curMin);
                     }
 
                     action.updateMultiPosInputExtrema();
@@ -1252,7 +1274,7 @@ var action = {
     },
     posSystemSelected: function(optionSelector, lastSelector) {
         action.multiPositioningSystem = $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6);
-        console.log(action.multiPositioningSystem);
+        action.showMultiSelectionMenu(); // Update the menu. Changes the positioning inputs
         return action.ultraBasicOptionSelected(optionSelector, lastSelector);
     },
     basicOptionSelected: function(optionSelector, lastSelector, cssKey, setTo) {
@@ -2314,7 +2336,7 @@ var action = {
             var megaMenu = []; // ['editMenu~bla~bla','otherMenu~bla~bla','etcMenu~bla~bla']
             var curMenu = action.getProperMenuForId(action.selectedItems[0]);
             for (var i = 0; i < curMenu.length; i++) { // Go through each menu item for the base selection item
-                if (curMenu[i] === constants.editArray[2]) {
+                if (curMenu[i] === constants.editArray[2] && action.multiPositioningSystem === 'relative') {
                     megaMenu.push(constants.multiPosition);
                 } else {
                     megaMenu.push(curMenu[i]); // Add it to the mega array
@@ -2668,6 +2690,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
                         }
                     });
                 } else {
+                    console.log(event.type);
                     for (var i = 0; i < action.selectedItems.length; i++) {// Deselect eveything else, clear multiselection array
                         var item = action.selectedItems[i];
                         if (item != action.selectedItem) {
@@ -2706,23 +2729,25 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
                 action.showMultiSelectionMenu();
             } else {
-                deselectElement(action.selectedItem, false); // Unhighlight the old element
-                for (var i = 0; i < action.selectedItems.length; i++) {
-                    deselectElement(action.selectedItems[i], false);
-                    i--;
+                if (!(event.type === "dragstart" && action.selectedItems.length > 0)) {
+                    deselectElement(action.selectedItem, false); // Unhighlight the old element
+                    for (var i = 0; i < action.selectedItems.length; i++) {
+                        deselectElement(action.selectedItems[i], false);
+                        i--;
+                    }
+
+                    if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
+                        action.setHelpText('Pick a style adjustment from the left menu.')
+                    else
+                        action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
+
+                    action.selectedItem = event.target.id; // Set the selected item to the new element
+                    $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+
+                    if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
+
+                    action.showMultiSelectionMenu();
                 }
-
-                if(event.target.id.substring(0,3) === 'box' || event.target.id === 'icon') //show different text for box and icon
-                    action.setHelpText('Pick a style adjustment from the left menu.')
-                else
-                    action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
-
-                action.selectedItem = event.target.id; // Set the selected item to the new element
-                $('#'+event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
-
-                if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-
-                action.showMultiSelectionMenu();
             }
         }
     }
