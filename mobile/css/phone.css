@@ -6,8 +6,8 @@
 	top: 50%;
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
 	border-radius: 20px;
+	overflow: hidden;
 }
 .phone:after{
 	position: absolute;
@@ -20,7 +20,6 @@
 	border-radius: 100%;
 	left: 50%;
 	-webkit-transform: translate(-50%);
-	transform: translate(-50%);
 }
 .phone:before{
 	position: absolute;
@@ -33,7 +32,6 @@
 	border-radius: 10px;
 	left: 50%;
 	-webkit-transform: translate(-50%);
-	transform: translate(-50%);
 }
 
 .screen,.screenoverlay{

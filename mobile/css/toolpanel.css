@@ -5,17 +5,10 @@
 /* Option: 252a30; -darker */
 /* Error: d44b29; -red */
 
-.toolPanel{
-	position: absolute;
-	width: 550px;
-	height: 560px;
-	top:51%;
-	left:52%;
-	-webkit-transform: translate(-82%, -50%);
-  transform: translate(-82%, -50%);
-	margin-left: -280px;
-}
+body{
+-webkit-tap-highlight-color: rgba(0,0,0,0);
 
+}
 #logo::after {
     content: attr(title);
     color: white;
@@ -41,6 +34,9 @@
     border-color: #21b9b0;
     z-index: -1;
 }
+#logo{
+  display: none;
+}
 #icons{
   padding-right: 7px;
 }
@@ -56,35 +52,57 @@
     width: 10px;
     margin-left: 0px;
 }
-.toolPanel ul {
-    overflow-y: scroll;
-    height: 560px;
-    top: -36px;
-    position: absolute;
+
+.toolPanel{
+  float:left;
+   width:100%;
+   overflow:hidden;
+   position:absolute;
+   bottom: 80px;
+}
+.toolPanel ul{
+  clear:left;
+   float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   left:50%;
+   text-align:center;
 }
 .toolPanel li{
-	text-align: center;
-	padding: 5px;
-	width: 40px;
-	line-height: 40px;
-	border: 8px solid rgba(0,0,0,0.3);
-	font-size: 25px;
-	border-radius: 100%;
-	margin-top: 2px;
-	background-color: #21b9b0;
-	color:white;
-	-webkit-background-clip: padding-box;
+    text-align: center;
+  padding: 5px;
+  width: 60px;
+  line-height: 60px;
+  height: 60px;
+  border: 8px solid rgba(0,0,0,0.3);
+  font-size: 25px;
+  border-radius: 100%;
+  margin-top: 2px;
+  background-color: #21b9b0;
+  color:white;
+  -webkit-background-clip: padding-box;
   background-clip: padding-box;
     -webkit-transition-property: transform;
     transition-property: transform;
     -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
 }
-.toolPanel li:hover{
-	-webkit-transform:translateX(-7px);
-  transform:translateX(-7px);
-	background-color: #54606e;
+.toolPanel ul div{
+  display:block;
+   float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   padding-left: 10px;
+   position:relative;
+   right:50%;
 }
+.toolPanel div p{
+  position: absolute;
+}
+
 .toolPanel a{
     margin-left: 400px;
 	text-decoration: none;

@@ -237,7 +237,7 @@ var action = {
 
         /* show/hide text and smooth animation */
         if ($('.elementPanel').is(":visible")) {
-            $('#elementDiv').children('a:first')[0].title = "Show Elements Panel";
+            //$('#elementDiv').children('a:first')[0].title = "Show Elements Panel";
             $(".elementPanel").animate({
                 opacity: 0,
                 marginTop: '-300px'
@@ -252,7 +252,7 @@ var action = {
                 }
             });
         } else {
-            $('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
+            //$('#elementDiv').children('a:first')[0].title = "Hide Elements Panel";
             $('.elementPanel').css({
                 opacity: '0',
                 //left: '53%',
@@ -891,11 +891,11 @@ var action = {
     getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle, isForText) {
         var divSelector = $('<div id="' + key + 'DivWrapper" style="display: none;"></div>');
         if (!isForText) {
-            var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>');
+            var decrementButton = $('<p id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)-200) + '; right: ' + (JSON.parse(inputRightPos)+293) + ';"></p>');
             $('<a href="#" class="fa fa-minus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(decrementButton);
             decrementButton.prependTo(divSelector);
             $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
-            var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>');
+            var incrementButton = $('<p id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></p>');
             $('<a href="#" class="fa fa-plus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(incrementButton);
             incrementButton.prependTo(divSelector);
         } else {
@@ -2216,35 +2216,39 @@ var action = {
         for (var i = 0; i < menuArray.length; i++) {
            var div = document.createElement('div');
            div.id = "Test";
-           var a = document.createElement('a');
+           //var a = document.createElement('a');
            var li = document.createElement('li');
-           a.href = 'javascript:void(0)';
-           a.className = 'leftTooltip';
+           //a.href = 'javascript:void(0)';
+           //a.className = 'leftTooltip';
            var splitArray = menuArray[i].split('~');
            if (splitArray[0] === "element") {
-                if ($('.elementPanel').is(":visible"))
-                    a.title = "Hide Elements Panel"
-                else
-                    a.title = "Show Elements Panel";
+                if ($('.elementPanel').is(":visible")){
+                    //a.title = "Hide Elements Panel"
+                }
+                else{
+                    //a.title = "Show Elements Panel";
+                }
            } else {
-               a.title = splitArray[1];
+               //a.title = splitArray[1];
            }
            li.className = splitArray[2];
            li.id = splitArray[0];
-           a.appendChild(li);
+           div.appendChild(li);
+           $('#icons').append(div);
            if (indexesToSurround > -2) {
               if (indexesToSurround === -1 || i === indexesToSurround) {
                 div.id = splitArray[3];
-                div.appendChild(a);
-                $('#icons').append(div);
+                //div.appendChild(a);
+                //$('#icons').append(div);
               } else {
-                $('#icons').append(a);
+                //$('#icons').append(a);
               }
            } else {
-              $('#icons').append(a);
+              //$('#icons').append(a);
            }
+
         }
-        action.setEditMenuInputsState(-2, false, menuArray);
+        //action.setEditMenuInputsState(-2, false, menuArray);
     },
     getTitleForArray: function(menuArray) { // Any icon menu that's shown needs to be added here to update its title
         switch (menuArray) {
