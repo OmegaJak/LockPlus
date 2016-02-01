@@ -2,6 +2,7 @@
 <head>
 	<title>LockPlus Creator</title>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="mobile/css/base.css">
 	<link rel="stylesheet" type="text/css" href="mobile/css/phone.css">
@@ -18,6 +19,52 @@
 	<script src='js/prefixfree.min.js'></script>
 	<script src='js/StackBlur.js'></script>
 	<link rel='stylesheet' href='mobile/css/spectrum.css' />
+	<style>
+#leftSelector{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 30px;
+    height: 100%;
+    background-color: transparent;
+    z-index: 999;
+}
+.sidePanel {
+	position: absolute;
+	display: none;
+	width: 90%;
+	height: 100%;
+	overflow:hidden;
+}
+#screenCover{
+	position: absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	display: none;
+}
+
+	</style>
+	<script>
+	var menu = {};
+	menu.toggle = function(){
+		var display = $('.sidePanel').css('display');
+		if(display == 'none'){
+			$('.sidePanel').css('display', 'block');
+			$('#screenCover').css('display', 'block');
+		}else{
+			$('.sidePanel').css('display', 'none');
+			$('#screenCover').css('display', 'none');
+			$('.elementPanel').css('display','none');
+			$('.sidePanel').css('opacity','1');
+		}
+	}
+	function showElementPanel(){
+		$('.sidePanel').css('opacity','0');
+		}
+	</script>
 </head>
 <body>
 	<header>
@@ -36,7 +83,7 @@
          	 <li class="menulist"><a href="http://cydia.saurik.com/package/com.macciti.lockplus/">Cydget</a></li>
       	  </ul>
 	</header>
-<div class="container">
+<div class="container" >
 	<div class="phone">
 		<div class="screen">
 			<img class='svg'/>
@@ -55,9 +102,13 @@
 		<div id="helpinfo"></div>
 	</div>
 </div>
-	<div class="toolPanel">
-		<ul id="icons">
-		</ul>
+	<div id="leftSelector" ontouchstart="menu.toggle()"></div>
+	<div id="screenCover"></div>
+	<div class="sidePanel">
+		<div class="toolPanel">
+			<ul id="icons">
+			</ul>
+		</div>
 	</div>
 	<div class="elementPanel" style="display:none;">
 		<h3 id="cl">Clock Elements</h3>

@@ -4,11 +4,15 @@
 /* Selected: 54606e; -dark */
 /* Option: 252a30; -darker */
 /* Error: d44b29; -red */
-
-body{
--webkit-tap-highlight-color: rgba(0,0,0,0);
-
+.toolPanel{
+  position: absolute;
+  width: 200px;
+  height: 560px;
+  top:51%;
+  left:52%;
+  -webkit-transform: translate(-82%, -50%);
 }
+
 #logo::after {
     content: attr(title);
     color: white;
@@ -24,18 +28,15 @@ body{
     background-color: #21b9b0;
     border-style: solid;
     border-width: 5px;
-	border-right-width: 25px;
+  border-right-width: 25px;
     border-radius: 30px;
-	border-bottom-right-radius: 0px;
-	border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
     padding-left: 10px;
     padding-right: 10px;
     padding:0 10px 0 10px;
     border-color: #21b9b0;
     z-index: -1;
-}
-#logo{
-  display: none;
 }
 #icons{
   padding-right: 7px;
@@ -52,26 +53,19 @@ body{
     width: 10px;
     margin-left: 0px;
 }
-
-.toolPanel{
-   position:absolute;
-   bottom: 80px;
-  left: 50%;
-  -webkit-transform: translate(-50%);
-}
-.toolPanel ul{
-   list-style:none;
-   margin:0;
-   padding:0;
-   position:relative;
-   text-align:center;
+.toolPanel ul {
+    overflow-y: scroll;
+    height: 520px;
+    width: 400px;
+    left:-30px;
+    top: -5px;
+    position: absolute;
 }
 .toolPanel li{
-    text-align: center;
+  text-align: center;
   padding: 5px;
-  width: 60px;
-  line-height: 60px;
-  height: 60px;
+  width: 40px;
+  line-height: 40px;
   border: 8px solid rgba(0,0,0,0.3);
   font-size: 25px;
   border-radius: 100%;
@@ -85,75 +79,64 @@ body{
     -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
 }
-.toolPanel ul div{
-  display:block;
-   float:left;
-   list-style:none;
-   margin:0;
-   padding:0;
-   padding-left: 10px;
-   position:relative;
-}
-.toolPanel div p{
-  position: absolute;
-}
+
 
 .toolPanel a{
-    margin-left: 400px;
-	text-decoration: none;
-	color:black;
+
+  text-decoration: none;
+  color:black;
 }
 .toolPanel input {
-	height: 45px;
-	width: 120px;
-	right: 58px;
-	font-size: 25px;
-	background-color: #54606e;
-	color: white;
-	position: absolute;
-	text-align: center;
-	border-color: #54606e;
-	border-radius: 45px;
-	border-width: 3px;
+  height: 45px;
+  width: 120px;
+  right: 58px;
+  font-size: 25px;
+  background-color: #54606e;
+  color: white;
+  position: absolute;
+  text-align: center;
+  border-color: #54606e;
+  border-radius: 45px;
+  border-width: 3px;
     border-top-width: 5px;
-	border-style: solid;
-	outline-color: rgba(0,0,0,0);
-	font-weight: bold;
+  border-style: solid;
+  outline-color: rgba(0,0,0,0);
+  font-weight: bold;
     -webkit-transition-property: width, font-size;
         transition-property: width, font-size;
     -webkit-transition-duration: 200ms;
     transition-duration: 200ms;
 }
 .toolPanel input:hover {
-	font-size: 28px;
+  font-size: 28px;
 }
 .toolPanel input::-webkit-inner-spin-button,
 .toolPanel input::-webkit-outer-spin-button {
-	-webkit-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
-	margin: 0;
+  margin: 0;
 }
 .toolPanel input:focus{
     outline: 0;
 }
 .toolPanel label {
-	color: #54606e;
-	position: absolute;
-	font-size: 23px;
+  color: #54606e;
+  position: absolute;
+  font-size: 23px;
 }
 .sizeControl {
-	position: absolute!important;
-	width: 17px;
-	height: 17px;
-	background-color: white!important;
-	z-index: 2;
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  background-color: white!important;
+  z-index: 2;
 }
 .sizeControl a {
-	bottom: -7px;
-	right: -4px;
-	color: #21b9b0;
-	font-size: 30px;
-	position: absolute;
+  bottom: -7px;
+  right: -4px;
+  color: #21b9b0;
+  font-size: 30px;
+  position: absolute;
 }
 .options div {
     position: absolute;
@@ -194,41 +177,41 @@ body{
     text-align: center;
 }
 .fontSizePostLabel::after {
-	height: 31px;
-	right: -13px;
-	top: -8px;
-	color: rgba(0,0,0,0);
-	position: absolute;
-	z-index: -1;
-	content: "testasaa";
-	border-color: #54606e;
-	border-style: solid;
-	border-width: 5px;
-	border-right-width: 10px;
-	border-radius: 5px;
+  height: 31px;
+  right: -13px;
+  top: -8px;
+  color: rgba(0,0,0,0);
+  position: absolute;
+  z-index: -1;
+  content: "testasaa";
+  border-color: #54606e;
+  border-style: solid;
+  border-width: 5px;
+  border-right-width: 10px;
+  border-radius: 5px;
 }
 
 /*Thanks to this button generator: http://css3buttongenerator.com/ */
 .toolPanel button {
-	cursor: pointer;
-	position: absolute;
-	-webkit-border-radius: 3;
-  	-moz-border-radius: 3;
-  	border-radius: 3px;
-	color:#252a30;
-  	font-size: 18px;
-  	background-color: #21b9b0;
-  	padding: 5px 6px 5px 6px;
-  	border: solid rgba(0,0,0,0.3) 2px;
-  	text-decoration: none;
-  	outline-width: 4px;
-  	outline-color: rgba(0,0,0,0.2);
-  	-webkit-background-clip: padding-box;
+  cursor: pointer;
+  position: absolute;
+  -webkit-border-radius: 3;
+    -moz-border-radius: 3;
+    border-radius: 3px;
+  color:#252a30;
+    font-size: 18px;
+    background-color: #21b9b0;
+    padding: 5px 6px 5px 6px;
+    border: solid rgba(0,0,0,0.3) 2px;
+    text-decoration: none;
+    outline-width: 4px;
+    outline-color: rgba(0,0,0,0.2);
+    -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
 .toolPanel button:hover {
-  	background-color: #54606e;
-  	text-decoration: none;
+    background-color: #54606e;
+    text-decoration: none;
 }
 #clearDiv button{
     color: white!important;
@@ -240,17 +223,17 @@ body{
     background-color: #252a30!important;
 }
 .yesClear {
-	right: 135px;
+  right: 135px;
 }
 .noClear {
-  	right: 82px;
+    right: 82px;
 }
 .clearLabel {
-  	width: 311px;
+    width: 311px;
     right: 22px;
     text-align: left;
-  	font-weight: bold;
-  	color: white!important;
+    font-weight: bold;
+    color: white!important;
     background-color: #54606e;
     border-style: solid;
     border-color: #54606e;
@@ -270,4 +253,8 @@ body{
   margin-left: -280px;
   display: none;
 
+}
+
+#logo{
+  display: none;
 }

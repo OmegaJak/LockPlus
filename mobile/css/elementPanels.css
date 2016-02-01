@@ -1,12 +1,22 @@
 .elementPanel{
-	position: absolute;
-	width: 300px;
+    position: absolute;
+    width: 420px;
     height: 500px;
-    top: 20%;
-	left: 55%;
-	-webkit-transform: translate(-50%)translateZ(0px);
-    transform: translate(-50%)translateZ(0px);
-    margin-left: 230px;
+    top: 0;
+    left: -10px;
+    -webkit-transform: translateZ(0px);
+    overflow: scroll;
+}
+.elementPanel::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.elementPanel::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    -webkit-background-clip: padding-box;
+}
+.elementPanel::-webkit-scrollbar {
+    width: 0px;
+    margin-left: 0px;
 }
 .elementPanel div{
   margin:0;
@@ -25,13 +35,13 @@
     outline: none;
 }
 .elementPanel li{
-	white-space: nowrap;
+    white-space: nowrap;
     background-color: #54606e;
     border-color: #54606e;
     border-radius: 45px;
     border-width: 3px;
     border-style: solid;
-	padding: 5px;
+    padding: 5px;
     text-align: center;
     position: relative;
     margin-bottom: 5px;
@@ -76,7 +86,8 @@
     outline-color: rgba(0,0,0,0);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-	z-index: 50;
+    z-index: 50;
+    display: none!important;
 }
 .slick-arrow button:hover {
     background-color: #54606e;
@@ -108,13 +119,14 @@ label {
     white-space: nowrap;
     cursor: pointer;
     text-align: center;
-    width: 210px;
+    width: 205px;
     color: white;
     background-color: #54606e;
     border-color: #54606e;
     border-width: 12px;
     border-style: solid;
-    border-radius: 30px;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
     position: relative;
 }
 .elementPanel h3:hover{
@@ -122,26 +134,26 @@ label {
     border-color: #21b9b0;
 }
 .categoryTitle {
-	cursor: pointer;
+    cursor: pointer;
 }
 .subCategory {
-	cursor: pointer;
-	position: absolute;
-	left: 150px;
-	/*top: -31px;*/
-	top:50%;
-	-webkit-transform: translateY(-50%);
+    cursor: pointer;
+    position: absolute;
+    left: 150px;
+    /*top: -31px;*/
+    top:50%;
+    -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     margin-top: 0px;
-	list-style: none outside none;
+    list-style: none outside none;
     /*height: 240px!important;
     overflow: scroll;*/ /*could be scrolling list*/
 }
 .subCategory li {
-	height: 16px;
-	font-size: 17px;
-	margin-top: 5px;
-	margin-bottom: 5px;
+    height: 16px;
+    font-size: 17px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .subCategory li:hover{
     box-shadow: 0px 0px 0px 2px #21b9b0;
@@ -166,41 +178,13 @@ label {
 #clockList,#weatherList,#systemList,#miscList {
     left: 50px;
     width: 500px;
-	height: 190px;
-	overflow: visible;
-	display: inline;
+    height: 190px;
+    overflow: visible;
+    display: inline;
 }
 #dummyOne,#dummyTwo{  /*clean up slick dummy divs*/
     opacity: 0!important;
 }
 #clockList li, #weatherList li, #systemList li, #miscList li{
     width: 150px!important;
-}
-
-#fontSizeDivWrapper,#widthSizeDivWrapper{
-    position: absolute;
-    top:-75px;
-    left:100px;
-    width: 200px;
-    height: 80px;
-    -webkit-transform:scale(2);
-}
-#posTopDivWrapper{
-    position: absolute;
-    top:-85px;
-    left:100px;
-    width: 200px;
-    height: 80px;
-    -webkit-transform:scale(2);
-}
-#posLeftDivWrapper{
-    position: absolute;
-    top:-85px;
-    left:200px;
-    width: 200px;
-    height: 80px;
-    -webkit-transform:scale(2);
-}
-.sizeControl{
-    background-color: transparent!important;
 }

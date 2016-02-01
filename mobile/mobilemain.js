@@ -165,8 +165,8 @@ var action = {
         if (id === 'backToTools') { this.showIconMenu(constants.toolArray, -1); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
-        if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
-        if (id === 'element') { action.elementIconClick(); }
+        if (id === 'load') { location.href = "http://lockplus.us/creator/load/mobile.php"  } //load php stuff
+        if (id === 'element') { action.elementIconClick(); showElementPanel(); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 300, 'font-size', 'font-size', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 1, $('.screen').width(), 'width', 'width', action.updateSize); }
         if (id === 'height') { this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize); }
@@ -1891,6 +1891,10 @@ var action = {
             $('miniWallpaper').remove();
             $('miniBlurCanvas').remove();
         }
+        $('.sidePanel').css('display', 'none');
+            $('#screenCover').css('display', 'none');
+            $('.elementPanel').css('display','none');
+            $('.sidePanel').css('opacity','1');
 
 
                 window.location  = 'ios:webToNativeCall';
@@ -2556,11 +2560,19 @@ $(document).on('keydown', function(event) {
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
 });
-$('#font').on('click', function (event) {
-    if ($(event.target).is('li')) {
+var fontMoving = false;
+$('#font').on('touchmove',function(){
+    fontMoving = true;
+});
+$('#font').on('touchend', function (event) {
+    if(fontMoving == true){
+        fontMoving = false;
+    }else{
+        if ($(event.target).is('li')) {
         action.setFont(event.target.title);
-    } else {
-        action.cgfont();
+        } else {
+            action.cgfont();
+        }
     }
 });
 $('.iconList').on('click', function (event) { //grab clicks from toolpanel
@@ -2846,7 +2858,7 @@ $('#snaptips').on('click',function(){
 if(localStorage.snap == 'true'){
     $('#snaptips').attr('title','On');
 }
-
+localStorage.hideTips = 'true';
 if(localStorage.hideTips === 'true'){
      $('#tips').css('top','-300px');
      $('#menutips').attr('title','Off');

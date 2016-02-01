@@ -15,16 +15,8 @@ License: MIT
     /* https://github.com/bgrins/spectrum/issues/40 */
     z-index: 9999994;
     overflow: hidden;
-    top:1300px!important;
-    left: 28%!important;
-    -webkit-transform:scale(1.5);
 }
 
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation : portrait) {
-    .sp-container{
-         top:1420px!important;
-    }
-}
 
 .sp-container.sp-flat {
     position: relative;
@@ -421,7 +413,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 .sp-palette {
   /*  *width: 220px; */
-    max-width: 220px;
+    max-width: 120px;
 }
 .sp-palette .sp-thumb-el {
     width:16px;
