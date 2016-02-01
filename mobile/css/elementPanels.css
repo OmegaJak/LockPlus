@@ -176,3 +176,31 @@ label {
 #clockList li, #weatherList li, #systemList li, #miscList li{
     width: 150px!important;
 }
+
+#fontSizeDivWrapper,#widthSizeDivWrapper{
+    position: absolute;
+    top:-75px;
+    left:100px;
+    width: 200px;
+    height: 80px;
+    -webkit-transform:scale(2);
+}
+#posTopDivWrapper{
+    position: absolute;
+    top:-85px;
+    left:100px;
+    width: 200px;
+    height: 80px;
+    -webkit-transform:scale(2);
+}
+#posLeftDivWrapper{
+    position: absolute;
+    top:-85px;
+    left:200px;
+    width: 200px;
+    height: 80px;
+    -webkit-transform:scale(2);
+}
+.sizeControl{
+    background-color: transparent!important;
+}

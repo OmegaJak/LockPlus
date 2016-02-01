@@ -891,11 +891,11 @@ var action = {
     getInputWrapper: function(key, inputRightPos, inputTopPos, min, max, inputTitle, isForText) {
         var divSelector = $('<div id="' + key + 'DivWrapper" style="display: none;"></div>');
         if (!isForText) {
-            var decrementButton = $('<p id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)-200) + '; right: ' + (JSON.parse(inputRightPos)+293) + ';"></p>');
+            var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+93) + ';"></div>');
             $('<a href="#" class="fa fa-minus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(decrementButton);
             decrementButton.prependTo(divSelector);
             $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
-            var incrementButton = $('<p id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></p>');
+            var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos)+15) + '; right: ' + (JSON.parse(inputRightPos)+11) + ';"></div>');
             $('<a href="#" class="fa fa-plus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(incrementButton);
             incrementButton.prependTo(divSelector);
         } else {
@@ -981,7 +981,7 @@ var action = {
             $('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
         });
         $('#' + action.selectedItem).resize(function() {
-            alert("test");
+            //alert("test");
             $('#posLeftInput').attr('max', $('.screen').width() - $('#' + action.selectedItem).width());
         });
     },
@@ -2475,7 +2475,7 @@ switch(iPhone) {
     try{
             action.setBG(newWall);
     }catch(err){
-        alert("Wallpaper too big! This file will not save to the theme! Please compress this wallpaper. Browser " + err);
+        //alert("Wallpaper too big! This file will not save to the theme! Please compress this wallpaper. Browser " + err);
     }
         $('#wallSelector').css('display','none');
     }
