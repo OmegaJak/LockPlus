@@ -870,7 +870,7 @@ var action = {
             $(buttonSelector).parent().attr('class', ''); //just disable the leftToolTip Class? hide tooltip
             $(divSelector).toggle('display');
         } else { //If the input already exists
-            $(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //enable tooltip again
+            //$(divSelector).is(':visible') ? $(buttonSelector).parent().attr('class','leftTooltip') : $(buttonSelector).parent().attr('class',''); //enable tooltip again
             $(divSelector).toggle('display');
         }
     },

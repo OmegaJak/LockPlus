@@ -114,6 +114,7 @@
         transition-property: width, font-size;
     -webkit-transition-duration: 200ms;
     transition-duration: 200ms;
+    z-index: 1;
 }
 .toolPanel input:hover {
   font-size: 28px;
