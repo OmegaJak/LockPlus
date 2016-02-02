@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="mobile/css/tooltips.css">
 	<link rel="stylesheet" type="text/css" href="mobile/css/stroll.css">
 	<link rel="stylesheet" type="text/css" href="mobile/css/slick.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/jquery.mousewheel.min.js"></script>
@@ -25,10 +26,27 @@
     top:0;
     left:0;
     width: 30px;
-    height: 100%;
-    background-color: transparent;
+    height: 80%;
+    background-color: rgba(0,0,0,0.7);
     z-index: 999;
+    top:50%;
+    -webkit-transform: translate(0, -53%);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
+#leftSelector:after{
+	position: relative;
+	content: attr(title);
+	color:white;
+	display: inline-block;
+	height: 100%;
+	left:-368px;
+	width: 200px;
+	font-size: 20px;
+	text-align: center;
+	-webkit-transform:rotate(90deg);
+}
+
 .sidePanel {
 	position: absolute;
 	display: none;
@@ -38,11 +56,12 @@
 }
 #screenCover{
 	position: absolute;
-	top:0;
-	left:0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0,0.4);
+	top:68px;
+	left:47px;
+	width: 320px;
+	height: 568px;
+	background-color: rgba(0,0,0,0.6);
+	-webkit-backdrop-filter: blur(10px);
 	display: none;
 }
 
@@ -52,9 +71,19 @@
 	menu.toggle = function(){
 		var display = $('.sidePanel').css('display');
 		if(display == 'none'){
+			if($('#leftSelector').attr('title') == 'Element Menu'){
+				$('#screenCover').css('display', 'none');
+				}else{
+					$('#screenCover').css('display', 'block');
+				}
+			$('#leftSelector').attr('title','Close');
 			$('.sidePanel').css('display', 'block');
-			$('#screenCover').css('display', 'block');
 		}else{
+			if(action.selectedItem !== ''){
+				$('#leftSelector').attr('title','Element Menu');
+			}else{
+				$('#leftSelector').attr('title','Main Menu');
+			}
 			$('.sidePanel').css('display', 'none');
 			$('#screenCover').css('display', 'none');
 			$('.elementPanel').css('display','none');
@@ -102,7 +131,7 @@
 		<div id="helpinfo"></div>
 	</div>
 </div>
-	<div id="leftSelector" ontouchstart="menu.toggle()"></div>
+	<div id="leftSelector" title="Main Menu" ontouchstart="menu.toggle()"></div>
 	<div id="screenCover"></div>
 	<div class="sidePanel">
 		<div class="toolPanel">
@@ -162,6 +191,10 @@ $( window ).load(function() {
 		f.innerHTML = "test";
 		fpre.appendChild(f);
 	}
+});
+
+$(function() {
+    FastClick.attach(document.body);
 });
 </script>
 <!--<script src="js/rasterHTML.js"></script>-->

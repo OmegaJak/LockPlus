@@ -2615,6 +2615,7 @@ $('.screen').click(function(event){
 });
 function handleScreenClick(event) { // Had to move everything to this function so it could be manually called
     function deselectElement(item, fullClear) {
+        $('#leftSelector').attr('title','Main Menu');
         $('#' + item).css('outline', '0px solid transparent'); // Remove the highlight
         action.removeFromMultiSelection(item);
         if (fullClear) {
@@ -2712,6 +2713,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
                     if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
 
                     action.showMultiSelectionMenu();
+                    $('#leftSelector').attr('title','Element Menu');
                 }
             }
         }

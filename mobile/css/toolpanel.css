@@ -55,10 +55,10 @@
 }
 .toolPanel ul {
     overflow-y: scroll;
-    height: 520px;
+    height: 570px;
     width: 400px;
-    left:-30px;
-    top: -5px;
+    left:-23px;
+    top: -43px;
     position: absolute;
 }
 .toolPanel li{
@@ -78,6 +78,14 @@
     transition-property: transform;
     -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
+}
+.toolPanel li:after{
+  position: absolute;
+  content: attr(id);
+  margin-left: 30px;
+  text-transform: capitalize;
+  font-size: 10px;
+
 }
 
 
