@@ -57,21 +57,21 @@
     overflow-y: scroll;
     height: 570px;
     width: 400px;
-    left:-23px;
+    left:-21px;
     top: -43px;
     position: absolute;
 }
 .toolPanel li{
   text-align: center;
   padding: 5px;
-  width: 40px;
-  line-height: 40px;
-  border: 8px solid rgba(0,0,0,0.3);
-  font-size: 25px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 15px;
   border-radius: 100%;
-  margin-top: 2px;
+  margin-top: 10px;
   background-color: #21b9b0;
-  color:white;
+  color:black;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
     -webkit-transition-property: transform;
@@ -79,12 +79,20 @@
     -webkit-transition-duration: 100ms;
     transition-duration: 100ms;
 }
+
 .toolPanel li:after{
   position: absolute;
   content: attr(id);
-  margin-left: 30px;
+  margin-left: 0px;
   text-transform: capitalize;
-  font-size: 10px;
+  font-size: 8px;
+  background-color: #21b9b0;
+  color:black;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  z-index: -1;
+
 
 }
 

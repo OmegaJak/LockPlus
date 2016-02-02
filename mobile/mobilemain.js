@@ -44,7 +44,7 @@ var constants = {
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'style~Change Font Style~fa fa-italic~styleDiv'
                     ,'affixes~Change Prefix/Suffix~fa fa-edit~affixesDiv'
-                    ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
+                    ,'shadow~Edit Text Shadow~fa fa-underline~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     customTextArray: ['customText~Change Text~fa fa-pencil~textDiv'
@@ -58,7 +58,7 @@ var constants = {
                     ,'uppercase~Change Uppercase~fa fa-text-height~uppercaseDiv' //added
                     ,'weight~Change Font Weight~fa fa-text-width~weightDiv' //added
                     ,'style~Change Font Style~fa fa-italic~styleDiv'
-                    ,'shadow~Edit Text Shadow~sa ctextshadow~shadowDiv'
+                    ,'shadow~Edit Text Shadow~fa fa-underline~shadowDiv'
                     ,'linearGradient~Edit Linear Text Color Gradient~fa fa-barcode~linearTextGradientDiv'
                     ,'delete~Delete item~fa fa-trash-o~deleteDiv'],
     affixArray: ['customPrefix~Change Prefix~fa fa-long-arrow-left~prefixDiv'
@@ -78,8 +78,8 @@ var constants = {
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'boxclearShadow~Clear Shadow~fa fa-trash~boxclearShadowDiv'],
     transformArray: ['rotation~Change Rotation Angle~fa fa-repeat~rotationDiv'
-                    ,'skewX~Change X Skew~sa cskewx~skewXDiv'
-                    ,'skewY~Change Y Skew~sa cskewy~skewYDiv'
+                    ,'skewX~Change X Skew~fa fa-text-width~skewXDiv'
+                    ,'skewY~Change Y Skew~fa fa-text-height~skewYDiv'
                     ,'backToEdit~Back~fa fa-arrow-left~backToEditDiv'
                     ,'clearTransform~Clear Transformations~fa fa-trash~clearTransformsDiv'],
     linearGradientArray: ['gradientType~Gradient Type~fa fa-square~gradientTypeDiv'
