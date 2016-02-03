@@ -1,4 +1,5 @@
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2){
+
+@media only screen and (max-device-width: 375px) {
 	#leftSelector{
 		width: 11px;
 	}
@@ -17,6 +18,7 @@
   		top:54%;
 	}
 }
+
 
 @media only screen and (width:768px) {
 	#leftSelector:after{

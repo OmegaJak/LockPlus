@@ -1,19 +1,8 @@
-function getIconName(){
-    var local = action.savedElements.iconName;
-    return local;
-}
-function getWallpaper(){
-    var local = (action.wallpaper) ? action.wallpaper : '';
-    return local;
-}
-function getOverlay(){
-    var local = (action.savedElements.overlay) ? action.savedElements.overlay : '';
-    return local;
-}
-function getElements(){
-    var local = JSON.stringify(action.savedElements.placedElements) || '';
-    return local;
-}
+//functions for the app to retrieve info to create a plist
+var getIconName = function(){ return action.savedElements.iconName; },
+getWallpaper = function (){ return (action.wallpaper) ? action.wallpaper : ''; },
+getOverlay = function(){ return (action.savedElements.overlay) ? action.savedElements.overlay : ''; },
+getElements = function(){ return JSON.stringify(action.savedElements.placedElements) || ''; };
 
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
