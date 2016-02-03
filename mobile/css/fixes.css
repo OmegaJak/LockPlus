@@ -1,0 +1,19 @@
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2){
+	#leftSelector{
+		width: 11px;
+	}
+	#leftSelector:after{
+		left:-355px;
+		font-size: 10px;
+	}
+	#screenCover{
+		top:33px;
+		left:27px;
+		width: 321px;
+		height: 569px;
+	}
+	.toolPanel{
+  		width: 215px;
+  		top:54%;
+	}
+}
