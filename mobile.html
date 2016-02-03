@@ -112,7 +112,7 @@
          	 <li class="menulist"><a href="http://cydia.saurik.com/package/com.macciti.lockplus/">Cydget</a></li>
       	  </ul>
 	</header>
-<div class="container" >
+<div class="container" id="container" >
 	<div class="phone">
 		<div class="screen">
 			<img class='svg'/>
@@ -174,7 +174,7 @@
 </br>
 	<div id="logo"><img src="css/logo.png" width="40"/></div>
 </footer>
-<input type='file' class="input" id='bgInput' name='bg'>
+<input type='file' class="input needsclick" id='bgInput' name='bg'>
 <script src="js/clock.js?001"></script>
 <script src="js/arrays.js?001"></script>
 <script src='js/stroll.js?001'></script>
@@ -194,7 +194,7 @@ $( window ).load(function() {
 });
 
 $(function() {
-    FastClick.attach(document.body);
+    FastClick.attach(document.getElementById('container'));
 });
 </script>
 <!--<script src="js/rasterHTML.js"></script>-->
