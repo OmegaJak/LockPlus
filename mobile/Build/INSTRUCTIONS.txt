@@ -1,0 +1,9 @@
+
+cd /Applications/XAMPP/xamppfiles/htdocs/repo/depiction/GitLockPlus/mobile/Build
+
+./mergeAll.sh
+
+
+Takes all css files and combines it into one. Puts files in WebReady folder. Don’t include font-awesome.
+
+Also takes multiple javascript files and puts it in one, while compressing it.
