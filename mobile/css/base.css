@@ -98,52 +98,6 @@ footer a {
 .input{
 	display: none;
 }
-#tipContainer{
-  position: absolute;
-  width: 320px;
-  height: 50px;
-  top:50%;
-  left:50%;
-  -webkit-transform: translate3d(-50%,-50%,0);
-  transform: translate3d(-50%,-50%,0);
-  margin-top: -276px;
-  overflow: hidden;
-  pointer-events:none;
-  z-index: 1000;
-
-}
-#tips{
-  top:100px;
-  margin-top: -99px;
-  width: 311px;
-  	/*line-height: 18px;*/
-  background-color: #21b9b0;
-  padding: 5px;
-	padding-right: 4px;
-	padding-bottom: 3px;
-	height: 27px;
-  display: none;
-	position: absolute;
-}
-#helpinfo{
-  	position: relative;
-  	left: 25px;
-	top: -21px;
-  	font-size: 12px;
-  	text-align: center;
-  	width: 289px;
-	background-color: transparent;
-	color: white;
-}
-#helpicon{
-  position: relative;
-  left: 4%;
-  font-size: 20px;
-  color: white;
-}
-#helpicon:hover{
-  cursor: pointer;
-}
 #menuTitle {
 
 }
@@ -382,18 +336,6 @@ footer a {
   color: white;
   text-align: center;
   font-size: 20px;
-}
-#menutips:after{
-  position: absolute;
-  left:74px;
-  top:-4px;
-  width: 24px;
-  height: 24px;
-  content:attr(title);
-  padding:5px;
-  background-color:#54606e;
-  border-radius: 100%;
-  border:3px solid #21b9b0;
 }
 #gridtips:after{
   position: absolute;

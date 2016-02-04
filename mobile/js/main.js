@@ -80,25 +80,25 @@ action.toolPanel = function (evt) {
         this.cgPosition();
     }
     if (id === 'align') {
-        this.cgalign(); /*action.setHelpText('Select left, right or center. Requires width to be set.');*/
+        this.cgalign();
     }
     if (id === 'fonts') {
-        this.cgfont(); /*action.setHelpText('View live preview, tap font to select.');*/
+        this.cgfont();
     }
     if (id === 'uppercase') {
-        this.cguppercase(); /* action.setHelpText('Choose uppercase, capitalize, or lowercase.');*/
+        this.cguppercase();
     }
     if (id === 'style') {
         this.cgStyle();
     }
     if (id === 'weight') {
-        this.cgweight(); /*action.setHelpText('Press + and - buttons, or choose bold or normal.');*/
+        this.cgweight();
     }
     if (id === 'shadow') {
-        action.showIconMenu(constants.shadowArray, -1); /*action.setHelpText('New menu opened (shadow menu)');*/
+        action.showIconMenu(constants.shadowArray, -1);
     }
     if (id === 'boxShadow') {
-        action.showIconMenu(constants.boxShadowArray, -1); /*action.setHelpText('New menu opened (box-shadow menu)');*/
+        action.showIconMenu(constants.boxShadowArray, -1);
     }
     if (id === 'hShadow') {
         this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal');
@@ -237,8 +237,6 @@ action.toolPanel = function (evt) {
 
 action.elementIconClick = function () {
     if (!$('.elementPanel').is(":visible")) {
-        action.setHelpText('Choose item from right panel');
-
         if (!$('.elementPanel').attr('data-shown')) {
             action.toggleAllElementPanels();
             $('.elementPanel').attr('data-shown', 'Congratulations, curious one. You are the millionth visitor!');
@@ -927,9 +925,6 @@ action.cgSize = function (key, nameString, unit, min, max, cssKey, jsCssKey, upd
         } catch (e) {
             console.log("There was an issue with setting the value of the input with idSelector:" + idSelector);
         }
-        $(idSelector).on("focus", function () {
-            action.setHelpText('Try scrolling while hovering over the input text!');
-        })
         $(idSelector).on("change", function () {
             updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
         });
@@ -959,7 +954,6 @@ action.cgSize = function (key, nameString, unit, min, max, cssKey, jsCssKey, upd
 };
 
 action.handleInputButtonEvent = function (idSelector, toMultiplyBy, cssKey, jsCssKey, unit, updateCallback, event) {
-    action.setHelpText('Shift+click to set to max/min. Alt+click to change by 10.');
     event.preventDefault();
     var max = JSON.parse($(idSelector).attr('max'));
     var min = JSON.parse($(idSelector).attr('min'));
@@ -1654,15 +1648,10 @@ action.openBackground = function (purpose) { // either 'original' or 'blurry'
         $('body', newWindow.document).append(image);
         $('head', newWindow.document).append($('<title>Wallpaper</title>'));
 
-    } else {
-        action.setHelpText('No wallpaper set. Click "Change Background" above to set one.');
     }
 };
 action.showPanel = function (list) {
     $('#' + list).css('visibility', 'visible'); //new function instead of running createLI again.
-};
-action.showPanelHelpText = function (list) {
-    if ($('#' + list).css('display') === 'none') action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
 };
 action.undo = function () {
     action.isUndoingRedoing = true;
@@ -1670,8 +1659,6 @@ action.undo = function () {
         var editorAction = action.actionQueue[action.queuePosition];
         action.runOppositeAction(editorAction[0], editorAction[1]);
         action.queuePosition--;
-    } else {
-        action.setHelpText("Nothing left to undo.");
     }
     action.isUndoingRedoing = false;
     console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
@@ -1682,8 +1669,6 @@ action.redo = function () {
         action.queuePosition++;
         var editorAction = action.actionQueue[action.queuePosition];
         action.runAction(editorAction[0], editorAction[1]);
-    } else {
-        action.setHelpText("Nothing left to redo.");
     }
     action.isUndoingRedoing = false;
     console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
@@ -1780,19 +1765,19 @@ action.runAction = function (actionName, actionInfo) { // [actionName, actionInf
 action.elementPanel = function (id, duration) { //show hide items in element Panel
     var duration = typeof duration != 'undefined' ? duration : 400;
     if (id === 'cl') {
-        $('#clockList').toggle(duration, action.showPanelHelpText('clockList')); /*this.createLI(elementPanel.clockElements, 'clockList');*/
+        $('#clockList').toggle(duration); /*this.createLI(elementPanel.clockElements, 'clockList');*/
         this.showPanel('clockList');
     }
     if (id === 'wl') {
-        $('#weatherList').toggle(duration, action.showPanelHelpText('weatherList')); /*this.createLI(elementPanel.weatherElements, 'weatherList');*/
+        $('#weatherList').toggle(duration); /*this.createLI(elementPanel.weatherElements, 'weatherList');*/
         this.showPanel('weatherList')
     }
     if (id === 'sl') {
-        $('#systemList').toggle(duration, action.showPanelHelpText('systemList')); /*this.createLI(elementPanel.systemElements, 'systemList');*/
+        $('#systemList').toggle(duration); /*this.createLI(elementPanel.systemElements, 'systemList');*/
         this.showPanel('systemList');
     }
     if (id === 'ml') {
-        $('#miscList').toggle(duration, action.showPanelHelpText('miscList')); /*this.createLI(elementPanel.miscElements, 'miscList');*/
+        $('#miscList').toggle(duration); /*this.createLI(elementPanel.miscElements, 'miscList');*/
         this.showPanel('miscList');
     }
 };
@@ -1830,7 +1815,6 @@ action.clearTheme = function (code) { // -1 is to check, 0 doesn't clear theme, 
         }
     } else if (code === 0) { // hide confirmation
         action.hideClearLabel();
-        action.setHelpText('Not cleared, click to edit elements. (Also delete)');
     } else if (code === 1) { // definitely clear the theme
         localStorage.removeItem('placedElements');
         action.savedElements = {};
@@ -1856,8 +1840,6 @@ action.clearTheme = function (code) { // -1 is to check, 0 doesn't clear theme, 
             previousAction: null,
             initialValue: ''
         };
-
-        action.setHelpText('Cleared. Click "Show Elements Panel" to place elements.');
     }
 };
 action.hideClearLabel = function () {
@@ -2223,7 +2205,6 @@ action.replaceElements = function () {
 action.loadFromStorage = function () { //reload elements onload
     if (localStorage.placedElements) {
         if (localStorage.placedElements.length > 2) { //maybe it was set to a string of {} and it breaks everything
-            action.setHelpText('Click elements to adjust styles.');
             this.savedElements = JSON.parse(localStorage.placedElements);
             this.movedElements = this.savedElements.placedElements; //keep moved elements up to date too
             if (this.savedElements.overlay) { //set overlay
@@ -2235,8 +2216,6 @@ action.loadFromStorage = function () { //reload elements onload
             if (this.savedElements.iconName) {
                 this.setNewIcon(this.savedElements.iconName, 1); //if second paramenter dont show list
             }
-        } else {
-            action.setHelpText('Select Add elements to place elements.');
         }
     }
     //fix for if a theme is loaded
@@ -2303,7 +2282,6 @@ action.addDraggable = function (id) {
     });
 };
 action.addtoScreen = function (id) { //when item is clicked from add panel
-    action.setHelpText('Click element to adjust style. (Also delete)');
     var div = document.createElement('div');
     div.id = id;
     if (id.substring(0, 3) === 'box') {
@@ -2545,43 +2523,6 @@ action.getProperMenuForId = function (id) {
         return constants.editArray;
     }
 };
-
-action.animateHelp = function (text, opacity, time) {
-    $("#tips").animate({
-        opacity: opacity,
-        top: 'toggle'
-    }, time, function () { // Called when it's done animating
-        if (text) {
-            action.setHelpText(text); // This is what does the 'queuing effect' kinda
-        }
-    });
-};
-action.setHelpText = function (text) {
-    var isStillShowing = $('#tips').is(":visible");
-    clearTimeout(action.timeout);
-    if (!$('#tips').is(':animated')) { // Don't do anything if it's animating
-        if (isStillShowing) { //If it's already showing, hide the old help text
-            if ($('#helpinfo').text() != text) {
-                var now = Date.now();
-                if (action.lastNotificationTime && now - action.lastNotificationTime > 50) { //If it's a person clicking things, not backend calls
-                    action.lastNotificationTime = Date.now(); //Since it's changing the tip shown, update when it was last called, the current time
-                    action.animateHelp(text, 1, 300); // Show the new text
-                }
-            } else { // If it's the same tip, and it's already showing, reset the countdown to hiding the tip
-                action.timeout = setTimeout(function () {
-                    action.animateHelp(false, 0, 200);
-                }, 5000);
-            }
-        } else { // Show a new tip
-            $('#helpinfo').text(text); // Actually set the text
-            action.lastNotificationTime = Date.now(); // For spam checking purposes
-            action.animateHelp(false, 1, 300); // Show the tip
-            action.timeout = setTimeout(function () { // In 5 seconds, hide the tip
-                action.animateHelp(false, 0, 200);
-            }, 5000);
-        }
-    }
-};
 action.setEditMenuInputsState = function (state, maxIndex, id) { //state: -2 means show all, -1 means hide all, other numbers means toggle that index
     if (!id) var id = '';
     if (typeof id === 'string')
@@ -2798,7 +2739,6 @@ $('.iconList').on('click', function (event) { //grab clicks from toolpanel
 
 $('.elementPanel').on('click', function (event) { //grab clicks from elementPanel
     if (event.target.id && event.target.tagName === 'H3') { //Clicking to show/hide a panel
-        //action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');
         action.elementPanel(event.target.id);
         var elementChildren = $('.elementPanel').children();
         for (var i = 0; i < elementChildren.length; i++) {
@@ -2848,7 +2788,6 @@ function handleScreenClick(event) { // Had to move everything to this function s
             }
         }
         deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
-        action.setHelpText('Clicking off an element de-selects it. Click back on it to re-select.');
     } else if (event.target.id != 'screen' && event.target.id != '') { //If you clicked on something...
         if (event.target.id === action.selectedItem) { // If they clicked the centrally highlighted item
             if (action.selectedItems.length > 0) { // If we should consider multi-selection
@@ -2913,11 +2852,6 @@ function handleScreenClick(event) { // Had to move everything to this function s
                         deselectElement(action.selectedItems[i], false);
                         i--;
                     }
-
-                    if (event.target.id.substring(0, 3) === 'box' || event.target.id === 'icon') //show different text for box and icon
-                        action.setHelpText('Pick a style adjustment from the left menu.')
-                    else
-                        action.setHelpText('Pick a style adjustment from the left menu, scroll for more options.');
 
                     action.selectedItem = event.target.id; // Set the selected item to the new element
                     $('#' + event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
@@ -2994,19 +2928,6 @@ var scrollLimitForEditMenu = 120; //one place to change incase any more edits
 
 $('#bgInput').on('change', uploadedImage);
 
-//notification hover
-$('#tips').mouseenter(function () {
-    clearInterval(action.timeout);
-});
-$('#tips').mouseleave(function () {
-    action.timeout = setTimeout(function () {
-        $('#tips').hide('slide', {
-            direction: 'up'
-        });
-    }, 1250);
-});
-
-
 /* grid stuff */
 function createGrid(sizeleft, sizetop) {
     var i,
@@ -3044,17 +2965,6 @@ function createGrid(sizeleft, sizetop) {
 
 
 /* Top right menu */
-$('#menutips').on('click', function () {
-    if ($('#tips').css('top') === "-300px") {
-        $('#tips').css('top', '100px');
-        localStorage.setItem('hideTips', false);
-        $(this).attr('title', 'On');
-    } else {
-        $('#tips').css('top', '-300px');
-        localStorage.setItem('hideTips', true);
-        $(this).attr('title', 'Off');
-    }
-});
 $('#gridtips').on('click', function () {
     if ($('.gridlines').css('display') === undefined) {
         $(this).attr('title', 'On');
@@ -3077,11 +2987,6 @@ $('#snaptips').on('click', function () {
 });
 if (localStorage.snap == 'true') {
     $('#snaptips').attr('title', 'On');
-}
-localStorage.hideTips = 'true';
-if (localStorage.hideTips === 'true') {
-    $('#tips').css('top', '-300px');
-    $('#menutips').attr('title', 'Off');
 }
 $(".select-menu").click(function () {
     $(this).toggleClass("menu-on");
