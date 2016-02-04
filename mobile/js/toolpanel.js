@@ -95,7 +95,7 @@ action.toolPanel = function (evt) {
         case 'rotation':
         	this.cgSize('rotationAngle', constants.transformArray[0], 'deg', 0, 360, 'rotate', 'rotate', action.updateTransform, false, false, 'Rotation Angle');
             break;
-        case 'skeyX':
+        case 'skewX':
         	this.cgSize('skewXAngle', constants.transformArray[1], 'deg', 0, 360, 'skewX', 'skewX', action.updateTransform, false, false, 'X Skew Angle');
             break;
         case 'skewY':
