@@ -7,8 +7,6 @@ var action = {
     blurTimeout: null,
     timeout: '',
     lastNotificationTime: false,
-    selectedItems: [], // Only used for multi-selection
-    multiPositioningSystem: 'relative',
     actionQueue: [], //Queue of actions for undo/redo
     queuePosition: -1, //The current position within this ↑ queue, which action was most recently done
     isUndoingRedoing: false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
@@ -76,29 +74,6 @@ action.setFont = function (fontName) {
 
 action.setCss = function (elementId, cssKey, cssValue) { //[[elementName, cssKey, cssValue], [elementName, [cssKey, cssKey], [cssValue, cssValue]]]
     // The special case here after the && is for when we're doing relative positioning and we're setting position. In that case, each is called individually
-    if (action.selectedItems.length > 0 && !(action.multiPositioningSystem === 'relative' && (cssKey === 'left' || cssKey === 'top'))) {
-        function isAlreadyInArr(arr, toTest) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i][0] === toTest) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        if (typeof elementId === 'string') {
-            elementId = [
-                [elementId, cssKey, cssValue]
-            ];
-        }
-
-        for (var i = 0; i < action.selectedItems.length; i++) {
-            if (!isAlreadyInArr(elementId, action.selectedItems[i])) {
-                var arr = [action.selectedItems[i], elementId[0][1], elementId[0][2]];
-                elementId.push(arr);
-            }
-        }
-    }
     if (typeof elementId === 'string') {
         if (cssKey === '-webkit-transform') {
             try {
@@ -716,16 +691,6 @@ action.cgSize = function (key, nameString, unit, min, max, cssKey, jsCssKey, upd
         $(idSelector).on("change", function () {
             updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
         });
-        $(idSelector).on("mousewheel", function (event) {
-            var increment = 0;
-            if (event.deltaY > 0 && !event.shiftKey) increment = event.altKey ? 10 : 1
-            else if (event.deltaY < 0 && !event.shiftKey) increment = event.altKey ? -10 : -1
-            else if (event.deltaX > 0 && event.shiftKey) increment = JSON.parse($(idSelector).attr('min')) - $(idSelector).val()
-            else if (event.deltaX < 0 && event.shiftKey) increment = JSON.parse($(idSelector).attr('max')) - $(idSelector).val();
-            $(idSelector).val(Math.round(JSON.parse($(idSelector).val()) + increment));
-            updateCallback(idSelector, cssKey, unit, jsCssKey, 'set');
-            event.preventDefault();
-        });
         $(idSelector).focusin(function () {
             action.isEditingText = true;
         });
@@ -761,7 +726,7 @@ action.getInputWrapper = function (key, inputRightPos, inputTopPos, min, max, in
         var decrementButton = $('<div id="' + key + 'Decrement" class="sizeControl" style="top: ' + (JSON.parse(inputTopPos) + 15) + '; right: ' + (JSON.parse(inputRightPos) + 93) + ';"></div>');
         $('<a href="#" class="fa fa-minus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(decrementButton);
         decrementButton.prependTo(divSelector);
-        $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" title="Try using the scroll wheel!" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
+        $('<input type="number" id="' + key + 'Input" min="' + min + '" max="' + max + '" style="top: ' + JSON.parse(inputTopPos) + '; right: ' + JSON.parse(inputRightPos) + '">').prependTo(divSelector);
         var incrementButton = $('<div id="' + key + 'Increment" class="sizeControl inputLabel" data-title="' + inputTitle + '" style="top:' + (JSON.parse(inputTopPos) + 15) + '; right: ' + (JSON.parse(inputRightPos) + 11) + ';"></div>');
         $('<a href="#" class="fa fa-plus-circle" title="Try shift+clicking and alt+clicking!"></a>').appendTo(incrementButton);
         incrementButton.prependTo(divSelector);
@@ -860,76 +825,6 @@ action.cgPosition = function () {
     });
 };
 
-action.cgMultiPosition = function () {
-    this.cgSize('multiPosLeft', constants.multiPosition, 'px', 0, 0, 'left', 'left', action.updateMultiPosition, '', '80', 'Left', 2);
-    this.cgSize('multiPosTop', constants.multiPosition, 'px', 0, 0, 'top', 'top', action.updateMultiPosition, '', '208', 'Top', 2);
-
-    //cgSize automatically initializes the inputs with values, but in relative mode, we want everything to start at 0
-    for (var i = 0; i < 2; i++) {
-        var curInputSelector = (i == 0 ? '#multiPosLeftInput' : '#multiPosTopInput');
-        if (!$(curInputSelector).attr('initialized')) {
-            $(curInputSelector).val(0);
-            $(curInputSelector).attr('initialized', 'partial');
-            $(curInputSelector).attr('lastVal', 0);
-        }
-    }
-
-    // Since they were initialized weith maxes/mins of 0, they need to be updated
-    action.updateMultiPosInputExtrema();
-
-    $('#' + action.selectedItem).on('drag', function (event, ui) {
-        //$('#posLeftInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().left)));
-        //$('#posTopInput').val(Math.round(JSON.parse($('#' + action.selectedItem).position().top)));
-        if (!$(ui.helper).attr('lastLeft'))
-            $(ui.helper).attr('lastLeft', ui.position.left);
-        if (!$(ui.helper).attr('lastTop'))
-            $(ui.helper).attr('lastTop', ui.position.top);
-
-        var leftChange = ui.position.left - JSON.parse($(ui.helper).attr('lastLeft'));
-        var topChange = ui.position.top - JSON.parse($(ui.helper).attr('lastTop'));
-        for (var i = 0; i < action.selectedItems.length; i++) {
-            var initialPos = $('#' + action.selectedItems[i]).position();
-            $('#' + action.selectedItems[i]).css('left', initialPos.left + leftChange);
-            $('#' + action.selectedItems[i]).css('top', initialPos.top + topChange);
-        }
-
-        $(ui.helper).attr('lastLeft', ui.position.left);
-        $(ui.helper).attr('lastTop', ui.position.top);
-    });
-};
-
-// Sets the maxes and mins for the multipos inputs
-action.updateMultiPosInputExtrema = function () {
-    var maxLeft = 0,
-        minLeft = 0;
-    var maxTop = 0,
-        minTop = 0;
-    var elName;
-    for (var i = 0; i < action.selectedItems.length; i++) { // Go through each selected item and establish the farthest any single one could travel in a direction
-        elName = '#' + action.selectedItems[i];
-
-
-        var curMaxLeft = action.getElementExtreme(elName, 'maxleft', 'rel');
-        if (curMaxLeft > maxLeft)
-            maxLeft = curMaxLeft;
-
-        var curMaxTop = action.getElementExtreme(elName, 'maxtop', 'rel');
-        if (curMaxTop > maxTop)
-            maxTop = curMaxTop;
-
-        var curMinLeft = action.getElementExtreme(elName, 'minleft', 'rel');
-        if (curMinLeft < minLeft)
-            minLeft = curMinLeft;
-
-        var curMinTop = action.getElementExtreme(elName, 'mintop', 'rel');
-        if (curMinTop < minTop)
-            minTop = curMinTop;
-    }
-
-    $('#multiPosLeftInput').attr('max', maxLeft).attr('min', minLeft);
-    $('#multiPosTopInput').attr('max', maxTop).attr('min', minTop);
-};
-
 /**
     * Gets a max/min that a relative movement input is allowed to go to
     * extreme : 'maxleft', 'minleft', 'maxtop', 'mintop'
@@ -944,25 +839,13 @@ action.getElementExtreme = function (elName, extreme, mode) {
 
     switch (extreme) {
     case 'maxleft':
-        if (mode == 'rel')
-            return JSON.parse($('#multiPosLeftInput').val()) + ($('.screen').width() - $(elName).width() - pos.left);
-        else
-            return $('.screen').width() - $(elName).width();
+        return $('.screen').width() - $(elName).width();
     case 'minleft':
-        if (mode == 'rel')
-            return JSON.parse($('#multiPosLeftInput').val()) + (-1 * pos.left);
-        else
-            return 0;
+        return 0;
     case 'maxtop':
-        if (mode === 'rel')
-            return JSON.parse($('#multiPosTopInput').val()) + ($('.screen').height() - $(elName).height() - pos.top);
-        else
-            return $('.screen').height() - $(elName).height();
+        return $('.screen').height() - $(elName).height();
     case 'mintop':
-        if (mode === 'rel')
-            return JSON.parse($('#multiPosTopInput').val()) + (-1 * pos.top);
-        else
-            return 0;
+        return 0;
     default:
         return 0;
     }
@@ -1059,89 +942,6 @@ action.updateSize = function (idSelector, cssKey, unit, jsCssKey, purpose) {
     }
 };
 
-action.updateMultiPosition = function (idSelector, cssKey, unit, jsCssKey, purpose) {
-    if (purpose === 'set') {
-        var max = JSON.parse($(idSelector).attr('max'));
-        var min = JSON.parse($(idSelector).attr('min'));
-        var originalDelta = JSON.parse($(idSelector).val()) - JSON.parse($(idSelector).attr('lastVal'));
-        if (JSON.parse($(idSelector).val()) >= max) $(idSelector).val(max);
-        if (JSON.parse($(idSelector).val()) <= min) $(idSelector).val(min);
-
-
-        for (var i = 0; i < action.selectedItems.length; i++) { // Save the initial values for each selectedItem
-            if ($(idSelector).attr('initialized') === 'partial') { // If this is the first time the element's been moved
-                $('#' + action.selectedItems[i]).attr("initial" + cssKey, $('#' + action.selectedItems[i]).css(cssKey));
-                if (i === action.selectedItems.length - 1)
-                    $(idSelector).attr('initialized', 'full');
-            }
-        }
-
-        //Now we're actually setting things
-        var initial = 0;
-        var elSelector;
-        for (var i = 0; i < action.selectedItems.length; i++) {
-            elSelector = '#' + action.selectedItems[i];
-            initial = $(elSelector).attr('initial' + cssKey);
-
-            initial = initial.substring(0, initial.length - unit.length); // Remove 'px' from the end
-            initial = JSON.parse(initial); // Convert it to a number
-
-            var newValue = initial + JSON.parse($(idSelector).val());
-            var curMax, curMin;
-            if (cssKey === 'left') {
-                curMax = action.getElementExtreme(elSelector, 'maxleft', 'abs');
-                curMin = action.getElementExtreme(elSelector, 'minleft', 'abs');
-            } else if (cssKey === 'top') {
-                curMax = action.getElementExtreme(elSelector, 'maxtop', 'abs');
-                curMin = action.getElementExtreme(elSelector, 'mintop', 'abs');
-            } else { // Something's gone wrong
-                curMax = 1000;
-                curMin = -1000;
-            }
-
-            var pos = $(elSelector).position()[cssKey];
-            var delta = $(idSelector).val() - JSON.parse($(idSelector).attr('lastVal'));
-            if (newValue < curMax && newValue > curMin) {
-                if ((pos === curMax - 1 || pos === curMax) && originalDelta > 0) { // If it's at or near the max
-                    action.setCss(action.selectedItems[i], cssKey, curMax); // Set it to the max
-                    //console.log("SettinG To " + curMax);
-                } else if ((pos === curMin + 1 || pos === curMin) && originalDelta < 0) { // f it's at or near the min
-                    action.setCss(action.selectedItems[i], cssKey, curMin); // Set it to the min
-                    //console.log("SeTting To " + curMin);
-                } else {
-                    action.setCss(action.selectedItems[i], cssKey, newValue);
-                    //console.log("Setting to " + newValue);
-                }
-            } else { // The stuff below makes it so that when you run into an edge, when later going the opposite direction, their relative positions to each other update
-                if (newValue >= curMax && delta > 0) {
-                    if (curMax - pos != 0) delta -= curMax - pos; // This fixes a bug with elements getting off from each other when hitting edges then leaving it
-                    action.setCss(action.selectedItems[i], cssKey, curMax);
-
-                    initial -= delta;
-                    //console.log("decrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
-                    //console.log("Setting To " + curMax);
-                } else if (newValue <= curMin && delta < 0) {
-                    if (curMin - pos != 0) delta -= curMin - pos;
-                    action.setCss(action.selectedItems[i], cssKey, curMin);
-
-                    initial -= delta;
-                    //console.log("incrementing initial" + cssKey + ' of ' + action.selectedItems[i] + ' by ' + delta);
-                    //console.log("SEtting to " + curMin);
-                }
-
-                action.updateMultiPosInputExtrema();
-                $(elSelector).attr('initial' + cssKey, initial + unit);
-            }
-        }
-
-        $(idSelector).attr('lastVal', $(idSelector).val());
-
-        action.saveStorage();
-    } else if (purpose === 'get') {
-        return $('#' + action.selectedItem).css(cssKey);
-    }
-};
-
 action.cgGradientPurpose = function () {
     var lastSelector;
     this.cgOption('gradientType', constants.linearGradientArray[0], ['background', 'text'], 14, true, function (optionSelector) {
@@ -1188,23 +988,6 @@ action.cgalign = function () {
     });
 };
 
-action.cgPosSystem = function () {
-    var lastSelector = '#' + action.multiPositioningSystem + 'Option';
-    this.cgOption('posSystem', constants.positioningSystemOption, ['relative', 'absolute'], 0, true, function (optionSelector) {
-        lastSelector = action.posSystemSelected(optionSelector, lastSelector);
-    }, function (optionName) {
-        var el = $('<label id="' + optionName + 'Option">' + optionName + '</label>');
-        if (optionName == 'relative')
-            el.attr('data-selected', 'true');
-        return el;
-    })
-};
-
-action.posSystemSelected = function (optionSelector, lastSelector) {
-    action.multiPositioningSystem = $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6);
-    action.showMultiSelectionMenu(); // Update the menu. Changes the positioning inputs
-    return action.ultraBasicOptionSelected(optionSelector, lastSelector);
-};
 action.basicOptionSelected = function (optionSelector, lastSelector, cssKey, setTo) {
     action.setCss(action.selectedItem, cssKey, setTo);
     return action.ultraBasicOptionSelected(optionSelector, lastSelector);
@@ -1355,15 +1138,6 @@ action.cgweight = function () {
                 action.handleInputButtonEvent(inputSelector, -100, 'font-weight', 'font-weight', '', action.updateSize, event);
             });
 
-            $(input).on('mousewheel', function (event) {
-                if (event.deltaY > 0) {
-                    $(input).val(Math.round(JSON.parse($(input).val()) + ($(input).val() === $(input).attr('max') ? 0 : 100)));
-                } else {
-                    $(input).val(Math.round(JSON.parse($(input).val()) - ($(input).val() === $(input).attr('min') ? 0 : 100)));
-                }
-                event.preventDefault();
-            });
-
             wrapper.attr('id', 'boldnessOption');
             wrapper.appendTo($("#boldnessOptionDiv"));
             wrapper.attr('class', 'noHoverChange');
@@ -1408,9 +1182,6 @@ action.cgweight = function () {
         })
     });
     $('#boldnessOption').on("change", function () {
-        action.setCss(action.selectedItem, 'font-weight', $('#boldnessInput').val());
-    });
-    $('#boldnessOption').on("mousewheel", function () {
         action.setCss(action.selectedItem, 'font-weight', $('#boldnessInput').val());
     });
 };
@@ -1713,18 +1484,6 @@ action.createLI = function (type, div) { //create add menu
     } else {
         $('#' + div).attr('class', '');
     }
-    $('#' + div).on('mousewheel', function (e) {
-        if (e.deltaY > 0) {
-            $('#' + div).slick('slickPrev');
-            action.setCarouselOpacity(div);
-        } else {
-            if (action.shouldSlickProgress(div)) {
-                $('#' + div).slick('slickNext');
-                action.setCarouselOpacity(div);
-            }
-        }
-        e.preventDefault();
-    });
     $('#' + div).hover(function () {
         $(document).keyup(function () {
             if (event.keyCode === 38) {
@@ -1844,7 +1603,6 @@ action.setCarouselOpacity = function (div) {
     }
 };
 action.saveTheme = function () { //saves info to divs and sends form to create plist
-
     if (action.wallpaper !== null && action.wallpaper !== 'null') {
         $('#wallpaper').hide();
         var canvas = document.getElementById('blurcanvas');
@@ -1869,7 +1627,6 @@ action.saveTheme = function () { //saves info to divs and sends form to create p
     $('.elementPanel').css('display', 'none');
     $('.sidePanel').css('opacity', '1');
 
-
     window.location = 'ios:webToNativeCall';
 
     /*  var devname = $('#fdevname').val();
@@ -1885,10 +1642,6 @@ action.saveTheme = function () { //saves info to divs and sends form to create p
            //$('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
            $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
            $('#myform').submit();*/
-
-
-
-
 };
 action.setBG = function (img) { //apply background to screen
     if (img != '') {
@@ -2260,39 +2013,11 @@ action.getTitleForArray = function (menuArray) { // Any icon menu that's shown n
     }
     if (menuArray.toString() === constants.notSoConstantArray.toString()) return "Custom Combination Menu";
 };
-action.showMultiSelectionMenu = function () {
-    if (action.selectedItems.length > 0) { // Pretty imperative for what we're doing
-
-        var megaMenu = []; // ['editMenu~bla~bla','otherMenu~bla~bla','etcMenu~bla~bla']
-        var curMenu = action.getProperMenuForId(action.selectedItems[0]);
-        for (var i = 0; i < curMenu.length; i++) { // Go through each menu item for the base selection item
-            if (curMenu[i] === constants.editArray[2] && action.multiPositioningSystem === 'relative') {
-                megaMenu.push(constants.multiPosition);
-            } else {
-                megaMenu.push(curMenu[i]); // Add it to the mega array
-            }
-        }
-
-        for (var i = 1; i < action.selectedItems.length; i++) { // Go through each of the other selection items
-            curMenu = action.getProperMenuForId(action.selectedItems[i]);
-            for (var k = 0; k < megaMenu.length; k++) { // Compare each item of the megaMenu to check if it's in this item's menu
-                if (megaMenu[k].split('~')[0].substring(0, 5) != 'multi' && curMenu.indexOf(megaMenu[k]) === -1) { // If the item's in megaMenu but not in this item's menu
-                    megaMenu.splice(k, 1); // Remove the item from megaMenu
-                    k--;
-                }
-            }
-        }
-
-        megaMenu.unshift(constants.positioningSystemOption); // Weird function name. Just puts it at the front.
-
-        constants.notSoConstantArray = megaMenu;
-        action.showIconMenu(megaMenu, -1);
+action.showEditMenu = function () {
+    if (action.selectedItem != "") {
+        action.showProperMenuForId(action.selectedItem);
     } else {
-        if (action.selectedItem != "") {
-            action.showProperMenuForId(action.selectedItem);
-        } else {
-            action.showIconMenu(constants.toolArray, -1);
-        }
+        action.showIconMenu(constants.toolArray, -1);
     }
 };
 action.showProperMenuForId = function (id) {
@@ -2334,48 +2059,6 @@ action.setEditMenuInputsState = function (state, maxIndex, id) { //state: -2 mea
     } else {
         console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
     }
-};
-action.arrowKey = function (key, capitalizedCssKey, event) {
-    var selectedItem = $('#' + action.selectedItem); //The currently selected item
-    var increment = event.altKey ? 10 : 1; // Move by 10 if the alt key is pressed
-    if (key === 'left') {
-        var newPos = selectedItem.position().left - increment;
-        if (event.shiftKey) newPos = 0; // Forcibly trigger the else statement in the ternary below
-        newPos = newPos > 0 ? newPos : 0; // Check to ensure it's still within the screen
-    } else if (key === 'right') {
-        var newPos = selectedItem.position().left + increment;
-        if (event.shiftKey) newPos = 320;
-        newPos = newPos + selectedItem.width() < 320 ? newPos : 320 - selectedItem.width();
-    } else if (key === 'up') {
-        var newPos = selectedItem.position().top - increment;
-        if (event.shiftKey) newPos = 0;
-        newPos = newPos > 0 ? newPos : 0;
-    } else if (key === 'down') {
-        var newPos = selectedItem.position().top + increment;
-        if (event.shiftKey) newPos = 568;
-        newPos = newPos + selectedItem.height() < 568 ? newPos : 568 - selectedItem.height();
-    }
-
-    var lowercaseCssKey = capitalizedCssKey.toLowerCase();
-    action.setCss(action.selectedItem, lowercaseCssKey, newPos); // Actually move the item
-
-    var input = $('#pos' + capitalizedCssKey + 'Input');
-    if (input.length > 0) { // Verify the relevant input exists
-        input.val(newPos); // If it does, update it to reflect the new position
-    }
-};
-action.isASelectedItem = function (itemName) { // Determines whether an iten with the name itemName is in action.selectedItems already
-    for (var i = 0; i < action.selectedItems.length; i++) {
-        if (action.selectedItems[i] === itemName)
-            return true;
-    }
-    return false;
-};
-action.removeFromMultiSelection = function (itemName) {
-    action.selectedItems.forEach(function (item, index) {
-        if (item === itemName)
-            action.selectedItems.splice(index, 1);
-    });
 };
 
 function resizeWall(img, width, height) {
@@ -2463,42 +2146,6 @@ window.onload = function () {
     }, 0); //if going to load immediately wait for everything visible to show first.
 }
 
-$(document).on('keydown', function (event) {
-    if (action.selectedItem != '') {
-        switch (event.keyCode) {
-        case 37: //Left arrow
-            if (!action.isEditingText)
-                action.arrowKey('left', 'Left', event);
-            break;
-        case 38: //Up arrow
-            if (!action.isEditingText)
-                action.arrowKey('up', 'Top', event);
-            break;
-        case 39: //Right arrow
-            if (!action.isEditingText)
-                action.arrowKey('right', 'Left', event);
-            break;
-        case 40: //Down arrow
-            if (!action.isEditingText)
-                action.arrowKey('down', 'Top', event);
-            break;
-        case 46: //Delete key
-            if (!action.isEditingText)
-                action.removeSelectedFromScreen(true);
-            break;
-        }
-    }
-    switch (event.keyCode) {
-    case 89: //Y
-        if (event.ctrlKey) action.redo();
-        break;
-    case 90: //Z
-        if (event.ctrlKey) action.undo();
-        break;
-    }
-
-});
-
 $('.toolPanel').on('click', function (event) { //grab clicks from toolpanel
     action.toolPanel(event);
 });
@@ -2557,7 +2204,6 @@ function handleScreenClick(event) { // Had to move everything to this function s
     function deselectElement(item, fullClear) {
         $('#leftSelector').attr('title', 'Main Menu');
         $('#' + item).css('outline', '0px solid transparent'); // Remove the highlight
-        action.removeFromMultiSelection(item);
         if (fullClear) {
             action.showIconMenu(constants.toolArray, -1); // Show the base toolArray
             action.selectedItem = ""; // Clear the selected item
@@ -2569,148 +2215,23 @@ function handleScreenClick(event) { // Had to move everything to this function s
     }
 
     if (event.target.id === '' && action.selectedItem != '') { // Clicked on the empty screen
-        if (action.selectedItems.length > 0) {
-            for (var i = 0; i < action.selectedItems.length; i++) {
-                deselectElement(action.selectedItems[i], false);
-                i--;
-            }
-        }
         deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
     } else if (event.target.id != 'screen' && event.target.id != '') { //If you clicked on something...
-        if (event.target.id === action.selectedItem) { // If they clicked the centrally highlighted item
-            if (action.selectedItems.length > 0) { // If we should consider multi-selection
-                if (event.shiftKey) { // If someone shift-clicked the centrally selected item
-                    action.selectedItems.forEach(function (item, index, arr) { // Deselect the central item, name a new one
-                        if (item === action.selectedItem) {
-                            deselectElement(item, false); // Automatically removed from multiselection arr
+        if (event.target.id === action.selectedItem) { // If they clicked the currently selected item
+            deselectElement(action.selectedItem, true);
+        } else { // User either clicked on another element (so highlight it)
+            deselectElement(action.selectedItem, false); // Unhighlight the old element
 
-                            if (action.selectedItems.length > 0) // If there are still some left
-                                action.selectedItem = action.selectedItems[0]; // Change the centrally located one
+            action.selectedItem = event.target.id; // Set the selected item to the new element
+            $('#' + event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
 
-                            if (action.selectedItems.length === 1) { // The one we just made central is the only one left apparently
-                                action.selectedItems.splice(0, 1); // So clear out multi-selection entirely
-                            }
+            if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
 
-                            action.showMultiSelectionMenu();
-                        }
-                    });
-                } else {
-                    console.log(event.type);
-                    for (var i = 0; i < action.selectedItems.length; i++) { // Deselect eveything else, clear multiselection array
-                        var item = action.selectedItems[i];
-                        if (item != action.selectedItem) {
-                            deselectElement(item, false); // Deselect all multi-selected items, except the centrally selected one
-                        }
-                        action.selectedItems.splice(i, 1); // No matter what, remove this item from multi-selection. We're clearing out
-                        i--;
-                    }
-
-                    action.showMultiSelectionMenu();
-                }
-
-            } else {
-                deselectElement(action.selectedItem, true);
-            }
-        } else if (event.shiftKey && action.isASelectedItem(event.target.id)) { // If the shift-clicked item is an already-highlighted item
-            if (action.selectedItems.length > 0) {
-                for (var i = 0; i < action.selectedItems.length; i++) {
-                    if (action.selectedItems[i] === event.target.id) {
-                        action.selectedItems.splice(i, 1); // Remove the item from selectedItems
-                        break;
-                    }
-                }
-                deselectElement(event.target.id, false);
-            }
-
-            action.showMultiSelectionMenu();
-        } else { // User either clicked on another element, or on a new element to highlight
-            if (event.shiftKey && action.selectedItem != "") {
-                if (!action.isASelectedItem(action.selectedItem)) // Check if the 'centrally selected' item is a part of multi-selection
-                    action.selectedItems.push(action.selectedItem); // Add it if it isn't already
-
-                action.selectedItems.push(event.target.id);
-
-                $('#' + event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
-
-                action.showMultiSelectionMenu();
-            } else {
-                if (!(event.type === "dragstart" && action.selectedItems.length > 0)) {
-                    deselectElement(action.selectedItem, false); // Unhighlight the old element
-                    for (var i = 0; i < action.selectedItems.length; i++) {
-                        deselectElement(action.selectedItems[i], false);
-                        i--;
-                    }
-
-                    action.selectedItem = event.target.id; // Set the selected item to the new element
-                    $('#' + event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
-
-                    if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
-
-                    action.showMultiSelectionMenu();
-                    $('#leftSelector').attr('title', 'Element Menu');
-                }
-            }
+            $('#leftSelector').attr('title', 'Element Menu');
         }
     }
+    action.showEditMenu();
 }
-
-$('.screen').on('mousewheel', function (event) {
-    var selected = $('#' + action.selectedItem);
-    if (selected.length > 0 && $('#' + action.selectedItem + ':hover').length > 0) { // Tried using .is(':hover'), but it always returned false. This works
-        if (event.deltaY > 0) var increment = event.altKey ? 10 : 1;
-        else var increment = event.altKey ? -10 : -1;
-
-        if (action.selectedItem.substring(0, 3) === 'box' || action.selectedItem === 'icon') { // Special case for boxes and circles (also icons), change both height and width
-            var newHeight = selected.height() + increment;
-            newHeight = newHeight > 0 ? newHeight : 1; // Floor at 1
-            //newHeight = newHeight < 568 ? newHeight : 568; // Ceiling at 568 (height of screen) TODO: Fix the interesting quirks introduced by using this (circles → ovals)
-            var newWidth = selected.width() + increment;
-            newWidth = newWidth > 0 ? newWidth : 1; // Floor at 1
-            //newWidth = newWidth < 320 ? newWidth : 320; // Ceiling at 320 (width of screen)
-            action.setCss([
-                [action.selectedItem, ['height', 'width'],
-                    [newHeight + 'px', newWidth + 'px']
-                ]
-            ]);
-
-            if (action.selectedItem === 'icon') {
-                //Special case for icons. It's child img's height and width must also be updated
-                var iconChild = $(selected.children()[0]);
-                iconChild.css('height', newHeight).css('width', newHeight); // Icons should always be squares
-
-                var input = $('#iconSizeInput');
-                if (input.length > 0) { // Verify the relevant input exists
-                    input.val(newHeight); // If it does, update it to reflect the new position
-                }
-            } else { // It's either a box or a circle
-                var input = $('#widthSizeInput'); // Both boxes and circles need their width updated
-                if (input.length > 0) {
-                    input.val(newWidth);
-                }
-                if (action.selectedItem.substring(3, 9) != 'Circle') { // Only boxes, not circles, have height to be updated
-                    var inputTwo = $('#heightSizeInput');
-                    if (inputTwo.length > 0) {
-                        inputTwo.val(newHeight);
-                    }
-                }
-            }
-        } else { // Otherwise, it's normal text, change font size
-            var oldSize = selected.css('font-size');
-            oldSize = JSON.parse(oldSize.substring(0, oldSize.length - 2)); // Remove the 'px' from the end, turn it into a number
-            var newSize = oldSize + increment;
-            newSize = newSize > 5 ? newSize : 5; // Set a floor at 5
-            action.setCss(action.selectedItem, 'font-size', newSize + 'px');
-
-            // Update the font size input
-            var input = $('#fontSizeInput');
-            if (input.length > 0) {
-                input.val(newSize);
-            }
-        }
-        action.saveStorage();
-        event.preventDefault();
-    }
-});
 
 var scrollLimitForEditMenu = 120; //one place to change incase any more edits
 
