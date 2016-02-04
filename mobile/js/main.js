@@ -1780,7 +1780,7 @@ action.addDraggable = function (id) {
     /*var startX;
     var startY;*/
     $('#' + id).draggable({
-        containment: contain,
+        containment: "window",
         start: function (event, ui) {
             /* if dLine class has title the same as id remove it */
             /* remove it on start to not mess with it's own movement */
@@ -1807,13 +1807,13 @@ action.addDraggable = function (id) {
         stop: function (event, ui) {
             var position = $('#' + id).position();
             action.addAction(['setCss', [
-                [id, ['top', 'left'], action.sizeQueueTimeout.initialValue, [position.top, position.left]]
+                [id, ['top', 'left'], action.sizeQueueTimeout.initialValue, [ui.position.top, ui.position.left]]
             ]]);
             action.sizeQueueTimeout.initialValue = '';
 
             // Since we're not going through setCss, it's never saved to localStorage. Gotta do it manually
-            action.savedElements.placedElements[id].left = position.left;
-            action.savedElements.placedElements[id].top = position.top;
+            action.savedElements.placedElements[id].left = ui.position.left;
+            action.savedElements.placedElements[id].top = ui.position.top;
             action.saveStorage();
 
             /* Create a div around the element which can be used for snapping */
