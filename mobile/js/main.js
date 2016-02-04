@@ -1803,6 +1803,9 @@ action.addDraggable = function (id) {
 
             ui.position.left = newLeft;
             ui.position.top = newTop;
+
+            if (ui.position.left + $('#' + action.selectedItem).width() > 320) ui.position.left = 320 - $('#' + action.selectedItem).width(); // Fixes items going outside containment
+            if (ui.position.top + $('#' + action.selectedItem).height() > 568) ui.position.left = 568 - $('#' + action.selectedItem).height();
         },
         stop: function (event, ui) {
             var position = $('#' + id).position();
