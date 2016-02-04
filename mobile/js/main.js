@@ -7,6 +7,7 @@ var action = {
     blurTimeout: null,
     timeout: '',
     lastNotificationTime: false,
+    zoomScale: 1.5,
     actionQueue: [], //Queue of actions for undo/redo
     queuePosition: -1, //The current position within this ↑ queue, which action was most recently done
     isUndoingRedoing: false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
@@ -1784,11 +1785,24 @@ action.addDraggable = function (id) {
             /* if dLine class has title the same as id remove it */
             /* remove it on start to not mess with it's own movement */
             /* it will snap to itself this solves that issue */
+            ui.position.left = 0;
+            ui.position.top = 0;
+
             $(".dLine[title='" + id + "']").remove();
             if (action.selectedItem != id) //$('#' + id).click();
                 handleScreenClick(event);
 
             action.sizeQueueTimeout.initialValue = [$('#' + id).position().top, $('#' + id).position().left]; //Just borrowing it, nothing else will need this while you're moving an element
+        },
+        drag: function (event, ui) {
+            var changeLeft = ui.position.left - ui.originalPosition.left; // find change in left
+            var newLeft = ui.originalPosition.left + changeLeft / action.zoomScale; // adjust new left by our zoomScale
+
+            var changeTop = ui.position.top - ui.originalPosition.top; // find change in top
+            var newTop = ui.originalPosition.top + changeTop / action.zoomScale; // adjust new top by our zoomScale
+
+            ui.position.left = newLeft;
+            ui.position.top = newTop;
         },
         stop: function (event, ui) {
             var position = $('#' + id).position();
@@ -2143,6 +2157,8 @@ window.onload = function () {
         action.createLI(elementPanel.systemElements, 'systemList');
         $('#miscList').toggle('display');
         action.createLI(elementPanel.miscElements, 'miscList');
+
+
     }, 0); //if going to load immediately wait for everything visible to show first.
 }
 
