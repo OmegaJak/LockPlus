@@ -7,3 +7,4 @@
 ../css/stroll.css
 ../css/toolpanel.css
 ../css/tooltips.css
+../WebReady/font-awesome.min.css
