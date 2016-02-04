@@ -4,204 +4,204 @@ action.toolPanel = function (evt) {
     	case 'cgOverlay':
     	case 'cgBackground':
     		$('#bgInput').click();
-        break;
+            break;
     	case 'overlay':
     		this.showIconMenu(constants.overlayArray, -1);
-        break;
+            break;
     	case 'clearOverlay':
     		$('.screenoverlay').css('background-image', '');
     		action.savedElements.overlay = '';
         	action.saveStorage();
-        break;
+            break;
         case 'background':
         	this.showIconMenu(constants.backgroundArray, -1);
-        break;
+            break;
         case 'openBackground':
         	this.openBackground('original');
-        break;
+            break;
         case 'backgroundBlur':
         	this.cgSize('backgroundBlur', constants.backgroundArray[2], '', 0, 100, 'backBlur', 'backBlur', action.backgroundBlur, false, false, 'Background Blur');
-        break;
+            break;
         case 'openBlurryBackground':
         	this.openBackground('blurry');
-        break;
+            break;
         case 'clearBackground':
         	this.setBG('');
-        break;
+            break;
         case 'backToTools':
         	this.showIconMenu(constants.toolArray, -1);
-        break;
+            break;
         case 'clear':
         	action.clearTheme(-1);
-        break;
+            break;
         case 'save':
         	this.saveTheme();
-        break;
+            break;
         case 'load':
         	location.href = "http://lockplus.us/creator/load/mobile.php";
-        break;
+            break;
         case 'element':
         	action.elementIconClick();
         	showElementPanel();
-        break;
+            break;
         case 'size':
         	this.cgSize('fontSize', constants.editArray[0], 'px', 5, 300, 'font-size', 'font-size', action.updateSize);
-        break;
+            break;
         case 'width':
         	this.cgSize('widthSize', constants.editArray[1], 'px', 1, $('.screen').width(), 'width', 'width', action.updateSize);
-        break;
+            break;
         case 'height':
         	this.cgSize('heightSize', constants.boxEditArray[1], 'px', 1, $('.screen').height(), 'height', 'height', action.updateSize);
-        break;
+            break;
         case 'position':
         	this.cgPosition();
-        break;
+            break;
         case 'align':
         	this.cgalign();
-        break;
+            break;
         case 'fonts':
         	this.cgfont();
-        break;
+            break;
         case 'uppercase':
         	this.cguppercase();
-        break;
+            break;
         case 'style':
         	this.cgStyle();
-        break;
+            break;
         case 'weight':
         	this.cgweight();
-        break;
+            break;
         case 'shadow':
         	action.showIconMenu(constants.shadowArray, -1);
-        break;
+            break;
         case 'boxShadow':
         	action.showIconMenu(constants.boxShadowArray, -1);
-        break;
+            break;
         case 'hShadow':
         	this.cgSize('hShadow', constants.shadowArray[0], 'px', -100, 100, 'hShadow', 'hShadow', action.updateShadow, false, false, 'Horizontal');
-        break;
+            break;
         case 'vShadow':
         	this.cgSize('vShadow', constants.shadowArray[1], 'px', -100, 100, 'vShadow', 'vShadow', action.updateShadow, false, false, 'Vertical');
-        break;
+            break;
         case 'blur':
         	this.cgSize('blur', constants.shadowArray[2], 'px', 0, 50, 'blur', 'blur', action.updateShadow, false, false, 'Blur Radius');
-        break;
+            break;
         case 'radius':
         	this.cgSize('radiusSize', constants.boxEditArray[3], 'px', 0, $('#' + action.selectedItem).width() / 2, 'border-radius', 'border-radius', action.updateSize, false, false, 'Box Radius');
-        break;
+            break;
         case 'transform':
         	action.showIconMenu(constants.transformArray, -1);
-        break;
+            break;
         case 'rotation':
         	this.cgSize('rotationAngle', constants.transformArray[0], 'deg', 0, 360, 'rotate', 'rotate', action.updateTransform, false, false, 'Rotation Angle');
-        break;
+            break;
         case 'skeyX':
         	this.cgSize('skewXAngle', constants.transformArray[1], 'deg', 0, 360, 'skewX', 'skewX', action.updateTransform, false, false, 'X Skew Angle');
-        break;
+            break;
         case 'skewY':
         	this.cgSize('skewYAngle', constants.transformArray[2], 'deg', 0, 360, 'skewY', 'skewY', action.updateTransform, false, false, 'Y Skew Angle');
-        break;
+            break;
         case 'clearTransform':
         	action.updateTransform('', '', '', '', 'clear');
-        break;
+            break;
         case 'shadowColor':
         	this.cgShadowColor();
-        break;
+            break;
         case 'clearShadow':
         	this.updateShadow('', '', '', '', 'clear');
-        break;
+            break;
         case 'backToEdit':
         	action.showMultiSelectionMenu();
-        break;
+            break;
         case 'boxhShadow':
         	this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', -100, 100, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal');
-        break;
+            break;
         case 'boxvShadow':
         	this.cgSize('boxvShadow', constants.boxShadowArray[1], 'px', -100, 100, 'boxvShadow', 'boxvShadow', action.updateShadow, false, false, 'Vertical');
-        break;
+            break;
         case 'boxblur':
         	this.cgSize('boxblur', constants.boxShadowArray[2], 'px', 0, 50, 'boxblur', 'boxblur', action.updateShadow, false, false, 'Blur Radius');
-        break;
+            break;
         case 'boxshadowColor':
         	this.cgShadowColor(true);
-        break;
+            break;
         case 'boxclearShadow':
         	this.updateShadow('', '', '', '', 'clear');
-        break;
+            break;
         case 'color':
         	this.cgcolor(false, 'color', 'colorDiv');
-        break;
+            break;
         case 'boxColor':
         	this.cgcolor(false, 'background-color', 'boxColorDiv');
-        break;
+            break;
         case 'customText':
         	this.cgCustomText();
-        break;
+            break;
         case 'delete':
         	action.delete();
-        break;
+            break;
         case 'iconsize':
         	this.cgSize('iconSize', constants.iconArray[0], 'px', 5, $('.screen').width(), 'width', 'width', action.updateSize);
-        break;
+            break;
         case 'changeicon':
         	this.populateIcons();
-        break;
+            break;
         case 'affixes':
         	this.showIconMenu(constants.affixArray, -1);
-        break;
+            break;
         case 'customPrefix':
         	this.cgAffix('prefix');
-        break;
+            break;
         case 'customSuffix':
         	this.cgAffix('suffix');
-        break;
+            break;
         case 'clearAffixes':
         	this.cgAffix('clear');
-        break;
+            break;
         case 'border':
         	this.showIconMenu(constants.borderArray, -1);
-        break;
+            break;
         case 'borderStyle':
         	this.cgBorderStyle();
-        break;
+            break;
         case 'borderWidth':
         	this.cgSize('borderWidth', constants.borderArray[1], 'px', 0, 200, 'border-width', 'borderWidth', action.updateSize);
-        break;
+            break;
         case 'border-color':
         	this.cgcolor(false, 'border-color', 'border-colorDiv');
-        break;
+            break;
         case 'clearBorder':
         	this.setCss(action.selectedItem, 'border', '');
-        break;
+            break;
         case 'posSystem':
         	this.cgPosSystem();
-        break;
+            break;
         case 'multiPos':
         	this.cgMultiPosition();
-        break;
+            break;
         case 'linearBoxGradient':
         	this.showIconMenu(constants.linearBoxGradientArray, -1);
-        break;
+            break;
         case 'linearGradient':
         	this.showIconMenu(constants.linearGradientArray, -1);
-        break;
+            break;
         case 'gradientType':
         	this.cgGradientPurpose();
-        break;
+            break;
         case 'linearGradientAngle':
         	this.cgSize('rotateLinearGradient', constants.linearGradientArray[1], 'deg', 0, 360, 'rotate', 'rotate', action.updateGradient, false, false, 'Rotate Gradient');
-        break;
+            break;
         case 'linearGradientStartColor':
         	this.cgLinearGradientColor(constants.linearGradientArray[2], 'color~0.5');
-        break;
+            break;
         case 'linearGradientStopColorOne':
         	this.cgLinearGradientColor(constants.linearGradientArray[3], 'color~1');
         	this.cgSize('linGradientStopOnePercent', constants.linearGradientArray[3], '%', 0, 100, 'pos~1', 'pos~1', action.updateGradient, false, false, 'Stop 1 Distance');
-        break;
+            break;
         case 'linearGradientStopColorTwo':
         	this.cgLinearGradientColor(constants.linearGradientArray[4], 'color~2');
         	this.cgSize('linGradientStopTwoPercent', constants.linearGradientArray[4], '%', 0, 100, 'pos~2', 'pos~2', action.updateGradient, false, false, 'Stop 2 Distance');
-        break;
+            break;
         case 'clearGradient':
         	this.updateGradient('', '', '', '', 'clear');
     	default: '';
