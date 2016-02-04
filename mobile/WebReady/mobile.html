@@ -12,52 +12,6 @@
 	<script src='js/prefixfree.min.js'></script>
 	<script src='js/StackBlur.js'></script>
 	<script src="mobile/UITouchPunch.js"></script>
-	<style>
-#leftSelector{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 30px;
-    height: 80%;
-    background-color: rgba(0,0,0,0.7);
-    z-index: 999;
-    top:50%;
-    -webkit-transform: translate(0, -53%);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-#leftSelector:after{
-	position: relative;
-	content: attr(title);
-	color:white;
-	display: inline-block;
-	height: 100%;
-	left:-368px;
-	width: 200px;
-	font-size: 20px;
-	text-align: center;
-	-webkit-transform:rotate(90deg);
-}
-
-.sidePanel {
-	position: absolute;
-	display: none;
-	width: 90%;
-	height: 100%;
-	overflow:hidden;
-}
-#screenCover{
-	position: absolute;
-	top:68px;
-	left:47px;
-	width: 320px;
-	height: 568px;
-	background-color: rgba(0,0,0,0.6);
-	-webkit-backdrop-filter: blur(10px);
-	display: none;
-}
-
-	</style>
 	<link rel="stylesheet" type="text/css" href="mobile/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="mobile/css/main.min.css">
 </head>
@@ -97,9 +51,7 @@
 		<div id="helpinfo"></div>
 	</div>
 </div>
-	<div id="leftSelector" title="Main Menu" ontouchstart="menu.toggle()"></div>
-	<div id="screenCover"></div>
-	<div class="sidePanel">
+	<div class="sidePanel" style="display:none;">
 		<div class="toolPanel">
 			<ul id="icons">
 			</ul>
@@ -165,34 +117,6 @@ $(function() {
     FastClick.attach(document.getElementById('container'));
 });
 </script>
-<script>
-	var menu = {};
-	menu.toggle = function(){
-		var display = $('.sidePanel').css('display');
-		if(display == 'none'){
-			if($('#leftSelector').attr('title') == 'Element Menu'){
-				$('#screenCover').css('display', 'none');
-				}else{
-					$('#screenCover').css('display', 'block');
-				}
-			$('#leftSelector').attr('title','Close');
-			$('.sidePanel').css('display', 'block');
-		}else{
-			if(action.selectedItem !== ''){
-				$('#leftSelector').attr('title','Element Menu');
-			}else{
-				$('#leftSelector').attr('title','Main Menu');
-			}
-			$('.sidePanel').css('display', 'none');
-			$('#screenCover').css('display', 'none');
-			$('.elementPanel').css('display','none');
-			$('.sidePanel').css('opacity','1');
-		}
-	}
-	function showElementPanel(){
-		$('.sidePanel').css('opacity','0');
-		}
-	</script>
 <!--<script src="js/rasterHTML.js"></script>-->
 </body>
 </html>
