@@ -108,7 +108,7 @@ footer a {
 #version{
   position: absolute;
   left:5px;
-  bottom: -2px;
+  bottom: 2px;
   font-size: 10px;
 }
 #version:hover{
@@ -723,7 +723,7 @@ label {
 
 @media only screen and (min-device-width: 375px) {
 	.phone{
-		-webkit-transform:scale(1.2);
+		-webkit-transform:scale(1.18);
 	}
 }
 @media only screen and (min-device-width: 414px) {
@@ -733,7 +733,10 @@ label {
 }
 @media only screen and (min-device-width: 768px) {
 	.phone{
-		-webkit-transform:scale(1.4);
+		left:50%;
+		top:50%;
+		-webkit-transform:scale(1.8)translate(-50%,-50%);
+
 	}
 }
 

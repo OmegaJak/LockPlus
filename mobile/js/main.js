@@ -1780,7 +1780,7 @@ action.addDraggable = function (id) {
     /*var startX;
     var startY;*/
     $('#' + id).draggable({
-        containment: "window",
+        containment: 'window',
         start: function (event, ui) {
             /* if dLine class has title the same as id remove it */
             /* remove it on start to not mess with it's own movement */
@@ -1805,7 +1805,12 @@ action.addDraggable = function (id) {
             ui.position.top = newTop;
 
             if (ui.position.left + $('#' + action.selectedItem).width() > 320) ui.position.left = 320 - $('#' + action.selectedItem).width(); // Fixes items going outside containment
-            if (ui.position.top + $('#' + action.selectedItem).height() > 568) ui.position.left = 568 - $('#' + action.selectedItem).height();
+
+            if (ui.position.top + $('#' + action.selectedItem).height() > 568) ui.position.top = 568 - $('#' + action.selectedItem).height();
+
+            //ipad
+            if (ui.position.left < 0) ui.position.left = 0;
+
         },
         stop: function (event, ui) {
             var position = $('#' + id).position();
@@ -2164,12 +2169,12 @@ window.onload = function () {
         action.zoomScale = screen.width / 320;
         switch(window.innerWidth) {
             case 375:
-                action.zoomScale = 1.2;
+                action.zoomScale = 1.18;
                 break;
             case 414:
                 action.zoomScale = 1.3;
                 break;
-            case 414:
+            case 768:
                 action.zoomScale = 1.8;
                 break;
         }
