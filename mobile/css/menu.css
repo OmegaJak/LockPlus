@@ -15,7 +15,7 @@
 	height: 80px;
 	bottom:0;
 	left:0;
-	background-color: rgba(0,0,0,0.6);
+	background-color: rgba(0,0,0,0.2);
 	display: block;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -24,7 +24,42 @@
 
 
 
-    display:none;
+}
+
+.inputContainer{
+	position: absolute;
+	top:23px;
+	right:140px;
+	width: 80px;
+	height: 60px;
+}
+.manualInput{
+	position: absolute;
+	top:3px;
+	left:24px;
+	width: 30px;
+	text-align: center;
+	border:0px solid transparent;
+	border-radius: 2px;
+}
+.inButton{
+	position: absolute;
+}
+.incs,.decs{
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: rgba(255,255,255,1);
+	border-radius: 999px;
+	text-align: center;
+	line-height: 20px;
+	color:black;
+}
+.incs{
+	right: 0;
+}
+.decs{
+	left:0;
 }
 
 /*#bottomMenu::-webkit-scrollbar-track {
@@ -57,31 +92,38 @@
 	color: white;
 	list-style-type: none;
 	height: 60px;
-	top:-10px;
-	left:-40px;
-	background-color: blue;
+	top:-15px;
+	left:-41px;
+	background-color: rgba(0,0,0,0.7);
 	display: inline-block;
 	font-size: 20px;
-	border-bottom: 1px solid black;
+	margin: 1px;
+	overflow: hidden;
+}
+
+.liText{
+	position: absolute;
+	line-height: 60px;
+	margin-left: 20px;
+	text-transform: capitalize;
 }
 
 .slider-wrapper{
 	width: 100px!important;
 	position: absolute;
 	top:30px;
-	right:60px;
+	right:20px;
 }
 .range-bar{
 	position: absolute;
 	width: 100px!important;
-	left:200px;
 }
 .range-handle{
 	width: 30px!important;
 	height: 30px!important;
 }
 .range-quantity{
-	background-color: green!important;
+	background-color: white!important;
 }
 
 

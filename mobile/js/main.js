@@ -2251,7 +2251,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
     if (event.target.id === '' && action.selectedItem != '') { // Clicked on the empty screen
         deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
-        $('#bottomMenu').css('display','none');
+        $('#bottomMenu').remove();
     } else if (event.target.id != 'screen' && event.target.id != '') { //If you clicked on something...
         $('#bottomMenu').css('display','block');
         if (event.target.id === action.selectedItem) { // If they clicked the currently selected item
@@ -2264,7 +2264,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
             if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
 
-            $('#leftSelector').attr('title', 'Element Menu');
+            menu.bottomMenu();
         }
     }
     //action.showEditMenu();

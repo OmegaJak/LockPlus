@@ -16,8 +16,8 @@ var constants = {
     overlayArray: ['cgOverlay~Change Overlay~fa fa-clipboard'
                     ,'backToTools~Back~fa fa-arrow-left'
                     ,'clearOverlay~Clear Overlay~fa fa-trash'],
-    editArray: ['size~Change Font Size~fa fa-font~sizeDiv'
-                    ,'width~Change Width~fa fa-arrows-h~widthDiv'
+    editArray: ['size~Change Font Size~fa fa-font~sizeDiv~font-size'
+                    ,'width~Change Width~fa fa-arrows-h~widthDiv~width'
                     ,'position~Change Position~fa fa-arrows~positionDiv'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'align~Change Alignment~fa fa-align-center~alignDiv'
