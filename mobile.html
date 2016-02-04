@@ -67,34 +67,6 @@
 }
 
 	</style>
-	<script>
-	var menu = {};
-	menu.toggle = function(){
-		var display = $('.sidePanel').css('display');
-		if(display == 'none'){
-			if($('#leftSelector').attr('title') == 'Element Menu'){
-				$('#screenCover').css('display', 'none');
-				}else{
-					$('#screenCover').css('display', 'block');
-				}
-			$('#leftSelector').attr('title','Close');
-			$('.sidePanel').css('display', 'block');
-		}else{
-			if(action.selectedItem !== ''){
-				$('#leftSelector').attr('title','Element Menu');
-			}else{
-				$('#leftSelector').attr('title','Main Menu');
-			}
-			$('.sidePanel').css('display', 'none');
-			$('#screenCover').css('display', 'none');
-			$('.elementPanel').css('display','none');
-			$('.sidePanel').css('opacity','1');
-		}
-	}
-	function showElementPanel(){
-		$('.sidePanel').css('opacity','0');
-		}
-	</script>
 	<link rel='stylesheet' href='mobile/css/fixes.css?002'/>
 </head>
 <body>
@@ -203,6 +175,35 @@ $(function() {
     FastClick.attach(document.getElementById('container'));
 });
 </script>
+<script>
+//must be defined after action is created.
+	var menu = {};
+	menu.toggle = function(){
+		var display = $('.sidePanel').css('display');
+		if(display == 'none'){
+			if($('#leftSelector').attr('title') == 'Element Menu'){
+				$('#screenCover').css('display', 'none');
+				}else{
+					$('#screenCover').css('display', 'block');
+				}
+			$('#leftSelector').attr('title','Close');
+			$('.sidePanel').css('display', 'block');
+		}else{
+			if(action.selectedItem !== ''){
+				$('#leftSelector').attr('title','Element Menu');
+			}else{
+				$('#leftSelector').attr('title','Main Menu');
+			}
+			$('.sidePanel').css('display', 'none');
+			$('#screenCover').css('display', 'none');
+			$('.elementPanel').css('display','none');
+			$('.sidePanel').css('opacity','1');
+		}
+	}
+	function showElementPanel(){
+		$('.sidePanel').css('opacity','0');
+		}
+	</script>
 <!--<script src="js/rasterHTML.js"></script>-->
 </body>
 </html>
