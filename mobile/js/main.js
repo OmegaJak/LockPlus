@@ -673,7 +673,7 @@ action.cgSize = function (key, nameString, unit, min, max, cssKey, jsCssKey, upd
     if (intendedNumberOfInputs === undefined || !intendedNumberOfInputs)
         var intendedNumberOfInputs = 1;
     if (!$(divSelector).length) { //If the input hasn't been created yet
-        action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle, false).prependTo('#' + splitArr[3]);
+        action.getInputWrapper(key, inputRightPos, inputTopPos, min, max, inputTitle, false).insertAfter('#' + splitArr[3]);
 
         $('#' + key + 'Decrement').on('click', function (event) {
             action.handleInputButtonEvent(idSelector, -1, cssKey, jsCssKey, unit, updateCallback, event)
@@ -754,7 +754,7 @@ action.cgOption = function (key, nameString, options, optionsTop, adjustWidth, o
     if (optionsTop === 0 || !optionsTop)
         optionsTop = $('#' + splitArr[3]).position().top + 11;
     if (!$(divSelector).length) { //If the options haven't been created yet
-        $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').prependTo('#' + splitArr[3]);
+        $('<div id="' + key + 'DivWrapper" style="display: block;" class="options"></div>').insertAfter('#' + splitArr[3]);
 
         var right = 80;
         var margin = 0;
