@@ -111,8 +111,8 @@ action.toolPanel = function (evt) {
         	this.updateShadow('', '', '', '', 'clear');
             break;
         case 'backToEdit':
-        	action.showMultiSelectionMenu();
-            break;
+        	action.showEditMenu();
+        	break;
         case 'boxhShadow':
         	this.cgSize('boxhShadow', constants.boxShadowArray[0], 'px', -100, 100, 'boxhShadow', 'boxhShadow', action.updateShadow, false, false, 'Horizontal');
             break;
@@ -210,8 +210,3 @@ action.toolPanel = function (evt) {
         action.setCss(action.selectedItem, 'background', 'linear-gradient(rgb(255,0,0),rgb(255,255,0) 50%,rgb(0,0,255) 90%)');
     }
 };
-
-
-
-
-
