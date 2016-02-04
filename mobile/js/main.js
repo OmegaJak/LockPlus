@@ -2251,7 +2251,9 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
     if (event.target.id === '' && action.selectedItem != '') { // Clicked on the empty screen
         deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
+        $('#bottomMenu').css('display','none');
     } else if (event.target.id != 'screen' && event.target.id != '') { //If you clicked on something...
+        $('#bottomMenu').css('display','block');
         if (event.target.id === action.selectedItem) { // If they clicked the currently selected item
             deselectElement(action.selectedItem, true);
         } else { // User either clicked on another element (so highlight it)
@@ -2265,7 +2267,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
             $('#leftSelector').attr('title', 'Element Menu');
         }
     }
-    action.showEditMenu();
+    //action.showEditMenu();
 }
 
 var scrollLimitForEditMenu = 120; //one place to change incase any more edits
