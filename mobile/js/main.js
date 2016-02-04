@@ -2159,7 +2159,7 @@ window.onload = function () {
         action.createLI(elementPanel.miscElements, 'miscList');
 
         action.zoomScale = screen.width / 320;
-        $('html').css('transform','scale(' + action.zoomScale + ')');
+        $('container').css('transform','scale(' + action.zoomScale + ')');
     }, 0); //if going to load immediately wait for everything visible to show first.
 }
 
