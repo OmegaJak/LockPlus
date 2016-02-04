@@ -60,34 +60,6 @@
 	</style>
 	<link rel="stylesheet" type="text/css" href="mobile/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="mobile/css/main.min.css">
-	<script>
-	var menu = {};
-	menu.toggle = function(){
-		var display = $('.sidePanel').css('display');
-		if(display == 'none'){
-			if($('#leftSelector').attr('title') == 'Element Menu'){
-				$('#screenCover').css('display', 'none');
-				}else{
-					$('#screenCover').css('display', 'block');
-				}
-			$('#leftSelector').attr('title','Close');
-			$('.sidePanel').css('display', 'block');
-		}else{
-			if(action.selectedItem !== ''){
-				$('#leftSelector').attr('title','Element Menu');
-			}else{
-				$('#leftSelector').attr('title','Main Menu');
-			}
-			$('.sidePanel').css('display', 'none');
-			$('#screenCover').css('display', 'none');
-			$('.elementPanel').css('display','none');
-			$('.sidePanel').css('opacity','1');
-		}
-	}
-	function showElementPanel(){
-		$('.sidePanel').css('opacity','0');
-		}
-	</script>
 </head>
 <body>
 	<header style="display:none;">
@@ -193,6 +165,34 @@ $(function() {
     FastClick.attach(document.getElementById('container'));
 });
 </script>
+<script>
+	var menu = {};
+	menu.toggle = function(){
+		var display = $('.sidePanel').css('display');
+		if(display == 'none'){
+			if($('#leftSelector').attr('title') == 'Element Menu'){
+				$('#screenCover').css('display', 'none');
+				}else{
+					$('#screenCover').css('display', 'block');
+				}
+			$('#leftSelector').attr('title','Close');
+			$('.sidePanel').css('display', 'block');
+		}else{
+			if(action.selectedItem !== ''){
+				$('#leftSelector').attr('title','Element Menu');
+			}else{
+				$('#leftSelector').attr('title','Main Menu');
+			}
+			$('.sidePanel').css('display', 'none');
+			$('#screenCover').css('display', 'none');
+			$('.elementPanel').css('display','none');
+			$('.sidePanel').css('opacity','1');
+		}
+	}
+	function showElementPanel(){
+		$('.sidePanel').css('opacity','0');
+		}
+	</script>
 <!--<script src="js/rasterHTML.js"></script>-->
 </body>
 </html>
