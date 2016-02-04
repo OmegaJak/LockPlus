@@ -2158,7 +2158,8 @@ window.onload = function () {
         $('#miscList').toggle('display');
         action.createLI(elementPanel.miscElements, 'miscList');
 
-
+        action.zoomScale = screen.width / 320;
+        $('html').css('transform','scale(' + action.zoomScale + ')');
     }, 0); //if going to load immediately wait for everything visible to show first.
 }
 
