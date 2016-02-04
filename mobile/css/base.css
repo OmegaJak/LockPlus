@@ -108,7 +108,7 @@ footer a {
 #version{
   position: absolute;
   left:5px;
-  bottom: -2px;
+  bottom: 2px;
   font-size: 10px;
 }
 #version:hover{
