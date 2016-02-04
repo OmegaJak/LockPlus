@@ -83,3 +83,95 @@
 .range-quantity{
 	background-color: green!important;
 }
+
+
+
+
+
+
+#elPanelDragger{
+	position: absolute;
+	color:white;
+	left: 3px;
+	bottom: 71px;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 999;
+	padding: 4px;
+	border-radius: 3px;
+	display: none;
+}
+#elPanelCloser{
+	position: fixed;
+	color:white;
+	right: 3px;
+	bottom: 71px;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 999;
+	padding: 4px;
+	border-radius: 3px;
+}
+
+
+.liSelected{
+	background-color: teal!important;
+}
+
+
+#elPanel::-webkit-scrollbar-track {
+    display: none;
+}
+#elPanel::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+#elPanel::-webkit-scrollbar {
+    display: none;
+}
+
+#elPanel{
+	position: absolute;
+	left:0;
+	bottom:0;
+	width: 100%;
+	height: 100px;
+	background-color: black;
+	overflow: scroll;
+	display: none;
+}
+#accordion {
+	position: relative;
+	top:-15px;
+    list-style: none;
+    padding: 0 0 0 0;
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+}
+#accordion div {
+    display: block;
+    font-weight: bold;
+    margin: 1px;
+    padding: 5 5 5 7px;
+    list-style: circle;
+    color:white;
+    background-color: rgba(255,255,255,0.2);
+}
+#accordion ul {
+    list-style: none;
+    padding: 0 0 0 0;
+}
+#accordion ul{
+    display: none;
+}
+
+#accordion ul li {
+    background-color: rgba(255,255,255,0.1);
+}
+.accordionInner {
+	color:white;
+}
+.accordionInner ul li{
+	margin: 1px;
+	padding: 5 5 5 7px;
+	background-color: rgba(255,255,255,0.1);
+}

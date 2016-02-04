@@ -41,8 +41,10 @@ action.toolPanel = function (evt) {
         	location.href = "http://lockplus.us/creator/load/mobile.php";
             break;
         case 'element':
-        	action.elementIconClick();
-        	showElementPanel();
+            elPanel.toggle();
+            menu.toggle();
+        	//action.elementIconClick();
+        	//showElementPanel();
             break;
         case 'size':
         	this.cgSize('fontSize', constants.editArray[0], 'px', 5, 300, 'font-size', 'font-size', action.updateSize);
