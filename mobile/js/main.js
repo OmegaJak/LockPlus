@@ -2159,7 +2159,6 @@ window.onload = function () {
         action.createLI(elementPanel.miscElements, 'miscList');
 
         action.zoomScale = screen.width / 320;
-        $('container').css('transform','scale(' + action.zoomScale + ')');
         switch(window.innerWidth) {
             case 375:
                 action.zoomScale = 1.2;
