@@ -18,7 +18,7 @@ var constants = {
                     ,'clearOverlay~Clear Overlay~fa fa-trash'],
     editArray: ['size~Change Font Size~fa fa-font~sizeDiv~font-size'
                     ,'width~Change Width~fa fa-arrows-h~widthDiv~width'
-                    ,'position~Change Position~fa fa-arrows~positionDiv'
+                    ,'position~Change Position~fa fa-arrows~positionDiv~top-left'
                     ,'color~Change Color~fa fa-eyedropper~colorDiv' //added
                     ,'align~Change Alignment~fa fa-align-center~alignDiv'
                     ,'fonts~Change Font~ fa fa-language~fontsDiv'

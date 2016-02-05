@@ -28,6 +28,7 @@ menu.inputClick = function (button) {
     var oldValue = button.parent().find("input").val(),
         clas = button.parent().find("input")[0].id.replace('manual', ''),
         newVal;
+        console.log('inputClick'+clas);
     if (button.text() === "+") {
         newVal = parseFloat(oldValue) + 1;
     } else {
@@ -43,6 +44,127 @@ menu.inputClick = function (button) {
     button.parent().find("input").val(newVal);
     menu.adjustManual(clas, newVal);
 };
+
+menu.updatePosition = function (left,top) {
+
+    console.log(left);
+
+    $('.topInput').val(top);
+    $('.leftInput').val(left);
+};
+
+menu.createButtons = function(id,name){
+    var button = document.createElement('div');
+        button.innerHTML = 'Open';
+        button.className = 'openButtons';
+        if(name == 'color'){
+            button.onclick = function () {
+                action.cgcolor(false,'color', 'bottomMenu');
+            };
+        }
+    document.getElementById(id).appendChild(button);
+};
+
+menu.createPositionInputs = function (name, does) {
+    if(does === 'top-left'){
+        var first = does.split('-')[0]; //top
+        var second = does.split('-')[1]; //left
+    }
+
+    var startVal1 = $('#' + action.selectedItem).css(first).replace(/[^-\d\.]/g, ''); //top
+    var startVal2 = $('#' + action.selectedItem).css(second).replace(/[^-\d\.]/g, ''); //left
+    //var startVal2 =
+
+    var inputContainer = document.createElement('div'),
+        inputContainer2 = document.createElement('div'),
+        input1 = document.createElement('input'),
+        increment = document.createElement('div'),
+        decrement = document.createElement('div'),
+        input2 = document.createElement('input'),
+        increment1 = document.createElement('div'),
+        label1 = document.createElement('div'),
+        label2 = document.createElement('div'),
+        decrement1 = document.createElement('div');
+
+    inputContainer.className = 'inputContainer';
+    inputContainer2.className = 'inputContainer2';
+
+    label1.innerHTML = 'top';
+    label1.className = 'topLabel';
+    label2.innerHTML = 'left';
+    label2.className = 'leftLabel';
+    //top
+    input1.type = 'text';
+    input1.value = startVal1;
+    input1.id = 'manual' + name;
+    input1.className = 'manualInput topInput';
+    //left
+    input2.type = 'text';
+    input2.value = startVal2;
+    input2.id = 'manual' + name;
+    input2.className = 'manualInput leftInput';
+    //top
+    increment.className = 'incs inButton';
+    increment.onclick = function () {
+        menu.inputClickTop($(this),first);
+    };
+    increment.innerHTML = '+';
+    //left
+    increment1.className = 'incs inButton';
+    increment1.onclick = function () {
+        menu.inputClickTop($(this),second);
+    };
+    increment1.innerHTML = '+';
+    //top
+    decrement.className = 'decs inButton';
+    decrement.onclick = function () {
+        menu.inputClickTop($(this),first);
+    }
+    decrement.innerHTML = '-';
+    //left
+    decrement1.className = 'decs inButton';
+    decrement1.onclick = function () {
+        menu.inputClickTop($(this),second);
+    }
+    decrement1.innerHTML = '-';
+    //top
+    inputContainer.appendChild(label1);
+    inputContainer.appendChild(increment);
+    inputContainer.appendChild(decrement);
+    inputContainer.appendChild(input1);
+    //left
+    inputContainer2.appendChild(label2);
+    inputContainer2.appendChild(increment1);
+    inputContainer2.appendChild(decrement1);
+    inputContainer2.appendChild(input2);
+
+    document.getElementById(name).appendChild(inputContainer);
+    document.getElementById(name).appendChild(inputContainer2);
+
+
+};
+
+menu.inputClickTop = function(button,css){
+    console.log('inputClickTop' + css);
+    var oldValue = button.parent().find("input").val(),
+        newVal;
+    console.log(oldValue);
+    if (button.text() === "+") {
+        newVal = parseFloat(oldValue) + 1;
+    } else {
+        if (oldValue > 0) {
+            newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    if (newVal > 568) {
+        newVal = 568;
+    }
+    button.parent().find("input").val(newVal);
+    this.adjust(css,newVal,true);
+};
+
 
 menu.createRange = function (name, does) {
     var slideCon = document.createElement('div'),
@@ -116,20 +238,31 @@ menu.createRange = function (name, does) {
 };
 
 menu.adjustManual = function (name, value) {
+    console.log('adjustManual' + name + value);
     //should change powerange here, but it's being a bitch
     this.adjust(name, value, true);
 
 };
 menu.adjust = function (adjustItem, value, manual) {
+    console.log('adjust'+ adjustItem + value);
     if (!manual) {
         $('#manual' + adjustItem).val(document.getElementById('range' + adjustItem).value);
     }
     if (action.selectedItem.length > 0) {
         if (value) {
-            if (adjustItem === 'BMsize') {
-                action.setCss(action.selectedItem, 'font-size', value + 'px');
-            } else if (adjustItem === 'BMwidth') {
-                action.setCss(action.selectedItem, 'width', value + 'px');
+            switch(adjustItem) {
+                case 'BMsize':
+                    action.setCss(action.selectedItem, 'font-size', value + 'px');
+                    break;
+                case 'BMwidth':
+                    action.setCss(action.selectedItem, 'width', value + 'px');
+                case 'top':
+                    action.setCss(action.selectedItem, 'top', value + 'px');
+                    break;
+                case 'left':
+                    action.setCss(action.selectedItem, 'left', value + 'px');
+                default:
+                    'null';
             }
         } else {
             var value = document.getElementById('range' + adjustItem).value;
@@ -137,8 +270,28 @@ menu.adjust = function (adjustItem, value, manual) {
                 action.setCss(action.selectedItem, 'font-size', value + 'px');
             } else if (adjustItem === 'BMwidth') {
                 action.setCss(action.selectedItem, 'width', value + 'px');
+            }else if (adjustItem === 'BMtop'){
+                action.setCss(action.selectedItem, 'top', value + 'px');
             }
         }
+    }
+};
+
+menu.createWhat = function(liName, does, id){
+    console.log('create' + liName + does + id);
+    switch(liName) {
+        case 'size':
+        case 'width':
+            menu.createRange(id, does);
+            break;
+        case 'position':
+            menu.createPositionInputs(id,does);
+            break;
+        case 'color':
+            menu.createButtons(id,liName);
+            break
+        default:
+            'null';
     }
 };
 
@@ -150,16 +303,9 @@ menu.createList = function (liName, does) {
     div.className = 'liText';
     li.id = 'BM' + liName;
     li.className = 'bottomMenuLI';
-
-
     li.appendChild(div);
     UL.appendChild(li);
-
-    if (liName === 'size') {
-        this.createRange(li.id, does);
-    } else if (liName === 'width') {
-        this.createRange(li.id, does);
-    }
+    menu.createWhat(liName, does, li.id);
 };
 
 menu.createEdits = function () {

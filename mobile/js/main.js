@@ -1036,6 +1036,7 @@ action.cgcolor = function (color, cssKey, div) {
         }, 0); //give it time to load.
         $("#" + div).on('hide.spectrum', function (e, tinycolor) {
             action.cgcolor(tinycolor.toRgbString(), cssKey, div);
+            $("#" + div).spectrum("destroy");
         });
         $("#" + div).on('move.spectrum', function (e, tinycolor) {
             action.cgcolor(tinycolor.toRgbString(), cssKey, div);
@@ -1810,6 +1811,8 @@ action.addDraggable = function (id) {
 
             //ipad
             if (ui.position.left < 0) ui.position.left = 0;
+
+            menu.updatePosition(ui.position.left,ui.position.top);
 
         },
         stop: function (event, ui) {
