@@ -2237,6 +2237,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 $('.screen').click(function (event) {
     handleScreenClick(event);
     elPanel.screenClick();
+    menu.screenClick();
 });
 
 function handleScreenClick(event) { // Had to move everything to this function so it could be manually called
@@ -2255,9 +2256,9 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
     if (event.target.id === '' && action.selectedItem != '') { // Clicked on the empty screen
         deselectElement(action.selectedItem, true); //Doesn't hurt to do this once more, to do the full deselect
-        $('#bottomMenu').remove();
+
     } else if (event.target.id != 'screen' && event.target.id != '') { //If you clicked on something...
-        $('#bottomMenu').css('display','block');
+
         if (event.target.id === action.selectedItem) { // If they clicked the currently selected item
             deselectElement(action.selectedItem, true);
         } else { // User either clicked on another element (so highlight it)
@@ -2268,7 +2269,6 @@ function handleScreenClick(event) { // Had to move everything to this function s
 
             if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
 
-            menu.bottomMenu();
         }
     }
     //action.showEditMenu();

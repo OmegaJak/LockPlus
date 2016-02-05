@@ -1,5 +1,24 @@
-
+/*jslint browser: true*/
+/*global  $*/
+/*global  action*/
+/*global  elementPanel*/
+'use strict';
 var menu = {};
+
+menu.screenClick = function () {
+    if (action.selectedItem !== '') {
+        $('#bottomMenu').remove();
+        menu.bottomMenu();
+        if ($('#bottomMenu').hasClass(action.selectedItem)) {
+            $('#bottomMenu').css('display', 'block');
+        } else {
+            $('#bottomMenu').remove();
+            menu.bottomMenu();
+        }
+    } else {
+        $('#bottomMenu').remove();
+    }
+};
 
 menu.toggle = function () {
     var display = $('.sidePanel').css('display');
@@ -42,26 +61,24 @@ menu.inputClick = function (button) {
     menu.adjustManual(clas, newVal);
 };
 
-menu.updatePosition = function (left,top) {
-
-
+menu.updatePosition = function (left, top) {
     $('.topInput').val(top);
     $('.leftInput').val(left);
 };
 
-menu.createButtons = function(id,name){
+menu.createButtons = function (id, name) {
     var button = document.createElement('div');
-        button.innerHTML = 'Open';
-        button.className = 'openButtons';
-        if(name == 'color'){
-            button.onclick = function () {
-                action.cgcolor(false,'color', 'bottomMenu');
-            };
-        }else if(name == 'fonts'){
-            button.onclick = function () {
-                action.cgfont();
-            };
-        }
+    button.innerHTML = 'Open';
+    button.className = 'openButtons';
+    if (name === 'color') {
+        button.onclick = function () {
+            action.cgcolor(false, 'color', 'bottomMenu');
+        };
+    } else if (name === 'fonts') {
+        button.onclick = function () {
+            action.cgfont();
+        };
+    }
     document.getElementById(id).appendChild(button);
 };
 
@@ -353,6 +370,7 @@ menu.createEdits = function () {
 menu.bottomMenu = function () {
     var bMenu = document.createElement('div');
     bMenu.id = 'bottomMenu';
+    bMenu.className = action.selectedItem;
     document.body.appendChild(bMenu);
 
     var bM = document.getElementById('bottomMenu');
