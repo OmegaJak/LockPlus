@@ -28,7 +28,6 @@ menu.inputClick = function (button) {
     var oldValue = button.parent().find("input").val(),
         clas = button.parent().find("input")[0].id.replace('manual', ''),
         newVal;
-        console.log('inputClick'+clas);
     if (button.text() === "+") {
         newVal = parseFloat(oldValue) + 1;
     } else {
@@ -47,7 +46,6 @@ menu.inputClick = function (button) {
 
 menu.updatePosition = function (left,top) {
 
-    console.log(left);
 
     $('.topInput').val(top);
     $('.leftInput').val(left);
@@ -60,6 +58,10 @@ menu.createButtons = function(id,name){
         if(name == 'color'){
             button.onclick = function () {
                 action.cgcolor(false,'color', 'bottomMenu');
+            };
+        }else if(name == 'fonts'){
+            button.onclick = function () {
+                action.cgfont();
             };
         }
     document.getElementById(id).appendChild(button);
@@ -145,10 +147,8 @@ menu.createPositionInputs = function (name, does) {
 };
 
 menu.inputClickTop = function(button,css){
-    console.log('inputClickTop' + css);
     var oldValue = button.parent().find("input").val(),
         newVal;
-    console.log(oldValue);
     if (button.text() === "+") {
         newVal = parseFloat(oldValue) + 1;
     } else {
@@ -187,10 +187,6 @@ menu.createRange = function (name, does) {
     document.getElementById('sliderContainer' + name).appendChild(range);
 
     var opct = document.querySelector('.' + name + 'js-opacity');
-
-    console.log($('#' + action.selectedItem).css(does));
-    console.log(does);
-
     var startVal = $('#' + action.selectedItem).css(does).replace(/[^-\d\.]/g, '');
 
 
@@ -238,13 +234,11 @@ menu.createRange = function (name, does) {
 };
 
 menu.adjustManual = function (name, value) {
-    console.log('adjustManual' + name + value);
     //should change powerange here, but it's being a bitch
     this.adjust(name, value, true);
 
 };
 menu.adjust = function (adjustItem, value, manual) {
-    console.log('adjust'+ adjustItem + value);
     if (!manual) {
         $('#manual' + adjustItem).val(document.getElementById('range' + adjustItem).value);
     }
@@ -277,8 +271,47 @@ menu.adjust = function (adjustItem, value, manual) {
     }
 };
 
+menu.createTriButtons = function(name,one,two,three){
+var triContain = document.createElement('div'),
+    first = document.createElement('div'),
+    second = document.createElement('div'),
+    third = document.createElement('div');
+
+    triContain.className = 'triContain';
+
+    first.className = 'firstTri';
+    first.innerHTML = one;
+
+    second.className = 'secondTri';
+    second.innerHTML = two;
+
+    third.className = 'thirdTri';
+    third.innerHTML = three;
+
+    first.onclick = function () {
+        $('#' + action.selectedItem).css('text-align', 'left');
+        action.savedElements.placedElements[action.selectedItem]['text-align'] = 'left';
+        action.saveStorage();
+        //menu.inputClick($(this));
+    }
+    second.onclick = function () {
+        $('#' + action.selectedItem).css('text-align', 'center');
+        action.savedElements.placedElements[action.selectedItem]['text-align'] = 'center';
+        action.saveStorage();
+    }
+    third.onclick = function () {
+        $('#' + action.selectedItem).css('text-align', 'right');
+        action.savedElements.placedElements[action.selectedItem]['text-align'] = 'right';
+        action.saveStorage();
+    }
+
+    triContain.appendChild(first);
+    triContain.appendChild(second);
+    triContain.appendChild(third);
+    document.getElementById(name).appendChild(triContain);
+};
+
 menu.createWhat = function(liName, does, id){
-    console.log('create' + liName + does + id);
     switch(liName) {
         case 'size':
         case 'width':
@@ -289,7 +322,13 @@ menu.createWhat = function(liName, does, id){
             break;
         case 'color':
             menu.createButtons(id,liName);
-            break
+            break;
+        case 'fonts':
+            menu.createButtons(id,liName);
+            break;
+        case 'align':
+            menu.createTriButtons(id,'left','center','right');
+            break;
         default:
             'null';
     }

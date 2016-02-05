@@ -109,6 +109,22 @@
 		text-align: center;
 }
 
+.triContain{
+	position: relative;
+	display: inline-block;
+	left:200px;
+	top:18px;
+}
+
+.triContain div{
+	display: inline-block;
+	margin-right: 4px;
+	background-color: white;
+	color:black;
+	padding: 2px;
+	border-radius: 3px
+}
+
 #bottomMenuUL{
 	position: absolute;
 	left:0px;

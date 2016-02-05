@@ -8,8 +8,6 @@
 
 #font {
 	position: absolute;
-	width: 320px;
-	background-color: rgba(0,0,0,1);
 	top:50%;
 	left:50%;
 	-webkit-transform: translate(-50%, -52.8%);
@@ -23,7 +21,6 @@
 	height: 568px;
 	margin: 0;
 	padding: 0;
-	margin-left: 3%;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	list-style: none;
@@ -40,7 +37,6 @@
 		background: #54606e;
 		color: white;
 		font-size: 15px;
-		margin-right: 20px;
 		z-index: 2;
 		border-radius: 2px;
 		margin-top: 5px;
