@@ -1,7 +1,4 @@
-/*jslint browser: true*/
-/*global  $*/
-/*global  action*/
-'use strict';
+
 var menu = {};
 menu.toggle = function () {
     var display = $('.sidePanel').css('display');

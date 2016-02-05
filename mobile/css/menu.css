@@ -1,3 +1,7 @@
+html{
+
+}
+
 #roundMenu{
 	position: absolute;
 	width: 40px;
@@ -12,13 +16,14 @@
 #bottomMenu{
 	position: absolute;
 	width: 100%;
-	height: 80px;
+	height: 200px;
 	bottom:0;
 	left:0;
 	background-color: rgba(0,0,0,0.2);
 	display: block;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	-webkit-backdrop-filter: blur(5px);
 
 
 
@@ -181,7 +186,7 @@
 	position: absolute;
 	color:white;
 	left: 3px;
-	bottom: 72px;
+	bottom: 270px;
 	background-color: rgba(0,0,0,0.5);
 	z-index: 999;
 	padding: 4px;
@@ -220,10 +225,12 @@
 	left:0;
 	bottom:0;
 	width: 100%;
-	height: 100px;
-	background-color: black;
+	height: 300px;
+	background-color: rgba(0,0,0,0.5);
+	-webkit-backdrop-filter: blur(5px);
 	overflow: scroll;
 	display: none;
+	-webkit-overflow-scrolling: touch;
 }
 #accordion {
 	position: relative;

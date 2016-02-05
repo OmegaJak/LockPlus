@@ -712,6 +712,277 @@ label {
 
 }
 
+html{
+
+}
+
+#roundMenu{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background-color: rgba(255,255,255,0.2);
+	border-radius:999px;
+	border:2px solid rgba(255,255,255,0.3);
+	bottom: 90px;
+	right:20px;
+}
+
+#bottomMenu{
+	position: absolute;
+	width: 100%;
+	height: 200px;
+	bottom:0;
+	left:0;
+	background-color: rgba(0,0,0,0.2);
+	display: block;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	-webkit-backdrop-filter: blur(5px);
+
+
+
+
+
+}
+
+.inputContainer{
+	position: absolute;
+	top:23px;
+	right:140px;
+	width: 80px;
+	height: 60px;
+}
+.inputContainer2{
+	position: absolute;
+	top:23px;
+	right:20px;
+	width: 80px;
+	height: 60px;
+}
+.manualInput{
+	position: absolute;
+	top:3px;
+	left:24px;
+	width: 30px;
+	text-align: center;
+	border:0px solid transparent;
+	border-radius: 2px;
+}
+.inButton{
+	position: absolute;
+}
+.incs,.decs{
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: rgba(255,255,255,1);
+	border-radius: 999px;
+	text-align: center;
+	line-height: 20px;
+	color:black;
+}
+.incs{
+	right: 0;
+}
+.decs{
+	left:0;
+}
+.topLabel{
+	position: absolute;
+	top:-14px;
+	right:32px;
+	font-size: 12px;
+	text-transform: capitalize;
+}
+.leftLabel{
+	top:-14px;
+	right:30px;
+	position: absolute;
+	font-size: 12px;
+	text-transform: capitalize;
+}
+/*#bottomMenu::-webkit-scrollbar-track {
+    background-color: transparent;
+}*/
+#bottomMenu::-webkit-scrollbar-thumb {
+   /* background-color: transparent;
+    -webkit-background-clip: padding-box;*/
+       border-radius: 0px!important;
+    background-color: black;
+}
+
+#bottomMenu::-webkit-scrollbar {
+    width: 0px;
+    margin-left: 0px;
+    border-radius: 0px!important;
+    background-color: black;
+}
+.openButtons{
+	position: absolute;
+	top:20px;
+	left:200px;
+	width: 200px;
+	background-color: white;
+	color:black;
+	border-radius: 5px;
+		text-align: center;
+}
+
+.triContain{
+	position: relative;
+	display: inline-block;
+	left:200px;
+	top:18px;
+}
+
+.triContain div{
+	display: inline-block;
+	margin-right: 4px;
+	background-color: white;
+	color:black;
+	padding: 2px;
+	border-radius: 3px
+}
+
+#bottomMenuUL{
+	position: absolute;
+	left:0px;
+	width: 100%;
+}
+
+.bottomMenuLI{
+	position: relative;
+	width: 100%;
+	text-align: left;
+	color: white;
+	list-style-type: none;
+	height: 60px;
+	top:-15px;
+	left:-41px;
+	background-color: rgba(0,0,0,0.7);
+	display: inline-block;
+	font-size: 20px;
+	margin: 1px;
+	overflow: hidden;
+}
+
+.liText{
+	position: absolute;
+	line-height: 60px;
+	margin-left: 20px;
+	text-transform: capitalize;
+}
+
+.slider-wrapper{
+	width: 100px!important;
+	position: absolute;
+	top:30px;
+	right:20px;
+}
+.range-bar{
+	position: absolute;
+	width: 100px!important;
+}
+.range-handle{
+	width: 30px!important;
+	height: 30px!important;
+}
+.range-quantity{
+	background-color: white!important;
+}
+
+
+
+
+
+
+#elPanelDragger{
+	position: absolute;
+	color:white;
+	left: 3px;
+	bottom: 270px;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 999;
+	padding: 4px;
+	border-radius: 3px;
+	display: none;
+}
+#elPanelCloser{
+	position: fixed;
+	color:white;
+	right: 3px;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 1;
+	padding: 4px;
+	border-radius: 3px;
+}
+
+
+.liSelected{
+	background-color: teal!important;
+}
+
+
+#elPanel::-webkit-scrollbar-track {
+    display: none;
+}
+#elPanel::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+#elPanel::-webkit-scrollbar {
+    display: none;
+}
+
+#elPanel{
+	position: absolute;
+	left:0;
+	bottom:0;
+	width: 100%;
+	height: 300px;
+	background-color: rgba(0,0,0,0.5);
+	-webkit-backdrop-filter: blur(5px);
+	overflow: scroll;
+	display: none;
+	-webkit-overflow-scrolling: touch;
+}
+#accordion {
+	position: relative;
+	top:-15px;
+    list-style: none;
+    padding: 0 0 0 0;
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+}
+#accordion div {
+    display: block;
+    font-weight: bold;
+    margin: 1px;
+    padding: 10 5 10 5px;
+    list-style: circle;
+    color:white;
+    background-color: rgba(255,255,255,0.2);
+}
+#accordion ul {
+    list-style: none;
+    padding: 0 0 0 0;
+}
+#accordion ul{
+    display: none;
+}
+
+#accordion ul li {
+    background-color: rgba(255,255,255,0.1);
+}
+.accordionInner {
+	color:white;
+}
+.accordionInner ul li{
+	margin: 1px;
+	padding: 5 5 5 5px;
+	background-color: rgba(255,255,255,0.1);
+}
 .phone{
 	position: absolute;
 	width: 320px;
@@ -805,7 +1076,125 @@ label {
 	margin-left: 300px;
 	opacity: 0;
 }
-/* Slider */
+/**
+ *
+ * Main stylesheet for Powerange.
+ * http://abpetkov.github.io/powerange/
+ *
+ */
+
+/**
+ * Horizontal slider style (default).
+ */
+
+.range-bar {
+  background-color: #a9acb1;
+  border-radius: 15px;
+  display: block;
+  height: 4px;
+  position: relative;
+  width: 100%;
+}
+
+.range-quantity {
+  background-color: #017afd;
+  border-radius: 15px;
+  display: block;
+  height: 100%;
+  width: 0;
+}
+
+.range-handle {
+  background-color: #fff;
+  border-radius: 100%;
+  cursor: move;
+  height: 30px;
+  left: 0;
+  top: -13px;
+  position: absolute;
+  width: 30px;
+
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.range-min,
+.range-max {
+  color: #181819;
+  font-size: 12px;
+  height: 20px;
+  padding-top: 4px;
+  position: absolute;
+  text-align: center;
+  top: -9px;
+  width: 24px;
+}
+
+.range-min {
+  left: -30px;
+}
+
+.range-max {
+  right: -30px;
+}
+
+/**
+ * Vertical slider style.
+ */
+
+.vertical {
+  height: 100%;
+  width: 4px;
+}
+
+.vertical .range-quantity {
+  bottom: 0;
+  height: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.vertical .range-handle {
+  bottom: 0;
+  left: -13px;
+  top: auto;
+}
+
+.vertical .range-min,
+.vertical .range-max {
+  left: -10px;
+  right: auto;
+  top: auto;
+}
+
+.vertical .range-min {
+  bottom: -30px;
+}
+
+.vertical .range-max {
+  top: -30px;
+}
+
+/**
+ * Style for disabling text selection on handle move.
+ */
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/**
+ * Style for handle cursor on disabled slider.
+ */
+
+.range-disabled {
+  cursor: default;
+}/* Slider */
 .slick-slider
 {
     position: relative;
@@ -1435,8 +1824,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 #font {
 	position: absolute;
-	width: 320px;
-	background-color: rgba(0,0,0,1);
 	top:50%;
 	left:50%;
 	-webkit-transform: translate(-50%, -52.8%);
@@ -1450,7 +1837,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 	height: 568px;
 	margin: 0;
 	padding: 0;
-	margin-left: 3%;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	list-style: none;
@@ -1467,7 +1853,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 		background: #54606e;
 		color: white;
 		font-size: 15px;
-		margin-right: 20px;
 		z-index: 2;
 		border-radius: 2px;
 		margin-top: 5px;
@@ -2187,10 +2572,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 .toolPanel{
   position: absolute;
   width: 200px;
-  height: 560px;
-  top:51%;
-  left:52%;
-  -webkit-transform: translate(-82%, -50%);
+  left:0;
+  top:25%;
+  background-color: red;
 }
 
 #logo::after {
@@ -2234,24 +2618,21 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     margin-left: 0px;
 }
 .toolPanel ul {
-    overflow-y: scroll;
-    height: 570px;
-    width: 400px;
-    left:-21px;
-    top: -43px;
+    width: 50px;
+    left:-38px;
     position: absolute;
 }
 .toolPanel li{
   text-align: center;
   padding: 5px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
   font-size: 15px;
   border-radius: 100%;
   margin-top: 10px;
-  background-color: #21b9b0;
-  color:black;
+  background-color: #343434;
+  color:white;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
     -webkit-transition-property: transform;
@@ -2266,10 +2647,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   margin-left: 0px;
   text-transform: capitalize;
   font-size: 8px;
-  background-color: #21b9b0;
-  color:black;
-  padding-left: 5px;
-  padding-right: 5px;
+  background-color: #343434;
+  color:white;
+  padding-left: 10px;
+  padding-right: 10px;
   border-radius: 5px;
   z-index: -1;
 

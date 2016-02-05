@@ -1,7 +1,9 @@
 ../css/base.css
 ../css/elementPanels.css
 ../css/fixes.css
+../css/menu.css
 ../css/phone.css
+../css/powerange.css
 ../css/slick.css
 ../css/spectrum.css
 ../css/stroll.css

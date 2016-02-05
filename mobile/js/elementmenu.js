@@ -1,8 +1,4 @@
-/*jslint browser: true*/
-/*global  $*/
-/*global  action*/
-/*global  elementPanel*/
-'use strict';
+
 action.removeItemFromScreen = function (id) {
     var parent = document.getElementById('screenElements'),
         div = document.getElementById(id);
