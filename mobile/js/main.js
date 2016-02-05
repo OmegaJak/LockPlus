@@ -2236,6 +2236,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 
 $('.screen').click(function (event) {
     handleScreenClick(event);
+    elPanel.screenClick();
 });
 
 function handleScreenClick(event) { // Had to move everything to this function so it could be manually called

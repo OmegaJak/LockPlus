@@ -10,6 +10,15 @@ action.removeItemFromScreen = function (id) {
 
 var elPanel = {};
 
+elPanel.screenClick = function () {
+    if($('#elPanel').css('display') === 'block'){
+        $('#elPanel').scrollTop(0);
+
+       $("#accordion li").children('ul').hide();
+    }
+
+};
+
 elPanel.scrollTop = function (item) {
     $('#elPanel').animate({
         scrollTop: $(item).position().top
@@ -19,17 +28,17 @@ elPanel.scrollTop = function (item) {
 elPanel.clicker = function () {
     $("#accordion > li > div").click(function () {
         if (false === $(this).next().is(':visible')) {
-            $('#accordion ul').slideUp(300);
+            $('#accordion ul').slideUp(100);
         }
-        $(this).next().slideToggle(300);
+        $(this).next().slideToggle(100);
         elPanel.scrollTop(this);
     });
 
     $(".accordionInner > li > div").click(function () {
         if (false === $(this).next().is(':visible')) {
-            $('#accordionInner ul').slideUp(300);
+            $('#accordionInner ul').slideUp(100);
         }
-        $(this).next().slideToggle(300);
+        $(this).next().slideToggle(100);
         elPanel.scrollTop(this);
     });
 

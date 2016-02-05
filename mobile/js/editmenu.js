@@ -1,5 +1,6 @@
 
 var menu = {};
+
 menu.toggle = function () {
     var display = $('.sidePanel').css('display');
     if (display === 'none') {
