@@ -8,6 +8,7 @@ var action = {
     timeout: '',
     lastNotificationTime: false,
     zoomScale: 1.5,
+    isScrollingEdit: false,
     actionQueue: [], //Queue of actions for undo/redo
     queuePosition: -1, //The current position within this ↑ queue, which action was most recently done
     isUndoingRedoing: false, //True while it's either undoing or redoing, prevents more from being added to the stack while it's processing the stack
@@ -2231,9 +2232,11 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 });
 
 $('.screen').click(function (event) {
-    handleScreenClick(event);
-    elPanel.screenClick();
-    menu.screenClick(event);
+    if(!action.isScrollingEdit){
+        handleScreenClick(event);
+        elPanel.screenClick();
+        menu.screenClick(event);
+    }
 });
 
 function handleScreenClick(event) { // Had to move everything to this function so it could be manually called

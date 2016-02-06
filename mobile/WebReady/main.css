@@ -738,24 +738,21 @@ html{
 	overflow-y: scroll;
 	overflow-x: hidden;
 	-webkit-backdrop-filter: blur(5px);
-
-
-
-
-
+	z-index: 999999999!important;
+	-webkit-overflow-scrolling: touch;
 }
 
 .inputContainer{
 	position: absolute;
 	top:23px;
-	right:140px;
+	right:50px;
 	width: 80px;
 	height: 60px;
 }
 .inputContainer2{
 	position: absolute;
 	top:23px;
-	right:20px;
+	right:160px;
 	width: 80px;
 	height: 60px;
 }
@@ -779,6 +776,7 @@ html{
 	border-radius: 999px;
 	text-align: center;
 	line-height: 20px;
+	font-family: Times;
 	color:black;
 }
 .incs{
@@ -820,7 +818,7 @@ html{
 .openButtons{
 	position: absolute;
 	top:20px;
-	right:100px;
+	right:60px;
 	width: 150px;
 	background-color: white;
 	color:black;
@@ -831,7 +829,7 @@ html{
 .triContain{
 	position: absolute;
 	display: inline-block;
-	right:100px;
+	right:60px;
 	top:18px;
 }
 
@@ -864,6 +862,7 @@ html{
 	font-size: 20px;
 	margin: 1px;
 	overflow: hidden;
+	z-index: 999;
 }
 
 .liText{
@@ -877,7 +876,7 @@ html{
 	width: 100px!important;
 	position: absolute;
 	top:30px;
-	right:20px;
+	right:170px;
 }
 .range-bar{
 	position: absolute;
@@ -1046,6 +1045,7 @@ html{
 	background-size: cover;
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
+	z-index: 0!important;
 }
 .screenoverlay{
 	left:0;
@@ -1053,7 +1053,7 @@ html{
 	pointer-events:none;
 	background-color: transparent;
 	outline: 1px solid #323232;
-	z-index: 1;
+	z-index: 1!important;
 }
 .canvas {
 	pointer-events: none;

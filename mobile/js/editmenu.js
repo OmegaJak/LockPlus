@@ -22,6 +22,7 @@ menu.screenClick = function (event) {
     }
 };
 
+
 menu.toggle = function () {
     var display = $('.sidePanel').css('display');
     if (display === 'none') {
@@ -475,7 +476,14 @@ menu.bottomMenu = function () {
     var bM = document.getElementById('bottomMenu');
     var bMenuUL = document.createElement('ul');
     bMenuUL.id = "bottomMenuUL";
-    bM.appendChild(bMenuUL)
+    bM.appendChild(bMenuUL);
+
+    $('#bottomMenu').on('touchmove',function(){
+        action.isScrollingEdit = true;
+    });
+    $('#bottomMenu').on('touchend',function(){
+        action.isScrollingEdit = false;
+    });
 
     // $("#bottomMenu").draggable({ axis: "y", scroll: true });
 
