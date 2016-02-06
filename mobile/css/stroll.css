@@ -8,16 +8,18 @@
 
 #font {
 	position: absolute;
-	top:50%;
+	top:20px;
 	left:50%;
-	-webkit-transform: translate(-50%, -52.8%);
-	transform: translate(-50%, -52.8%);
+	-webkit-transform: translate(-50%, 0%);
 	text-transform: capitalize;
+	z-index: 12;
+	background-color: rgba(0,0,0,0.8);
+	-webkit-backdrop-filter: blur(10px);
 }
 
 #font ul {
 	position: relative;
-	width: 305px;
+	width: 100%;
 	height: 568px;
 	margin: 0;
 	padding: 0;
