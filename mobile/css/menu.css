@@ -47,7 +47,7 @@ html{
 }
 .manualInput{
 	position: absolute;
-	top:3px;
+	top:0;
 	left:24px;
 	width: 30px;
 	text-align: center;
@@ -106,8 +106,8 @@ html{
 .openButtons{
 	position: absolute;
 	top:20px;
-	left:200px;
-	width: 200px;
+	right:100px;
+	width: 150px;
 	background-color: white;
 	color:black;
 	border-radius: 5px;
@@ -115,9 +115,9 @@ html{
 }
 
 .triContain{
-	position: relative;
+	position: absolute;
 	display: inline-block;
-	left:200px;
+	right:100px;
 	top:18px;
 }
 

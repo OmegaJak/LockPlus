@@ -78,6 +78,13 @@ menu.createButtons = function (id, name) {
         button.onclick = function () {
             action.cgfont();
         };
+    } else if (name === 'delete') {
+        button.innerHTML = 'Delete';
+        button.onclick = function () {
+            action.removeItemFromScreen(action.selectedItem);
+            $('#bottomMenu').remove();
+            $("#accordion").find("li[title='" + action.selectedItem + "']").removeClass();
+        };
     }
     document.getElementById(id).appendChild(button);
 };
@@ -343,6 +350,9 @@ menu.createWhat = function(liName, does, id){
             break;
         case 'align':
             menu.createTriButtons(id,'left','center','right');
+            break;
+        case 'delete':
+            menu.createButtons(id,liName);
             break;
         default:
             'null';
