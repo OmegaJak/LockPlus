@@ -25,7 +25,6 @@ html{
 	overflow-x: hidden;
 	-webkit-backdrop-filter: blur(5px);
 	z-index: 999999999!important;
-	background-color: red;
 }
 
 .inputContainer{
