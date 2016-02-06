@@ -70,11 +70,11 @@ menu.createButtons = function (id, name) {
     var button = document.createElement('div');
     button.innerHTML = 'Open';
     button.className = 'openButtons';
-    if (name === 'color') {
+    if (name === 'color' || name === 'boxColor') {
         button.onclick = function () {
-            if(action.selectedItem.substring(0, 3) === 'box'){
+            if (action.selectedItem.substring(0, 3) === 'box') {
                 action.cgcolor(false, 'background-color', 'bottomMenu');
-            }else{
+            } else {
                 action.cgcolor(false, 'color', 'bottomMenu');
             }
         };
@@ -192,6 +192,7 @@ menu.inputClickTop = function(button,css){
 };
 
 
+
 menu.createRange = function (name, does) {
     var slideCon = document.createElement('div'),
         input = document.createElement('input'),
@@ -213,10 +214,8 @@ menu.createRange = function (name, does) {
     document.getElementById('sliderContainer' + name).appendChild(range);
 
     var opct = document.querySelector('.' + name + 'js-opacity');
+
     var startVal = $('#' + action.selectedItem).css(does).replace(/[^-\d\.]/g, '');
-
-
-
 
     var initOpct = new Powerange(opct, {
         callback: function () {
@@ -265,6 +264,7 @@ menu.adjustManual = function (name, value) {
 
 };
 menu.adjust = function (adjustItem, value, manual) {
+    console.log(adjustItem)
     if (!manual) {
         $('#manual' + adjustItem).val(document.getElementById('range' + adjustItem).value);
     }
@@ -276,11 +276,19 @@ menu.adjust = function (adjustItem, value, manual) {
                     break;
                 case 'BMwidth':
                     action.setCss(action.selectedItem, 'width', value + 'px');
+                    break;
+                case 'BMheight':
+                    action.setCss(action.selectedItem, 'height', value + 'px');
+                    break;
+                case 'BMradius':
+                    action.setCss(action.selectedItem, 'border-radius', value + 'px');
+                    break;
                 case 'top':
                     action.setCss(action.selectedItem, 'top', value + 'px');
                     break;
                 case 'left':
                     action.setCss(action.selectedItem, 'left', value + 'px');
+                    break;
                 default:
                     'null';
             }
@@ -290,8 +298,12 @@ menu.adjust = function (adjustItem, value, manual) {
                 action.setCss(action.selectedItem, 'font-size', value + 'px');
             } else if (adjustItem === 'BMwidth') {
                 action.setCss(action.selectedItem, 'width', value + 'px');
+            }else if (adjustItem === 'BMheight') {
+                action.setCss(action.selectedItem, 'height', value + 'px');
             }else if (adjustItem === 'BMtop'){
                 action.setCss(action.selectedItem, 'top', value + 'px');
+            }else if (adjustItem === 'BMradius'){
+                action.setCss(action.selectedItem, 'border-radius', value + 'px');
             }
         }
     }
@@ -373,14 +385,22 @@ var triContain = document.createElement('div'),
 };
 
 menu.createWhat = function(liName, does, id){
+    console.log(liName);
     switch(liName) {
         case 'size':
         case 'width':
             menu.createRange(id, does);
             break;
+        case 'height':
+            menu.createRange(id, does);
+            break;
+        case 'radius':
+            menu.createRange(id, does);
+            break;
         case 'position':
             menu.createPositionInputs(id,does);
             break;
+        case 'boxColor':
         case 'color':
             menu.createButtons(id,liName);
             break;
@@ -418,9 +438,21 @@ menu.createList = function (liName, does) {
 };
 
 menu.createEdits = function () {
-    for (var i = 0; i < constants.editArray.length; i++) {
-        menu.createList(constants.editArray[i].split('~')[0], constants.editArray[i].split('~')[4]);
-    };
+    if(action.selectedItem.substring(0, 3) === 'box'){
+        var names;
+        for (var i = 0; i < constants.boxEditArray.length; i++) {
+            names = constants.boxEditArray[i].split('~')[0];
+            if(names === 'boxShadow' || names === 'transform' || names === 'linearBoxGradient' || names === 'border'){
+                //do nothing
+            }else{
+                menu.createList(constants.boxEditArray[i].split('~')[0], constants.boxEditArray[i].split('~')[4]);
+            }
+        };
+    }else{
+        for (var i = 0; i < constants.editArray.length; i++) {
+            menu.createList(constants.editArray[i].split('~')[0], constants.editArray[i].split('~')[4]);
+        };
+    }
 };
 menu.bottomMenu = function () {
     var bMenu = document.createElement('div');
