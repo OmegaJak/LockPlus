@@ -438,11 +438,11 @@ menu.createList = function (liName, does) {
 };
 
 menu.createEdits = function () {
+     var names;
     if(action.selectedItem.substring(0, 3) === 'box'){
-        var names;
         for (var i = 0; i < constants.boxEditArray.length; i++) {
             names = constants.boxEditArray[i].split('~')[0];
-            if(names === 'boxShadow' || names === 'transform' || names === 'linearBoxGradient' || names === 'border'){
+            if(names === 'boxShadow' || names === 'transform' || names === 'linearBoxGradient' || names === 'border'){ //temp disable
                 //do nothing
             }else{
                 menu.createList(constants.boxEditArray[i].split('~')[0], constants.boxEditArray[i].split('~')[4]);
@@ -450,8 +450,12 @@ menu.createEdits = function () {
         };
     }else{
         for (var i = 0; i < constants.editArray.length; i++) {
-            menu.createList(constants.editArray[i].split('~')[0], constants.editArray[i].split('~')[4]);
-        };
+            names = constants.editArray[i].split('~')[0];
+            if(names === 'transform' || names === 'weight' || names === 'affixes' || names === 'shadow' || names === 'linearGradient' ){ //tmp disable
+            }else{
+                menu.createList(constants.editArray[i].split('~')[0], constants.editArray[i].split('~')[4]);
+            }
+        }
     }
 };
 menu.bottomMenu = function () {
