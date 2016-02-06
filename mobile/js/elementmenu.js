@@ -121,7 +121,6 @@ elPanel.li = function (name) {
 };
 
 elPanel.create = function () {
-    console.log(elementPanel);
     Object.keys(elementPanel).forEach(function (key) {
         elPanel.li(key);
     });
