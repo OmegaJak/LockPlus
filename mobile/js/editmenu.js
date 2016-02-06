@@ -11,13 +11,16 @@ menu.screenClick = function (event) {
     if (action.selectedItem !== '') {
         $('#bottomMenu').remove();
         menu.bottomMenu();
+        $('#editDragger').css('display','block');
         if ($('#bottomMenu').hasClass(action.selectedItem)) {
             $('#bottomMenu').css('display', 'block');
         } else {
+            $('#editDragger').css('display','block');
             $('#bottomMenu').remove();
             menu.bottomMenu();
         }
     } else {
+        $('#editDragger').css('display','none');
         $('#bottomMenu').remove();
     }
 };
@@ -468,7 +471,8 @@ menu.createEdits = function () {
     }
 };
 menu.bottomMenu = function () {
-    var bMenu = document.createElement('div');
+    var bMenu = document.createElement('div'),
+        dragger = document.createElement('div');
     bMenu.id = 'bottomMenu';
     bMenu.className = action.selectedItem;
     document.body.appendChild(bMenu);
@@ -477,6 +481,24 @@ menu.bottomMenu = function () {
     var bMenuUL = document.createElement('ul');
     bMenuUL.id = "bottomMenuUL";
     bM.appendChild(bMenuUL);
+
+    dragger.id = 'editDragger';
+    dragger.innerHTML = '&#8597;';
+    document.body.appendChild(dragger);
+
+    $('#editDragger').draggable({
+        axis: "y",
+        drag: function (event, ui) {
+            if (ui.position.top > screen.height - $('#bottomMenu').height()) {
+                ui.position.top = screen.height - $('#bottomMenu').height();
+            } else if (ui.position.top < 0) {
+                ui.position.top = 0;
+            }
+            $('#bottomMenu').css('top', ui.position.top);
+        }
+    });
+
+    $('#bottomMenu').css('top', $('#editDragger').css('top'));
 
     $('#bottomMenu').on('touchmove',function(){
         action.isScrollingEdit = true;
