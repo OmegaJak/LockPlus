@@ -309,24 +309,42 @@ var triContain = document.createElement('div'),
 
     third.className = 'thirdTri';
     third.innerHTML = three;
-
-    first.onclick = function () {
-        $('#' + action.selectedItem).css('text-align', 'left');
-        action.savedElements.placedElements[action.selectedItem]['text-align'] = 'left';
-        action.saveStorage();
-        //menu.inputClick($(this));
+    console.log(name);
+    if(name === 'BMalign'){
+        first.onclick = function () {
+            $('#' + action.selectedItem).css('text-align', 'left');
+            action.savedElements.placedElements[action.selectedItem]['text-align'] = 'left';
+            action.saveStorage();
+            //menu.inputClick($(this));
+        }
+        second.onclick = function () {
+            $('#' + action.selectedItem).css('text-align', 'center');
+            action.savedElements.placedElements[action.selectedItem]['text-align'] = 'center';
+            action.saveStorage();
+        }
+        third.onclick = function () {
+            $('#' + action.selectedItem).css('text-align', 'right');
+            action.savedElements.placedElements[action.selectedItem]['text-align'] = 'right';
+            action.saveStorage();
+        }
+    }else if(name === 'BMuppercase'){
+        first.onclick = function () {
+            $('#' + action.selectedItem).css('text-transform', 'uppercase');
+            action.savedElements.placedElements[action.selectedItem]['text-transform'] = 'uppercase';
+            action.saveStorage();
+            //menu.inputClick($(this));
+        }
+        second.onclick = function () {
+            $('#' + action.selectedItem).css('text-transform', 'capitalize');
+            action.savedElements.placedElements[action.selectedItem]['text-transform'] = 'capitalize';
+            action.saveStorage();
+        }
+        third.onclick = function () {
+            $('#' + action.selectedItem).css('text-transform', 'lowercase');
+            action.savedElements.placedElements[action.selectedItem]['text-transform'] = 'lowercase';
+            action.saveStorage();
+        }
     }
-    second.onclick = function () {
-        $('#' + action.selectedItem).css('text-align', 'center');
-        action.savedElements.placedElements[action.selectedItem]['text-align'] = 'center';
-        action.saveStorage();
-    }
-    third.onclick = function () {
-        $('#' + action.selectedItem).css('text-align', 'right');
-        action.savedElements.placedElements[action.selectedItem]['text-align'] = 'right';
-        action.saveStorage();
-    }
-
     triContain.appendChild(first);
     triContain.appendChild(second);
     triContain.appendChild(third);
@@ -353,6 +371,9 @@ menu.createWhat = function(liName, does, id){
             break;
         case 'delete':
             menu.createButtons(id,liName);
+            break;
+        case 'uppercase':
+            menu.createTriButtons(id,'Upper','Cap','Lower');
             break;
         default:
             'null';
