@@ -10,6 +10,13 @@ action.removeItemFromScreen = function (id) {
 
 var elPanel = {};
 
+//remove all selected items in the panel (this is done when clear theme is pressed).
+elPanel.removeSelected = function () {
+    $('#accordion li ul li ul li.liSelected').each(function (index) {
+        $(this).removeClass();
+    });
+};
+
 elPanel.screenClick = function () {
     if($('#elPanel').css('display') === 'block'){
         $('#elPanel').scrollTop(0);
@@ -163,3 +170,4 @@ elPanel.init = function () {
 setTimeout(function () {
     elPanel.init();
 }, 10);
+
