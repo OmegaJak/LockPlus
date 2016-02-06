@@ -1636,7 +1636,7 @@ action.saveTheme = function () { //saves info to divs and sends form to create p
 
     setTimeout(function(){
         $('#roundMenu').css('opacity','1');
-    },3000);
+    },15000);
 
     /*  var devname = $('#fdevname').val();
       var themename = $('#fthemename').val();
