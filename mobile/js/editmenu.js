@@ -72,7 +72,11 @@ menu.createButtons = function (id, name) {
     button.className = 'openButtons';
     if (name === 'color') {
         button.onclick = function () {
-            action.cgcolor(false, 'color', 'bottomMenu');
+            if(action.selectedItem.substring(0, 3) === 'box'){
+                action.cgcolor(false, 'background-color', 'bottomMenu');
+            }else{
+                action.cgcolor(false, 'color', 'bottomMenu');
+            }
         };
     } else if (name === 'fonts') {
         button.onclick = function () {
