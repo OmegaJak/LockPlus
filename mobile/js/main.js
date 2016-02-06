@@ -2236,6 +2236,7 @@ $('.screen').click(function (event) {
         handleScreenClick(event);
         elPanel.screenClick();
         menu.screenClick(event);
+        $('.sidePanel').css('display', 'none');
     }
 });
 
