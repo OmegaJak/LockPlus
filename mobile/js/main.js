@@ -1773,11 +1773,7 @@ action.loadFromStorage = function () { //reload elements onload
 };
 action.addDraggable = function (id) {
     var contain;
-    if (id === 'icon') {
-        contain = '';
-    } else {
-        contain = $('.screen');
-    }
+
     /*var startX;
     var startY;*/
     $('#' + id).draggable({
@@ -2237,7 +2233,7 @@ $('.elementPanel').on('click', function (event) { //grab clicks from elementPane
 $('.screen').click(function (event) {
     handleScreenClick(event);
     elPanel.screenClick();
-    menu.screenClick();
+    menu.screenClick(event);
 });
 
 function handleScreenClick(event) { // Had to move everything to this function so it could be manually called

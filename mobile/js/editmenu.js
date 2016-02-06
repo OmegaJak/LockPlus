@@ -5,7 +5,9 @@
 'use strict';
 var menu = {};
 
-menu.screenClick = function () {
+menu.screenClick = function (event) {
+    console.log("Trigger ScreenClick");
+    console.log(event.target);
     if (action.selectedItem !== '') {
         $('#bottomMenu').remove();
         menu.bottomMenu();
@@ -264,7 +266,6 @@ menu.adjustManual = function (name, value) {
 
 };
 menu.adjust = function (adjustItem, value, manual) {
-    console.log(adjustItem)
     if (!manual) {
         $('#manual' + adjustItem).val(document.getElementById('range' + adjustItem).value);
     }
@@ -325,7 +326,6 @@ var triContain = document.createElement('div'),
 
     third.className = 'thirdTri';
     third.innerHTML = three;
-    console.log(name);
     if(name === 'BMalign'){
         first.onclick = function () {
             $('#' + action.selectedItem).css('text-align', 'left');
@@ -385,7 +385,6 @@ var triContain = document.createElement('div'),
 };
 
 menu.createWhat = function(liName, does, id){
-    console.log(liName);
     switch(liName) {
         case 'size':
         case 'width':
@@ -448,6 +447,15 @@ menu.createEdits = function () {
                 menu.createList(constants.boxEditArray[i].split('~')[0], constants.boxEditArray[i].split('~')[4]);
             }
         };
+    }else if (action.selectedItem === 'icon'){
+        for (var i = 0; i < constants.iconArray.length; i++) {
+            names = constants.iconArray[i].split('~')[0];
+            if(names === 'iconsize' || names === 'changeicon' || names === 'transform'){
+
+            }else{
+                menu.createList(constants.iconArray[i].split('~')[0], constants.iconArray[i].split('~')[4]);
+            }
+        }
     }else{
         for (var i = 0; i < constants.editArray.length; i++) {
             names = constants.editArray[i].split('~')[0];

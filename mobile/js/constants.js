@@ -101,11 +101,11 @@ var constants = {
                     ,'border-color~Border Color~fa fa-eyedropper~border-colorDiv'
                     ,'backToEdit~Back~fa fa-arrow-left'
                     ,'clearBorder~Clear Border~fa fa-trash'],
-    iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv'
-                ,'position~Change Position~fa fa-arrows~positionDiv'
-                , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv'
-                ,'transform~Change Transformations~fa fa-level-up~transformDiv'
-                , 'delete~Delete item~fa fa-trash-o~deleteDiv'],
+    iconArray: ['iconsize~Change Icon Size~fa fa-expand~changeIconDiv~width'
+                ,'position~Change Position~fa fa-arrows~positionDiv~top-left'
+                , 'changeicon~Change Icon~fa fa-code-fork~changeIconDiv~change'
+                ,'transform~Change Transformations~fa fa-level-up~transformDiv~transform'
+                , 'delete~Delete item~fa fa-trash-o~deleteDiv~delete'],
                 gridSizeTop: 160,
                 gridSizeLeft: 284,
     //preloadBlacklist: {color:'', fonts:'',transform:'',shadow:'',linearGradient:'',linearBoxGradient:'',backToEdit:'',boxShadow:'',boxColor:'',changeicon:'',affixes:''}, /*//If it shouldn't be opened when the menu is opened, the id needs to be here. 'delete', 'clear', and 'color' are already taken care of*/

@@ -989,7 +989,7 @@ html{
 	height: 568px;
 	background-color: #252a30;
 	-webkit-transform-origin:0 0;
-	overflow: hidden;
+	overflow: visible;
 }
 
 @media only screen and (min-device-width: 375px) {
