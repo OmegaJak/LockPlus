@@ -344,6 +344,23 @@ var triContain = document.createElement('div'),
             action.savedElements.placedElements[action.selectedItem]['text-transform'] = 'lowercase';
             action.saveStorage();
         }
+    }else if(name === 'BMstyle'){
+        first.onclick = function () {
+            $('#' + action.selectedItem).css('font-style', 'italic');
+            action.savedElements.placedElements[action.selectedItem]['font-style'] = 'italic';
+            action.saveStorage();
+            //menu.inputClick($(this));
+        }
+        second.onclick = function () {
+            $('#' + action.selectedItem).css('font-style', 'oblique');
+            action.savedElements.placedElements[action.selectedItem]['font-style'] = 'oblique';
+            action.saveStorage();
+        }
+        third.onclick = function () {
+            $('#' + action.selectedItem).css('font-style', 'initial');
+            action.savedElements.placedElements[action.selectedItem]['font-style'] = 'initial';
+            action.saveStorage();
+        }
     }
     triContain.appendChild(first);
     triContain.appendChild(second);
@@ -374,6 +391,9 @@ menu.createWhat = function(liName, does, id){
             break;
         case 'uppercase':
             menu.createTriButtons(id,'Upper','Cap','Lower');
+            break;
+        case 'style':
+            menu.createTriButtons(id,'Italic','Oblique','Initial');
             break;
         default:
             'null';
