@@ -1609,10 +1609,10 @@ action.setCarouselOpacity = function (div) {
 };
 action.saveTheme = function () { //saves info to divs and sends form to create plist
     if (action.wallpaper !== null && action.wallpaper !== 'null') {
-        $('#wallpaper').hide();
+        //$('#wallpaper').hide();
         var canvas = document.getElementById('blurcanvas');
-        canvas.style.display = 'none';
-        canvas.className = '';
+        //canvas.style.display = 'none';
+        //canvas.className = '';
         var imageData = canvas.toDataURL();
         if (imageData.length > 7) { //if canvas contains data
             $('.screen').css('background-image', 'url(' + imageData + ')');
@@ -1622,10 +1622,10 @@ action.saveTheme = function () { //saves info to divs and sends form to create p
             $('.screen').css('background-image', 'url(' + action.wallpaper + ')');
         }
 
-        $('#blurcanvas').remove();
-        $('#wallpaper').remove();
-        $('miniWallpaper').remove();
-        $('miniBlurCanvas').remove();
+       // $('#blurcanvas').remove();
+       // $('#wallpaper').remove();
+       // $('miniWallpaper').remove();
+       // $('miniBlurCanvas').remove();
     }
     $('.sidePanel').css('display', 'none');
     $('#screenCover').css('display', 'none');
