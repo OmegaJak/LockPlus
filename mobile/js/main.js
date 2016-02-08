@@ -506,7 +506,7 @@ action.updateShadow= function (idSelector, cssKey, unit, jsCssKey, purpose) {
 
 
 action.cgShadowColor = function (isForBox) {
-    var selector = isForBox ? '#boxshadowColorDiv' : '#shadowColorDiv';
+    var selector = isForBox;
     $(selector).spectrum({
         showInitial: true,
         maxSelectionSize: 66,
@@ -526,6 +526,10 @@ action.cgShadowColor = function (isForBox) {
     $(selector).on('move.spectrum', function (e, tinycolor) {
         action.updateShadow(isForBox ? 'box' : '', tinycolor.toRgbString(), 'px', 'color', 'set'); //Added special case to updateShadow for this
     });
+    $(selector).on('hide.spectrum', function (e, tinycolor) {
+            //action.cgcolor(tinycolor.toRgbString(), cssKey, div);
+            $(selector).spectrum("destroy");
+        });
 };
 
 action.cgCustomText = function () { //TODO: Undo/Redo for this

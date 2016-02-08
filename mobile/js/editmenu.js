@@ -6,6 +6,7 @@
 var menu = {};
 
 menu.screenClick = function (event) {
+    $('#externalMenu').remove();
     console.log("Trigger ScreenClick");
     console.log(event.target);
     if (action.selectedItem !== '') {
@@ -99,6 +100,13 @@ menu.createButtons = function (id, name) {
         button.innerHTML = 'Change Icon';
         button.onclick = function () {
             action.populateIcons();
+        };
+    } else if (name === 'shadow') {
+        button.innerHTML = "Open Shadow";
+        button.onclick = function () {
+            menu.externalMenu('text-shadow', 3 , ['x', 'y', 'blur'],action.selectedItem);
+            $('#bottomMenu').remove();
+            $('#editDragger').css('display','none');
         };
     }
     document.getElementById(id).appendChild(button);
@@ -434,6 +442,9 @@ menu.createWhat = function(liName, does, id){
         case 'fonts':
             menu.createButtons(id,liName);
             break;
+         case 'shadow':
+            menu.createButtons(id,liName);
+            break;
         case 'align':
             menu.createTriButtons(id,'left','center','right');
             break;
@@ -487,7 +498,7 @@ menu.createEdits = function () {
     }else{
         for (var i = 0; i < constants.editArray.length; i++) {
             names = constants.editArray[i].split('~')[0];
-            if(names === 'transform' || names === 'weight' || names === 'affixes' || names === 'shadow' || names === 'linearGradient' ){ //tmp disable
+            if(names === 'transform' || names === 'weight' || names === 'affixes' || names === 'linearGradient' ){ //tmp disable
             }else{
                 menu.createList(constants.editArray[i].split('~')[0], constants.editArray[i].split('~')[4]);
             }
@@ -537,16 +548,121 @@ menu.bottomMenu = function () {
     //this.createRange();
 };
 
-menu.init = function () {
-    this.button();
-    //this.bottomMenu();
+//button is the div of the increment/decrement
+//type is css value
+menu.externalClick = function (button, type) {
+
+    var title = button.context.title, //returns 0, 1, 2 (0 for x, 1 for y, 2 for blur);
+        position,
+        result = $('#' + action.selectedItem).css(type).match(/(-?\d+px)|(rgb\(.+\))/g),
+        color, y, x, blur, oldValue, newVal;
+
+    if (result) {
+        color = result[0];
+        y = result[1];
+        x = result[2];
+        blur = result[3];
+    } else {
+        color = 'rgb(0,0,0)';
+        y = '0px';
+        x = '0px';
+        blur = '0px';
+    }
+
+    oldValue = button.parent().find("input").val();
+    if (button.text() === "+") {
+        newVal = parseFloat(oldValue) + 1;
+    } else {
+        if (oldValue > 0) {
+            newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    button.parent().find("input").val(newVal);
+
+    switch (title) {
+    case '0':
+        y = newVal + 'px';
+        break;
+    case '1':
+        x = newVal + 'px';
+        break;
+    case '2':
+        blur = newVal + 'px';
+        break;
+    }
+    newVal = y + ' ' + x + ' ' + blur + ' ' + color;
+    action.setCss(action.selectedItem, type, newVal);
+};
+//type == text-shadow
+//count == number of inputs
+//names == array of names
+//id == id of selected item
+menu.externalMenu = function (type, count, names, id) {
+    var eMenu = document.createElement('div'),
+        eButton = document.createElement('div'),
+        old = $('#' + id).css('text-shadow');
+
+    eMenu.id = 'externalMenu';
+    eButton.className = 'exColorButton';
+    eButton.innerHTML = 'Color';
+    eButton.onclick = function () {
+        action.cgShadowColor('#externalMenu');
+    };
+    document.body.appendChild(eMenu);
+    $(eMenu).draggable({
+        axis: 'y'
+    });
+
+    for (var i = 0; i < count; i++) {
+        var result = $('#' + action.selectedItem).css('text-shadow').match(/(-?\d+px)|(rgb\(.+\))/g);
+        if (!result) {
+            result = ['rgb(0,0,0)', '0px', '0px', '0px'];
+        }
+        var externalInputContainer = document.createElement('div'),
+            input = document.createElement('input'),
+            increment = document.createElement('div'),
+            decrement = document.createElement('div'),
+            label = document.createElement('div');
+
+        label.innerHTML = names[i];
+        input.value = parseInt(result[i + 1], 10);
+        increment.innerHTML = '+';
+        increment.title = i;
+        increment.onclick = function () {
+            menu.externalClick($(this), type);
+        };
+        decrement.innerHTML = '-';
+        decrement.title = i;
+        decrement.onclick = function () {
+            menu.externalClick($(this), type);
+        };
+
+        externalInputContainer.className = 'exInput' + i;
+        label.className = 'exTopLabel';
+        increment.className = 'exInc exButton';
+        decrement.className = 'exDec exButton';
+        input.className = 'exInput';
+
+        externalInputContainer.appendChild(input);
+        externalInputContainer.appendChild(increment);
+        externalInputContainer.appendChild(decrement);
+        externalInputContainer.appendChild(label);
+        eMenu.appendChild(externalInputContainer);
+
+    };
+    eMenu.appendChild(eButton);
+
 };
 
 
+menu.init = function () {
+    this.button();
+};
 
 function showElementPanel() {
     $('.sidePanel').css('opacity', '0');
 }
-
 
 menu.init();
