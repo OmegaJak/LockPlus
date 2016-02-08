@@ -12,7 +12,7 @@ menu.screenClick = function (event) {
         $('#bottomMenu').remove();
         menu.bottomMenu();
         $('#editDragger').css('display','block');
-        if ($('#bottomMenu').hasClass(action.selectedItem)) {
+        if ($('#bottomMenu').hasClass(action.selectedItem + "Menu")) {
             $('#bottomMenu').css('display', 'block');
         } else {
             $('#editDragger').css('display','block');
@@ -94,6 +94,11 @@ menu.createButtons = function (id, name) {
             action.removeItemFromScreen(action.selectedItem);
             $('#bottomMenu').remove();
             $("#accordion").find("li[title='" + action.selectedItem + "']").removeClass();
+        };
+    } else if (name === 'changeicon') {
+        button.innerHTML = 'Change Icon';
+        button.onclick = function () {
+            action.populateIcons();
         };
     }
     document.getElementById(id).appendChild(button);
@@ -221,7 +226,12 @@ menu.createRange = function (name, does) {
 
     var opct = document.querySelector('.' + name + 'js-opacity');
 
-    var startVal = $('#' + action.selectedItem).css(does).replace(/[^-\d\.]/g, '');
+
+        if(name == 'BMiconsize'){
+            var startVal = $('#iconImg').css(does).replace(/[^-\d\.]/g, '');
+        }else{
+            var startVal = $('#' + action.selectedItem).css(does).replace(/[^-\d\.]/g, '');
+        }
 
     var initOpct = new Powerange(opct, {
         callback: function () {
@@ -288,6 +298,11 @@ menu.adjust = function (adjustItem, value, manual) {
                 case 'BMradius':
                     action.setCss(action.selectedItem, 'border-radius', value + 'px');
                     break;
+                case 'BMiconsize':
+                    action.setCss(action.selectedItem, 'width', value + 'px');
+                    $('#iconImg').css('width', value + 'px');
+                    //action.setCss('iconImg', 'width', value + 'px');
+                    break;
                 case 'top':
                     action.setCss(action.selectedItem, 'top', value + 'px');
                     break;
@@ -309,6 +324,9 @@ menu.adjust = function (adjustItem, value, manual) {
                 action.setCss(action.selectedItem, 'top', value + 'px');
             }else if (adjustItem === 'BMradius'){
                 action.setCss(action.selectedItem, 'border-radius', value + 'px');
+            }else if (adjustItem === 'BMiconsize'){
+                action.setCss(action.selectedItem, 'width', value + 'px');
+                $('#iconImg').css('width', value + 'px');
             }
         }
     }
@@ -400,11 +418,17 @@ menu.createWhat = function(liName, does, id){
         case 'radius':
             menu.createRange(id, does);
             break;
+        case 'iconsize':
+            menu.createRange(id, does);
+            break;
         case 'position':
             menu.createPositionInputs(id,does);
             break;
         case 'boxColor':
         case 'color':
+            menu.createButtons(id,liName);
+            break;
+        case 'changeicon':
             menu.createButtons(id,liName);
             break;
         case 'fonts':
@@ -454,7 +478,7 @@ menu.createEdits = function () {
     }else if (action.selectedItem === 'icon'){
         for (var i = 0; i < constants.iconArray.length; i++) {
             names = constants.iconArray[i].split('~')[0];
-            if(names === 'iconsize' || names === 'changeicon' || names === 'transform'){
+            if(names === 'transform'){
 
             }else{
                 menu.createList(constants.iconArray[i].split('~')[0], constants.iconArray[i].split('~')[4]);
@@ -474,7 +498,7 @@ menu.bottomMenu = function () {
     var bMenu = document.createElement('div'),
         dragger = document.createElement('div');
     bMenu.id = 'bottomMenu';
-    bMenu.className = action.selectedItem;
+    bMenu.className = action.selectedItem + "Menu";
     document.body.appendChild(bMenu);
 
     var bM = document.getElementById('bottomMenu');
