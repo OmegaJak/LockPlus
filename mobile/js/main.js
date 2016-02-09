@@ -1023,6 +1023,7 @@ action.cgcolor = function (color, cssKey, div) {
     if (color) {
         action.setCss(action.selectedItem, cssKey, color);
     } else {
+        console.log(cssKey);
         $("#" + div).spectrum({
             showInitial: true,
             maxSelectionSize: 66,
@@ -2277,7 +2278,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
             deselectElement(action.selectedItem, false); // Unhighlight the old element
 
             action.selectedItem = event.target.id; // Set the selected item to the new element
-            $('#' + event.target.id).css('outline', '1px solid #21b9b0'); // Highlight new element
+            $('#' + event.target.id).css('outline', '1px solid #00c3ff'); // Highlight new element
 
             if (action.selectedItem === '') $('.elementPanel').data('prevHiddenState', $('.elementPanel').is(':visible')); // Save the panel's previous state, but only if switching to a new element
 

@@ -70,6 +70,12 @@
     -webkit-transform: translateZ(0px);
     overflow: scroll;
 }
+.yesClear {
+  left: 200px!important;
+}
+.noClear {
+    left: 250px!important;
+}
 
 }
 

@@ -10,9 +10,13 @@ html{
 	height: 40px;
 	background-color: rgba(255,255,255,0.2);
 	border-radius:999px;
-	border:2px solid rgba(255,255,255,0.3);
+	border:2px solid white;
 	bottom: 90px;
 	right:20px;
+  	border: 2px solid #00c3ff;
+  	background-clip: content-box;
+  	padding: 2px;
+  	box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
 }
 
 #bottomMenu{
@@ -21,51 +25,70 @@ html{
 	height: 200px;
 	bottom:0;
 	left:0;
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0,0,0,0.4);
 	display: block;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	-webkit-backdrop-filter: blur(5px);
 	z-index: 9;
 	-webkit-overflow-scrolling: touch;
+	border-top:2px solid #00c3ff;
+	border-bottom:2px solid #00c3ff;
 }
 
-.inputContainer{
-	position: absolute;
-	top:23px;
-	right:50px;
-	width: 80px;
-	height: 60px;
+#bottomMenu::-webkit-scrollbar {
+    width: 0px;
+    margin-left: 0px;
+    border-radius: 0px!important;
+    background-color: black!important;
 }
-.inputContainer2{
+
+.liText{
 	position: absolute;
-	top:23px;
-	right:160px;
-	width: 80px;
-	height: 60px;
-}
-.manualInput{
-	position: absolute;
-	top:0;
-	left:24px;
-	width: 30px;
+	left:0;
+	color:black;
+	line-height: 60px;
+	text-shadow:0 1px 2px white;
+	border-right: 1px solid black;
+	background-color: #00c3ff;
+	text-transform: capitalize;
+	width: 105px;
 	text-align: center;
-	border:0px solid transparent;
-	border-radius: 2px;
 }
-.inButton{
+
+.slider-wrapper{
+	width: 100px!important;
 	position: absolute;
+	top:30px;
+	right:165px;
 }
+.range-bar{
+	position: absolute;
+	width: 100px!important;
+}
+.range-handle{
+	width: 30px!important;
+	height: 30px!important;
+	background-color: #00c3ff!important;
+}
+.range-quantity{
+	background-color: #00c3ff!important;
+}
+
 .incs,.decs{
 	position: absolute;
+	text-shadow:0 1px 2px white;
 	width: 20px;
 	height: 20px;
-	background-color: rgba(255,255,255,1);
+	background-color: #00c3ff;
 	border-radius: 999px;
 	text-align: center;
 	line-height: 20px;
 	font-family: Times;
 	color:black;
+	padding: 1px;
+  	border: 2px solid #00c3ff;
+  	background-clip: content-box;
 }
 .incs{
 	right: 0;
@@ -73,20 +96,123 @@ html{
 .decs{
 	left:0;
 }
+
+#bottomMenuUL li{
+
+}
+
+.inputContainer{
+	position: absolute;
+	top:20px;
+	right:50px;
+	width: 90.5px;
+	height: 60px;
+}
+.inputContainer2{
+	position: absolute;
+	top:20px;
+	right:160px;
+	width: 90.5px;
+	height: 60px;
+}
+@media only screen and (max-device-width: 375px) {
+	.slider-wrapper{
+		right:155px;
+	}
+	.inputContainer{
+		right:40px;
+	}
+	.inputContainer2{
+		right:150px;
+	}
+}
+.manualInput{
+	position: absolute;
+	top:6px;
+	left:24px;
+	height: 14.4px;
+	line-height: 14.4px;
+	width: 42px;
+	text-align: center;
+	border:0px solid transparent;
+	background-color: #00c3ff;
+	border-radius: 0px;
+	text-shadow:0 1px 2px white;
+
+}
+.inButton{
+	position: absolute;
+}
+
 .topLabel{
 	position: absolute;
 	top:-14px;
-	right:32px;
+	right:34px;
 	font-size: 12px;
-	text-transform: capitalize;
+	text-transform: uppercase;
+	font-weight: 500;
+	color:#a9acb1;
 }
 .leftLabel{
 	top:-14px;
-	right:30px;
+	right:33px;
 	position: absolute;
 	font-size: 12px;
-	text-transform: capitalize;
+	text-transform: uppercase;
+	font-weight: 500;
+	color:#a9acb1;
 }
+
+.openButtons{
+	position: absolute;
+	top:20px;
+	right:60px;
+	width: 150px;
+	background-color: #00c3ff;
+	color:black;
+	text-align: center;
+	text-shadow:0 1px 2px white;
+}
+
+.borderButton{
+	position: absolute;
+	top:20px;
+	right:60px;
+	width: 60px;
+	background-color: #00c3ff;
+	color:black;
+	text-align: center;
+	text-shadow:0 1px 2px white;
+	text-align: center;
+}
+
+.triContain{
+	position: absolute;
+	display: inline-block;
+	right:40px;
+	top:18px;
+}
+
+.triContain div{
+	display: inline-block;
+	background-color: #00c3ff;
+	color:black;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-right:1px solid black;
+}
+
+#editDragger{
+	position: absolute;
+	color:white;
+	left: 0;
+	bottom: 177px;
+	background-color: rgba(0,0,0,1);
+	padding: 4px;
+	display: none;
+	z-index: 10;
+}
+
 /*#bottomMenu::-webkit-scrollbar-track {
     background-color: transparent;
 }*/
@@ -103,32 +229,7 @@ html{
     border-radius: 0px!important;
     background-color: black;
 }
-.openButtons{
-	position: absolute;
-	top:20px;
-	right:60px;
-	width: 150px;
-	background-color: white;
-	color:black;
-	border-radius: 5px;
-		text-align: center;
-}
 
-.triContain{
-	position: absolute;
-	display: inline-block;
-	right:60px;
-	top:18px;
-}
-
-.triContain div{
-	display: inline-block;
-	margin-right: 4px;
-	background-color: white;
-	color:black;
-	padding: 2px;
-	border-radius: 3px
-}
 
 #bottomMenuUL{
 	position: absolute;
@@ -153,30 +254,6 @@ html{
 	z-index: 999;
 }
 
-.liText{
-	position: absolute;
-	line-height: 60px;
-	margin-left: 20px;
-	text-transform: capitalize;
-}
-
-.slider-wrapper{
-	width: 100px!important;
-	position: absolute;
-	top:30px;
-	right:170px;
-}
-.range-bar{
-	position: absolute;
-	width: 100px!important;
-}
-.range-handle{
-	width: 30px!important;
-	height: 30px!important;
-}
-.range-quantity{
-	background-color: white!important;
-}
 
 
 
@@ -194,17 +271,7 @@ html{
 	border-radius: 3px;
 	display: none;
 }
-#editDragger{
-	position: absolute;
-	color:white;
-	left: 3px;
-	bottom: 170px;
-	background-color: rgba(0,0,0,0.5);
-	padding: 4px;
-	border-radius: 3px;
-	display: none;
-	z-index: 10;
-}
+
 #elPanelCloser{
 	position: fixed;
 	color:white;
@@ -217,9 +284,11 @@ html{
 
 
 .liSelected{
-	background-color: teal!important;
+	background-color: #00c3ff!important;
 }
-
+::-webkit-scrollbar-thumb {
+    background-color: #00c3ff!important;
+}
 
 #elPanel::-webkit-scrollbar-track {
     display: none;
@@ -243,6 +312,8 @@ html{
 	overflow: scroll;
 	display: none;
 	-webkit-overflow-scrolling: touch;
+	border-top:2px solid #00c3ff;
+	border-bottom:2px solid #00c3ff;
 }
 #accordion {
 	position: relative;

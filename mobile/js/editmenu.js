@@ -7,8 +7,6 @@ var menu = {};
 
 menu.screenClick = function (event) {
     $('#externalMenu').remove();
-    console.log("Trigger ScreenClick");
-    console.log(event.target);
     if (action.selectedItem !== '') {
         $('#bottomMenu').remove();
         menu.bottomMenu();
@@ -80,7 +78,7 @@ menu.createButtons = function (id, name) {
     if (name === 'color' || name === 'boxColor') {
         button.onclick = function () {
             if (action.selectedItem.substring(0, 3) === 'box') {
-                action.cgcolor(false, 'background-color', 'bottomMenu');
+                action.cgcolor(false, 'background-color', 'BMboxColor');
             } else {
                 action.cgcolor(false, 'color', 'bottomMenu');
             }
@@ -284,7 +282,7 @@ menu.createRange = function (name, does) {
 
 menu.adjustManual = function (name, value) {
     //should change powerange here, but it's being a bitch
-    this.adjust(name, value, true);
+    this.adjust(name, String(value), true);
 
 };
 menu.adjust = function (adjustItem, value, manual) {
@@ -310,6 +308,9 @@ menu.adjust = function (adjustItem, value, manual) {
                     action.setCss(action.selectedItem, 'width', value + 'px');
                     $('#iconImg').css('width', value + 'px');
                     //action.setCss('iconImg', 'width', value + 'px');
+                    break;
+                case 'BMborder':
+                   action.setCss(action.selectedItem, 'border-width', value + 'px');
                     break;
                 case 'top':
                     action.setCss(action.selectedItem, 'top', value + 'px');
@@ -414,6 +415,44 @@ var triContain = document.createElement('div'),
     document.getElementById(name).appendChild(triContain);
 };
 
+menu.createBorderButton = function (id) {
+    var button = document.createElement('div');
+    button.innerHTML = 'Color';
+    button.className = 'borderButton';
+    button.onclick = function () {
+            action.cgcolor(false,'border-color','BMborder');
+        };
+    document.getElementById(id).appendChild(button);
+
+
+    var inputContainer = document.createElement('div');
+    inputContainer.className = 'inputContainer2';
+    var input2 = document.createElement('input');
+    input2.type = 'text';
+    input2.value = $('#' + action.selectedItem).css('border-width');
+    input2.id = 'manual' + id;
+    input2.className = 'manualInput';
+    var increment = document.createElement('div');
+    var decrement = document.createElement('div');
+    increment.className = 'incs inButton';
+    increment.onclick = function () {
+        menu.inputClick($(this));
+    }
+    increment.innerHTML = '+';
+    decrement.className = 'decs inButton';
+    decrement.onclick = function () {
+        menu.inputClick($(this));
+    }
+    decrement.innerHTML = '-';
+    input2.onchange = function () {
+        menu.adjustManual(name, this.value);
+    }
+    inputContainer.appendChild(increment);
+    inputContainer.appendChild(decrement);
+    inputContainer.appendChild(input2);
+    document.getElementById(id).appendChild(inputContainer);
+};
+
 menu.createWhat = function(liName, does, id){
     switch(liName) {
         case 'size':
@@ -457,6 +496,9 @@ menu.createWhat = function(liName, does, id){
         case 'style':
             menu.createTriButtons(id,'Italic','Oblique','Initial');
             break;
+        case 'border':
+            menu.createBorderButton(id);
+            break;
         default:
             'null';
     }
@@ -480,7 +522,7 @@ menu.createEdits = function () {
     if(action.selectedItem.substring(0, 3) === 'box'){
         for (var i = 0; i < constants.boxEditArray.length; i++) {
             names = constants.boxEditArray[i].split('~')[0];
-            if(names === 'boxShadow' || names === 'transform' || names === 'linearBoxGradient' || names === 'border'){ //temp disable
+            if(names === 'boxShadow' || names === 'transform' || names === 'linearBoxGradient'){ //temp disable
                 //do nothing
             }else{
                 menu.createList(constants.boxEditArray[i].split('~')[0], constants.boxEditArray[i].split('~')[4]);

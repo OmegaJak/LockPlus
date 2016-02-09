@@ -78,7 +78,7 @@
     border-radius: 25px;
     color:#ffffff;
     font-size: 18px;
-    background-color: #21b9b0;
+    background-color: #00c3ff;
     padding: 5px 6px 5px 6px;
     border: solid rgba(0,0,0,0.3) 5px;
     text-decoration: none;
@@ -112,7 +112,7 @@ label {
     background-color: #54606e;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #21b9b0;
+    background-color: #00c3ff;
     border-radius: 99px;
 }
 .elementPanel h3{
@@ -130,8 +130,8 @@ label {
     position: relative;
 }
 .elementPanel h3:hover{
-    background-color: #21b9b0;
-    border-color: #21b9b0;
+    background-color: #00c3ff;
+    border-color: #00c3ff;
 }
 .categoryTitle {
     cursor: pointer;
@@ -156,9 +156,9 @@ label {
     margin-bottom: 5px;
 }
 .subCategory li:hover{
-    box-shadow: 0px 0px 0px 2px #21b9b0;
-    -webkit-box-shadow: 0px 0px 0px 2px #21b9b0;
-    box-shadow: 0px 0px 0px 2px #21b9b0;
+    box-shadow: 0px 0px 0px 2px #00c3ff;
+    -webkit-box-shadow: 0px 0px 0px 2px #00c3ff;
+    box-shadow: 0px 0px 0px 2px #00c3ff;
 }
 #textelementsSubCategory li:first-child, #squaresSubCategory li:first-child{ /*fix textElements */
     margin-top:80px;

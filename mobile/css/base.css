@@ -110,6 +110,7 @@ footer a {
   left:5px;
   bottom: 2px;
   font-size: 10px;
+  display: none;
 }
 #version:hover{
   cursor: pointer;
@@ -167,7 +168,7 @@ footer a {
     background-color: transparent;
 }
 .iconList::-webkit-scrollbar-thumb {
-    background-color: #21b9b0;
+    background-color: #00c3ff;
     border-radius: 99px;
 }
 .iconList::-webkit-scrollbar {
