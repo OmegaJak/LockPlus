@@ -8,7 +8,7 @@
   position: absolute;
   width: 200px;
   left:0;
-  top:25%;
+  top:20%;
   background-color: red;
 }
 
@@ -54,19 +54,18 @@
 }
 .toolPanel ul {
     width: 50px;
-    left:-38px;
+    left:-40px;
     position: absolute;
 }
 .toolPanel li{
   text-align: center;
   padding: 5px;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  font-size: 15px;
-  border-radius: 100%;
-  margin-top: 10px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 20px;
   background-color: #343434;
+  border-bottom: 1px solid #00c3ff;
   color:white;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
@@ -80,15 +79,19 @@
   position: absolute;
   content: attr(id);
   margin-left: 0px;
+  width: 70px;
+  text-align: center;
+  top:55px;
+  left:0;
   text-transform: capitalize;
   font-size: 8px;
-  background-color: #343434;
+  height: 15px;
+  line-height: 15px;
   color:white;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 5px;
   z-index: -1;
-
+  background-color: #343434;
+  border-bottom: 1px solid #00c3ff;
+  text-shadow:0 1px 2px black;
 
 }
 

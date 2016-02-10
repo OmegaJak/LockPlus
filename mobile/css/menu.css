@@ -323,26 +323,40 @@ html{
     width: 100%;
     text-align: center;
     text-transform: capitalize;
+    text-shadow:0 1px 2px black;
 }
 #accordion div {
     display: block;
     font-weight: bold;
-    margin: 1px;
     padding: 10 5 10 5px;
     list-style: circle;
     color:white;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(0,0,0,0.8);
 }
+
+/*First layer*/
+#accordion li div{
+	background-color: #343434;
+/*	border-bottom: 1px solid black; */
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+/*Second Layer*/
+#accordion > li > ul > li > div{
+	background-color: #4e4e4e;
+	color:#00c3ff;
+	font-style: italic;
+}
+/* Third Layer */
+#accordion ul li {
+    background-color: rgba(0,0,0,0.1);
+}
+
 #accordion ul {
     list-style: none;
     padding: 0 0 0 0;
 }
 #accordion ul{
     display: none;
-}
-
-#accordion ul li {
-    background-color: rgba(255,255,255,0.1);
 }
 .accordionInner {
 	color:white;

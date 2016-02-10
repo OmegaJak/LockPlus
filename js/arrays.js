@@ -156,6 +156,22 @@ var elementPanel = {
             datesingled: cF.month() + '-' + cF.date() + '-' + cF.smyear(),
             datemonthfirst: cF.date() + ' ' + cF.monthtext()
         },
+        strings6: {
+            title: "Strings6",
+            nsmd : cF.smonthtext() + " " + cF.date(),
+            ndsm : cF.date() + " " + cF.smonthtext(),
+            ndsmd: cF.date() + " " + cF.sdaytext(),
+            nsmdd: cF.sdaytext() + " " + cF.date(),
+            ndatedash: cF.daytext() + " - " + cF.monthtext() + " - " + cF.date()
+        },
+        strings7: {
+            title: "Strings7",
+            nsmmyear: cF.smonthtext() + " " + cF.year(),
+            nmdplusyear: cF.monthtext() + " " + cF.dateplus() + " " + cF.year(),
+            nhrtmin: cF.hourtext() + ':' + cF.minute(),
+            nhrtarrowmin: cF.hourtext() + '>>' + cF.minute(),
+            nttext: "[" + cF.hourtext() + "]" + "" + cF.minuteonetext() + '' + cF.minutetwotext(),
+        },
         clocks: {
             title: "Clock",
             clock: cF.hour() + ":" + cF.minute(),

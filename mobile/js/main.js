@@ -1822,7 +1822,7 @@ action.addDraggable = function (id) {
             //ipad
             if (ui.position.left < 0) ui.position.left = 0;
 
-            menu.updatePosition(ui.position.left,ui.position.top);
+            menu.updatePosition(Math.round(ui.position.left),Math.round(ui.position.top));
 
         },
         stop: function (event, ui) {

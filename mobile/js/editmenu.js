@@ -140,12 +140,12 @@ menu.createPositionInputs = function (name, does) {
     label2.className = 'leftLabel';
     //top
     input1.type = 'text';
-    input1.value = startVal1;
+    input1.value = Math.round(startVal1);
     input1.id = 'manual' + name;
     input1.className = 'manualInput topInput';
     //left
     input2.type = 'text';
-    input2.value = startVal2;
+    input2.value = Math.round(startVal2);
     input2.id = 'manual' + name;
     input2.className = 'manualInput leftInput';
     //top

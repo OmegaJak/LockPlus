@@ -114,43 +114,52 @@ var fontArray = ['abeatbykai'
 var elementPanel = {
     clockElements: {
         strings: {
-            title: "Strings",
-            datestring: cF.daytext() + ", " + cF.monthtext() + " " + cF.date(),
-            datedash: cF.daytext() + "-" + cF.monthtext() + "-" + cF.date(),
-            datespace: cF.daytext() + " " + cF.monthtext() + " " + cF.date(),
-            datedotmonth: cF.date() + '.' + cF.monthtext(),
-            monthdot: cF.monthtext() + "." + cF.date(),
-            dateslashmonth: cF.date() + "/" + cF.monthtext(),
-            mdy: cF.month() + "/" + cF.date() + "/" + cF.year(),
-            datemonth: cF.date() + " " + cF.monthtext(),
-            datemonthrev: cF.monthtext() + " " + cF.date(),
-            monthlinespace: cF.monthtext() + " | " + cF.date() + " | " + cF.year(),
-            monthline: cF.monthtext() + "|" + cF.date() + "|" + cF.year(),
-            daydate: cF.daytext() + " " + cF.date(),
-            daydotdate: cF.daytext() + "." + cF.date(),
-            datestringrev: cF.monthtext() + " " + cF.date() + ", " + cF.daytext(),
-            daydatemonth: cF.daytext() + " | " + cF.date() + " " + cF.monthtext(),
-            daydatesmonth: cF.daytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
-            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),
-            dayabdatemonth: cF.sdaytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
-            daycommadatemonth: cF.sdaytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),
+            title: "Strings For Clocks",
             hrmin: cF.hourtext() + '.' + cF.minute(),
             hrnsmin: cF.hourtext() + ' ' + cF.minute(),
             hrsmush: cF.hourtext() + '' + cF.minute(),
             hrmintx: (cF.minutetwotext() !== "") ? cF.hourtext() + '.' + cF.minuteonetextdot() +  '.' + cF.minutetwotext() : cF.hourtext() + '.' + cF.minuteonetextdot() + cF.minutetwotext(),
             ttext: cF.hourtext() + " " + cF.minuteonetext() + ' ' + cF.minutetwotext(),
-            datebar: cF.month() + '|' + cF.date() + '|' + cF.smyear(),
-            datesnslash: cF.month() + '/' + cF.date() + '/' + cF.smyear(),
-            datesingled: cF.month() + '-' + cF.date() + '-' + cF.smyear(),
-            datemonthfirst: cF.date() + ' ' + cF.monthtext()
-        },
-        clocks: {
-            title: "Clock",
             clock: cF.hour() + ":" + cF.minute(),
             clocksmush: cF.hour() + "" + cF.minute(),
             clockline: cF.hour() + "|" + cF.minute(),
             zclock: cF.zhour() + ":" + cF.minute(),
-            clockpm: cF.hour() + ":" + cF.minute() + cF.am()
+            clockpm: cF.hour() + ":" + cF.minute() + cF.am(),
+            nhrtmin: cF.hourtext() + ':' + cF.minute(),
+            nhrtarrowmin: cF.hourtext() + '>>' + cF.minute(),
+            nttext: "[" + cF.hourtext() + "]" + "" + cF.minuteonetext() + '' + cF.minutetwotext()
+        },
+        strings2:{
+            title: "Strings For Dates",
+            datestring: cF.daytext() + ", " + cF.monthtext() + " " + cF.date(),             // Tuesday, February 9
+            datedash: cF.daytext() + "-" + cF.monthtext() + "-" + cF.date(),                // Tuesday-February-9
+            datespace: cF.daytext() + " " + cF.monthtext() + " " + cF.date(),               // Tuesday February 9
+            datedotmonth: cF.date() + '.' + cF.monthtext(),                                 // 9.February
+            monthdot: cF.monthtext() + "." + cF.date(),                                     // February.9
+            dateslashmonth: cF.date() + "/" + cF.monthtext(),                               // 9/February
+            mdy: cF.month() + "/" + cF.date() + "/" + cF.year(),                            // 1/9/2016
+            datemonth: cF.date() + " " + cF.monthtext(),                                    // 9 February
+            datemonthrev: cF.monthtext() + " " + cF.date(),                                 // February 9
+            monthlinespace: cF.monthtext() + " | " + cF.date() + " | " + cF.year(),         // February | 9 | 2016
+            monthline: cF.monthtext() + "|" + cF.date() + "|" + cF.year(),                  // February|9|2016
+            daydate: cF.daytext() + " " + cF.date(),                                        // Tuesday 9
+            daydotdate: cF.daytext() + "." + cF.date(),                                     // Tuesday.9
+            datestringrev: cF.monthtext() + " " + cF.date() + ", " + cF.daytext(),          // February 9, Tuesday
+            daydatemonth: cF.daytext() + " | " + cF.date() + " " + cF.monthtext(),          // Tuesday | 9 February
+            daydatesmonth: cF.daytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),          // Tuesday 9 Feb
+            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),    // Tuesday 9 Feb
+            dayabdatemonth: cF.sdaytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),        // Tue 9 Feb
+            daycommadatemonth: cF.sdaytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),    // Tue, 9 Feb
+            datebar: cF.month() + '|' + cF.date() + '|' + cF.smyear(),                      // 1|9|16
+            datesnslash: cF.month() + '/' + cF.date() + '/' + cF.smyear(),                  // 1/9/16
+            datesingled: cF.month() + '-' + cF.date() + '-' + cF.smyear(),                  // 1-9-16
+            nsmd : cF.smonthtext() + " " + cF.date(),                                       // Feb 9
+            ndsm : cF.date() + " " + cF.smonthtext(),                                       // 9 Feb
+            ndsmd: cF.date() + " " + cF.sdaytext(),                                         // 9 Tue
+            nsmdd: cF.sdaytext() + " " + cF.date(),                                         // Tue 9
+            ndatedash: cF.daytext() + " - " + cF.monthtext() + " - " + cF.date(),           // Tuesday - February - 9
+            nsmmyear: cF.smonthtext() + " " + cF.year(),                                    // Feb 2016
+            nmdplusyear: cF.monthtext() + " " + cF.dateplus() + " " + cF.year()             // Febraruary 9th 2016
         },
         hours: {
             title: "Hour",
@@ -357,14 +366,14 @@ var elementPanel = {
         }
     },
     miscElements: {
-        text: {
+/*        text: {
             title: "Text Elements",
             textOne: "Custom Text 1",
             textTwo: "Custom Text 2",
             textThree: "Custom Text 3",
             textFour: "Custom Text 4",
             textFive: "Custom Text 5"
-        },
+        }, */
         box: {
             title: "Squares",
             boxOne: "Custom Box 1",

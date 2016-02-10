@@ -315,7 +315,17 @@ function loadClock() {
                 hrsmush: clock.hourtext() + '' + clock.minute(),
                 dayabdatemonth: clock.sdaytext() + ' ' + clock.date() + ' ' + clock.smonthtext(),
                 daycommadatemonth: clock.sdaytext() + ', ' + clock.date() + ' ' + clock.smonthtext(),
-                datemonthfirst: clock.date() + ' ' + clock.monthtext()
+                datemonthfirst: clock.date() + ' ' + clock.monthtext(),
+                nsmd : clock.smonthtext() + " " + clock.date(),
+                ndsm : clock.date() + " " + clock.smonthtext(),
+                ndsmd : clock.date() + " " + clock.sdaytext(),
+                nsmdd: clock.sdaytext() + " " + clock.date(),
+                ndatedash: clock.daytext() + " - " + clock.monthtext() + " - " + clock.date(),
+                nsmmyear: clock.smonthtext() + " " + clock.year(),
+                nmdplusyear: clock.monthtext() + " " + clock.dateplus() + " " + clock.year(),
+                nhrtmin: clock.hourtext() + ':' + clock.minute(),
+                nhrtarrowmin: clock.hourtext() + '>>' + clock.minute(),
+                nttext: "[" + clock.hourtext() + "]" + "" + clock.minuteonetext() + '' + clock.minutetwotext()
             };
             Object.keys(clockElements).forEach(function (key) {
                 var value = clockElements[key],

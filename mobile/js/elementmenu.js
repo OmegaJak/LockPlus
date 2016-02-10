@@ -18,12 +18,15 @@ elPanel.removeSelected = function () {
 };
 
 elPanel.screenClick = function () {
-    if($('#elPanel').css('display') === 'block'){
-        $('#elPanel').scrollTop(0);
-
-       $("#accordion li").children('ul').hide();
+    if (action.selectedItem != '') {
+        $('#elPanel').css('display', 'none');
+        $('#elPanelDragger').css('display', 'none');
+    } else {
+        if ($('#elPanel').css('display') === 'block') {
+            $('#elPanel').scrollTop(0);
+            $("#accordion li").children('ul').hide();
+        }
     }
-
 };
 
 elPanel.scrollTop = function (item) {
@@ -96,7 +99,7 @@ elPanel.subLI = function (name) {
             div = document.createElement('div');
         li.id = 'li' + key;
         ul.id = 'sub' + key;
-        div.innerHTML = key;
+        div.innerHTML = elementPanel[name][key]['title'];
         document.getElementById(name).appendChild(li);
         document.getElementById('li' + key).appendChild(div);
         document.getElementById('li' + key).appendChild(ul);
