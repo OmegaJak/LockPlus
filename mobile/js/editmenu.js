@@ -34,12 +34,11 @@ menu.toggle = function () {
     }
 };
 menu.button = function () {
-    var rMenu = document.createElement('div');
-    rMenu.id = 'roundMenu';
-    document.body.appendChild(rMenu);
-    $("#roundMenu").draggable();
+    var rMenu = $('<div id="roundmenu"></div>');
+    $('#container').append(rMenu);
+    rMenu.draggable();
 
-    $("#roundMenu").click(function () {
+    rMenu.click(function () {
         menu.toggle();
     });
 };
