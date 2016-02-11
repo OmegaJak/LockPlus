@@ -36,7 +36,39 @@ menu.toggle = function () {
 menu.button = function () {
     var rMenu = $('<div id="roundmenu"></div>');
     $('#container').append(rMenu);
-    rMenu.draggable();
+    rMenu.draggable({
+        stop: function(event, ui) {
+            var halfHeight = $('#roundmenu').height() / 2;
+            var halfWidth = $('#roundmenu').width() / 2; // These are probably the same but you never know
+
+            var verticalCenter = ui.position.top + halfHeight;
+            var horizontalCenter = ui.position.left + halfWidth;
+            var newLeft = $('#roundmenu').position().left;
+            var newTop = $('#roundmenu').position().top;
+
+            var smallestDistance = screen.width - horizontalCenter; // Distance to right
+            newLeft = screen.width - halfWidth;
+            if (horizontalCenter < smallestDistance) { // Distance to left
+                smallestDistance = horizontalCenter;
+                newLeft = 0 - halfWidth;
+            }
+            if (screen.height - verticalCenter < smallestDistance) { // Distance to bottom
+                smallestDistance = screen.height - verticalCenter;
+                newLeft = $('#roundmenu').position().left; // Reset this as it's already been changed
+                newTop = screen.height - halfHeight;
+            }
+            if (verticalCenter < smallestDistance) { // Distance to top
+                smallestDistance = verticalCenter;
+                newLeft = $('#roundmenu').position().left;
+                newTop = 0 - halfHeight;
+            }
+
+            $('#roundmenu').animate({
+                left: newLeft,
+                top: newTop
+            }, 700, 'easeOutElastic');
+        }
+    });
 
     rMenu.click(function () {
         menu.toggle();
