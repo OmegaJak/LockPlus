@@ -1,4 +1,4 @@
-var widgetArray = ['Battery', 'Analog', 'Analog2', 'Forecast'];
+var widgetArray = ['Battery', 'Analog', 'Analog2', 'Forecast', 'Shadows'];
 
 
 var replaceWidget = function(key){
@@ -12,6 +12,7 @@ var loadexjsfile = function (id,over) {
     var link = 'http://lockplus.us/creator/widgets/images/' + id + '.js';
     var fileref = document.createElement('script');
     fileref.setAttribute("type", "text/javascript");
+    fileref.setAttribute('title','widgetScript');
     fileref.setAttribute("src", link);
     fileref.async = true;
     if (fileref !== "undefined") {

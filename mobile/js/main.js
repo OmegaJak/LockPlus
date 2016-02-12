@@ -1384,6 +1384,7 @@ action.clearTheme = function (code) { // -1 is to check, 0 doesn't clear theme, 
     } else if (code === 0) { // hide confirmation
         action.hideClearLabel();
     } else if (code === 1) { // definitely clear the theme
+        $("script[title='widgetScript']").remove();
         elPanel.removeSelected();
         localStorage.removeItem('placedElements');
         action.savedElements = {};
