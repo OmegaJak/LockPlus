@@ -1730,7 +1730,11 @@ action.remakeDIV = function (id) {
 };
 action.replaceElements = function () {
     Object.keys(this.savedElements.placedElements).forEach(function (key) {
-        action.remakeDIV(key); //loop object and place items
+        if(action.savedElements.placedElements[key].type == 'widget'){
+            loadexjsfile(key,true);
+        }else{
+            action.remakeDIV(key); //loop object and place items
+        }
         var value = action.savedElements.placedElements[key];
         Object.keys(value).forEach(function (skey) { //loop styles on the object
             var styleVal = value[skey];
@@ -1937,9 +1941,10 @@ action.addtoScreen = function (id) { //when item is clicked from add panel
     if (!action.isUndoingRedoing) {
         action.addAction(['addElement', [id]]);
     }
-
+try{
     document.getElementById(id + 'Picker').style.backgroundColor = "#21b9b0"; //Add colored background to list element
     document.getElementById(id + 'Picker').style.borderColor = "#21b9b0";
+}catch(allow){}
 };
 action.removeFromScreen = function (id, toggleElementPanel) { //when trash for item is clicked or item is re-clicked in element menu
     if (action.selectedItems.length === 0) { // If it >0, then removeSelectedFromScreen handles the queueing

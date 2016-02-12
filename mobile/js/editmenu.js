@@ -7,6 +7,7 @@ var menu = {};
 
 menu.screenClick = function (event) {
     $('#externalMenu').remove();
+    $('#widgetlist').remove();
     if (action.selectedItem !== '') {
         $('#bottomMenu').remove();
         menu.bottomMenu();

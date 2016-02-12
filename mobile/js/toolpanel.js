@@ -37,6 +37,9 @@ action.toolPanel = function (evt) {
         case 'save':
         	this.saveTheme();
             break;
+        case 'widget':
+            showWidgets();
+            break;
         case 'load':
         	location.href = "http://lockplus.us/creator/load/mobile.php";
             break;

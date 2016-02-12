@@ -9,4 +9,5 @@
 ../css/stroll.css
 ../css/toolpanel.css
 ../css/tooltips.css
+../css/widget.css
 ../WebReady/font-awesome.min.css

@@ -4,6 +4,7 @@ var constants = {
     toolArray: ['background~Background~fa fa-photo~backgroundDiv'
                     ,'overlay~Overlay~fa fa-clipboard~overlayDiv'
                     ,'element~Show Elements Panel~fa fa-flask~elementDiv'
+                    ,'widget~Load Widget~fa fa-flag~loadWidget'
                     ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'load~Load Theme~fa fa-download~loadDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],

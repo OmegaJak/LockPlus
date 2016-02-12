@@ -743,7 +743,7 @@ html{
 	border-radius:999px;
 	border:2px solid white;
 	bottom: 90px;
-	right:20px;
+	right:-25px;
   	border: 2px solid #00c3ff;
   	background-clip: content-box;
   	padding: 2px;
@@ -3076,6 +3076,43 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 	z-index: 98;
 	white-space: nowrap;
 	pointer-events:none;
+}#widgetlist{
+  position: absolute;
+  left:0;
+  width: 100%;
+  height: 200px;
+  background-color: rgba(0,0,0,0.2);
+  z-index: 999;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  -webkit-justify-content: center;
+}
+
+.divimg {
+    margin: 5px;
+    display: inline-block;
+    width: 180px;
+}
+
+.divimg img {
+    width: 100%;
+    height: auto;
+}
+
+#widgetlist::-webkit-scrollbar-thumb {
+   /* background-color: transparent;
+    -webkit-background-clip: padding-box;*/
+       border-radius: 0px!important;
+    background-color: black;
+}
+
+#widgetlist::-webkit-scrollbar {
+    width: 0px;
+    margin-left: 0px;
+    border-radius: 0px!important;
+    display: none;
 }/*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
