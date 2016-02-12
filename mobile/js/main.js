@@ -1637,12 +1637,12 @@ action.saveTheme = function () { //saves info to divs and sends form to create p
     $('.elementPanel').css('display', 'none');
     $('.sidePanel').css('opacity', '1');
 
-    $('#roundMenu').css('opacity','0');
+    $('#roundmenu').css('opacity','0');
 
     window.location = 'ios:webToNativeCall';
 
     setTimeout(function(){
-        $('#roundMenu').css('opacity','1');
+        $('#roundmenu').css('opacity','1');
     },15000);
 
     /*  var devname = $('#fdevname').val();
