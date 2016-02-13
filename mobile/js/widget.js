@@ -1,4 +1,4 @@
-var widgetArray = ['Battery', 'Analog', 'Analog2', 'Forecast', 'Shadows', 'LineDates'];
+var widgetArray = ['Battery', 'Analog', 'Analog2', 'Forecast', 'Shadows', 'LineDates', 'Seconds'];
 
 
 var replaceWidget = function(key){
