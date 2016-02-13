@@ -52,6 +52,12 @@ menu.button = function () {
                 newLeft = 0 - halfWidth;
             }
 
+            if (newTop + $('#roundmenu').height() > screen.height - 10) { // Below the bottom
+                newTop = (screen.height - 10) - $('#roundmenu').height();
+            } else if (newTop < 0) { // Above the top
+                newTop = 4;
+            }
+
             $('#roundmenu').animate({
                 left: newLeft,
                 top: newTop
