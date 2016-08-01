@@ -514,3 +514,106 @@
 	font-family:'tresdias';
 	src:url(fonts/user/tresdias.otf);
 }
+
+/* NEW ADDITIONS */
+
+@font-face{
+	font-family:'allura';
+	src:url(fonts/user/allura.otf);
+}
+@font-face{
+	font-family:'arista';
+	src:url(fonts/user/arista.otf);
+}
+@font-face{
+	font-family:'astrud';
+	src:url(fonts/user/astrud.otf);
+}
+@font-face{
+	font-family:'back';
+	src:url(fonts/user/back.otf);
+}
+@font-face{
+	font-family:'blanch';
+	src:url(fonts/user/blanch.otf);
+}
+@font-face{
+	font-family:'captian';
+	src:url(fonts/user/captian.otf);
+}
+@font-face{
+	font-family:'crafted';
+	src:url(fonts/user/crafted.otf);
+}
+@font-face{
+	font-family:'cumulous';
+	src:url(fonts/user/cumulous.otf);
+}
+@font-face{
+	font-family:'earth';
+	src:url(fonts/user/earth.otf);
+}
+@font-face{
+	font-family:'entypo';
+	src:url(fonts/user/entypo.otf);
+}
+@font-face{
+	font-family:'establo';
+	src:url(fonts/user/establo.otf);
+}
+@font-face{
+	font-family:'feast';
+	src:url(fonts/user/feast.otf);
+}
+@font-face{
+	font-family:'freeky';
+	src:url(fonts/user/freeky.otf);
+}
+@font-face{
+	font-family:'fronte';
+	src:url(fonts/user/fronte.otf);
+}
+@font-face{
+	font-family:'hallo';
+	src:url(fonts/user/hallo.otf);
+}
+@font-face{
+	font-family:'hanging';
+	src:url(fonts/user/hanging.otf);
+}
+@font-face{
+	font-family:'lot';
+	src:url(fonts/user/lot.otf);
+}
+@font-face{
+	font-family:'mohave';
+	src:url(fonts/user/mohave.otf);
+}
+@font-face{
+	font-family:'oswald';
+	src:url(fonts/user/oswald.otf);
+}
+@font-face{
+	font-family:'panama';
+	src:url(fonts/user/panama.otf);
+}
+@font-face{
+	font-family:'pushkin';
+	src:url(fonts/user/pushkin.otf);
+}
+@font-face{
+	font-family:'roadrage';
+	src:url(fonts/user/roadrage.otf);
+}
+@font-face{
+	font-family:'storopia';
+	src:url(fonts/user/storopia.otf);
+}
+@font-face{
+	font-family:'zekton';
+	src:url(fonts/user/zekton.otf);
+}
+@font-face{
+	font-family:'zelda';
+	src:url(fonts/user/zelda.otf);
+}

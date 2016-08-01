@@ -408,7 +408,13 @@ var action = {
         $('#fList').append('<li>Helvetica</li>');
         for (var i = 0; i < fontArray.length; i++) {
             var li = document.createElement('li');
-            li.innerHTML = $('#'+action.selectedItem).text() + '-' + fontArray[i];
+
+            if(fontArray[i] === 'NEW FONTS'){
+                li.innerHTML = fontArray[i];
+                li.style.cssText += 'background-color:white; color:black;';
+            }else{
+                li.innerHTML = $('#'+action.selectedItem).text() + '-' + fontArray[i];
+            }
             li.style.fontFamily = fontArray[i];
             li.title = fontArray[i];
             $('#fList').append(li);

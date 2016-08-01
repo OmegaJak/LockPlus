@@ -126,7 +126,36 @@ var fontArray = ['abeatbykai'
                 ,'timber'
                 ,'tiza'
                 ,'track'
-                ,'tresdias'];
+                ,'tresdias'
+
+                ,'NEW FONTS'
+
+                ,'allura'
+                ,'arista'
+                ,'astrud'
+                ,'back'
+                ,'blanch'
+                ,'captian'
+                ,'crafted'
+                ,'cumulous'
+                ,'earth'
+                ,'entypo'
+                ,'establo'
+                ,'feast'
+                ,'freeky'
+                ,'fronte'
+                ,'hallo'
+                ,'hanging'
+                ,'lot'
+                ,'mohave'
+                ,'oswald'
+                ,'panama'
+                ,'pushkin'
+                ,'roadrage'
+                ,'storopia'
+                ,'zekton'
+                ,'zelda'
+                ];
 
 var elementPanel = {
     clockElements: {
