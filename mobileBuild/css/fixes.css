@@ -1,0 +1,81 @@
+
+@media only screen and (max-device-width: 375px) {
+	#leftSelector{
+		width: 11px;
+	}
+	#leftSelector:after{
+		left:-355px;
+		font-size: 10px;
+	}
+	#screenCover{
+		top:33px;
+		left:27px;
+		width: 321px;
+		height: 569px;
+	}
+	.toolPanel{
+  		width: 215px;
+  		top:54%;
+	}
+}
+
+
+@media only screen and (width:768px) {
+	#leftSelector:after{
+		left:-483px;
+		font-size: 20px;
+	}
+	#screenCover{
+		top:110px;
+		left:107px;
+		width: 321px;
+		height: 569px;
+		opacity: 0;
+	}
+	.toolPanel{
+  		width: 800px;
+  		left:680px;
+	}
+	.toolPanel ul{
+		height: 570px;
+    	width: 550px;
+	}
+	.toolPanel li{
+	  text-align: center;
+	  padding: 5px;
+	  width: 50px;
+	  height: 50px;
+	  line-height: 50px;
+	  font-size: 25px;
+	}
+	.toolPanel li:after{
+	  position: absolute;
+	  content: attr(id);
+	  margin-left: 0px;
+	  text-transform: capitalize;
+	  font-size: 12px;
+	  background-color: #21b9b0;
+	  color:black;
+	  border-radius: 5px;
+	  width: 100px;
+	  text-align: center;
+	  z-index: -1;
+	}
+	.elementPanel{
+    position: absolute;
+    width: 420px;
+    height: 500px;
+    top: 345px;
+    left: 30px;
+    -webkit-transform: translateZ(0px);
+    overflow: scroll;
+}
+.yesClear {
+  left: 200px!important;
+}
+.noClear {
+    left: 250px!important;
+}
+
+}
+

@@ -1,0 +1,15 @@
+
+Go to the directory where the build folder is.
+
+cd /Applications/XAMPP/xamppfiles/htdocs/repo/depiction/GitLockPlus/mobile/Build
+
+run command
+
+./mergeAll.sh
+
+
+Takes all css files and combines it into one. Puts files in WebReady folder. Don’t include font-awesome.
+
+Also takes multiple javascript files and puts it in one, while compressing it. If any new javascript files are added, update the mergeALL script to include them.
+
+If mobile.html is updated, it must be updated here.
