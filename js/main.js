@@ -147,7 +147,7 @@ var constants = {
     iconList: ['MonolyphDark','MonolyphFlat','MonolyphLight','city','blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky','bbl','blackd','cleard', 'flt', 'kelly','climacut'],
     positioningSystemOption : 'posSystem~Change Positioning System~fa fa-arrows-alt~posSystemDiv',
     multiPosition : 'multiPos~Change Position~fa fa-arrows~multiPosDiv',
-    widgets: ['Analog', 'Analog2', 'Battery', 'Forecast', 'LineDates', 'Seconds', 'Shadows', 'VBattery']
+    widgets: ['Analog', 'Analog2', 'Battery', 'Forecast', 'LineDates', 'Seconds', 'Shadows', 'VBattery', 'days']
 };
 var action = {
     savedElements : {}, //object to save elements placed

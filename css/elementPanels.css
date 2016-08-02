@@ -184,15 +184,17 @@ label {
     -webkit-transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
     width: 90%;
-    height: 250px;
-    background-color: rgba(0,0,0,0.2);
+    height: 200px;
+    background-color: rgba(0,0,0,0.6);
     z-index: 999;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
     display: -webkit-flex;
     -webkit-flex-wrap: wrap;
     -webkit-justify-content: center;
+    -webkit-backdrop-filter:blur(10px);
     z-index: 2;
+    border-radius: 5px;
 }
 
 .divimg {
@@ -204,6 +206,7 @@ label {
 .divimg img {
     width: 100%;
     height: auto;
+    border-radius: 20px;
 }
 
 #widgetlist::-webkit-scrollbar-thumb {
