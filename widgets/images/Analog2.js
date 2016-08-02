@@ -10,20 +10,20 @@ var div = document.createElement("div"),
 div.id = 'Analog2';
 div.style.cssText = 'width:122px;height:122px;position:absolute;top:0;left:0;background-color:transparent;';
 
-var containCSS = 'width: 100px;height: 100px;position: absolute;top: 50%;left: 50%;margin: -50px 0 0 -50px;border-radius: 50%;';
-var spanCSS = 'width: 10px;height: 10px;border-radius: 50%;display: block;position: absolute;left: 50%;margin-left: -15px;top: 10px;';
+var containCSS = 'pointer-events:none;width: 100px;height: 100px;position: absolute;top: 50%;left: 50%;margin: -50px 0 0 -50px;border-radius: 50%;';
+var spanCSS = 'pointer-events:none;width: 10px;height: 10px;border-radius: 50%;display: block;position: absolute;left: 50%;margin-left: -15px;top: 10px;';
 
 Aclock.id = "Aclock";
-Aclock.style.cssText = containCSS + "border: 2px solid white;";
+Aclock.style.cssText = containCSS + "pointer-events:none;border: 2px solid white;";
 Ahours.id = "Ahours";
 Ahours.style.cssText = containCSS;
-sphr.style.cssText = spanCSS + "top:-5px;background-color:white;";
+sphr.style.cssText = spanCSS + "pointer-events:none;top:-5px;background-color:white;";
 Amins.id = "Amins";
 Amins.style.cssText = containCSS;
-spmn.style.cssText = spanCSS + "top:-5px;background-color:white;";
+spmn.style.cssText = spanCSS + "pointer-events:none;top:-5px;background-color:white;";
 Asec.id = "Asec";
 Asec.style.cssText = containCSS;
-spsec.style.cssText = spanCSS + "top:-5px;background-color:white;";
+spsec.style.cssText = spanCSS + "pointer-events:none;top:-5px;background-color:white;";
 
 Ahours.appendChild(sphr);
 Amins.appendChild(spmn);

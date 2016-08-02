@@ -8,7 +8,7 @@ div.style.cssText = 'width:200px;height:110px;position:absolute;top:0;left:0;bac
 
 clockdiv.id = "clockWid";
 clockdiv.innerHTML = "10:50";
-clockdiv.style.cssText = 'position:absolute;left:0;top:0;font-size:75px;font-weight:100;letter-spacing:-1px;color:white;';
+clockdiv.style.cssText = 'position:absolute;left:0;top:0;font-size:75px;font-weight:100;letter-spacing:-1px;color:white;pointer-events:none;';
 clockShadow.innerHTML = "10:50";
 clockShadow.id = 'clockShadow';
 div.appendChild(clockShadow);
@@ -27,7 +27,7 @@ var size = [];
         shadow += i + 'px ' + i +'px rgba(0,0,0,' + (dark - i) / feather + '), ';
     }
     shadow = shadow.substr(0, shadow.length - 2);
-    document.getElementById('clockShadow').setAttribute("style", "position:absolute;left:0;top:0;font-size:75px;letter-spacing:-1px;opacity:0.4;font-weight:100;color:#fff;text-shadow: " + shadow);
+    document.getElementById('clockShadow').setAttribute("style", "pointer-events:none;position:absolute;left:0;top:0;font-size:75px;letter-spacing:-1px;opacity:0.4;font-weight:100;color:#fff;text-shadow: " + shadow);
 
 function lTime(){
     var Adate = new Date();

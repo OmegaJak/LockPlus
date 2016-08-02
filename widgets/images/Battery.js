@@ -5,10 +5,10 @@ div.style.cssText = 'width:320px;height:30px;position:absolute;top:0;left:0;';
 
 
 var batteryholder = document.createElement('div');
-batteryholder.style.cssText = "position:absolute;top:10px;left:33px;width:250px;height:2px;background-color:#666666;";
+batteryholder.style.cssText = "pointer-events:none;position:absolute;top:10px;left:33px;width:250px;height:2px;background-color:#666666;";
 var _battery = document.createElement('div');
 _battery.id = "batterybar";
-_battery.style.cssText = "position:absolute;top:10px;left:33px;height:2px;background-color:white;";
+_battery.style.cssText = "pointer-events:none;position:absolute;top:10px;left:33px;height:2px;background-color:white;";
 
 
 div.appendChild(batteryholder);

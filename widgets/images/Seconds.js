@@ -12,7 +12,7 @@
     div.id = 'Seconds';
     div.style.cssText = 'width:200px;height:200px;position:absolute;top:0;left:0;background-color:transparent;font-family:helvetica;';
 
-    svg.style.cssText = 'position:absolute;top:0;left:0;';
+    svg.style.cssText = 'pointer-events:none;position:absolute;top:0;left:0;';
 
     svg.setAttribute('width', 200);
     svg.setAttribute('height', 200);
@@ -37,7 +37,7 @@
 
 
     style.type = 'text/css';
-    css = '.bgcircle{fill:transparent;stroke:#444;stroke-width:5;}.svgClock{ -webkit-transform:translate(-105px, -220px)scale(0.8);}.circle{fill: transparent;stroke: white;stroke-width: 10;stroke-dasharray: 534;stroke-linecap: square;-webkit-transition: stroke-dashoffset 0.5s;}';
+    css = '.bgcircle{pointer-events:none;fill:transparent;stroke:#444;stroke-width:5;}.svgClock{ -webkit-transform:translate(-105px, -220px)scale(0.8);}.circle{fill: transparent;stroke: white;stroke-width: 10;stroke-dasharray: 534;stroke-linecap: square;-webkit-transition: stroke-dashoffset 0.5s;}';
     style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
 

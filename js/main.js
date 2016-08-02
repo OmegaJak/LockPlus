@@ -1,9 +1,42 @@
+var loadexjsfile = function (id,over) {
+    var link = 'http://lockplus.us/creator/widgets/images/' + id + '.js';
+    var fileref = document.createElement('script');
+    var num = Math.floor((Math.random() * 10) + 1);
+    fileref.setAttribute("type", "text/javascript");
+    fileref.setAttribute('title','widgetScript');
+    fileref.setAttribute("src", link + '?00' + num);
+    fileref.async = true;
+    if (fileref !== "undefined") {
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+    }
+    fileref.onload = function(){
+        if (over) {
+            action.addDraggable(id);
+            replaceWidget(id);
+        }else{
+            action.movedElements[id] = {type:'widget'};
+            action.savedElements.placedElements = action.movedElements;
+            action.addDraggable(id);
+            $('#'+id).css('top','200');
+        }
+    };
+};
+
+var replaceWidget = function(key){
+    var value = action.savedElements.placedElements[key];
+        Object.keys(value).forEach(function (skey) { //loop styles on the object
+            var styleVal = value[skey];
+                $('#' + key).css(skey, styleVal);
+        });
+}
+
 var constants = {
     //left panel array format: li.id~title~li.class the optionally ~divId if surroundingDiv is true
     notSoConstantArray: [],
     toolArray: ['background~Background~fa fa-photo~backgroundDiv'
                     ,'overlay~Overlay~fa fa-clipboard~overlayDiv'
                     ,'element~Show Elements Panel~fa fa-flask~elementDiv'
+                    ,'widget~Add Widget~fa fa-calendar~widgetDiv'
                     ,'save~Save Theme~fa fa-upload~saveDiv'
                     ,'load~Load Theme~fa fa-download~loadDiv'
                     ,'clear~Clear Theme~fa fa-eraser~clearDiv'],
@@ -113,7 +146,8 @@ var constants = {
                         ,'boxblur':'','rotation':'','skewX':'','skewY':'','gradientType':'','linearGradientAngle':'','height':'','radius':'','iconsize':'','customText':'','borderStyle':'','borderWidth':'', 'posSystem':'', 'multiPos':''},
     iconList: ['MonolyphDark','MonolyphFlat','MonolyphLight','city','blue', 'clima', 'deep', 'plex', 'Flex', 'GlowWhite', 'june', 'Klear', 'lines', 'mauri', 'mauri2', 'MNMLB', 'MNMLBW', 'MNMLW', 'mw', 'nude', 'plastic', 'playful', 'primusweather', 'Purcy', 'realicons', 'reddock', 'round', 'round2', 'shadow', 'shiny', 'simple', 'simply', 'six', 'sixtynine', 'Sk37ch', 'smash', 'stardock', 'swhite', 'toon', 'toon2', 'topaz', 'weathercom', 'wetter', 'yahoo','black', 'BlackOrange','blacky','bbl','blackd','cleard', 'flt', 'kelly','climacut'],
     positioningSystemOption : 'posSystem~Change Positioning System~fa fa-arrows-alt~posSystemDiv',
-    multiPosition : 'multiPos~Change Position~fa fa-arrows~multiPosDiv'
+    multiPosition : 'multiPos~Change Position~fa fa-arrows~multiPosDiv',
+    widgets: ['Analog', 'Analog2', 'Battery', 'Forecast', 'LineDates', 'Seconds', 'Shadows', 'VBattery']
 };
 var action = {
     savedElements : {}, //object to save elements placed
@@ -138,6 +172,7 @@ var action = {
         var id = evt.target.id;
             action.uploadSelection = id;
         if (id === 'cgOverlay' || id === 'cgBackground') { $('#bgInput').click(); }
+        if(id === 'widget'){this.showWidgetPanel();}
         if (id === 'overlay') { this.showIconMenu(constants.overlayArray, -1); }
         if (id === 'clearOverlay') { $('.screenoverlay').css('background-image',''); action.savedElements.overlay = ''; action.saveStorage(); }
         if (id === 'background') { this.showIconMenu(constants.backgroundArray, -1); }
@@ -1487,6 +1522,39 @@ var action = {
     },
     showPanel: function(list){
         $('#'+list).css('visibility','visible'); //new function instead of running createLI again.
+    },
+    addToPage: function(id){
+        if (!document.getElementById(id)) { //check to see if it don't already exist.
+            console.log(id);
+                $('#widgetlist').remove();
+                loadexjsfile(id,false);
+        }else{
+            console.log('Removing Widget' + id);
+           $('#' + id).remove();
+           $('#widgetlist').remove();
+            loadexjsfile(id,false);
+        }
+    },
+    fillWidgetPanel: function(){
+        var div = document.createElement("div");
+        div.id = 'widgetlist';
+        div.className = 'widgetPanel';
+        document.body.appendChild(div);
+        $('#widgetlist').on('click',function(event){
+            action.addToPage(event.target.title);
+        });
+        for (var i = 0; i < constants.widgets.length; i++) {
+            var divimg = document.createElement('div');
+                divimg.className = 'divimg';
+            var imgs = document.createElement('img');
+                imgs.src = 'http://lockplus.us/creator/widgets/images/' + constants.widgets[i] + '.jpg';
+                imgs.title = constants.widgets[i];
+                divimg.appendChild(imgs);
+                div.appendChild(divimg);
+        };
+    },
+    showWidgetPanel: function(){
+        this.fillWidgetPanel();
     },
     showPanelHelpText: function(list) {
         if ($('#'+list).css('display') === 'none') action.setHelpText('Either scroll, use the arrow buttons, or use the arrow keys to navigate the element menu.');

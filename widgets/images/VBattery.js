@@ -8,10 +8,10 @@
     div.id = 'VBattery';
     div.style.cssText = 'width:38px;height:73px;position:absolute;top:0;left:0;background-color:transparent;font-family:helvetica;';
 
-    bottomBack.style.cssText = 'position:absolute;top:20px;left:3px;width:30px;height:50px;background-color:transparent;border:1px solid white;';
-    bottomInside.style.cssText = 'position:absolute;top:51px;left:6px;width:26px;height:1px;background-color:white;';
+    bottomBack.style.cssText = 'pointer-events:none;position:absolute;top:20px;left:3px;width:30px;height:50px;background-color:transparent;border:1px solid white;';
+    bottomInside.style.cssText = 'pointer-events:none;position:absolute;top:51px;left:6px;width:26px;height:1px;background-color:white;';
     bottomInside.id = 'VBatteryInner';
-    top.style.cssText = 'position:absolute;top:14px;left:9px;width:18px;height:6px;background-color:transparent;border:1px solid white;border-bottom:none;';
+    top.style.cssText = 'pointer-events:none;position:absolute;top:14px;left:9px;width:18px;height:6px;background-color:transparent;border:1px solid white;border-bottom:none;';
 
     div.appendChild(bottomInside);
     div.appendChild(bottomBack);

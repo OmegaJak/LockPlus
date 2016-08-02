@@ -7,7 +7,7 @@
     for (var i = 0; i < daysOf.length; i++) {
         var dayw = document.createElement('span');
         dayw.id = daysOf[i];
-        dayw.style.cssText = 'position:relative;left:2;font-weight:200;font-size:14px;width:38px;padding-top:2px;display:inline-block;margin-left:2px;top:2px;text-transform:uppercase;text-align:center;color:rgba(255,255,255,0.5);';
+        dayw.style.cssText = 'pointer-events:none;position:relative;left:2;font-weight:200;font-size:14px;width:38px;padding-top:2px;display:inline-block;margin-left:2px;top:2px;text-transform:uppercase;text-align:center;color:rgba(255,255,255,0.5);';
         dayw.innerHTML = daysOf[i];
         div.appendChild(dayw);
     }

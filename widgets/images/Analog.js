@@ -14,9 +14,9 @@ div.style.cssText = 'width:110px;height:110px;position:absolute;top:0;left:0;bac
                 h.id="h";
                 h.className="transform";
                 center.id="center";
-                center.style.cssText = "position:absolute;left:45px;top:45px;width:10px;height:10px;background-color:transparent;border-radius:100%;";
+                center.style.cssText = "pointer-events:none;position:absolute;left:45px;top:45px;width:10px;height:10px;background-color:transparent;border-radius:100%;";
                 holder.className="clock";
-                holder.style.cssText = "position:absolute;top:2px;left:2px;width:100px;height:100px;background-color:rgba(0,0,0,0);border:2px solid white;border-radius: 100%;background-size: 100px;"
+                holder.style.cssText = "pointer-events:none;position:absolute;top:2px;left:2px;width:100px;height:100px;background-color:rgba(0,0,0,0);border:2px solid white;border-radius: 100%;background-size: 100px;"
                 holder.appendChild(s);
                 holder.appendChild(m);
                 holder.appendChild(h);
