@@ -164,28 +164,27 @@ var elementPanel = {
             datestring: cF.daytext() + ", " + cF.monthtext() + " " + cF.date(),
             datedash: cF.daytext() + "-" + cF.monthtext() + "-" + cF.date(),
             datespace: cF.daytext() + " " + cF.monthtext() + " " + cF.date(),
-            datedotmonth: cF.date() + '.' + cF.monthtext(),
-            monthdot: cF.monthtext() + "." + cF.date(),
-            dateslashmonth: cF.date() + "/" + cF.monthtext(),
-            mdy: cF.month() + "/" + cF.date() + "/" + cF.year()
+            ndatedash: cF.daytext() + " - " + cF.monthtext() + " - " + cF.date(),
+            daydatesmonth: cF.daytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
+            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext()
         },
         strings2: {
             title: "Strings2",
-            datemonth: cF.date() + " " + cF.monthtext(),
-            datemonthrev: cF.monthtext() + " " + cF.date(),
             monthlinespace: cF.monthtext() + " | " + cF.date() + " | " + cF.year(),
             monthline: cF.monthtext() + "|" + cF.date() + "|" + cF.year(),
-            daydate: cF.daytext() + " " + cF.date(),
-            daydotdate: cF.daytext() + "." + cF.date(),
-            datestringrev: cF.monthtext() + " " + cF.date() + ", " + cF.daytext()
+            monthdayyear: cF.monthtext() + " " + cF.date() + " " + cF.year(),
+            datestringrev: cF.monthtext() + " " + cF.date() + ", " + cF.daytext(),
+            datedotmonth: cF.date() + '.' + cF.monthtext(),
+            monthdot: cF.monthtext() + "." + cF.date(),
+
         },
         strings3: {
             title: "Strings3",
             daydatemonth: cF.daytext() + " | " + cF.date() + " " + cF.monthtext(),
-            daydatesmonth: cF.daytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
-            daydatescommamonth: cF.daytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),
             dayabdatemonth: cF.sdaytext() + ' ' + cF.date() + ' ' + cF.smonthtext(),
-            daycommadatemonth: cF.sdaytext() + ', ' + cF.date() + ' ' + cF.smonthtext()
+            daycommadatemonth: cF.sdaytext() + ', ' + cF.date() + ' ' + cF.smonthtext(),
+            daydate: cF.daytext() + " " + cF.date(),
+            daydotdate: cF.daytext() + "." + cF.date()
         },
         strings4:{
             title: "Strings4",
@@ -200,7 +199,7 @@ var elementPanel = {
             datebar: cF.month() + '|' + cF.date() + '|' + cF.smyear(),
             datesnslash: cF.month() + '/' + cF.date() + '/' + cF.smyear(),
             datesingled: cF.month() + '-' + cF.date() + '-' + cF.smyear(),
-            datemonthfirst: cF.date() + ' ' + cF.monthtext()
+            mdy: cF.month() + "/" + cF.date() + "/" + cF.year()
         },
         strings6: {
             title: "Strings6",
@@ -208,15 +207,30 @@ var elementPanel = {
             ndsm : cF.date() + " " + cF.smonthtext(),
             ndsmd: cF.date() + " " + cF.sdaytext(),
             nsmdd: cF.sdaytext() + " " + cF.date(),
-            ndatedash: cF.daytext() + " - " + cF.monthtext() + " - " + cF.date()
+            smdotdate: cF.smonthtext() + '.' + cF.date(),
+            datesmdot: cF.date() + '.' + cF.smonthtext(),
         },
         strings7: {
             title: "Strings7",
+            dateslashmonth: cF.date() + "/" + cF.monthtext(),
+            monthslashdate: cF.monthtext() + "/" + cF.date(),
+            datemonth: cF.date() + " " + cF.monthtext(),
+            datemonthrev: cF.monthtext() + " " + cF.date(),
+            fullmonthdotdate: cF.monthtext() + '.' + cF.date(),
+            datedotmonthfull: cF.date() + '.' + cF.monthtext()
+            //datemonthfirst: cF.date() + ' ' + cF.monthtext(),
+        },
+        strings8: {
+            title: "Strings8",
             nsmmyear: cF.smonthtext() + " " + cF.year(),
             nmdplusyear: cF.monthtext() + " " + cF.dateplus() + " " + cF.year(),
             nhrtmin: cF.hourtext() + ':' + cF.minute(),
             nhrtarrowmin: cF.hourtext() + '>>' + cF.minute(),
             nttext: "[" + cF.hourtext() + "]" + "" + cF.minuteonetext() + '' + cF.minutetwotext(),
+        },
+        strings9: {
+            title: "Strings9",
+            datemonthyear: cF.date() + ' ' + cF.monthtext() + ', ' + cF.year()
         },
         clocks: {
             title: "Clock",
@@ -305,6 +319,8 @@ var elementPanel = {
             tempcon: "76 Cloudy",
             tempcon1: "76°f Cloudy",
             tempcon2: "76° Cloudy",
+            contemp: "Cloudy 76°",
+            contemp2: "Cloudy 76°f",
             windstr: "25mph N"
         },
         temps: {
@@ -400,6 +416,15 @@ var elementPanel = {
             batterypercent: "100%",
             chargingtxt: "Not Charging",
             chargingstate: "Charging"
+        },
+        memory: {
+            title:"Memory",
+            ramFree: "700 (Free)",
+            ramUsed: "100 (Used)",
+            ramAvailable: "800 (Available)",
+            ramFreeMB: "700mb (Free)",
+            ramUsedMB: "100mb (Used)",
+            ramAvailableMB: "800mb (Available)"
         },
         unlock: {
             title: "Unlock",

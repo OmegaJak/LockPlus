@@ -138,10 +138,11 @@ label {
     overflow: scroll;*/ /*could be scrolling list*/
 }
 .subCategory li {
-	height: 16px;
+	height: 10px;
 	font-size: 17px;
-	margin-top: 5px;
-	margin-bottom: 5px;
+    line-height: 10px;
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 .subCategory li:hover{
     box-shadow: 0px 0px 0px 2px #21b9b0;

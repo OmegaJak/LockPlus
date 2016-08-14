@@ -325,7 +325,15 @@ function loadClock() {
                 nmdplusyear: clock.monthtext() + " " + clock.dateplus() + " " + clock.year(),
                 nhrtmin: clock.hourtext() + ':' + clock.minute(),
                 nhrtarrowmin: clock.hourtext() + '>>' + clock.minute(),
-                nttext: "[" + clock.hourtext() + "]" + "" + clock.minuteonetext() + '' + clock.minutetwotext()
+                nttext: "[" + clock.hourtext() + "]" + "" + clock.minuteonetext() + '' + clock.minutetwotext(),
+                smdotdate: clock.smonthtext() + '.' + clock.date(),
+                datesmdot: clock.date() + '.' + clock.smonthtext(),
+                monthdayyear : clock.monthtext() + " " + clock.date() + " " + clock.year(),
+                monthslashdate: clock.monthtext() + '/' + clock.date(),
+                fullmonthdotdate: clock.monthtext() + '.' + clock.date(),
+                datedotmonthfull: clock.date() + '.' + clock.monthtext(),
+                datemonthyear: clock.date() + ' ' + clock.monthtext() + ', ' + clock.year()
+
             };
             Object.keys(clockElements).forEach(function (key) {
                 var value = clockElements[key],
@@ -375,6 +383,8 @@ var weatherdivs = function () {
             tempcon: '76 Cloudy',
             tempcon1: '76°f Cloudy',
             tempcon2: '76° Cloudy',
+            contemp: "Cloudy 76°",
+            contemp2: "Cloudy 76°f",
             windstr: '25mph N'
     };
     Object.keys(weatherElements).forEach(function (key) {
@@ -420,7 +430,13 @@ var systemdivs = function () {
         notifysms: "0",
         notifyphone: "0",
         notifywhats: "0",
-        notifytelegram: "0"
+        notifytelegram: "0",
+        ramFree: "700",
+        ramUsed: "100",
+        ramAvailable: "800",
+        ramFreeMB: "700mb",
+        ramUsedMB: "100mb",
+        ramAvailableMB: "800mb"
     };
     Object.keys(systemEl).forEach(function (key) {
         var value = systemEl[key],
