@@ -155,6 +155,27 @@ var fontArray = ['abeatbykai'
                 ,'storopia'
                 ,'zekton'
                 ,'zelda'
+
+                ,'NEW FONTS'
+
+                ,'adamasreg'
+                ,'cooperhewiththin'
+                ,'cooperhewittbold'
+                ,'cooperhewittbook'
+                ,'cooperhewittlight'
+                ,'cooperhewittreg'
+                ,'everafte'
+                ,'goodvibes'
+                ,'latoblack'
+                ,'latobold'
+                ,'latolight'
+                ,'latoreg'
+                ,'latothin'
+                ,'masterofbreak'
+                ,'moonshinerround'
+                ,'moonshinersharp'
+                ,'quadrantabold'
+                ,'quadrantareg'
                 ];
 
 var elementPanel = {

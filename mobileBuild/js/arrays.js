@@ -154,7 +154,29 @@ var fontArray = ['abeatbykai'
                 ,'roadrage'
                 ,'storopia'
                 ,'zekton'
-                ,'zelda'];
+                ,'zelda'
+
+                ,'NEW FONTS'
+
+                ,'adamasreg'
+                ,'cooperhewiththin'
+                ,'cooperhewittbold'
+                ,'cooperhewittbook'
+                ,'cooperhewittlight'
+                ,'cooperhewittreg'
+                ,'everafte'
+                ,'goodvibes'
+                ,'latoblack'
+                ,'latobold'
+                ,'latolight'
+                ,'latoreg'
+                ,'latothin'
+                ,'masterofbreak'
+                ,'moonshinerround'
+                ,'moonshinersharp'
+                ,'quadrantabold'
+                ,'quadrantareg'
+                ];
 
 var elementPanel = {
     clockElements: {

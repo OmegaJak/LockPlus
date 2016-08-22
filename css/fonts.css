@@ -617,3 +617,78 @@
 	font-family:'zelda';
 	src:url(fonts/user/zelda.otf);
 }
+/* New */
+@font-face{
+	font-family:'adamasreg';
+	src:url(fonts/user/adamasreg.otf);
+}
+@font-face{
+	font-family:'cooperhewiththin';
+	src:url(fonts/user/cooperhewiththin.otf);
+}
+@font-face{
+	font-family:'cooperhewittbold';
+	src:url(fonts/user/cooperhewittbold.otf);
+}
+@font-face{
+	font-family:'cooperhewittbook';
+	src:url(fonts/user/cooperhewittbook.otf);
+}
+@font-face{
+	font-family:'cooperhewittlight';
+	src:url(fonts/user/cooperhewittlight.otf);
+}
+@font-face{
+	font-family:'cooperhewittreg';
+	src:url(fonts/user/cooperhewittreg.otf);
+}
+@font-face{
+	font-family:'everafte';
+	src:url(fonts/user/everafte.otf);
+}
+@font-face{
+	font-family:'goodvibes';
+	src:url(fonts/user/goodvibes.otf);
+}
+@font-face{
+	font-family:'latoblack';
+	src:url(fonts/user/latoblack.otf);
+}
+@font-face{
+	font-family:'latobold';
+	src:url(fonts/user/latobold.otf);
+}
+@font-face{
+	font-family:'latolight';
+	src:url(fonts/user/latolight.otf);
+}
+@font-face{
+	font-family:'latoreg';
+	src:url(fonts/user/latoreg.otf);
+}
+@font-face{
+	font-family:'latothin';
+	src:url(fonts/user/latothin.otf);
+}
+@font-face{
+	font-family:'masterofbreak';
+	src:url(fonts/user/masterofbreak.otf);
+}
+@font-face{
+	font-family:'moonshinerround';
+	src:url(fonts/user/moonshinerround.otf);
+}
+@font-face{
+	font-family:'moonshinersharp';
+	src:url(fonts/user/moonshinersharp.otf);
+}
+@font-face{
+	font-family:'quadrantabold';
+	src:url(fonts/user/quadrantabold.otf);
+}
+@font-face{
+	font-family:'quadrantareg';
+	src:url(fonts/user/quadrantareg.otf);
+}
+
+
