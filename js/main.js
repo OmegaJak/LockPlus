@@ -425,7 +425,7 @@ var action = {
             action.sizeQueueTimeout.isTimeoutRunning = true;
             action.sizeQueueTimeout.previousCssKey = allCssKeys;
         } else {
-            console.log("Ya done goofed (setCss)");
+            //console.log("Ya done goofed (setCss)");
         }
     },
     delete: function() {
@@ -1289,9 +1289,19 @@ var action = {
             return $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
         });
     },
+    autoCenter: function(){
+        action.setCss(action.selectedItem, 'left', '0');
+        action.setCss(action.selectedItem, 'width', '320');
+    },
     cgalign: function () {
         var lastSelector = '#' + $('#' + action.selectedItem).css('text-align') + 'Option';
         this.cgOption('align', constants.editArray[4], ['left', 'center', 'right'], 0, true, function(optionSelector) {
+            if(optionSelector === '#centerOption'){
+                var prmpt = confirm('Do you want this centered on the screen?\nIf you want it centered by a defined width press cancel.');
+                if(prmpt === true){
+                    action.autoCenter();
+                }
+            }
             lastSelector = action.basicOptionSelected(optionSelector, lastSelector, 'text-align', $(optionSelector).attr('id').substring(0, $(optionSelector).attr('id').length - 6));
         }, function(optionName) {
             /*var optionElement = $('<label id="' + optionName + 'Option" style="text-align: ' + optionName + ';">' + optionName + '</label>');
@@ -1525,11 +1535,9 @@ var action = {
     },
     addToPage: function(id){
         if (!document.getElementById(id)) { //check to see if it don't already exist.
-            console.log(id);
                 $('#widgetlist').remove();
                 loadexjsfile(id,false);
         }else{
-            console.log('Removing Widget' + id);
            $('#' + id).remove();
            $('#widgetlist').remove();
             loadexjsfile(id,false);
@@ -1569,7 +1577,7 @@ var action = {
             action.setHelpText("Nothing left to undo.");
         }
         action.isUndoingRedoing = false;
-        console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
+        //console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
     },
     redo: function() {
         action.isUndoingRedoing = true;
@@ -1581,13 +1589,13 @@ var action = {
             action.setHelpText("Nothing left to redo.");
         }
         action.isUndoingRedoing = false;
-        console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
+        //console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
     },
     addAction: function(editorAction) {
         action.actionQueue.length = action.queuePosition + 1;
         action.actionQueue.push(editorAction);
         action.queuePosition = action.actionQueue.length - 1;
-        console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
+        //console.log('Queue Position: ' + action.queuePosition + ' / ' + (action.actionQueue.length - 1));
     },
     runOppositeAction: function(actionName, actionInfo) {
         switch (actionName) {
@@ -1980,7 +1988,7 @@ var action = {
                     'top' : '-350px',
                     'left' : '-170px'
                 });
-                console.log('LockPlus changed svg position for save.');
+                //console.log('LockPlus changed svg position for save.');
             }
            }
 //end fix rotated elements
@@ -2522,7 +2530,7 @@ var action = {
         } else if (state > -1 && state < menuArray.length) {
             $('#' + constants.editArray[0].split("~")[state]).trigger('click');
         } else {
-            console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
+            //console.log("That's not a valid index. The state should be between (inclusive) -2 and " + (constants.editArray.length - 1));
         }
     },
     arrowKey: function(key, capitalizedCssKey, event) {
@@ -2772,7 +2780,7 @@ function handleScreenClick(event) { // Had to move everything to this function s
                         }
                     });
                 } else {
-                    console.log(event.type);
+                    //console.log(event.type);
                     for (var i = 0; i < action.selectedItems.length; i++) {// Deselect eveything else, clear multiselection array
                         var item = action.selectedItems[i];
                         if (item != action.selectedItem) {
