@@ -35,7 +35,7 @@ footer a {
   position: relative;
   background-color:rgba(33,185,176,0.6);
   width:20%;
-  margin:15% auto;
+  margin:5% auto;
   border-radius:0.4em;
   overflow:hidden;
   position:relative;
@@ -52,7 +52,7 @@ footer a {
   width: 100%;
   text-align: center;
   margin-top:10px;
-  color:white;
+  color:black;
   display:block;
   padding-bottom:9px;
   opacity: 0.5
@@ -68,6 +68,9 @@ footer a {
 }
 #saveForm input:focus{
     outline: 0;
+}
+.saveNote{
+    color:red;
 }
 .fsubmit{
   text-align: center;

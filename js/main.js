@@ -2005,7 +2005,7 @@ var action = {
             $('.phone').css('display','none'); //dont hide until html2canvas has rendered it.
             $('.newSVG').empty(); //remove svg
             //Fixing what html2canvas breaks
-            $("body").append('<form id="saveForm"><h3>Enter theme details</h3><label class="flabel">Your Name</label><input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/><label class="flabel">Your Email</label><input type="text" name="femail" id="femail" placeholder="Email@email.com"/><label class="flabel">Theme Name</label><input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/><div class="fsubmit">Submit</div><label class="errorlabel">*must fill in all inputs</label></form>');
+            $("body").append('<form id="saveForm"><h3>Enter theme details</h3><label class="flabel">Your Name</label><input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/><label class="flabel">Your Email</label><input type="text" name="femail" id="femail" placeholder="Email@email.com"/><label class="flabel">Theme Name</label><input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/></br></br><span class="saveNote"><b>Note:</b> If you are testing this theme put the word test somewhere in the theme name. These automatically get deleted after a period of time. I would always use this method unless you are familiar with the creator.</span></br><div class="fsubmit">Submit</div><label class="errorlabel">*must fill in all inputs</label></form>');
             //end fixing what html2canvas broke
             $('.fsubmit').on('click',function(){
                    var devname = $('#fdevname').val();
