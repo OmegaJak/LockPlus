@@ -2214,6 +2214,11 @@ var action = {
                 action.savedElements.placedElements[id].top = position.top;
                 action.saveStorage();
 
+                /* So a random bug popped up, when an item is dragged it sets a height. WHY?
+                   Which means if you resize the font the bounding box didn't change. This fixes that.
+                 */
+                $('#' + id).css('height', 'auto');
+
                 /* Create a div around the element which can be used for snapping */
                 if(localStorage.snap == 'true'){
                     var snapper = $('<div>',{'class' : 'dLine', 'title' : id}),
