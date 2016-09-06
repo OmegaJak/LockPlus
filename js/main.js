@@ -17,6 +17,7 @@ var loadexjsfile = function (id,over) {
             action.movedElements[id] = {type:'widget'};
             action.savedElements.placedElements = action.movedElements;
             action.addDraggable(id);
+
             $('#'+id).css('top','200');
         }
     };
@@ -1533,7 +1534,7 @@ var action = {
     showPanel: function(list){
         $('#'+list).css('visibility','visible'); //new function instead of running createLI again.
     },
-    addToPage: function(id){
+    addToPage: function(id, replace){
         if (!document.getElementById(id)) { //check to see if it don't already exist.
                 $('#widgetlist').remove();
                 loadexjsfile(id,false);
@@ -1541,6 +1542,9 @@ var action = {
            $('#' + id).remove();
            $('#widgetlist').remove();
             loadexjsfile(id,false);
+        }
+        if(!replace){
+            localStorage.setItem('placedElements', JSON.stringify(action.savedElements));
         }
     },
     fillWidgetPanel: function(){
@@ -2106,6 +2110,7 @@ var action = {
         action.saveStorage();
     },
     saveStorage: function (specialPurpose) { //save savedElements object to localStorage
+        console.log('saving storage');
         if (specialPurpose === 'wallpaper') {
             localStorage.setItem('wallpaper', action.wallpaper);
         }else{
@@ -2114,6 +2119,7 @@ var action = {
     },
     remakeDIV: function(id) {
         var div = document.createElement('div');
+
         div.id = id;
         div.style.position = 'absolute';
         document.getElementById('screenElements').appendChild(div);
@@ -2122,11 +2128,15 @@ var action = {
         weatherdivs();
         systemdivs();
         miscDivs();
+
     },
     replaceElements: function(){
         Object.keys(this.savedElements.placedElements).forEach(function (key) {
             action.remakeDIV(key); //loop object and place items
             var value = action.savedElements.placedElements[key];
+            if($.inArray(key, constants.widgets) !== -1){
+                action.addToPage(key, true);
+            }
             Object.keys(value).forEach(function (skey) { //loop styles on the object
                 var styleVal = value[skey];
                 if(skey === 'fontSize'){
@@ -2150,6 +2160,15 @@ var action = {
                     $('#' + key).html($('#' + key).html() + styleVal);
                 } else {
                     $('#' + key).css(skey, styleVal);
+                }
+
+                //Widgets
+                if($.inArray(key, constants.widgets) !== -1){
+                    //console.log('setting widget styles');
+                    setTimeout(function(){
+                        //console.log('Widget' + key);
+                        $('#' + key).css(skey,styleVal);
+                    },2500);
                 }
             });
         });
@@ -2175,8 +2194,12 @@ var action = {
         }
         //fix for if a theme is loaded
         if(this.savedElements.wallpaper && this.savedElements.wallpaper.length > 10){ //if theme is loaded
-            localStorage.setItem('wallpaper',this.savedElements.wallpaper); //transfer to storage
-            this.savedElements.wallpaper = ''; //clear here for performance
+            try{
+                localStorage.setItem('wallpaper',this.savedElements.wallpaper); //transfer to storage
+                this.savedElements.wallpaper = ''; //clear here for performance
+            }catch(err){
+                alert('Wallpaper was too big to load:(');
+            }
         }
         action.wallpaper = localStorage.getItem('wallpaper');
         if (action.wallpaper != '' && action.wallpaper != null && action.wallpaper != "null") { //set wallpaper
@@ -2217,7 +2240,9 @@ var action = {
                 /* So a random bug popped up, when an item is dragged it sets a height. WHY?
                    Which means if you resize the font the bounding box didn't change. This fixes that.
                  */
-                $('#' + id).css('height', 'auto');
+                 if($.inArray(id, constants.widgets) == -1){
+                    $('#' + id).css('height', 'auto');
+                 }
 
                 /* Create a div around the element which can be used for snapping */
                 if(localStorage.snap == 'true'){

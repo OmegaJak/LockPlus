@@ -1,3 +1,31 @@
 #php files
 *.php
 
+
+css/fonts/.DS_Store
+
+mobileBuild/.DS_Store
+
+css/.DS_Store
+
+mobileBuild/Build/.DS_Store
+
+mobileBuild/css/fonts/.DS_Store
+
+mobileBuild/css/.DS_Store
+
+mobileBuild/css/fonts/user/.DS_Store
+
+mobileBuild/WebReady/.DS_Store
+
+mobileWeb/.DS_Store
+
+mobileWeb/css/.DS_Store
+
+mobileBuild/js/.DS_Store
+
+mobileWeb/css/fonts/.DS_Store
+
+widgets/.DS_Store
+
+.DS_Store
