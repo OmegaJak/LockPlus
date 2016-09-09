@@ -2008,6 +2008,8 @@ var action = {
                 var dataURL = ca.toDataURL();
             $('.phone').css('display','none'); //dont hide until html2canvas has rendered it.
             $('.newSVG').empty(); //remove svg
+
+if(isInEditMode === false){
             //Fixing what html2canvas breaks
             $("body").append('<form id="saveForm"><h3>Enter theme details</h3><label class="flabel">Your Name</label><input type="text" name="fdevname" id="fdevname" placeholder="Your Name"/><label class="flabel">Your Email</label><input type="text" name="femail" id="femail" placeholder="Email@email.com"/><label class="flabel">Theme Name</label><input type="text" name="fthemename" id="fthemename" placeholder="Theme Name"/></br></br><span class="saveNote"><b>Note:</b> If you are testing this theme put the word test somewhere in the theme name. These automatically get deleted after a period of time. I would always use this method unless you are familiar with the creator.</span></br><div class="fsubmit">Submit</div><label class="errorlabel">*must fill in all inputs</label></form>');
             //end fixing what html2canvas broke
@@ -2054,6 +2056,16 @@ var action = {
                    }
                }
                 });
+}else{
+    $('#Tpreview').val(dataURL);
+    $('#Ticon').val(action.savedElements.iconName || '');
+    $('#Twallpaper').val((action.wallpaper) ? action.wallpaper : '');
+    $('#Toverlay').val((action.savedElements.overlay) ? action.savedElements.overlay : '');
+    $('#Telements').val(JSON.stringify(action.savedElements.placedElements) || '');
+    $('#myform').submit();
+    $('#saveForm').css('display','none');
+    $('.loader').toggle('display');
+}
             },1000);
         });
 

@@ -120,6 +120,7 @@
   <input type="hidden" name="Toverlay" id="Toverlay"/>
   <input type="hidden" name="Ticon" id="Ticon"/>
   <input type="hidden" name="Telements" id="Telements"/>
+  <input type="hidden" name="editing" id="editing" value="NO"/>
   <input style="display:none;" type="submit" value="Submit">
 </form>
 <!--<canvas id="canvas" width="320" height="568" style="border: 1px solid black;"></canvas>-->
@@ -134,7 +135,7 @@
 <script src="js/clock.js?004"></script>
 <script src="js/arrays.js?005"></script>
 <script src='js/stroll.js?001'></script>
-<script src="js/main.js?0031"></script>
+<script src="js/main.js?0032"></script>
 <script src="js/svg.js"></script>
 <link rel="stylesheet" type="text/css" href="css/fonts.css?005">
 <div class="font_preload" style="position:absolute;top:-600px;left:0;opacity: 1"></div>
@@ -148,6 +149,8 @@ $( window ).load(function() {
 		fpre.appendChild(f);
 	}
 });
+
+var isInEditMode = false;
 </script>
 <!--<script src="js/rasterHTML.js"></script>-->
 </body>
