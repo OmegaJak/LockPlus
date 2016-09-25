@@ -184,7 +184,15 @@ var action = {
         if (id === 'backToTools') { this.showIconMenu(constants.toolArray, -1); }
         if (id === 'clear') { action.clearTheme(-1) }
         if (id === 'save') {this.saveTheme(); }
-        if (id === 'load') { window.open(location.href.replace('#', '') + 'load'); window.close();  } //load php stuff
+        if (id === 'load') {
+
+            if(editSB){
+                window.open('http://lockplus.us/creator/load/index.php?edit=SB');window.close();
+            }else{
+                window.open(location.href.replace('#', '') + 'load'); window.close();
+            }
+
+        } //load php stuff
         if (id === 'element') { action.elementIconClick(); }
         if (id === 'size') { this.cgSize('fontSize', constants.editArray[0], 'px', 5, 300, 'font-size', 'font-size', action.updateSize);}
         if (id === 'width') { this.cgSize('widthSize', constants.editArray[1], 'px', 1, $('.screen').width(), 'width', 'width', action.updateSize); }
@@ -2661,6 +2669,11 @@ switch(iPhone) {
 }
 //upload images should implement into action OBJ. (TODO)
 function uploadedImage(e) {
+
+        if(editSB){
+            alert("When creating SB themes upload a screenshot of your homescreen to create your widget around them. Wallpapers are not used!");
+        }
+
     var input = e.currentTarget, //added to provide alert if png is used
         tw = e.target.files,
         ncount,

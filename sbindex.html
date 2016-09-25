@@ -151,7 +151,8 @@ $( window ).load(function() {
 });
 
 var isInEditMode = false;
-var editSB = false;
+var editSB = true;
+document.getElementById('myform').setAttribute('action', 'php/export.php?type=SB');
 </script>
 <!--<script src="js/rasterHTML.js"></script>-->
 </body>
