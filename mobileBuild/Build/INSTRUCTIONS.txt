@@ -1,7 +1,7 @@
 
 Go to the directory where the build folder is.
 
-cd /Applications/XAMPP/xamppfiles/htdocs/repo/depiction/GitLockPlus/mobile/Build
+cd /Applications/XAMPP/xamppfiles/htdocs/repo/depiction/GitLockPlus/mobileBuild/Build
 
 run command
 
