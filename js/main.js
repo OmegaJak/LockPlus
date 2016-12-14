@@ -2261,7 +2261,9 @@ if(isInEditMode === false){
                    Which means if you resize the font the bounding box didn't change. This fixes that.
                  */
                  if($.inArray(id, constants.widgets) == -1){
-                    $('#' + id).css('height', 'auto');
+                    if(id.substring(0,3) != 'box' && id.substring(3, 9) != 'Circle'){ //don't change box //don't change circle
+                          $('#' + id).css('height', 'auto');
+                    }
                  }
 
                 /* Create a div around the element which can be used for snapping */
